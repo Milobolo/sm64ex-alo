@@ -1204,6 +1204,7 @@ s8 TE_set_mario_action(struct TEState *CurEng,u8 *str){
 	gMarioState->action = TE_get_ptr(str,str);
 	return TE_advBlen(CurEng,5);
 }
+//aa cmd
 s8 TE_box_transition(struct TEState *CurEng,u8 *str){
 	CurEng->BoxTrXi = (s16) (TE_get_s16(str)*CurEng->TrPct);
 	CurEng->BoxTrXf = (s16) (TE_get_s16(str+2)*CurEng->TrPct);

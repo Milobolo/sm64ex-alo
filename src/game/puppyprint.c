@@ -23,6 +23,10 @@ a modern game engine's developer's console.
 - DMA measures the time it takes to load things. In Vanilla, Mario's animations and audio samples are loaded from ROM as needed.
 **/
 
+//note, some features have been removed to fit this repo, or because I didn't feel like tracking down every single change
+//across different repos. Text Engine also currently uses a modified version of print_small_text that should eventually
+//get its own function isolated in TE
+
 #include <sm64.h>
 
 #include "game_init.h"

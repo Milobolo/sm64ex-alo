@@ -420,6 +420,8 @@ void render_hud_camera_status(void) {
     u8 *(*cameraLUT)[6];
     s32 x;
     s32 y;
+	if (!SHOW_CAM)
+		return;
 
     cameraLUT = segmented_to_virtual(&main_hud_camera_lut);
     x = GFX_DIMENSIONS_RECT_FROM_RIGHT_EDGE(54);

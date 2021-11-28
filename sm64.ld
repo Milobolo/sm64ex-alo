@@ -191,6 +191,7 @@ SECTIONS
       BUILD_DIR/src/game/obj_behaviors_2.o(.text);
       BUILD_DIR/src/game/puppyprint.o(.text);
       BUILD_DIR/src/game/debug_box.o(.text);
+      BUILD_DIR/src/game/magic.o(.text);
 #if TE
 	  BUILD_DIR/src/game/text_engine.o(.text);
 #endif
@@ -524,6 +525,7 @@ SECTIONS
       BUILD_DIR/src/game/obj_behaviors_2.o(.data*);
       BUILD_DIR/src/game/puppyprint.o(.data*);
       BUILD_DIR/src/game/debug_box.o(.data*);
+      BUILD_DIR/src/game/magic.o(.data*);
 #if TE
 	  BUILD_DIR/src/game/text_engine.o(.data*);
 #endif
@@ -644,6 +646,7 @@ SECTIONS
       BUILD_DIR/src/game/obj_behaviors_2.o(.rodata*);
       BUILD_DIR/src/game/puppyprint.o(.rodata*);
       BUILD_DIR/src/game/debug_box.o(.rodata*);
+      BUILD_DIR/src/game/magic.o(.rodata*);
 #if TE
 	  BUILD_DIR/src/game/text_engine.o(.rodata*);
 #endif
@@ -753,6 +756,7 @@ SECTIONS
       BUILD_DIR/src/game/obj_behaviors_2.o(.bss*);
       BUILD_DIR/src/game/puppyprint.o(.bss*);
       BUILD_DIR/src/game/debug_box.o(.bss*);
+      BUILD_DIR/src/game/magic.o(.bss*);
 #if TE
 	  BUILD_DIR/src/game/text_engine.o(.bss*);
 #endif

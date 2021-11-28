@@ -124,7 +124,7 @@ extern char TE_KEYBOARD_lower[];
 extern char TE_KEYBOARD_upper[];
 extern char *TE_Strings[];
 extern u8 StrBuffer[NumEngines][0x100];
-extern volatile struct TEState TE_Engines[NumEngines];
+extern struct TEState TE_Engines[NumEngines];
 void SetupTextEngine(s16 x, s16 y, u8 *str, u8 state);
 void RunTextEngine(void);
 void TE_setup_ia8(void);

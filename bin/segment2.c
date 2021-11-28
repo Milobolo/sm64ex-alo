@@ -10,6 +10,24 @@
 
 // SM64 (US/JP/EU/SH) Segment 02
 
+//magic textures for SS4
+
+ALIGNED8 const Texture magic_action_menu[] = {
+#include "textures/segment2/custom_action_magic.rgba16.inc.c"
+};
+ALIGNED8 const Texture magic_d_up[] = {
+#include "textures/segment2/custom_ButtonIcon-N64-D-Pad-U.rgba16.inc.c"
+};
+ALIGNED8 const Texture magic_d_down[] = {
+#include "textures/segment2/custom_ButtonIcon-N64-D-Pad-D.rgba16.inc.c"
+};
+ALIGNED8 const Texture magic_d_left[] = {
+#include "textures/segment2/custom_ButtonIcon-N64-D-Pad-L.rgba16.inc.c"
+};
+ALIGNED8 const Texture magic_d_right[] = {
+#include "textures/segment2/custom_ButtonIcon-N64-D-Pad-R.rgba16.inc.c"
+};
+
 ALIGNED8 const Texture small_font[] = {
 #include "textures/segment2/custom_text.i4.inc.c"
 };

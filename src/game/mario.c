@@ -33,6 +33,7 @@
 #include "save_file.h"
 #include "sound_init.h"
 #include "pc/configfile.h"
+#include "magic.h"
 #ifdef CHEATS_ACTIONS
 #include "cheats.h"
 #endif
@@ -1961,6 +1962,9 @@ s32 execute_mario_action(UNUSED struct Object *o) {
 		if(configCL){
 			Apply_Chaos_Mods(gMarioState);
 		}
+		//controls the magic rendering in the HUD via text engine
+		//if an option is selected, it can alter mario's state potentially.
+		magic_hud_render_controller(gMarioState);
 
         // The function can loop through many action shifts in one frame,
         // which can lead to unexpected sub-frame behavior. Could potentially hang
