@@ -176,7 +176,7 @@ void render_dl_power_meter(s16 numHealthWedges) {
 		shiftR = 1;
 	else
 		shiftR = 0;
-	print_text_fmt_int(GFX_DIMENSIONS_RECT_FROM_RIGHT_EDGE(58)-shiftR*14, 218, "%d", gMarioState->health>>8); //cur hp
+	print_text_fmt_int(GFX_DIMENSIONS_RECT_FROM_RIGHT_EDGE(58)-shiftR*12, 218, "%d", gMarioState->health>>8); //cur hp
 	print_text_fmt_int(GFX_DIMENSIONS_RECT_FROM_RIGHT_EDGE(30), 214, "%d", gMarioState->Level*5); //max hp
 	// if (numHealthWedges != 0) {
         // gSPDisplayList(gDisplayListHead++, &dl_power_meter_health_segments_begin);
@@ -345,7 +345,7 @@ void render_hud_coins(void) {
  * Disables "X" glyph when Mario has 100 stars or more.
  */
 void render_hud_stars(void) {
-    s8 showX = 0;
+    s8 showX = 2;
 
     if (gHudFlash == 1 && gGlobalTimer & 0x08) {
         return;
@@ -354,9 +354,12 @@ void render_hud_stars(void) {
     if (gHudDisplay.stars < 100) {
         showX = 1;
     }
+    if (gHudDisplay.stars < 10) {
+        showX = 0;
+    }
 
     print_text(HUD_STARS_X, HUD_STARS_Y, "-"); // 'Star' glyph
-    if (showX == 1) {
+    if (showX < 2) {
         print_text(HUD_STARS_X+16, HUD_STARS_Y, "*"); // 'X' glyph
     }
     print_text_fmt_int((showX * 14) + HUD_STARS_NUM_X,

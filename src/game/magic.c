@@ -40,16 +40,17 @@ void cancel_render_magic_spells_hud(void){
 }
 
 void magic_hud_render_controller(struct MarioState *m){
-	if (gPlayer1Controller->buttonPressed&D_JPAD){
+	if (gPlayer1Controller->buttonPressed&L_TRIG){
 		start_render_magic_spells_hud();
-	}if (gPlayer1Controller->buttonPressed&U_JPAD){
+	}if (gPlayer1Controller->buttonPressed&Z_TRIG || gPlayer1Controller->buttonPressed&R_TRIG){
 		cancel_render_magic_spells_hud();
 	}
 }
 
 void update_mario_exp(struct MarioState *m){
-	u32 Next = 100*m->Level*(m->Level/5);
-	if (m->Exp >= Next){
+	u32 Next = 100*m->Level*(m->Level/3);
+
+	if ((m->Level<20) && (m->Exp >= Next)){
 		m->Exp -= Next;
 		m->Level += 1;
 		save_file_udpate_level(gCurrSaveFileNum - 1,  m);
