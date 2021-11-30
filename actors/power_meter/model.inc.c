@@ -3,6 +3,14 @@
 UNUSED static const u64 power_meter_unused_1 = 0;
 
 // 0x030233E0
+ALIGNED8 static const u8 texture_power_meter_bar[] = {
+#include "actors/power_meter/custom_hud_meter_bar.rgba16.inc.c"
+};
+// 0x030233E0
+ALIGNED8 static const u8 texture_power_meter_ele_head[] = {
+#include "actors/power_meter/custom_elephant_head.rgba16.inc.c"
+};
+// 0x030233E0
 ALIGNED8 static const u8 texture_power_meter_left_side[] = {
 #include "actors/power_meter/power_meter_left_side.rgba16.inc.c"
 };
@@ -66,14 +74,14 @@ const u8 *const power_meter_health_segments_lut[] = {
 
 // 0x03029400
 static const Vtx vertex_power_meter_base[] = {
-    {{{   -32,    -32,      0}, 0, {     0,   2016}, {0xff, 0xff, 0xff, 0xff}}},
-    {{{     0,    -32,      0}, 0, {   992,   2016}, {0xff, 0xff, 0xff, 0xff}}},
-    {{{     0,     32,      0}, 0, {   992,      0}, {0xff, 0xff, 0xff, 0xff}}},
-    {{{   -32,     32,      0}, 0, {     0,      0}, {0xff, 0xff, 0xff, 0xff}}},
-    {{{     0,    -32,      0}, 0, {     1,   2016}, {0xff, 0xff, 0xff, 0xff}}},
-    {{{    32,    -32,      0}, 0, {  1024,   2016}, {0xff, 0xff, 0xff, 0xff}}},
-    {{{    32,     32,      0}, 0, {  1024,      0}, {0xff, 0xff, 0xff, 0xff}}},
-    {{{     0,     32,      0}, 0, {     1,      0}, {0xff, 0xff, 0xff, 0xff}}},
+    {{{   -30,      0,      0}, 0, {     0,   2016}, {0xff, 0xff, 0xff, 0xff}}},
+    {{{     -6,      0,      0}, 0, {   992,   2016}, {0xff, 0xff, 0xff, 0xff}}},
+    {{{     -6,     28,      0}, 0, {   992,      0}, {0xff, 0xff, 0xff, 0xff}}},
+    {{{   -30,     28,      0}, 0, {     0,      0}, {0xff, 0xff, 0xff, 0xff}}},
+    {{{     6,    0,      0}, 0, {     1,   1024}, {0xff, 0xff, 0xff, 0xff}}},
+    {{{    54,    0,      0}, 0, {  2048,   1024}, {0xff, 0xff, 0xff, 0xff}}},
+    {{{    54,     32,      0}, 0, {  2048,      0}, {0xff, 0xff, 0xff, 0xff}}},
+    {{{     6,     32,      0}, 0, {     1,      0}, {0xff, 0xff, 0xff, 0xff}}},
 };
 
 // 0x03029480 - 0x03029530
@@ -89,13 +97,15 @@ const Gfx dl_power_meter_base[] = {
     gsDPTileSync(),
     gsDPSetTile(G_IM_FMT_RGBA, G_IM_SIZ_16b, 8, 0, G_TX_RENDERTILE, 0, G_TX_CLAMP, 6, G_TX_NOLOD, G_TX_CLAMP, 5, G_TX_NOLOD),
     gsDPSetTileSize(0, 0, 0, (32 - 1) << G_TEXTURE_IMAGE_FRAC, (64 - 1) << G_TEXTURE_IMAGE_FRAC),
-    gsDPSetTextureImage(G_IM_FMT_RGBA, G_IM_SIZ_16b, 1, texture_power_meter_left_side),
+    gsDPSetTextureImage(G_IM_FMT_RGBA, G_IM_SIZ_16b, 1, texture_power_meter_ele_head),
     gsDPLoadSync(),
     gsDPLoadBlock(G_TX_LOADTILE, 0, 0, 32 * 64 - 1, CALC_DXT(32, G_IM_SIZ_16b_BYTES)),
     gsSP2Triangles( 0,  1,  2, 0x0,  0,  2,  3, 0x0),
-    gsDPSetTextureImage(G_IM_FMT_RGBA, G_IM_SIZ_16b, 1, texture_power_meter_right_side),
+    gsDPSetTextureImage(G_IM_FMT_RGBA, G_IM_SIZ_16b, 1, texture_power_meter_bar),
     gsDPLoadSync(),
-    gsDPLoadBlock(G_TX_LOADTILE, 0, 0, 32 * 64 - 1, CALC_DXT(32, G_IM_SIZ_16b_BYTES)),
+	gsDPLoadBlock(G_TX_LOADTILE, 0, 0, 32 * 64 - 1, CALC_DXT(64, G_IM_SIZ_16b_BYTES)),
+	gsDPSetTileSize(0, 0, 0, (64 - 1) << G_TEXTURE_IMAGE_FRAC, (32 - 1) << G_TEXTURE_IMAGE_FRAC),
+	gsDPSetTile(G_IM_FMT_RGBA, G_IM_SIZ_16b, 16, 0, G_TX_RENDERTILE, 0, G_TX_CLAMP, 5, G_TX_NOLOD, G_TX_CLAMP, 6, G_TX_NOLOD),
     gsSP2Triangles( 4,  5,  6, 0x0,  4,  6,  7, 0x0),
     gsSPEndDisplayList(),
 };

@@ -525,57 +525,18 @@ void save_file_reload(void) {
  * Update the current save file after collecting a star or a key.
  * If coin score is greater than the current high score, update it.
  */
-void save_file_collect_star_or_key(s16 coinScore, s16 starIndex) {
+void save_file_collect_star_or_key(s16 coinScore, s16 starIndex, u16 index) {
     s32 fileIndex = gCurrSaveFileNum - 1;
     s32 courseIndex = gCurrCourseNum - 1;
 
     s32 starFlag = 1 << starIndex;
-    UNUSED s32 flags = save_file_get_flags();
 
-    gLastCompletedCourseNum = courseIndex + 1;
-    gLastCompletedStarNum = starIndex + 1;
-    sUnusedGotGlobalCoinHiScore = 0;
-    gGotFileCoinHiScore = FALSE;
+    gSaveBuffer.files[fileIndex][0].TotalCoins = coinScore;
+    gSaveFileModified = TRUE;
 
-    if (courseIndex >= 0 && courseIndex < COURSE_STAGES_COUNT) {
-        //! Compares the coin score as a 16 bit value, but only writes the 8 bit
-        // truncation. This can allow a high score to decrease.
-
-        if (coinScore > ((u16) save_file_get_max_coin_score(courseIndex) & 0xFFFF)) {
-            sUnusedGotGlobalCoinHiScore = 1;
-        }
-
-        if (coinScore > save_file_get_course_coin_score(fileIndex, courseIndex)) {
-            gSaveBuffer.files[fileIndex][0].courseCoinScores[courseIndex] = coinScore;
-            touch_coin_score_age(fileIndex, courseIndex);
-
-            gGotFileCoinHiScore = TRUE;
-            gSaveFileModified = TRUE;
-        }
-    }
-
-    switch (gCurrLevelNum) {
-        case LEVEL_BOWSER_1:
-            if (!(save_file_get_flags() & (SAVE_FLAG_HAVE_KEY_1 | SAVE_FLAG_UNLOCKED_BASEMENT_DOOR))) {
-                save_file_set_flags(SAVE_FLAG_HAVE_KEY_1);
-            }
-            break;
-
-        case LEVEL_BOWSER_2:
-            if (!(save_file_get_flags() & (SAVE_FLAG_HAVE_KEY_2 | SAVE_FLAG_UNLOCKED_UPSTAIRS_DOOR))) {
-                save_file_set_flags(SAVE_FLAG_HAVE_KEY_2);
-            }
-            break;
-
-        case LEVEL_BOWSER_3:
-            break;
-
-        default:
-            if (!(save_file_get_star_flags(fileIndex, courseIndex) & starFlag)) {
-                save_file_set_star_flags(fileIndex, courseIndex, starFlag);
-            }
-            break;
-    }
+	if (!(save_file_get_star_flags(fileIndex, index) & starFlag)) {
+		save_file_set_star_flags(fileIndex, index, starFlag);
+	}
 }
 
 s32 save_file_exists(s32 fileIndex) {
@@ -736,8 +697,25 @@ void save_file_set_star_flags(s32 fileIndex, s32 courseIndex, u32 starFlags) {
     gSaveFileModified = TRUE;
 }
 
+void save_file_udpate_level(s32 fileIndex, struct MarioState *m) {
+	gSaveBuffer.files[fileIndex][0].Exp = m->Exp;
+	gSaveBuffer.files[fileIndex][0].Level = m->Level;
+	gSaveFileModified = TRUE;
+	save_file_do_save(fileIndex);
+}
+
+u32 save_file_get_exp(s32 fileIndex) {
+    return gSaveBuffer.files[fileIndex][0].Exp;
+}
+u32 save_file_get_level(s32 fileIndex) {
+    return gSaveBuffer.files[fileIndex][0].Level;
+}
+u32 save_file_get_coin_count(s32 fileIndex) {
+    return gSaveBuffer.files[fileIndex][0].TotalCoins;
+}
+
 s32 save_file_get_course_coin_score(s32 fileIndex, s32 courseIndex) {
-    return gSaveBuffer.files[fileIndex][0].courseCoinScores[courseIndex];
+    return 0;
 }
 
 /**

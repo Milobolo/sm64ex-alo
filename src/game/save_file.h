@@ -9,7 +9,7 @@
 #include "course_table.h"
 
 #define EEPROM_SIZE 0x200
-#define NUM_SAVE_FILES 4
+#define NUM_SAVE_FILES 2
 
 struct SaveBlockSignature
 {
@@ -32,9 +32,13 @@ struct SaveFile
     // Star flags for each course.
     // The most significant bit of the byte *following* each course is set if the
     // cannon is open.
-    u8 courseStars[COURSE_COUNT];
+    u8 courseStars[32]; //I'm going to change this to just be 32
 
-    u8 courseCoinScores[COURSE_STAGES_COUNT];
+    //new for SS4. I have double the save space since I'm only using two files.
+	u32 TotalCoins; //just maintain coins between stages
+	u32 Level;
+	u32 Exp;
+	u8 abilities[32]; //idk what I'll put here yet
 
     struct SaveBlockSignature signature;
 };
@@ -157,7 +161,7 @@ void save_file_erase(s32 fileIndex);
 BAD_RETURN(s32) save_file_copy(s32 srcFileIndex, s32 destFileIndex);
 void save_file_load_all(void);
 void save_file_reload(void);
-void save_file_collect_star_or_key(s16 coinScore, s16 starIndex);
+void save_file_collect_star_or_key(s16 coinScore, s16 starIndex, u16 index);
 s32 save_file_exists(s32 fileIndex);
 u32 save_file_get_max_coin_score(s32 courseIndex);
 s32 save_file_get_course_star_count(s32 fileIndex, s32 courseIndex);
@@ -176,7 +180,8 @@ s32 save_file_get_cap_pos(Vec3s capPos);
 void save_file_set_sound_mode(u16 mode);
 u16 save_file_get_sound_mode(void);
 void save_file_move_cap_to_default_location(void);
-
+u32 save_file_get_coin_count(s32 fileIndex);
+void save_file_udpate_level(s32 fileIndex, struct MarioState *m);
 void disable_warp_checkpoint(void);
 void check_if_should_set_warp_checkpoint(struct WarpNode *warpNode);
 s32 check_warp_checkpoint(struct WarpNode *warpNode);

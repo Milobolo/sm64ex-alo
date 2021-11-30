@@ -1556,9 +1556,9 @@ void update_mario_health(struct MarioState *m) {
 						// when in snow terrains lose 3 health.
 						// If using the debug level select, do not lose any HP to water.
 						if ((m->pos[1] >= (m->waterLevel - 140)) && !terrainIsSnow) {
-							m->health += 0x1A;
+							// m->health += 0x1A;
 						} else if (!gDebugLevelSelect) {
-							m->health -= (terrainIsSnow ? 3 : 1);
+							// m->health -= (terrainIsSnow ? 3 : 1);
 						}
 					}
                 }
@@ -1578,8 +1578,8 @@ void update_mario_health(struct MarioState *m) {
 				m->health = 0x180;
 			}
 		}else{
-			if (m->health > MAXHP) {
-				m->health = MAXHP;
+			if (m->health > (m->Level*5)<<8) {
+				m->health = (m->Level*5)<<8;
 			}
 		}
         if (m->health < 0x100) {
@@ -1588,7 +1588,7 @@ void update_mario_health(struct MarioState *m) {
 		if(!configDD){
 			// Play a noise to alert the player when Mario is close to drowning.
 			if (((m->action & ACT_GROUP_MASK) == ACT_GROUP_SUBMERGED) && (m->health < 0x300)) {
-				play_sound(SOUND_MOVING_ALMOST_DROWNING, gGlobalSoundSource);
+				// play_sound(SOUND_MOVING_ALMOST_DROWNING, gGlobalSoundSource);
 	#ifdef RUMBLE_FEEDBACK
 				if (!gRumblePakTimer) {
 					gRumblePakTimer = 36;
@@ -1928,7 +1928,7 @@ s32 execute_mario_action(UNUSED struct Object *o) {
     if (Cheats.EnableCheats)
     {
         if (Cheats.GodMode)
-            gMarioState->health = 0x880;
+            gMarioState->health = (gMarioState->Level*5)<<8;
 
         if (Cheats.InfiniteLives && gMarioState->numLives < 99)
             gMarioState->numLives += 1;
@@ -1965,6 +1965,8 @@ s32 execute_mario_action(UNUSED struct Object *o) {
 		//controls the magic rendering in the HUD via text engine
 		//if an option is selected, it can alter mario's state potentially.
 		magic_hud_render_controller(gMarioState);
+		//handle exp in magic.c
+		update_mario_exp(gMarioState);
 
         // The function can loop through many action shifts in one frame,
         // which can lead to unexpected sub-frame behavior. Could potentially hang
@@ -2134,13 +2136,16 @@ void init_mario_from_save_file(void) {
     gMarioState->controller = &gControllers[0];
     gMarioState->animation = &D_80339D10;
 
-    gMarioState->numCoins = 0;
+    gMarioState->Exp = save_file_get_exp(gCurrSaveFileNum - 1);
+    gMarioState->Level = save_file_get_level(gCurrSaveFileNum - 1);
+
+    gMarioState->numCoins = save_file_get_coin_count(gCurrSaveFileNum - 1);
     gMarioState->numStars =
         save_file_get_total_star_count(gCurrSaveFileNum - 1, COURSE_MIN - 1, COURSE_MAX - 1);
     gMarioState->numKeys = 0;
 
     gMarioState->numLives = MARIO_START_LIVES;
-    gMarioState->health = 0x880;
+    gMarioState->health = (gMarioState->Level*5)<<8;
 
     gMarioState->prevNumStarsForDialog = gMarioState->numStars;
     gMarioState->unkB0 = 0xBD;

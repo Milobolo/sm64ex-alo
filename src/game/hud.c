@@ -156,24 +156,33 @@ void render_power_meter_health_segment(s16 numHealthWedges) {
  */
 void render_dl_power_meter(s16 numHealthWedges) {
     Mtx *mtx;
+	u8 shiftR;
 
     mtx = alloc_display_list(sizeof(Mtx));
 
     if (mtx == NULL) {
         return;
     }
+	
 
-    guTranslate(mtx, (f32) sPowerMeterHUD.x, (f32) sPowerMeterHUD.y, 0);
+    guTranslate(mtx, (f32) GFX_DIMENSIONS_RECT_FROM_RIGHT_EDGE(64), 204.0f, 0);
 
     gSPMatrix(gDisplayListHead++, VIRTUAL_TO_PHYSICAL(mtx++),
               G_MTX_MODELVIEW | G_MTX_MUL | G_MTX_PUSH);
     gSPDisplayList(gDisplayListHead++, &dl_power_meter_base);
 
-    if (numHealthWedges != 0) {
-        gSPDisplayList(gDisplayListHead++, &dl_power_meter_health_segments_begin);
-        render_power_meter_health_segment(numHealthWedges);
-        gSPDisplayList(gDisplayListHead++, &dl_power_meter_health_segments_end);
-    }
+
+	if ((gMarioState->health>>8)>9)
+		shiftR = 1;
+	else
+		shiftR = 0;
+	print_text_fmt_int(GFX_DIMENSIONS_RECT_FROM_RIGHT_EDGE(58)-shiftR*14, 218, "%d", gMarioState->health>>8); //cur hp
+	print_text_fmt_int(GFX_DIMENSIONS_RECT_FROM_RIGHT_EDGE(30), 214, "%d", gMarioState->Level*5); //max hp
+	// if (numHealthWedges != 0) {
+        // gSPDisplayList(gDisplayListHead++, &dl_power_meter_health_segments_begin);
+        // render_power_meter_health_segment(numHealthWedges);
+        // gSPDisplayList(gDisplayListHead++, &dl_power_meter_health_segments_end);
+    // }
 
     gSPPopMatrix(gDisplayListHead++, G_MTX_MODELVIEW);
 }
@@ -273,34 +282,37 @@ void handle_power_meter_actions(s16 numHealthWedges) {
  * or has taken damage and has less than 8 health segments.
  * And calls a power meter animation function depending of the value defined.
  */
+
+//For SS4, I'm just going to always show a health meter which is a ratio of numbers
+
 void render_hud_power_meter(void) {
-    s16 shownHealthWedges = gHudDisplay.wedges;
+    // s16 shownHealthWedges = gHudDisplay.wedges;
 
-    if (sPowerMeterHUD.animation != POWER_METER_HIDING) {
-        handle_power_meter_actions(shownHealthWedges);
-    }
+    // if (sPowerMeterHUD.animation != POWER_METER_HIDING) {
+        // handle_power_meter_actions(shownHealthWedges);
+    // }
 
-    if (sPowerMeterHUD.animation == POWER_METER_HIDDEN) {
-        return;
-    }
+    // if (sPowerMeterHUD.animation == POWER_METER_HIDDEN) {
+        // return;
+    // }
 
-    switch (sPowerMeterHUD.animation) {
-        case POWER_METER_EMPHASIZED:
-            animate_power_meter_emphasized();
-            break;
-        case POWER_METER_DEEMPHASIZING:
-            animate_power_meter_deemphasizing();
-            break;
-        case POWER_METER_HIDING:
-            animate_power_meter_hiding();
-            break;
-        default:
-            break;
-    }
+    // switch (sPowerMeterHUD.animation) {
+        // case POWER_METER_EMPHASIZED:
+            // animate_power_meter_emphasized();
+            // break;
+        // case POWER_METER_DEEMPHASIZING:
+            // animate_power_meter_deemphasizing();
+            // break;
+        // case POWER_METER_HIDING:
+            // animate_power_meter_hiding();
+            // break;
+        // default:
+            // break;
+    // }
 
-    render_dl_power_meter(shownHealthWedges);
+    render_dl_power_meter(0);
 
-    sPowerMeterVisibleTimer += 1;
+    // sPowerMeterVisibleTimer += 1;
 }
 
 #ifdef VERSION_JP
@@ -541,13 +553,13 @@ void render_hud(void) {
             render_hud_keys();
         }
 
-        if (hudDisplayFlags & HUD_DISPLAY_FLAG_CAMERA_AND_POWER
+        if (1
 #ifdef EXT_OPTIONS_MENU
         && configHUD
 #endif
         ) {
             render_hud_power_meter();
-            render_hud_camera_status();
+            // render_hud_camera_status();
         }
 
         if (hudDisplayFlags & HUD_DISPLAY_FLAG_TIMER && SHOW_TIME

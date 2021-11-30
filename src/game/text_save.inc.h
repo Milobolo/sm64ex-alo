@@ -262,7 +262,6 @@ static s32 read_text_save(s32 fileIndex) {
             cannonFlag <<= 7; //Shifts the bit to the most significant bit.
             save_file_set_star_flags(fileIndex, i+1, cannonFlag); //
             save_file_set_star_flags(fileIndex, i, starFlags);
-            gSaveBuffer.files[fileIndex][0].courseCoinScores[i] = coins;
         }
     }
 

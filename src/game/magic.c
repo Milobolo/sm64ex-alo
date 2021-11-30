@@ -14,6 +14,7 @@ It will also contain basic enemy logic and enemy battle stuff like arenas, exp e
 #include "sm64.h"
 #include "main.h"
 #include "mario.h"
+#include "save_file.h"
 #include "level_update.h"
 #include "engine/math_util.h"
 #include "object_list_processor.h"
@@ -43,5 +44,14 @@ void magic_hud_render_controller(struct MarioState *m){
 		start_render_magic_spells_hud();
 	}if (gPlayer1Controller->buttonPressed&U_JPAD){
 		cancel_render_magic_spells_hud();
+	}
+}
+
+void update_mario_exp(struct MarioState *m){
+	u32 Next = 100*m->Level*(m->Level/5);
+	if (m->Exp >= Next){
+		m->Exp -= Next;
+		m->Level += 1;
+		save_file_udpate_level(gCurrSaveFileNum - 1,  m);
 	}
 }
