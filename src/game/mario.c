@@ -1578,8 +1578,8 @@ void update_mario_health(struct MarioState *m) {
 				m->health = 0x180;
 			}
 		}else{
-			if (m->health > (m->Level*5)<<8) {
-				m->health = (m->Level*5)<<8;
+			if (m->health > (8+m->Level*5)<<8) {
+				m->health = (8+m->Level*5)<<8;
 			}
 		}
         if (m->health < 0x100) {
@@ -1928,7 +1928,7 @@ s32 execute_mario_action(UNUSED struct Object *o) {
     if (Cheats.EnableCheats)
     {
         if (Cheats.GodMode)
-            gMarioState->health = (gMarioState->Level*5)<<8;
+            gMarioState->health = (8+gMarioState->Level*5)<<8;
 
         if (Cheats.InfiniteLives && gMarioState->numLives < 99)
             gMarioState->numLives += 1;
@@ -1965,8 +1965,10 @@ s32 execute_mario_action(UNUSED struct Object *o) {
 		//controls the magic rendering in the HUD via text engine
 		//if an option is selected, it can alter mario's state potentially.
 		magic_hud_render_controller(gMarioState);
-		//handle exp in magic.c
+		//handle exp in magic.c (not really used)
 		update_mario_exp(gMarioState);
+		//handle magic action stuff
+		handle_magic_actions(gMarioState);
 
         // The function can loop through many action shifts in one frame,
         // which can lead to unexpected sub-frame behavior. Could potentially hang
@@ -2145,7 +2147,7 @@ void init_mario_from_save_file(void) {
     gMarioState->numKeys = 0;
 
     gMarioState->numLives = MARIO_START_LIVES;
-    gMarioState->health = (gMarioState->Level*5)<<8;
+    gMarioState->health = (8+gMarioState->Level*5)<<8;
 
     gMarioState->prevNumStarsForDialog = gMarioState->numStars;
     gMarioState->unkB0 = 0xBD;

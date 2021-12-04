@@ -25,7 +25,7 @@ struct TEState{
 	/* 0x0A */ u8  KeyboardState;
 	/* NEW  */ s8  KeyboardChar; //which letter is being drawn on the keyboard
 	/* NEW  */ s8  KeyboardReset; //also used to keep track of box ends
-	/* 0x0B */ u8  Unused; //wobble but deprecated because puppyprint supports it now
+	/* 0x0B */ u8  DialogSkip; //next [end] doesn't count as a dialog option
 	/* 0x0C */ u8 *TempStr;
 	/* 0x10 */ s16 TempX;
 	/* 0x12 */ s16 TempY;
@@ -118,6 +118,12 @@ union WordByte{
 	char col[4];
 };
 #include "text_engine_helpers.h"
+
+extern u8 StrBuffer[NumEngines][0x100];
+extern u8 CmdBuffer[NumEngines][0x400];
+extern u32 TimerBuffer[NumEngines][64]; //stores timers necessary for certain cmds with their own cycles and stuff
+extern u8 UserInputs[NumEngines][16][16]; //16 length 16 strings
+
 extern u16 sCurrentMusic;
 extern const Gfx dl_draw_text_bg_box_TE[];
 extern char TE_KEYBOARD_lower[];

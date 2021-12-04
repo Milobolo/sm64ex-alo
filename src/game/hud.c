@@ -574,7 +574,7 @@ void render_hud(void) {
         }
         
 #ifdef TARGET_N64
-        render_hud_surface_text();
+        // render_hud_surface_text();
 #endif
     }
 }

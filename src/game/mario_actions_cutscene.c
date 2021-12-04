@@ -2701,6 +2701,25 @@ static s32 check_for_instant_quicksand(struct MarioState *m) {
     return FALSE;
 }
 
+
+//SS4 actions
+#include "magic.h"
+
+s32 act_cast_select(struct MarioState *m) {
+	if((gMagicHUDRequest==0) || (gMagicHUDRequest&CANCEL_HUD))
+		set_mario_action(m, ACT_IDLE, 0);
+	else
+		set_mario_animation(m, MARIO_ANIM_START_REACH_POCKET);
+	return FALSE;
+}
+
+s32 act_cast_actions(struct MarioState *m) {
+	char text[14];
+	sprintf(text, "cast action");
+	print_text(46, 46, text);
+	return FALSE;
+}
+
 s32 mario_execute_cutscene_action(struct MarioState *m) {
     s32 cancel;
 
@@ -2761,6 +2780,9 @@ s32 mario_execute_cutscene_action(struct MarioState *m) {
         case ACT_BUTT_STUCK_IN_GROUND:       cancel = act_butt_stuck_in_ground(m);       break;
         case ACT_FEET_STUCK_IN_GROUND:       cancel = act_feet_stuck_in_ground(m);       break;
         case ACT_PUTTING_ON_CAP:             cancel = act_putting_on_cap(m);             break;
+		//ss4 casting actions
+        case ACT_CAST_SELECT:                cancel = act_cast_select(m);                break;
+        case ACT_CAST_ACTION:                cancel = act_cast_actions(m);               break;
     }
     /* clang-format on */
 

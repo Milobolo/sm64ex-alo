@@ -6,6 +6,10 @@
 #include "macros.h"
 #include "types.h"
 
+//SS4 actions
+s32 act_cast_select(struct MarioState *m);
+s32 act_cast_actions(struct MarioState *m);
+
 void print_displaying_credits_entry(void);
 void bhv_end_peach_loop(void);
 void bhv_end_toad_loop(void);

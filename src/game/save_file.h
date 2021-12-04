@@ -182,6 +182,7 @@ u16 save_file_get_sound_mode(void);
 void save_file_move_cap_to_default_location(void);
 u32 save_file_get_coin_count(s32 fileIndex);
 void save_file_udpate_level(s32 fileIndex, struct MarioState *m);
+u32 mario_has_spell(s16 fileIndex, u32 spell);
 void disable_warp_checkpoint(void);
 void check_if_should_set_warp_checkpoint(struct WarpNode *warpNode);
 s32 check_warp_checkpoint(struct WarpNode *warpNode);

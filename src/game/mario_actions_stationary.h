@@ -5,6 +5,8 @@
 
 #include "types.h"
 
+
+
 s32 check_common_idle_cancels(struct MarioState *m);
 s32 check_common_hold_idle_cancels(struct MarioState *m);
 s32 act_idle(struct MarioState *m);

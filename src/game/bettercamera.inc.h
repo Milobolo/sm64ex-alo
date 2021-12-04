@@ -12,6 +12,8 @@
 #include "pc/configfile.h"
 #include "pc/controller/controller_mouse.h"
 
+#include "magic.h"
+
 #if defined(__MINGW32__) && !defined(__MINGW64_VERSION_MAJOR) 
 //quick and dirty fix for some older MinGW.org mingwrt
 #else
@@ -329,26 +331,26 @@ static void newcam_rotate_button(void)
             newcam_centering = 1;
         }
 		else
-        if ((gPlayer1Controller->buttonDown & L_JPAD) && newcam_analogue == 0)
+        if ((gPlayer1Controller->buttonDown & L_JPAD)  && !(gMagicHUDRequest&HUD_OPEN)&& newcam_analogue == 0)
         {
             newcam_yaw_target = newcam_yaw_target+(ivrt(0)*0x80);
 			newcam_centering = 1;
         }
 		else
-        if ((gPlayer1Controller->buttonDown & R_JPAD) && newcam_analogue == 0)
+        if ((gPlayer1Controller->buttonDown & R_JPAD)  && !(gMagicHUDRequest&HUD_OPEN)&& newcam_analogue == 0)
         {
             newcam_yaw_target = newcam_yaw_target-(ivrt(0)*0x80);
 			newcam_centering = 1;
         }
 		else
-		if ((gPlayer1Controller->buttonPressed & D_JPAD) && newcam_analogue == 0)
+		if ((gPlayer1Controller->buttonPressed & D_JPAD)  && !(gMagicHUDRequest&HUD_OPEN) && newcam_analogue == 0)
         {
         newcam_yaw_target = (newcam_yaw_target+0x1000)&0xE000;
         newcam_centering = 1;
 		newcam_tilt = 0x1000;
         }
 		else
-		if (gPlayer1Controller->buttonDown & U_JPAD)
+		if (gPlayer1Controller->buttonDown & U_JPAD && !(gMagicHUDRequest&HUD_OPEN))
 		{
 			newcam_yaw_target = ((-gMarioState->faceAngle[1]-0x4000)+0x1000)&0xE000; //conversion from sm64 angles to newcam angle system
 			newcam_centering = 1;

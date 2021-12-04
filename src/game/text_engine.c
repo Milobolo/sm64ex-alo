@@ -498,14 +498,14 @@ u32 TE_get_ptr(u8 *strArgs,u8 *str){
 extern uintptr_t sSegmentTable[32];
 void TE_debug_print(struct TEState *CurEng){
 	u8 buf[32];
-	if (gPlayer1Controller->buttonDown&L_TRIG){
-		sprintf(buf,"col %d",CurEng->EnvColorWord);
+	// if (gPlayer1Controller->buttonDown&L_TRIG){
+		sprintf(buf,"hov %d",CurEng->HoveredDialog);
 		print_text(32,64,buf);
-		sprintf(buf,"og %d",CurEng->OgSeqID);
-		print_text(32,128,buf);
-		sprintf(buf,"param %d",gCurrentArea->musicParam);
+		sprintf(buf,"ret2 %d",FunctionReturns[1][1]);
 		print_text(32,96,buf);
-	}
+		sprintf(buf,"ret3 %d",FunctionReturns[1][2]);
+		print_text(32,128,buf);
+	// }
 	
 }
 #endif

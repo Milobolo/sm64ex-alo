@@ -1080,6 +1080,8 @@ s32 act_first_person(struct MarioState *m) {
     return FALSE;
 }
 
+
+
 s32 check_common_stationary_cancels(struct MarioState *m) {
     if (m->pos[1] < m->waterLevel - 100) {
         if (m->action == ACT_SPAWN_SPIN_LANDING) {
@@ -1152,6 +1154,7 @@ s32 mario_execute_stationary_action(struct MarioState *m) {
         case ACT_BRAKING_STOP:            cancel = act_braking_stop(m);                     break;
         case ACT_BUTT_SLIDE_STOP:         cancel = act_butt_slide_stop(m);                  break;
         case ACT_HOLD_BUTT_SLIDE_STOP:    cancel = act_hold_butt_slide_stop(m);             break;
+
     }
     /* clang-format on */
 

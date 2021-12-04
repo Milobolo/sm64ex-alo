@@ -1226,6 +1226,7 @@ void mode_2_directions_camera(struct Camera *c) {
 /**
  * A mode that only has 8 camera angles, 45 degrees apart
  */
+#include "magic.h"
 void mode_8_directions_camera(struct Camera *c) {
     Vec3f pos;
     UNUSED u8 unused[8];
@@ -1241,19 +1242,21 @@ void mode_8_directions_camera(struct Camera *c) {
         s8DirModeYawOffset -= DEGREES(45);
         play_sound_cbutton_side();
     }
-	// extra functionality
-    else if (gPlayer1Controller->buttonDown & L_JPAD) {
-        s8DirModeYawOffset -= DEGREES(1);
-    }
-    else if (gPlayer1Controller->buttonDown & R_JPAD) {
-        s8DirModeYawOffset += DEGREES(1);
-    }
-    else if (gPlayer1Controller->buttonPressed & U_JPAD) {
-        s8DirModeYawOffset = (gMarioState->faceAngle[1]+0x9000)&0xE000;
-    }
-    else if (gPlayer1Controller->buttonPressed & D_JPAD) {
-        s8DirModeYawOffset = (s8DirModeYawOffset+0x1000)&0xE000;
-    }
+	// extra functionality, disable when action menu up SS4 only
+	if(!(gMagicHUDRequest&HUD_OPEN)){
+		if (gPlayer1Controller->buttonDown & L_JPAD) {
+			s8DirModeYawOffset -= DEGREES(1);
+		}
+		else if (gPlayer1Controller->buttonDown & R_JPAD) {
+			s8DirModeYawOffset += DEGREES(1);
+		}
+		else if (gPlayer1Controller->buttonPressed & U_JPAD) {
+			s8DirModeYawOffset = (gMarioState->faceAngle[1]+0x9000)&0xE000;
+		}
+		else if (gPlayer1Controller->buttonPressed & D_JPAD) {
+			s8DirModeYawOffset = (s8DirModeYawOffset+0x1000)&0xE000;
+		}
+	}
     lakitu_zoom(400.f, 0x900);
     c->nextYaw = update_8_directions_camera(c, c->focus, pos);
     c->pos[0] = pos[0];
