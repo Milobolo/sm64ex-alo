@@ -25,7 +25,7 @@ struct TEState{
 	/* 0x0A */ u8  KeyboardState;
 	/* NEW  */ s8  KeyboardChar; //which letter is being drawn on the keyboard
 	/* NEW  */ s8  KeyboardReset; //also used to keep track of box ends
-	/* 0x0B */ u8  DialogSkip; //next [end] doesn't count as a dialog option
+	/* 0x0B */ u8  DialogSkip; //not used
 	/* 0x0C */ u8 *TempStr;
 	/* 0x10 */ s16 TempX;
 	/* 0x12 */ s16 TempY;

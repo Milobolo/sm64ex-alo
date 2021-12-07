@@ -1966,7 +1966,7 @@ s32 execute_mario_action(UNUSED struct Object *o) {
 		//if an option is selected, it can alter mario's state potentially.
 		magic_hud_render_controller(gMarioState);
 		//handle exp in magic.c (not really used)
-		update_mario_exp(gMarioState);
+		// update_mario_exp(gMarioState);
 		//handle magic action stuff
 		handle_magic_actions(gMarioState);
 

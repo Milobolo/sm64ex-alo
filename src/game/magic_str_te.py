@@ -43,66 +43,102 @@ magic_list_items = ['[AutoNextBox()][MosaicBGBox(12,82,214,234,"magic_action_men
 [JumpLink("magic_list_start_cast")]',
 #list of all the spells goes here
 '[CallLoop(3,"create_magic_list_dialog",2,[0,12])]\
-[MatchRtrn(3,0)]item list\nempty[GenericText()][TransAbs(16,160)][JumpLink("magic_list_chk_cancel")]\
+[MatchRtrn(3,0)]item list\nempty[TransAbs(16,160)][JumpLink("magic_list_chk_cancel")][end][GenericText()][TransAbs(16,160)][JumpLink("magic_list_chk_cancel")]\
 [MatchRtrn(3,1)][TransAbs(16,212)][CallLoop(0,"list_scroll_y_dialog",0,[])][UsrStr(12)][SetScissor(14,80,174,210)]\
-[CallLoop(2,"mario_has_spell_TE",2,["&gCurrSaveFileNum","magic_pot"])][MatchRtrn(2,1)]magic pot[end][MatchRtrn(2,0)]\
-[CallLoop(2,"mario_has_spell_TE",2,["&gCurrSaveFileNum","magic_pot2"])][MatchRtrn(2,1)]magic pot[end][MatchRtrn(2,0)]\
-[CallLoop(2,"mario_has_spell_TE",2,["&gCurrSaveFileNum","magic_pot3"])][MatchRtrn(2,1)]magic pot[end][MatchRtrn(2,0)]\
-[CallLoop(2,"mario_has_spell_TE",2,["&gCurrSaveFileNum","magic_pot4"])][MatchRtrn(2,1)]magic pot[end][MatchRtrn(2,0)]\
-[CallLoop(2,"mario_has_spell_TE",2,["&gCurrSaveFileNum","health_pot"])][MatchRtrn(2,1)]health pot[end][MatchRtrn(2,0)]\
-[CallLoop(2,"mario_has_spell_TE",2,["&gCurrSaveFileNum","health_pot2"])][MatchRtrn(2,1)]health pot[end][MatchRtrn(2,0)]\
-[CallLoop(2,"mario_has_spell_TE",2,["&gCurrSaveFileNum","health_pot3"])][MatchRtrn(2,1)]health pot[end][MatchRtrn(2,0)]\
-[CallLoop(2,"mario_has_spell_TE",2,["&gCurrSaveFileNum","health_pot4"])][MatchRtrn(2,1)]health pot[end][MatchRtrn(2,0)]',
+[CallLoop(2,"mario_has_spell_TE",2,["&gCurrSaveFileNum","magic_pot"])][MatchRtrn(2,1)]magic pot[end][GenericText()]\
+[CallLoop(2,"mario_has_spell_TE",2,["&gCurrSaveFileNum","magic_pot2"])][MatchRtrn(2,1)]magic pot[end][GenericText()]\
+[CallLoop(2,"mario_has_spell_TE",2,["&gCurrSaveFileNum","magic_pot3"])][MatchRtrn(2,1)]magic pot[end][GenericText()]\
+[CallLoop(2,"mario_has_spell_TE",2,["&gCurrSaveFileNum","magic_pot4"])][MatchRtrn(2,1)]magic pot[end][GenericText()]\
+[CallLoop(2,"mario_has_spell_TE",2,["&gCurrSaveFileNum","health_pot"])][MatchRtrn(2,1)]health pot[end][GenericText()]\
+[CallLoop(2,"mario_has_spell_TE",2,["&gCurrSaveFileNum","health_pot2"])][MatchRtrn(2,1)]health pot[end][GenericText()]\
+[CallLoop(2,"mario_has_spell_TE",2,["&gCurrSaveFileNum","health_pot3"])][MatchRtrn(2,1)]health pot[end][GenericText()]\
+[CallLoop(2,"mario_has_spell_TE",2,["&gCurrSaveFileNum","health_pot4"])][MatchRtrn(2,1)]health pot[end][GenericText()]',
 #end of the spells
-'[GenericText()][end]']
+'[GenericText()][CallOnce(0,"TE_set_flag",2,["&gMagicHUDRequest","CAST_ITEM"])][AutoNextBox()][MosaicBGBox(12,82,214,234,"magic_action_menu",2,1)][CallOnce(3,"Get_Spell_Sel",1,[0])][ShadedBGBox(14,80,158,215,0,0,0,0x96)]]\n\
+[MatchRtrn(3,0)]magic pot used[TimeEndStr(90)]\
+[MatchRtrn(3,1)]magic pot used[TimeEndStr(90)]\
+[MatchRtrn(3,2)]magic pot used[TimeEndStr(90)]\
+[MatchRtrn(3,3)]magic pot used[TimeEndStr(90)]\
+[MatchRtrn(3,4)]health pot used[TimeEndStr(90)]\
+[MatchRtrn(3,5)]health pot used[TimeEndStr(90)]\
+[MatchRtrn(3,6)]health pot used[TimeEndStr(90)]\
+[MatchRtrn(3,7)]health pot used[TimeEndStr(90)]\
+[GenericText()][end]']
 
 magic_list_spells = ['[AutoNextBox()][MosaicBGBox(12,82,214,234,"magic_action_menu",2,1)][ShadedBGBox(14,80,158,215,0,0,0,0x96)]\n\
 [JumpLink("magic_list_start_cast")]',
 #list of all the spells goes here
 '[CallLoop(3,"create_magic_list_dialog",2,[1,13])]\
-[MatchRtrn(3,0)]no world\nspells[GenericText()][TransAbs(16,160)][JumpLink("magic_list_chk_cancel")]\
+[MatchRtrn(3,0)]no world\nspells[TransAbs(16,160)][JumpLink("magic_list_chk_cancel")][end][GenericText()][TransAbs(16,160)][JumpLink("magic_list_chk_cancel")]\
 [MatchRtrn(3,1)][TransAbs(16,212)][CallLoop(0,"list_scroll_y_dialog",0,[])][UsrStr(13)][SetScissor(14,80,174,210)]\
-[CallLoop(2,"mario_has_spell_TE",2,["&gCurrSaveFileNum","checkpoint"])][MatchRtrn(2,1)]checkpoint[end][MatchRtrn(2,0)]\
-[CallLoop(2,"mario_has_spell_TE",2,["&gCurrSaveFileNum","time_freeze"])][MatchRtrn(2,1)]time freeze[end][MatchRtrn(2,0)]\
-[CallLoop(2,"mario_has_spell_TE",2,["&gCurrSaveFileNum","destroy_enemy"])][MatchRtrn(2,1)]destruction[end][MatchRtrn(2,0)]\
-[CallLoop(2,"mario_has_spell_TE",2,["&gCurrSaveFileNum","teleport_portal"])][MatchRtrn(2,1)]teleport[end][MatchRtrn(2,0)]\
-[CallLoop(2,"mario_has_spell_TE",2,["&gCurrSaveFileNum","spell5"])][MatchRtrn(2,1)]spell5[end][MatchRtrn(2,0)]\
-[CallLoop(2,"mario_has_spell_TE",2,["&gCurrSaveFileNum","spell6"])][MatchRtrn(2,1)]spell6[end][MatchRtrn(2,0)]\
-[CallLoop(2,"mario_has_spell_TE",2,["&gCurrSaveFileNum","spell7"])][MatchRtrn(2,1)]spell7[end][MatchRtrn(2,0)]\
-[CallLoop(2,"mario_has_spell_TE",2,["&gCurrSaveFileNum","spell8"])][MatchRtrn(2,1)]spell8[end][MatchRtrn(2,0)]',
+[CallLoop(2,"mario_has_spell_TE",2,["&gCurrSaveFileNum","checkpoint"])][MatchRtrn(2,1)]checkpoint[end][GenericText()]\
+[CallLoop(2,"mario_has_spell_TE",2,["&gCurrSaveFileNum","time_freeze"])][MatchRtrn(2,1)]time freeze[end][GenericText()]\
+[CallLoop(2,"mario_has_spell_TE",2,["&gCurrSaveFileNum","destroy_enemy"])][MatchRtrn(2,1)]destruction[end][GenericText()]\
+[CallLoop(2,"mario_has_spell_TE",2,["&gCurrSaveFileNum","teleport_portal"])][MatchRtrn(2,1)]teleport[end][GenericText()]\
+[CallLoop(2,"mario_has_spell_TE",2,["&gCurrSaveFileNum","spell5"])][MatchRtrn(2,1)]spell5[end][GenericText()]\
+[CallLoop(2,"mario_has_spell_TE",2,["&gCurrSaveFileNum","spell6"])][MatchRtrn(2,1)]spell6[end][GenericText()]\
+[CallLoop(2,"mario_has_spell_TE",2,["&gCurrSaveFileNum","spell7"])][MatchRtrn(2,1)]spell7[end][GenericText()]\
+[CallLoop(2,"mario_has_spell_TE",2,["&gCurrSaveFileNum","spell8"])][MatchRtrn(2,1)]spell8[end][GenericText()]',
 #end of the spells
-'[GenericText()][end]']
+'[GenericText()][CallOnce(0,"TE_set_flag",2,["&gMagicHUDRequest","CAST_SPELL"])][AutoNextBox()][MosaicBGBox(12,82,214,234,"magic_action_menu",2,1)][CallOnce(3,"Get_Spell_Sel",1,[1])][ShadedBGBox(14,80,158,215,0,0,0,0x96)]]\n\
+[MatchRtrn(3,0)]Checkpoint Cast[TimeEndStr(90)]\
+[MatchRtrn(3,1)]Time Freeze[TimeEndStr(90)]\
+[MatchRtrn(3,2)]Destruction[TimeEndStr(90)]\
+[MatchRtrn(3,3)]Teleport[TimeEndStr(90)]\
+[MatchRtrn(3,4)]spell5[TimeEndStr(90)]\
+[MatchRtrn(3,5)]spell6[TimeEndStr(90)]\
+[MatchRtrn(3,6)]spell7[TimeEndStr(90)]\
+[MatchRtrn(3,7)]spell8[TimeEndStr(90)]\
+[GenericText()][end]']
 
 magic_list_spirit = ['[AutoNextBox()][MosaicBGBox(12,82,214,234,"magic_action_menu",2,1)][ShadedBGBox(14,80,158,215,0,0,0,0x96)]\n\
 [JumpLink("magic_list_start_cast")]',
 #list of all the spells goes here
 '[CallLoop(3,"create_magic_list_dialog",2,[2,14])]\
-[MatchRtrn(3,0)]no spirit\nspells[GenericText()][TransAbs(16,160)][JumpLink("magic_list_chk_cancel")]\
+[MatchRtrn(3,0)]no spirit\nspells[TransAbs(16,160)][JumpLink("magic_list_chk_cancel")][end][GenericText()][TransAbs(16,160)][JumpLink("magic_list_chk_cancel")]\
 [MatchRtrn(3,1)][TransAbs(16,212)][CallLoop(0,"list_scroll_y_dialog",0,[])][UsrStr(14)][SetScissor(14,80,174,210)]\
-[CallLoop(2,"mario_has_spell_TE",2,["&gCurrSaveFileNum","super_strength"])][MatchRtrn(2,1)]strength[end][MatchRtrn(2,0)]\
-[CallLoop(2,"mario_has_spell_TE",2,["&gCurrSaveFileNum","floaty_jumps"])][MatchRtrn(2,1)]float[end][MatchRtrn(2,0)]\
-[CallLoop(2,"mario_has_spell_TE",2,["&gCurrSaveFileNum","wall_stick"])][MatchRtrn(2,1)]stick[end][MatchRtrn(2,0)]\
-[CallLoop(2,"mario_has_spell_TE",2,["&gCurrSaveFileNum","water_walk"])][MatchRtrn(2,1)]jesus[end][MatchRtrn(2,0)]\
-[CallLoop(2,"mario_has_spell_TE",2,["&gCurrSaveFileNum","immunity"])][MatchRtrn(2,1)]invincible[end][MatchRtrn(2,0)]\
-[CallLoop(2,"mario_has_spell_TE",2,["&gCurrSaveFileNum","test1"])][MatchRtrn(2,1)]spell6[end][MatchRtrn(2,0)]\
-[CallLoop(2,"mario_has_spell_TE",2,["&gCurrSaveFileNum","test2"])][MatchRtrn(2,1)]spell7[end][MatchRtrn(2,0)]\
-[CallLoop(2,"mario_has_spell_TE",2,["&gCurrSaveFileNum","test3"])][MatchRtrn(2,1)]spell8[end][MatchRtrn(2,0)]',
+[CallLoop(2,"mario_has_spell_TE",2,["&gCurrSaveFileNum","super_strength"])][MatchRtrn(2,1)]strength[end][GenericText()]\
+[CallLoop(2,"mario_has_spell_TE",2,["&gCurrSaveFileNum","floaty_jumps"])][MatchRtrn(2,1)]float[end][GenericText()]\
+[CallLoop(2,"mario_has_spell_TE",2,["&gCurrSaveFileNum","wall_stick"])][MatchRtrn(2,1)]stick[end][GenericText()]\
+[CallLoop(2,"mario_has_spell_TE",2,["&gCurrSaveFileNum","water_walk"])][MatchRtrn(2,1)]water walk[end][GenericText()]\
+[CallLoop(2,"mario_has_spell_TE",2,["&gCurrSaveFileNum","immunity"])][MatchRtrn(2,1)]invincible[end][GenericText()]\
+[CallLoop(2,"mario_has_spell_TE",2,["&gCurrSaveFileNum","test1"])][MatchRtrn(2,1)]spell6[end][GenericText()]\
+[CallLoop(2,"mario_has_spell_TE",2,["&gCurrSaveFileNum","test2"])][MatchRtrn(2,1)]spell7[end][GenericText()]\
+[CallLoop(2,"mario_has_spell_TE",2,["&gCurrSaveFileNum","test3"])][MatchRtrn(2,1)]spell8[end][GenericText()]',
 #end of the spells
-'[GenericText()][end]']
+'[GenericText()][CallOnce(0,"TE_set_flag",2,["&gMagicHUDRequest","CAST_SPIRIT"])][AutoNextBox()][MosaicBGBox(12,82,214,234,"magic_action_menu",2,1)][CallOnce(3,"Get_Spell_Sel",1,[2])][ShadedBGBox(14,80,158,215,0,0,0,0x96)]]\n\
+[MatchRtrn(3,0)]Super Strength[TimeEndStr(90)]\
+[MatchRtrn(3,1)]Float[TimeEndStr(90)]\
+[MatchRtrn(3,2)]Stick[TimeEndStr(90)]\
+[MatchRtrn(3,3)]Water Walk[TimeEndStr(90)]\
+[MatchRtrn(3,4)]Invincibility[TimeEndStr(90)]\
+[MatchRtrn(3,5)]spell6[TimeEndStr(90)]\
+[MatchRtrn(3,6)]spell7[TimeEndStr(90)]\
+[MatchRtrn(3,7)]spell8[TimeEndStr(90)]\
+[GenericText()][end]']
 
 magic_list_env = ['[AutoNextBox()][MosaicBGBox(12,82,214,234,"magic_action_menu",2,1)][ShadedBGBox(14,80,158,215,0,0,0,0x96)]\n\
 [JumpLink("magic_list_start_cast")]',
 #list of all the spells goes here
 '[CallLoop(3,"create_magic_list_dialog",2,[3,15])]\
-[MatchRtrn(3,0)]no env\nspells[GenericText()][TransAbs(16,160)][JumpLink("magic_list_chk_cancel")]\
+[MatchRtrn(3,0)]no env\nspells[TransAbs(16,160)][JumpLink("magic_list_chk_cancel")][end][GenericText()][TransAbs(16,160)][JumpLink("magic_list_chk_cancel")]\
 [MatchRtrn(3,1)][TransAbs(16,212)][CallLoop(0,"list_scroll_y_dialog",0,[])][UsrStr(15)][SetScissor(14,80,174,210)]\
-[CallLoop(2,"mario_has_spell_TE",2,["&gCurrSaveFileNum","ice_block"])][MatchRtrn(2,1)]ice block[end][MatchRtrn(2,0)]\
-[CallLoop(2,"mario_has_spell_TE",2,["&gCurrSaveFileNum","rising_leaf"])][MatchRtrn(2,1)]rising leaf[end][MatchRtrn(2,0)]\
-[CallLoop(2,"mario_has_spell_TE",2,["&gCurrSaveFileNum","cloud_lob"])][MatchRtrn(2,1)]cloud lob[end][MatchRtrn(2,0)]\
-[CallLoop(2,"mario_has_spell_TE",2,["&gCurrSaveFileNum","unk4"])][MatchRtrn(2,1)]spell4[end][MatchRtrn(2,0)]\
-[CallLoop(2,"mario_has_spell_TE",2,["&gCurrSaveFileNum","unk5"])][MatchRtrn(2,1)]spell5[end][MatchRtrn(2,0)]\
-[CallLoop(2,"mario_has_spell_TE",2,["&gCurrSaveFileNum","unk6"])][MatchRtrn(2,1)]spell6[end][MatchRtrn(2,0)]\
-[CallLoop(2,"mario_has_spell_TE",2,["&gCurrSaveFileNum","unk7"])][MatchRtrn(2,1)]spell7[end][MatchRtrn(2,0)]\
-[CallLoop(2,"mario_has_spell_TE",2,["&gCurrSaveFileNum","unk8"])][MatchRtrn(2,1)]spell8[end][MatchRtrn(2,0)]',
+[CallLoop(2,"mario_has_spell_TE",2,["&gCurrSaveFileNum","ice_block"])][MatchRtrn(2,1)]ice block[end][GenericText()]\
+[CallLoop(2,"mario_has_spell_TE",2,["&gCurrSaveFileNum","rising_leaf"])][MatchRtrn(2,1)]rising leaf[end][GenericText()]\
+[CallLoop(2,"mario_has_spell_TE",2,["&gCurrSaveFileNum","cloud_lob"])][MatchRtrn(2,1)]cloud lob[end][GenericText()]\
+[CallLoop(2,"mario_has_spell_TE",2,["&gCurrSaveFileNum","unk4"])][MatchRtrn(2,1)]spell4[end][GenericText()]\
+[CallLoop(2,"mario_has_spell_TE",2,["&gCurrSaveFileNum","unk5"])][MatchRtrn(2,1)]spell5[end][GenericText()]\
+[CallLoop(2,"mario_has_spell_TE",2,["&gCurrSaveFileNum","unk6"])][MatchRtrn(2,1)]spell6[end][GenericText()]\
+[CallLoop(2,"mario_has_spell_TE",2,["&gCurrSaveFileNum","unk7"])][MatchRtrn(2,1)]spell7[end][GenericText()]\
+[CallLoop(2,"mario_has_spell_TE",2,["&gCurrSaveFileNum","unk8"])][MatchRtrn(2,1)]spell8[end][GenericText()]',
 #end of the spells
-'[GenericText()][end]']
+'[GenericText()][CallOnce(0,"TE_set_flag",2,["&gMagicHUDRequest","CAST_ENVIRONMENT"])][AutoNextBox()][MosaicBGBox(12,82,214,234,"magic_action_menu",2,1)][CallOnce(3,"Get_Spell_Sel",1,[3])][ShadedBGBox(14,80,158,215,0,0,0,0x96)]]\n\
+[MatchRtrn(3,0)]Spawn Ice Block[TimeEndStr(90)]\
+[MatchRtrn(3,1)]Spawn Rising Leaf[TimeEndStr(90)]\
+[MatchRtrn(3,2)]Spawn Floating Cloud[TimeEndStr(90)]\
+[MatchRtrn(3,3)]unk spawn4[TimeEndStr(90)]\
+[MatchRtrn(3,4)]unk spawn5[TimeEndStr(90)]\
+[MatchRtrn(3,5)]unk spawn6[TimeEndStr(90)]\
+[MatchRtrn(3,6)]unk spawn7[TimeEndStr(90)]\
+[MatchRtrn(3,7)]unk spawn8[TimeEndStr(90)]\
+[GenericText()][end]']

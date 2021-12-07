@@ -9,13 +9,14 @@ extern u32 gMagicHUDRequest;
 #define HUD_OPEN                      /* 0x00000001 */ (1 <<  0)
 #define START_CAST                    /* 0x00000002 */ (1 <<  1)
 #define CANCEL_CAST                   /* 0x00000004 */ (1 <<  2)
-#define CAST_SPELL                    /* 0x00000008 */ (1 <<  3)
-#define CAST_SPIRIT                   /* 0x00000010 */ (1 <<  4)
-#define CAST_ENVIRONMENT              /* 0x00000020 */ (1 <<  5)
-#define HOLD_CAST                     /* 0x00000040 */ (1 <<  6)
-#define CANCEL_HUD                    /* 0x00000080 */ (1 <<  7)
-#define CASTING_SEL                   /* 0x00000100 */ (1 <<  8)
-#define CASTING_UNK                   /* 0x00000200 */ (1 <<  9)
+#define HOLD_CAST                     /* 0x00000008 */ (1 <<  3)
+#define CANCEL_HUD                    /* 0x00000010 */ (1 <<  4)
+#define CASTING_SEL                   /* 0x00000020 */ (1 <<  5)
+#define CASTING_UNK                   /* 0x00000040 */ (1 <<  6)
+#define CAST_SPELL                    /* 0x00000080 */ (1 <<  7)
+#define CAST_SPIRIT                   /* 0x00000100 */ (1 <<  8)
+#define CAST_ENVIRONMENT              /* 0x00000200 */ (1 <<  9)
+#define CAST_ITEM                     /* 0x00000400 */ (1 <<  10)
 
 //spells
 enum spells{
@@ -68,5 +69,6 @@ void handle_magic_actions(struct MarioState *m);
 u32 create_magic_list_dialog(u32 list, u8 usr);
 void list_scroll_y_dialog(void);
 u32 mario_has_spell_TE(s16 *file, u32 spell);
+u32 Get_Spell_Sel(u32 list);
 
 #endif

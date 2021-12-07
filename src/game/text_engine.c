@@ -501,9 +501,9 @@ void TE_debug_print(struct TEState *CurEng){
 	// if (gPlayer1Controller->buttonDown&L_TRIG){
 		sprintf(buf,"hov %d",CurEng->HoveredDialog);
 		print_text(32,64,buf);
-		sprintf(buf,"ret2 %d",FunctionReturns[1][1]);
+		sprintf(buf,"ret2 %d",FunctionReturns[1][2]);
 		print_text(32,96,buf);
-		sprintf(buf,"ret3 %d",FunctionReturns[1][2]);
+		sprintf(buf,"ret3 %d",FunctionReturns[1][3]);
 		print_text(32,128,buf);
 	// }
 	

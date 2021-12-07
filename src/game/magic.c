@@ -142,5 +142,50 @@ void list_scroll_y_dialog(void){
 u32 mario_has_spell_TE(s16 *file, u32 spell){
 	return mario_has_spell(*file-1,spell);
 }
+
+u32 Get_Spell_Sel(u32 list){
+	u8 cnt[8];
+	u32 i;
+	u8 y = TE_Engines[TE_STATE_AUX].ReturnedDialog+1;
+	switch(list){
+		//item list
+		case 0:
+			for (i = 0; i<8; i++){
+				cnt[i] = mario_has_spell(gCurrSaveFileNum-1,i);
+			}
+			break;
+		//spell list
+		case 1:
+			for (i = 8; i<16; i++){
+				cnt[i-8] = mario_has_spell(gCurrSaveFileNum-1,i);
+			}
+			break;
+		//spirit list
+		case 2:
+			for (i = 16; i<24; i++){
+				cnt[i-16] = mario_has_spell(gCurrSaveFileNum-1,i);
+			}
+			break;
+		//env list
+		case 3:
+			for (i = 24; i<32; i++){
+				cnt[i-24] = mario_has_spell(gCurrSaveFileNum-1,i);
+			}
+			break;
+	}
+	u8 x = 0;
+	u8 z = 0;
+	for (i = 0; i<8; i++){
+		if (cnt[i]==1){
+			x += 1;
+		}
+		if (x == y){
+			z = i;
+			break;
+		}
+	}
+	return z;
+}
+
 //file at bottom so function in here are declared before compile
 #include "src/game/magic_str_te.py"
