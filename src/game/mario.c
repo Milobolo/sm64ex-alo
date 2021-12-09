@@ -1791,7 +1791,7 @@ void queue_rumble_particles(void) {
 #endif
 //for TINY/HUGE mario
 f32 GetMarioScaleFactors(void){
-	if (configHUGE){
+	if (configHUGE || (gMarioState->Spell == gigantify)){
 		return 1.5f;
 	}else if (configTINY){
 		return 0.6f;
@@ -1801,7 +1801,7 @@ f32 GetMarioScaleFactors(void){
 	
 };
 f32 GetMarioReducedScaleFactors(void){
-	if (configHUGE){
+	if (configHUGE || (gMarioState->Spell == gigantify)){
 		return 1.25f;
 	}else if (configTINY){
 		return 0.75f;
@@ -1811,7 +1811,7 @@ f32 GetMarioReducedScaleFactors(void){
 	
 };
 f32 GetMarioLargeScaleFactors(void){
-	if (configHUGE){
+	if (configHUGE || (gMarioState->Spell == gigantify)){
 		return 1.75f;
 	}else if (configTINY){
 		return 0.5f;

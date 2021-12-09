@@ -5,7 +5,7 @@ extern const MacroObject bob_area_1_macro_objs[];
 extern Lights1 bob_dl_checkerboard_lights;
 extern u8 bob_dl_kpa_kabe17tif_ci4[];
 extern u8 bob_dl_kpa_kabe17tif_ci4_pal_rgba16[];
-extern Vtx bob_dl_Plane_mesh_layer_1_vtx_0[4];
+extern Vtx bob_dl_Plane_mesh_layer_1_vtx_0[200];
 extern Gfx bob_dl_Plane_mesh_layer_1_tri_0[];
 extern Gfx mat_bob_dl_checkerboard[];
 extern Gfx mat_revert_bob_dl_checkerboard[];

@@ -18,6 +18,7 @@ extern u32 gMagicHUDRequest;
 #define CAST_ENVIRONMENT              /* 0x00000200 */ (1 <<  9)
 #define CAST_ITEM                     /* 0x00000400 */ (1 <<  10)
 
+
 //spells
 enum spells{
 	//items
@@ -40,11 +41,11 @@ enum spells{
 	spell7,
 	spell8,
 	//spirit
-	super_strength,
-	floaty_jumps,
-	wall_stick,
-	water_walk,
-	immunity,
+	gigantify,
+	hover,
+	stick,
+	test5,
+	test4,
 	test1,
 	test2,
 	test3,
@@ -70,5 +71,6 @@ u32 create_magic_list_dialog(u32 list, u8 usr);
 void list_scroll_y_dialog(void);
 u32 mario_has_spell_TE(s16 *file, u32 spell);
 u32 Get_Spell_Sel(u32 list);
+void mario_set_spell(u32 spell);
 
 #endif

@@ -2709,14 +2709,42 @@ s32 act_cast_select(struct MarioState *m) {
 	if((gMagicHUDRequest==0) || (gMagicHUDRequest&CANCEL_HUD))
 		set_mario_action(m, ACT_IDLE, 0);
 	else
-		set_mario_animation(m, MARIO_ANIM_START_REACH_POCKET);
+		set_mario_animation(m, MARIO_ANIM_HANDSTAND_IDLE);
 	return FALSE;
 }
 
 s32 act_cast_actions(struct MarioState *m) {
-	char text[14];
-	sprintf(text, "cast action");
-	print_text(46, 46, text);
+	//spell, spirit, env, item
+	switch(m->actionArg){
+		case 0:
+			set_mario_animation(m, MARIO_ANIM_CREDITS_RAISE_HAND);
+			break;
+		case 1:
+			set_mario_animation(m, MARIO_ANIM_CRAWLING);
+			//handle gfx here
+			if (m->actionTimer == 0){
+				switch(m->Spell){
+					case gigantify:
+						break;
+					case hover:
+						break;
+					case stick:
+						break;
+				}
+			}
+			//somehow 3 seconds
+			if (m->actionTimer > 28){
+				set_mario_action(m, ACT_IDLE, 0);
+			}
+			m->actionTimer += 1;
+			break;
+		case 2:
+			set_mario_animation(m, MARIO_ANIM_TWIRL);
+			break;
+		case 3:
+			set_mario_animation(m, MARIO_ANIM_SLIDE_MOTIONLESS);
+			break;
+	}
 	return FALSE;
 }
 

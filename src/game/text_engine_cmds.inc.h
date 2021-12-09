@@ -999,11 +999,10 @@ s8 TE_scale_text(struct TEState *CurEng,u8 *str){
 }
 //85 cmd works
 s8 TE_enable_dialog_options(struct TEState *CurEng,u8 *str){
-	u8 arrow = 0x9E;
+	u8 arrow = 0xFF;
 	TE_print(CurEng);
 	CurEng->TempY -= ((u16) 0xD*CurEng->ScaleF[1]);
 	CurEng->TempYOrigin = CurEng->TempY;
-	CurEng->TempXOrigin -= 1;
 	CurEng->NumDialogs = str[1];
 	if(CurEng->DialogEnd != 0){
 		if(gPlayer1Controller->buttonPressed&A_BUTTON){
@@ -1026,10 +1025,10 @@ s8 TE_enable_dialog_options(struct TEState *CurEng,u8 *str){
 	}
 	StrBuffer[CurEng->state][0] = arrow;
 	StrBuffer[CurEng->state][1] = 0xFF;
-	CurEng->TempX = CurEng->TempXOrigin;
+	CurEng->TempX = CurEng->TempXOrigin-1;
 	TE_print(CurEng);
-	CurEng->TempXOrigin += gDialogCharWidths[0x53];
-	CurEng->TempX = CurEng->TempXOrigin;
+	CurEng->TempXOrigin += ((u16)(8*CurEng->ScaleF[0]));
+	CurEng->TempX = CurEng->TempXOrigin-1;
 	CurEng->DisplayingDialog = 0;
 	return TE_print_adv(CurEng,2);
 }

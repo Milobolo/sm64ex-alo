@@ -42,7 +42,7 @@ void cancel_render_magic_spells_hud(void){
 void magic_hud_render_controller(struct MarioState *m){
 	if (gPlayer1Controller->buttonPressed&L_TRIG){
 		start_render_magic_spells_hud();
-	}if (gPlayer1Controller->buttonPressed&Z_TRIG || gMagicHUDRequest&CANCEL_HUD){
+	}if ( (gPlayer1Controller->buttonPressed&Z_TRIG && gMagicHUDRequest<=0x40) || gMagicHUDRequest&CANCEL_HUD){
 		cancel_render_magic_spells_hud();
 		gMagicHUDRequest=0;
 	}
@@ -63,6 +63,22 @@ void handle_magic_actions(struct MarioState *m){
 			gMagicHUDRequest &= ~START_CAST;
 			gMagicHUDRequest |= CASTING_SEL;
 		}
+	}
+	if(gMagicHUDRequest & CAST_SPIRIT){
+		set_mario_action(m, ACT_CAST_ACTION, 1);
+		gMagicHUDRequest &= ~CASTING_SEL;
+	}
+	if(gMagicHUDRequest & CAST_ENVIRONMENT){
+		set_mario_action(m, ACT_CAST_ACTION, 2);
+		gMagicHUDRequest &= ~CASTING_SEL;
+	}
+	if(gMagicHUDRequest & CAST_SPELL){
+		set_mario_action(m, ACT_CAST_ACTION, 0);
+		gMagicHUDRequest &= ~CASTING_SEL;
+	}
+	if(gMagicHUDRequest & CAST_ITEM){
+		set_mario_action(m, ACT_CAST_ACTION, 3);
+		gMagicHUDRequest &= ~CASTING_SEL;
 	}
 }
 
@@ -185,6 +201,10 @@ u32 Get_Spell_Sel(u32 list){
 		}
 	}
 	return z;
+}
+
+void mario_set_spell(u32 spell){
+	gMarioState->Spell = spell;
 }
 
 //file at bottom so function in here are declared before compile

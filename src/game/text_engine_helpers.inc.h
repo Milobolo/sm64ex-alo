@@ -16,6 +16,10 @@ s32 TE_mod_state(s32 *state,s32 mod){
 s32 TE_get_state(s32 *state){
 	return *state;
 }
+s32 TE_set_state(s32 *state,u32 value){
+	*state = value;
+	return 1;
+}
 s32 TE_get_flag(s32 *flag,u32 bit){
 	s32 a = *flag;
 	return ((a&bit)>0);

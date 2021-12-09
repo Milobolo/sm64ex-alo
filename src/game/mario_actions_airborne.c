@@ -18,6 +18,8 @@
 #include "bettercamera.h"
 #endif
 #include "pc/configfile.h"
+
+#include "magic.h"
 u8 Super_Jump_Count=0;
 u8 Super_Can_Jump=0;
 void play_flip_sounds(struct MarioState *m, s16 frame1, s16 frame2, s16 frame3) {
@@ -1204,8 +1206,10 @@ s32 check_wall_kick(struct MarioState *m) {
         m->faceAngle[1] += 0x8000;
 		m->wallKickTimer = 0;
         return set_mario_action(m, ACT_WALL_KICK_AIR, 0);
-    }
-
+    }if(m->framesSinceA < 2 && m->Spell == stick){
+		m->wallKickTimer = 0;
+		return set_mario_action(m, ACT_WALL_KICK_AIR, 0);
+	}
     return FALSE;
 }
 
@@ -1213,6 +1217,24 @@ s32 act_backward_air_kb(struct MarioState *m) {
     if (check_wall_kick(m)) {
         return TRUE;
     }
+	else if(m->prevAction == ACT_AIR_HIT_WALL && m->Spell == stick){
+		//stick cancel or wall gone
+		if(gPlayer1Controller->buttonPressed&Z_TRIG || m->wall == NULL){
+			return set_mario_action(m, ACT_FREEFALL, 0);
+		}
+		if (m->actionArg == 0){
+			m->marioObj->header.gfx.angle[1] = atan2s(m->wall->normal.z, m->wall->normal.x);
+			m->actionArg = 1;
+		}
+		//platform displacement
+		struct Object *obj = m->wall->object;
+		if (obj != NULL){
+			m->pos[0] += obj->oVelX;
+			m->pos[1] += obj->oVelY;
+			m->pos[2] += obj->oVelZ;
+		}
+		return FALSE;
+	}
 
 #ifndef VERSION_JP
     play_knockback_sound(m);
@@ -1227,6 +1249,24 @@ s32 act_forward_air_kb(struct MarioState *m) {
     if (check_wall_kick(m)) {
         return TRUE;
     }
+	else if(m->prevAction == ACT_AIR_HIT_WALL && m->Spell == stick){
+		//stick cancel or wall gone
+		if(gPlayer1Controller->buttonPressed&Z_TRIG || m->wall == NULL){
+			return set_mario_action(m, ACT_FREEFALL, 0);
+		}
+		if (m->actionArg == 0){
+			m->marioObj->header.gfx.angle[1] = atan2s(m->wall->normal.z, m->wall->normal.x);
+			m->actionArg = 1;
+		}
+		//platform displacement
+		struct Object *obj = m->wall->object;
+		if (obj != NULL){
+			m->pos[0] += obj->oVelX;
+			m->pos[1] += obj->oVelY;
+			m->pos[2] += obj->oVelZ;
+		}
+		return FALSE;
+	}
 
 #ifndef VERSION_JP
     play_knockback_sound(m);
@@ -1367,21 +1407,24 @@ s32 act_air_hit_wall(struct MarioState *m) {
         mario_drop_held_object(m);
     }
 
+
     if (++(m->actionTimer) <= 2) {
         if (m->input & INPUT_A_PRESSED) {
             m->vel[1] = 52.0f;
             m->faceAngle[1] += 0x8000;
             return set_mario_action(m, ACT_WALL_KICK_AIR, 0);
         }
-    } else if (m->forwardVel >= 38.0f) {
+    } else if (m->forwardVel >= 38.0f || (m->Spell == stick)) {
         m->wallKickTimer = 5;
         if (m->vel[1] > 0.0f) {
             m->vel[1] = 0.0f;
         }
 
-        m->particleFlags |= PARTICLE_VERTICAL_STAR;
+        if(m->Spell != stick){
+			m->particleFlags |= PARTICLE_VERTICAL_STAR;
+		}
         return set_mario_action(m, ACT_BACKWARD_AIR_KB, 0);
-    } else {
+    }else{
         m->wallKickTimer = 5;
         if (m->vel[1] > 0.0f) {
             m->vel[1] = 0.0f;
