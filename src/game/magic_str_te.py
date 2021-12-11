@@ -92,7 +92,7 @@ magic_list_spells = ['[AutoNextBox()][MosaicBGBox(12,82,214,234,"magic_action_me
 [GenericText()][end]']
 
 
-magic_spirit_list_end = ['[SetSpd(1)][Pause(180)][AutoNextBox()][CallOnce(0,"TE_set_state",2,["&gMagicHUDRequest",0])][TimeEndStr(1)]']
+magic_spirit_list_end = ['[SetSpd(1)][Pause(120)][AutoNextBox()][CallOnce(0,"TE_set_state",2,["&gMagicHUDRequest",0])][TimeEndStr(1)]']
 
 magic_list_spirit = ['[AutoNextBox()][MosaicBGBox(12,82,214,234,"magic_action_menu",2,1)][ShadedBGBox(14,90,158,215,0,0,0,0x96)]\n\
 [JumpLink("magic_list_start_cast")]',
@@ -109,7 +109,7 @@ magic_list_spirit = ['[AutoNextBox()][MosaicBGBox(12,82,214,234,"magic_action_me
 [CallLoop(2,"mario_has_spell_TE",2,["&gCurrSaveFileNum","test2"])][MatchRtrn(2,1)]spell7[end][GenericText()]\
 [CallLoop(2,"mario_has_spell_TE",2,["&gCurrSaveFileNum","test3"])][MatchRtrn(2,1)]spell8[end][GenericText()]',
 #end of the spells
-'[GenericText()][CallOnce(0,"TE_set_flag",2,["&gMagicHUDRequest","CAST_SPIRIT"])][AutoNextBox()][MosaicBGBox(12,82,214,234,"magic_action_menu",2,1)][CallOnce(3,"Get_Spell_Sel",1,[2])][ShadedBGBox(14,90,200,215,0,0,0,0x96)]]\n\
+'[GenericText()][CallOnce(0,"TE_set_flag",2,["&gMagicHUDRequest","CAST_SPIRIT"])][AutoNextBox()][MosaicBGBox(12,82,214,234,"magic_action_menu",2,1)][CallOnce(3,"Get_Spell_Sel",1,[2])][ShadedBGBox(14,90,194,215,0,0,0,0x96)]]\n\
 [MatchRtrn(3,0)]Gigantify[CallOnce(0,"mario_set_spell",1,["gigantify"])][Jump("magic_spirit_list_end")]\
 [MatchRtrn(3,1)]Float[CallOnce(0,"mario_set_spell",1,["hover"])][Jump("magic_spirit_list_end")]\
 [MatchRtrn(3,2)]Stick[CallOnce(0,"mario_set_spell",1,["stick"])][Jump("magic_spirit_list_end")]\

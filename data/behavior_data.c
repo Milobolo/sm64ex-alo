@@ -331,6 +331,15 @@
     BC_B(0x37), \
     BC_PTR(dropletParams)
 
+//SS4 behaviors
+
+const BehaviorScript bhvHoverParticle[] = {
+    BEGIN(OBJ_LIST_DEFAULT),
+    OR_INT(oFlags, OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE),
+	BEGIN_LOOP(),
+    CALL_NATIVE(hover_particle_loop),
+    END_LOOP(),
+};
 
 const BehaviorScript bhvStarDoor[] = {
     BEGIN(OBJ_LIST_SURFACE),

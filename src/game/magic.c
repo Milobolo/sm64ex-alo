@@ -65,20 +65,28 @@ void handle_magic_actions(struct MarioState *m){
 		}
 	}
 	if(gMagicHUDRequest & CAST_SPIRIT){
-		set_mario_action(m, ACT_CAST_ACTION, 1);
-		gMagicHUDRequest &= ~CASTING_SEL;
+		if(m->action != ACT_CAST_ACTION){
+			set_mario_action(m, ACT_CAST_ACTION, 1);
+			gMagicHUDRequest &= ~CASTING_SEL;
+		}
 	}
 	if(gMagicHUDRequest & CAST_ENVIRONMENT){
-		set_mario_action(m, ACT_CAST_ACTION, 2);
-		gMagicHUDRequest &= ~CASTING_SEL;
+		if(m->action != ACT_CAST_ACTION){
+			set_mario_action(m, ACT_CAST_ACTION, 2);
+			gMagicHUDRequest &= ~CASTING_SEL;
+		}
 	}
 	if(gMagicHUDRequest & CAST_SPELL){
-		set_mario_action(m, ACT_CAST_ACTION, 0);
-		gMagicHUDRequest &= ~CASTING_SEL;
+		if(m->action != ACT_CAST_ACTION){
+			set_mario_action(m, ACT_CAST_ACTION, 0);
+			gMagicHUDRequest &= ~CASTING_SEL;
+		}
 	}
 	if(gMagicHUDRequest & CAST_ITEM){
-		set_mario_action(m, ACT_CAST_ACTION, 3);
-		gMagicHUDRequest &= ~CASTING_SEL;
+		if(m->action != ACT_CAST_ACTION){
+			set_mario_action(m, ACT_CAST_ACTION, 3);
+			gMagicHUDRequest &= ~CASTING_SEL;
+		}
 	}
 }
 

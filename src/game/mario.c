@@ -714,6 +714,9 @@ s16 find_floor_slope(struct MarioState *m, s16 yawOffset) {
     f32 forwardFloorY, backwardFloorY;
     f32 forwardYDelta, backwardYDelta;
     s16 result;
+	if(m->Spell == hover && m->floor->originOffset == -9999.0f){
+		return 0;
+	}
 
     f32 x = sins(m->faceAngle[1] + yawOffset) * 5.0f;
     f32 z = coss(m->faceAngle[1] + yawOffset) * 5.0f;

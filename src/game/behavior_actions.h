@@ -9,6 +9,8 @@ struct Struct802C0DF0 {
     u8 model;
     const BehaviorScript *behavior;
 };
+//ss4 bhv functions
+void hover_particle_loop(void);
 
 void spawn_mist_particles_variable(s32 count, s32 offsetY, f32 size);
 void bhv_spawn_star_no_level_exit(u32);

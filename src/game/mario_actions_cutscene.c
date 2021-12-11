@@ -2732,8 +2732,7 @@ s32 act_cast_actions(struct MarioState *m) {
 						break;
 				}
 			}
-			//somehow 3 seconds
-			if (m->actionTimer > 28){
+			if (m->actionTimer > 60){
 				set_mario_action(m, ACT_IDLE, 0);
 			}
 			m->actionTimer += 1;

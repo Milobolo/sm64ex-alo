@@ -2,6 +2,8 @@
 #define BEHAVIOR_DATA_H
 
 #include "types.h"
+//ss4 behaviors
+extern const BehaviorScript bhvHoverParticle[];
 
 extern const BehaviorScript editor_Scroll_Texture[];
 extern const BehaviorScript RM_Scroll_Texture[];

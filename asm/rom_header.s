@@ -23,7 +23,7 @@
 .if VERSION_SH == 1
 .ascii "SUPERMARIO64        "   /* Internal ROM name */
 .else
-.include "src/internal_name.s"
+.ascii "Shining Stars 4     "
 # .byte INTERNAL_NAME   /* Internal ROM name */
 .endif
 .word  0x00000000               /* Unknown */

@@ -9,11 +9,16 @@
 #include "interaction.h"
 #include "mario_step.h"
 #include "pc/configfile.h"
+#include "magic.h"
 static s16 sMovingSandSpeeds[] = { 12, 8, 4, 0 };
 
 struct Surface gWaterSurfacePseudoFloor = {
     SURFACE_VERY_SLIPPERY, 0,    0,    0, 0, 0, { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 },
     { 0.0f, 1.0f, 0.0f },  0.0f, NULL,
+};
+struct Surface gHoverPseudoFloor = {
+    SURFACE_DEFAULT, 0,    0,    0, 0, 0, { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 },
+    { 0.0f, 1.0f, 0.0f },  -9999.0f, NULL,
 };
 
 /**
@@ -293,6 +298,14 @@ static s32 perform_ground_quarter_step(struct MarioState *m, Vec3f nextPos) {
         if (nextPos[1] + 160.0f*Mscale >= ceilHeight) {
             return GROUND_STEP_HIT_WALL_STOP_QSTEPS;
         }
+		if(m->Spell == hover && gHoverPseudoFloor.room<90){
+			m->floor = &gHoverPseudoFloor;
+			m->floorHeight = m->pos[1];
+			m->particleFlags |= ACTIVE_PARTICLE_HOVER;
+			gHoverPseudoFloor.room += 1; //shouldn't have effect
+			vec3f_copy(m->pos, nextPos);
+			return GROUND_STEP_NONE;
+		}
 
         vec3f_copy(m->pos, nextPos);
         m->floor = floor;
@@ -304,7 +317,8 @@ static s32 perform_ground_quarter_step(struct MarioState *m, Vec3f nextPos) {
         return GROUND_STEP_HIT_WALL_STOP_QSTEPS;
     }
 
-    vec3f_set(m->pos, nextPos[0], floorHeight, nextPos[2]);
+    gHoverPseudoFloor.room = 0;
+	vec3f_set(m->pos, nextPos[0], floorHeight, nextPos[2]);
     m->floor = floor;
     m->floorHeight = floorHeight;
 
