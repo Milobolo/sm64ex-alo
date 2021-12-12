@@ -233,6 +233,7 @@ s8 TE_set_sfx(struct TEState *CurEng,u8 *str){
 //42 cmd works
 s8 TE_set_env_color(struct TEState *CurEng,u8 *str){
 	TE_print(CurEng);
+	CurEng->PrevEnvColorWord = CurEng->EnvColorWord;
 	CurEng->EnvColorWord = TE_get_u32(str);
 	return TE_print_adv(CurEng,5);
 }
@@ -272,6 +273,7 @@ s8 TE_enable_rainbow_txt(struct TEState *CurEng,u8 *str){
 		timer+=0x78;
 	}
 	CurEng->RainbowColorByte[3] = str[1];
+	CurEng->PrevEnvColorWord = CurEng->EnvColorWord;
 	CurEng->EnvColorWord = CurEng->RainbowColorWord;
 	return TE_print_adv(CurEng,2);
 }
@@ -720,14 +722,14 @@ void TE_bg_box_setup(struct TEState *CurEng){
 		CurEng->EnvColorWord = 0x10101000 | CurEng->EnvColorByte[3];
 		CurEng->TempX += 1;
 		CurEng->TempY -= 1;
-		if(!(StrBuffer[CurEng->state][0] == 0xFF))
-			TE_transition_print(CurEng);
+		TE_transition_print(CurEng);
 		CurEng->TempX -= 1;
 		CurEng->TempY += 1;
+		CurEng->PrevEnvColorWord = CurEng->EnvColorWord;
 		CurEng->EnvColorWord = Env;
 	}
-	if(!(StrBuffer[CurEng->state][0] == 0xFF))
-		TE_transition_print(CurEng);
+	TE_transition_print(CurEng);
+	CurEng->PrevEnvColorWord = CurEng->EnvColorWord;
 	TE_flush_str_buff(CurEng);
 	TE_reset_Xpos(CurEng);
 }
@@ -983,14 +985,14 @@ s8 TE_scale_text(struct TEState *CurEng,u8 *str){
 		CurEng->EnvColorWord = 0x10101000 | CurEng->EnvColorByte[3];
 		CurEng->TempX += 1;
 		CurEng->TempY -= 1;
-		if(!(StrBuffer[CurEng->state][0] == 0xFF))
-			TE_transition_print(CurEng);
+		TE_transition_print(CurEng);
 		CurEng->TempX -= 1;
 		CurEng->TempY += 1;
+		CurEng->PrevEnvColorWord = CurEng->EnvColorWord;
 		CurEng->EnvColorWord = Env;
 	}
-	if(!(StrBuffer[CurEng->state][0] == 0xFF))
-		TE_transition_print(CurEng);
+	TE_transition_print(CurEng);
+	CurEng->PrevEnvColorWord = CurEng->EnvColorWord;
 	TE_flush_str_buff(CurEng);
 	TE_reset_Xpos(CurEng);
 	CurEng->ScaleU[0] = TE_get_u32(str);
@@ -1119,7 +1121,7 @@ s8 TE_goto_return(struct TEState *CurEng,u8 *str){
 s8 TE_enable_plaintext(struct TEState *CurEng,u8 *str){
 	TE_print(CurEng);
 	CurEng->PlainText = str[1];
-	return TE_print_adv(CurEng,2);
+	return TE_print_adv(CurEng,1);
 }
 //9a cmd works
 s8 TE_enable_wobble(struct TEState *CurEng,u8 *str){
@@ -1225,7 +1227,7 @@ s8 TE_pop_str(struct TEState *CurEng,u8 *str){
 	TE_print(CurEng);
 	CurEng->TempStr = CurEng->StrStack[CurEng->StackDepth-1];
 	CurEng->StackDepth--;
-	//if you pop after a new box, you will lose  your jump and break
+	//if you pop after a new box, you will lose your jump and break
 	//the chain of jump/pop, therefore you have to start a new box
 	if(CurEng->StackDepth<CurEng->StackLocked){
 		CurEng->OgStr = CurEng->TempStr;
@@ -1276,14 +1278,14 @@ s8 TE_line_break(struct TEState *CurEng,u8 *str){
 		CurEng->EnvColorWord = 0x10101000 | CurEng->EnvColorByte[3];
 		CurEng->TempX += 1;
 		CurEng->TempY -= 1;
-		if(!(StrBuffer[CurEng->state][0] == 0xFF))
-			TE_transition_print(CurEng);
+		TE_transition_print(CurEng);
 		CurEng->TempX -= 1;
 		CurEng->TempY += 1;
+		CurEng->PrevEnvColorWord = CurEng->EnvColorWord;
 		CurEng->EnvColorWord = Env;
 	}
-	if(!(StrBuffer[CurEng->state][0] == 0xFF))
-		TE_transition_print(CurEng);
+	TE_transition_print(CurEng);
+	CurEng->PrevEnvColorWord = CurEng->EnvColorWord;
 	TE_flush_str_buff(CurEng);
 	CurEng->TempX = CurEng->TempXOrigin;
 	CurEng->TempY -= ((u16) 0xD*CurEng->ScaleF[1]);

@@ -318,6 +318,7 @@ struct MarioState
     /*0x70*/ f32 floorHeight;
     /*0x74*/ s16 floorAngle;
     /*0x76*/ s16 waterLevel;
+
     /*0x78*/ struct Object *interactObj;
     /*0x7C*/ struct Object *heldObj;
     /*0x80*/ struct Object *usedObj;
@@ -348,6 +349,7 @@ struct MarioState
     /*0xC4*/ u32 Exp; //for ss4
     /*0xC4*/ u32 Level; //for ss4
     /*0xC4*/ u32 Spell; //for ss4, enum for spell cast
+    /*0x78*/ struct Object *spawnObj;
     /*0xc8*/ Vec3f platformDisplacement;    //for inertia
 	/*0xd4*/ u8 SelFallDmg; //For certain objects I don't want fall damage ever
 	/*0xd5*/ u8 Chaos_Vals[2];

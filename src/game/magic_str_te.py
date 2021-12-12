@@ -19,16 +19,20 @@ magic_spells_init = ['[CallOnce(1,"TE_set_flag",2,["&gMagicHUDRequest","HUD_OPEN
 [BoxTransition(0,0,-72,0)]\
 [SetScissor(14,80,230,230)]\
 [ShadedBGBox(14,80,158,215,0,0,0,0x96)]\
+[CallLoop(4,"TE_get_flag",2,["&gMagicHUDRequest","CASTING_ON_PLAT"])][MatchRtrn(4,1)][Jump("magic_on_plat")][GenericText()]\
 [PrintGlyph("magic_d_up")]ITEMS\n\
 [PrintGlyph("magic_d_left")]WORLD\n\
 [PrintGlyph("magic_d_right")]SPIRIT\n\
 [PrintGlyph("magic_d_down")]ENV ',
 #[I explicitly do not use btn enums here because these are char arrays and btns are shorts]
-'[BtnBranchOpen(0x800)][Jump("magic_list_items")][BtnBranchClose()]\
-[BtnBranchOpen(0x400)][Jump("magic_list_env")][BtnBranchClose()]\
-[BtnBranchOpen(0x200)][Jump("magic_list_spells")][BtnBranchClose()]\
-[BtnBranchOpen(0x100)][Jump("magic_list_spirit")][BtnBranchClose()]\
+'[BtnBranchOpen(0x800)][CallOnce(0,"mario_set_spell",1,["cancel"])][Jump("magic_list_items")][BtnBranchClose()]\
+[BtnBranchOpen(0x400)][CallOnce(0,"mario_set_spell",1,["cancel"])][Jump("magic_list_env")][BtnBranchClose()]\
+[BtnBranchOpen(0x200)][CallOnce(0,"mario_set_spell",1,["cancel"])][Jump("magic_list_spells")][BtnBranchClose()]\
+[BtnBranchOpen(0x100)][CallOnce(0,"mario_set_spell",1,["cancel"])][Jump("magic_list_spirit")][BtnBranchClose()]\
 [end]']
+
+magic_on_plat = ['[AutoNextBox()][JumpLink("magic_gen_shadow_fade_io")][AutoNextBox()]cannot use ACTION while\non ENV platform.[SetSpd(1)][Pause(60)][AutoNextBox()][CallOnce(0,"TE_set_state",2,["&gMagicHUDRequest",0])][EndTransition(0,0,0,0)][TimeEndStr(1)][end]']
+
 
 magic_list_chk_cancel = ['\
 [BtnBranchOpen(0x20)][CallLoop(0,"TE_set_flag",2,["&gMagicHUDRequest","CANCEL_HUD"])][BtnBranchClose()]\
@@ -111,7 +115,7 @@ magic_list_spirit = ['[AutoNextBox()][MosaicBGBox(12,82,214,234,"magic_action_me
 #end of the spells
 '[GenericText()][CallOnce(0,"TE_set_flag",2,["&gMagicHUDRequest","CAST_SPIRIT"])][AutoNextBox()][MosaicBGBox(12,82,214,234,"magic_action_menu",2,1)][CallOnce(3,"Get_Spell_Sel",1,[2])][ShadedBGBox(14,90,194,215,0,0,0,0x96)]]\n\
 [MatchRtrn(3,0)]Gigantify[CallOnce(0,"mario_set_spell",1,["gigantify"])][Jump("magic_spirit_list_end")]\
-[MatchRtrn(3,1)]Float[CallOnce(0,"mario_set_spell",1,["hover"])][Jump("magic_spirit_list_end")]\
+[MatchRtrn(3,1)]Hover[CallOnce(0,"mario_set_spell",1,["hover"])][Jump("magic_spirit_list_end")]\
 [MatchRtrn(3,2)]Stick[CallOnce(0,"mario_set_spell",1,["stick"])][Jump("magic_spirit_list_end")]\
 [MatchRtrn(3,3)]ss[Jump("magic_spirit_list_end")]\
 [MatchRtrn(3,4)]d[Jump("magic_spirit_list_end")]\
@@ -120,28 +124,35 @@ magic_list_spirit = ['[AutoNextBox()][MosaicBGBox(12,82,214,234,"magic_action_me
 [MatchRtrn(3,7)]spell8[Jump("magic_spirit_list_end")]\
 [GenericText()][end]']
 
-magic_list_env = ['[AutoNextBox()][MosaicBGBox(12,82,214,234,"magic_action_menu",2,1)][ShadedBGBox(14,98,158,215,0,0,0,0x96)]\n\
+
+magic_list_env = ['[AutoNextBox()][MosaicBGBox(12,82,214,234,"magic_action_menu",2,1)][ShadedBGBox(14,118,158,215,0,0,0,0x96)]\n\
 [JumpLink("magic_list_start_cast")]',
 #list of all the spells goes here
 '[CallLoop(3,"create_magic_list_dialog",2,[3,15])]\
 [MatchRtrn(3,0)]no env\nspells[TransAbs(16,160)][JumpLink("magic_list_chk_cancel")][end][GenericText()][TransAbs(16,160)][JumpLink("magic_list_chk_cancel")]\
-[MatchRtrn(3,1)][TransAbs(16,212)][CallLoop(0,"list_scroll_y_dialog",0,[])][UsrStr(15)][SetScissor(14,98,174,210)]\
+[MatchRtrn(3,1)][TransAbs(16,212)][CallLoop(0,"list_scroll_y_dialog",0,[])][UsrStr(15)][SetScissor(14,118,174,210)]\
 [CallLoop(2,"mario_has_spell_TE",2,["&gCurrSaveFileNum","ice_block"])][MatchRtrn(2,1)]Ice Block[end][GenericText()]\
-[CallLoop(2,"mario_has_spell_TE",2,["&gCurrSaveFileNum","rising_leaf"])][MatchRtrn(2,1)]Rising Leaf[end][GenericText()]\
-[CallLoop(2,"mario_has_spell_TE",2,["&gCurrSaveFileNum","cloud_lob"])][MatchRtrn(2,1)]Cloud Lob[end][GenericText()]\
+[CallLoop(2,"mario_has_spell_TE",2,["&gCurrSaveFileNum","hanging_leaf"])][MatchRtrn(2,1)]Hanging Leaf[end][GenericText()]\
+[CallLoop(2,"mario_has_spell_TE",2,["&gCurrSaveFileNum","cloud_lob"])][MatchRtrn(2,1)]Floating Cloud[end][GenericText()]\
 [CallLoop(2,"mario_has_spell_TE",2,["&gCurrSaveFileNum","unk4"])][MatchRtrn(2,1)]spell4[end][GenericText()]\
 [CallLoop(2,"mario_has_spell_TE",2,["&gCurrSaveFileNum","unk5"])][MatchRtrn(2,1)]spell5[end][GenericText()]\
 [CallLoop(2,"mario_has_spell_TE",2,["&gCurrSaveFileNum","unk6"])][MatchRtrn(2,1)]spell6[end][GenericText()]\
 [CallLoop(2,"mario_has_spell_TE",2,["&gCurrSaveFileNum","unk7"])][MatchRtrn(2,1)]spell7[end][GenericText()]\
 [CallLoop(2,"mario_has_spell_TE",2,["&gCurrSaveFileNum","unk8"])][MatchRtrn(2,1)]spell8[end][GenericText()]',
 #end of the spells
-'[GenericText()][CallOnce(0,"TE_set_flag",2,["&gMagicHUDRequest","CAST_ENVIRONMENT"])][AutoNextBox()][MosaicBGBox(12,82,214,234,"magic_action_menu",2,1)][CallOnce(3,"Get_Spell_Sel",1,[3])][ShadedBGBox(14,80,158,215,0,0,0,0x96)]]\n\
-[MatchRtrn(3,0)]Spawn Ice Block[Pause(90)][AutoNextBox()][TimeEndStr(1)]\
-[MatchRtrn(3,1)]Spawn Rising Leaf[Pause(90)][AutoNextBox()][TimeEndStr(1)]\
-[MatchRtrn(3,2)]Spawn Floating Cloud[Pause(90)][AutoNextBox()][TimeEndStr(1)]\
-[MatchRtrn(3,3)]unk spawn4[Pause(90)][AutoNextBox()][TimeEndStr(1)]\
-[MatchRtrn(3,4)]unk spawn5[Pause(90)][AutoNextBox()][TimeEndStr(1)]\
-[MatchRtrn(3,5)]unk spawn6[Pause(90)][AutoNextBox()][TimeEndStr(1)]\
-[MatchRtrn(3,6)]unk spawn7[Pause(90)][AutoNextBox()][TimeEndStr(1)]\
-[MatchRtrn(3,7)]unk spawn8[Pause(90)][AutoNextBox()][TimeEndStr(1)]\
+'[GenericText()][CallOnce(0,"TE_set_flag",2,["&gMagicHUDRequest","CAST_ENVIRONMENT"])][AutoNextBox()][MosaicBGBox(12,82,214,234,"magic_action_menu",2,1)][CallOnce(3,"Get_Spell_Sel",1,[3])][ShadedBGBox(14,108,194,215,0,0,0,0x96)]]\n\
+[MatchRtrn(3,0)]Ice Block[CallOnce(0,"mario_set_spell",1,["ice_block"])][Jump("magic_spirit_list_end")]\
+[MatchRtrn(3,1)]Hanging Leaf[CallOnce(0,"mario_set_spell",1,["hanging_leaf"])][Jump("magic_spirit_list_end")]\
+[MatchRtrn(3,2)]Floating Cloud[CallOnce(0,"mario_set_spell",1,["cloud_lob"])][Jump("magic_spirit_list_end")]\
+[MatchRtrn(3,3)]unk spawn4[CallOnce(0,"mario_set_spell",1,["ice_block"])][Jump("magic_spirit_list_end")]\
+[MatchRtrn(3,4)]unk spawn5[CallOnce(0,"mario_set_spell",1,["ice_block"])][Jump("magic_spirit_list_end")]\
+[MatchRtrn(3,5)]unk spawn6[CallOnce(0,"mario_set_spell",1,["ice_block"])][Jump("magic_spirit_list_end")]\
+[MatchRtrn(3,6)]unk spawn7[CallOnce(0,"mario_set_spell",1,["ice_block"])][Jump("magic_spirit_list_end")]\
+[MatchRtrn(3,7)]unk spawn8[CallOnce(0,"mario_set_spell",1,["ice_block"])][Jump("magic_spirit_list_end")]\
 [GenericText()][end]']
+
+
+magic_gen_shadow_fade_io = ['[EndTransition(10,0,0,0)][StartTransition(10,0,0,0)][ShadowText()][Pop()]']
+magic_cannot_place_floor = ["[JumpLink('magic_gen_shadow_fade_io')][AutoNextBox()]ice block must be placed on floor[TimeEndStr(60)]"]
+magic_cannot_place_ceil = ["[JumpLink('magic_gen_shadow_fade_io')][AutoNextBox()]hanging leaf must be under a ceiling[TimeEndStr(60)]"]
+magic_cannot_place_oob = ["[JumpLink('magic_gen_shadow_fade_io')][AutoNextBox()]floating cloud cannot be placed out of bounds[TimeEndStr(60)]"]

@@ -12,7 +12,7 @@ extern u32 gMagicHUDRequest;
 #define HOLD_CAST                     /* 0x00000008 */ (1 <<  3)
 #define CANCEL_HUD                    /* 0x00000010 */ (1 <<  4)
 #define CASTING_SEL                   /* 0x00000020 */ (1 <<  5)
-#define CASTING_UNK                   /* 0x00000040 */ (1 <<  6)
+#define CASTING_ON_PLAT               /* 0x00000040 */ (1 <<  6)
 #define CAST_SPELL                    /* 0x00000080 */ (1 <<  7)
 #define CAST_SPIRIT                   /* 0x00000100 */ (1 <<  8)
 #define CAST_ENVIRONMENT              /* 0x00000200 */ (1 <<  9)
@@ -51,13 +51,14 @@ enum spells{
 	test3,
 	//env
 	ice_block,
-	rising_leaf,
+	hanging_leaf,
 	cloud_lob,
 	unk4,
 	unk5,
 	unk6,
 	unk7,
 	unk8,
+	cancel,
 };
 
 

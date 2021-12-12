@@ -255,7 +255,7 @@ void TE_transition_active(struct TEState *CurEng,struct Transition *Tr,u8 flip){
 		CurAlpha = CurEng->EnvColorByte[3];
 		TarAlpha = Tr->TransAlpha;
 	}
-	u32 Env = CurEng->EnvColorWord;
+	s32 Env = CurEng->EnvColorWord;
 	u32 Time = (gNumVblanks-Tr->TransVI);
 	f32 Pct = ((f32) Time) / ((f32) Tr->TransLength);
 	f32 Spd = ((f32)Tr->TransSpeed)/((f32) Tr->TransLength);
@@ -289,16 +289,18 @@ void TE_print(struct TEState *CurEng){
 	if(!(StrBuffer[CurEng->state][0] == 0xFF)){
 		//print shadow with plaintext
 		if(CurEng->PlainText){
-			u32 Env = CurEng->EnvColorWord;
+			s32 Env = CurEng->EnvColorWord;
 			CurEng->EnvColorWord = 0x10101000 | CurEng->EnvColorByte[3];
 			CurEng->TempX += 1;
 			CurEng->TempY -= 1;
 			TE_transition_print(CurEng);
 			CurEng->TempX -= 1;
 			CurEng->TempY += 1;
+			CurEng->PrevEnvColorWord = CurEng->EnvColorWord;
 			CurEng->EnvColorWord = Env;
 		}
 		TE_transition_print(CurEng);
+		CurEng->PrevEnvColorWord = CurEng->EnvColorWord;
 		TE_flush_str_buff(CurEng);
 		TE_reset_Xpos(CurEng);
 	}
@@ -500,12 +502,12 @@ extern uintptr_t sSegmentTable[32];
 void TE_debug_print(struct TEState *CurEng){
 	u8 buf[32];
 	// if (gPlayer1Controller->buttonDown&L_TRIG){
-		sprintf(buf,"hov %d",CurEng->HoveredDialog);
-		print_text(32,64,buf);
-		sprintf(buf,"hud rez %x",gMagicHUDRequest);
-		print_text(32,96,buf);
-		sprintf(buf,"ret3 %d",FunctionReturns[1][3]);
-		print_text(32,128,buf);
+		// sprintf(buf,"og %x",CurEng->OgStr);
+		// print_text(32,64,buf);
+		// sprintf(buf,"temp %x",CurEng->TempStr);
+		// print_text(32,96,buf);
+		// sprintf(buf,"stck %x",CurEng->StrStack[0]);
+		// print_text(32,128,buf);
 	// }
 	
 }

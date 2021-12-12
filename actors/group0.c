@@ -27,3 +27,9 @@
 #include "sparkle_animation/model.inc.c"
 
 #include "hover/model.inc.c"
+#include "ice_block/collision.inc.c"
+#include "ice_block/model.inc.c"
+#include "spawn_border/model.inc.c"
+#include "hanging_leaf/model.inc.c"
+#include "hanging_leaf/collision.inc.c"
+#include "ceil_vine/model.inc.c"

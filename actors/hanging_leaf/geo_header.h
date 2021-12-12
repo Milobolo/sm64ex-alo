@@ -1,0 +1,18 @@
+extern const GeoLayout hanging_leaf_geo[];
+extern Lights1 hanging_leaf_leaf_center_lights;
+extern Lights1 hanging_leaf_leaves_lights;
+extern u8 hanging_leaf_cs_narakucloud01_alb_rgba16[];
+extern u8 hanging_leaf_canon_light_32_ia8[];
+extern u8 hanging_leaf_rso_p_in1_plantC_ci4[];
+extern u8 hanging_leaf_rso_p_in1_plantC_ci4_pal_rgba16[];
+extern Vtx hanging_leaf_Col_002_mesh_layer_1_vtx_0[8];
+extern Gfx hanging_leaf_Col_002_mesh_layer_1_tri_0[];
+extern Vtx hanging_leaf_Col_003_mesh_layer_1_vtx_0[38];
+extern Gfx hanging_leaf_Col_003_mesh_layer_1_tri_0[];
+extern Gfx mat_hanging_leaf_leaf_center[];
+extern Gfx mat_revert_hanging_leaf_leaf_center[];
+extern Gfx mat_hanging_leaf_leaves[];
+extern Gfx mat_revert_hanging_leaf_leaves[];
+extern Gfx hanging_leaf_Col_002_mesh_layer_1[];
+extern Gfx hanging_leaf_Col_003_mesh_layer_1[];
+extern Gfx hanging_leaf_material_revert_render_settings[];

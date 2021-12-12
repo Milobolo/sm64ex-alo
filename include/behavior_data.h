@@ -4,6 +4,10 @@
 #include "types.h"
 //ss4 behaviors
 extern const BehaviorScript bhvHoverParticle[];
+extern const BehaviorScript bhvIceBlock[];
+extern const BehaviorScript bhvSpawnBorder[];
+extern const BehaviorScript bhvHangingLeaf[];
+extern const BehaviorScript bhvCeilVine[];
 
 extern const BehaviorScript editor_Scroll_Texture[];
 extern const BehaviorScript RM_Scroll_Texture[];

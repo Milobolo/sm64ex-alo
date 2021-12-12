@@ -56,11 +56,11 @@ struct TEState{
 	};
 	union{
 	/* 0x38 */ u8 EnvColorByte[4];
-	/* 0x38 */ u32 EnvColorWord;
+	/* 0x38 */ s32 EnvColorWord;
 	};
 	union{
 	/* 0x3C */ u8 RainbowColorByte[4];
-	/* 0x3C */ u32 RainbowColorWord;
+	/* 0x3C */ s32 RainbowColorWord;
 	};
 	/* 0x40 */ u8 *StrRemoval;
 	//For user input on keyboard

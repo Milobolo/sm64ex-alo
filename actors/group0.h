@@ -346,4 +346,16 @@ extern const Gfx white_particle_small_unused_dl[];
 
 #include "hover/geo_header.h"
 
+#include "ice_block/collision_header.h"
+
+#include "ice_block/geo_header.h"
+
+#include "spawn_border/geo_header.h"
+
+#include "hanging_leaf/geo_header.h"
+
+#include "hanging_leaf/collision_header.h"
+
+#include "ceil_vine/geo_header.h"
+
 #endif

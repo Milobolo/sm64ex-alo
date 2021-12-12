@@ -2704,6 +2704,8 @@ static s32 check_for_instant_quicksand(struct MarioState *m) {
 
 //SS4 actions
 #include "magic.h"
+#include "text_engine.h"
+#include "src/game/magic_str_te.h"
 
 s32 act_cast_select(struct MarioState *m) {
 	if((gMagicHUDRequest==0) || (gMagicHUDRequest&CANCEL_HUD))
@@ -2712,15 +2714,17 @@ s32 act_cast_select(struct MarioState *m) {
 		set_mario_animation(m, MARIO_ANIM_HANDSTAND_IDLE);
 	return FALSE;
 }
-
+extern s16 newcam_yaw;
 s32 act_cast_actions(struct MarioState *m) {
 	//spell, spirit, env, item
 	switch(m->actionArg){
 		case 0:
 			set_mario_animation(m, MARIO_ANIM_CREDITS_RAISE_HAND);
+			gMagicHUDRequest &= ~CAST_SPELL;
 			break;
 		case 1:
-			set_mario_animation(m, MARIO_ANIM_CRAWLING);
+			set_mario_animation(m, MARIO_ANIM_TRIPLE_JUMP_LAND);
+			gMagicHUDRequest &= ~CAST_SPIRIT;
 			//handle gfx here
 			if (m->actionTimer == 0){
 				switch(m->Spell){
@@ -2732,16 +2736,123 @@ s32 act_cast_actions(struct MarioState *m) {
 						break;
 				}
 			}
-			if (m->actionTimer > 60){
+			if (m->actionTimer > 30){
 				set_mario_action(m, ACT_IDLE, 0);
 			}
 			m->actionTimer += 1;
 			break;
 		case 2:
-			set_mario_animation(m, MARIO_ANIM_TWIRL);
+			set_mario_animation(m, MARIO_ANIM_SUMMON_STAR);
+			gMagicHUDRequest &= ~CAST_ENVIRONMENT;
+			if(m->spawnObj == 0){
+				switch(m->Spell){
+					case ice_block:
+						spawn_object(m->marioObj,MODEL_SPAWN_BORDER,bhvSpawnBorder);
+						m->spawnObj = spawn_object(m->marioObj,MODEL_ICE_BLOCK,bhvIceBlock);
+						break;
+					case hanging_leaf:
+						spawn_object(m->marioObj,MODEL_SPAWN_BORDER,bhvSpawnBorder);
+						m->spawnObj = spawn_object(m->marioObj,MODEL_HANGING_LEAF,bhvHangingLeaf);
+						break;
+					case cloud_lob:
+						spawn_object(m->marioObj,MODEL_SPAWN_BORDER,bhvSpawnBorder);
+						m->spawnObj = spawn_object(m->marioObj,MODEL_ICE_BLOCK,bhvIceBlock);
+						break;
+				}
+			}
+			//do block movement and placment
+			else{
+				struct Controller *cont = m->controller;
+				struct Object *block = m->spawnObj;
+				s16 angle;
+				if (gLakituState.mode != CAMERA_MODE_NEWCAM)
+					angle = m->area->camera->yaw;
+				else
+					angle = newcam_yaw+0x4000;
+				f32 Zinc = -(sins(angle)*cont->stickX + coss(angle)*cont->stickY)/4.0f;
+				f32 Xinc = (coss(angle)*cont->stickX - sins(angle)*cont->stickY)/4.0f;
+				f32 Yinc;
+				if(block->oDistanceToMario >= 800.0f){
+					if(absf(Zinc + block->oPosZ - m->pos[2]) < absf(block->oPosZ - m->pos[2])){
+						block->oPosZ += Zinc;
+					}
+					if(absf(Xinc + block->oPosX - m->pos[0]) < absf(block->oPosX - m->pos[0])){
+						block->oPosX += Xinc;
+					}
+				}else{
+					block->oPosX += Xinc;
+					block->oPosZ += Zinc;
+				}
+				if (m->Spell != ice_block){
+					if(cont->buttonDown & A_BUTTON && (block->oPosY-m->pos[1])<400.0f){
+						block->oPosY += 10.0f;
+						
+					}if(cont->buttonDown & B_BUTTON && (block->oPosY-m->pos[1])>0.0f){
+						block->oPosY -= 10.0f;
+					}
+				}
+				if(cont->buttonPressed & L_TRIG){
+					u8 pass = 0;
+					struct Surface *ceil;
+					struct Surface *floor;
+					f32 floorHeight = find_floor(block->oPosX, block->oPosY, block->oPosZ, &floor);
+					f32 ceilHeight = find_ceil(block->oPosX, block->oPosY, block->oPosZ, &ceil);
+					switch(m->Spell){
+						//must have floor and floor height must be within 10 of obj
+						case ice_block:
+							if (floor){
+								if (floorHeight<(block->oPosY+10.0f) && floorHeight>(block->oPosY-10.0f))
+									pass = 1;
+							}
+							break;
+						//must have ceiling above at least 300 and no more than 1500 above
+						case hanging_leaf:
+							if (ceil){
+								if (ceilHeight<(block->oPosY+1500.0f) && ceilHeight>(block->oPosY+300.0f)){
+									pass = 1;
+									block->oHomeY = ceilHeight-block->oPosY;
+								}
+							}
+							break;
+						//can be thrown anywhere but oob
+						case cloud_lob:
+							find_floor(block->oPosX, block->oPosY, block->oPosZ, &floor);
+							if (floor)
+								pass = 1;
+							break;
+					}
+					if (pass){
+						block->oAction = 1;
+						m->spawnObj = 0;
+						set_mario_action(m, ACT_IDLE, 0);
+					}else{
+						switch(m->Spell){
+							// must have floor and floor height must be within 10 of obj
+							case ice_block:
+								SetupTextEngine(16,48,magic_cannot_place_floor, TE_STATE_BG);
+								break;
+							// must have ceiling above at least 300 and no more than 1500 above
+							case hanging_leaf:
+								SetupTextEngine(16,48,magic_cannot_place_ceil, TE_STATE_BG);
+								break;
+							// can be thrown anywhere but oob
+							case cloud_lob:
+								SetupTextEngine(16,48,magic_cannot_place_oob, TE_STATE_BG);
+								break;
+						}
+					}
+				}
+				//cancel cast
+				if(cont->buttonPressed & Z_TRIG){
+					obj_mark_for_deletion(block);
+					m->spawnObj = 0;
+					set_mario_action(m, ACT_IDLE, 0);
+				}
+			}
 			break;
 		case 3:
 			set_mario_animation(m, MARIO_ANIM_SLIDE_MOTIONLESS);
+			gMagicHUDRequest &= ~CAST_SPELL;
 			break;
 	}
 	return FALSE;

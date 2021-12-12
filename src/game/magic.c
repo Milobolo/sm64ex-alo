@@ -31,7 +31,7 @@ It will also contain basic enemy logic and enemy battle stuff like arenas, exp e
 u32 gMagicHUDRequest = 0;
 
 void start_render_magic_spells_hud(void){
-	if (!(gMagicHUDRequest&HUD_OPEN))
+	if ( !((gMarioState->action == ACT_CAST_ACTION) || (gMagicHUDRequest&HUD_OPEN)))
 		SetupTextEngine(16,212,magic_spells_init, TE_STATE_AUX);
 }
 

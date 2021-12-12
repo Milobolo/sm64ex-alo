@@ -340,6 +340,45 @@ const BehaviorScript bhvHoverParticle[] = {
     CALL_NATIVE(hover_particle_loop),
     END_LOOP(),
 };
+//just updates itself and then dies when obj is placed
+const BehaviorScript bhvSpawnBorder[] = {
+    BEGIN(OBJ_LIST_DEFAULT),
+    OR_INT(oFlags, OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE),
+	BEGIN_LOOP(),
+    CALL_NATIVE(bhvSpawnBorder_loop),
+    END_LOOP(),
+};
+
+extern const Collision ice_block_collision[];
+
+const BehaviorScript bhvIceBlock[] = {
+    BEGIN(OBJ_LIST_SURFACE),
+    OR_INT(oFlags, OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE),
+	LOAD_COLLISION_DATA(ice_block_collision),
+	SET_INT(oFaceAngleYaw,0),
+	BEGIN_LOOP(),
+    CALL_NATIVE(ice_block_loop),
+    END_LOOP(),
+};
+extern const Collision hanging_leaf_collision[];
+
+const BehaviorScript bhvHangingLeaf[] = {
+    BEGIN(OBJ_LIST_SURFACE),
+    OR_INT(oFlags, OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE),
+	LOAD_COLLISION_DATA(hanging_leaf_collision),
+	SET_INT(oFaceAngleYaw,0),
+	SPAWN_CHILD(/*Model*/ MODEL_CEIL_VINE, /*Behavior*/ bhvCeilVine),
+	BEGIN_LOOP(),
+    CALL_NATIVE(hanging_leaf_loop),
+    END_LOOP(),
+};
+const BehaviorScript bhvCeilVine[] = {
+    BEGIN(OBJ_LIST_DEFAULT),
+    OR_INT(oFlags, OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE),
+	BEGIN_LOOP(),
+    CALL_NATIVE(ceil_vine_loop),
+    END_LOOP(),
+};
 
 const BehaviorScript bhvStarDoor[] = {
     BEGIN(OBJ_LIST_SURFACE),

@@ -29,6 +29,10 @@
 /* SS4 global models */
 
 #define MODEL_HOVER                       0xE2
+#define MODEL_ICE_BLOCK                   0xE3
+#define MODEL_SPAWN_BORDER                0xE4
+#define MODEL_HANGING_LEAF                0xE5
+#define MODEL_CEIL_VINE                   0xE6
 
 
 

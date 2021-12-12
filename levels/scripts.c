@@ -72,6 +72,10 @@ const LevelScript level_main_scripts_entry[] = {
     ALLOC_LEVEL_POOL(),
 	//ss4 global models, starts from 0xE2
     LOAD_MODEL_FROM_GEO(MODEL_HOVER,                   hover_geo),
+    LOAD_MODEL_FROM_GEO(MODEL_ICE_BLOCK,               ice_block_geo),
+    LOAD_MODEL_FROM_GEO(MODEL_SPAWN_BORDER,            spawn_border_geo),
+    LOAD_MODEL_FROM_GEO(MODEL_HANGING_LEAF,            hanging_leaf_geo),
+    LOAD_MODEL_FROM_GEO(MODEL_CEIL_VINE,               ceil_vine_geo),
 	
     LOAD_MODEL_FROM_GEO(MODEL_MARIO,                   mario_geo),
     LOAD_MODEL_FROM_GEO(MODEL_SMOKE,                   smoke_geo),
