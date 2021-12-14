@@ -1121,7 +1121,7 @@ s8 TE_goto_return(struct TEState *CurEng,u8 *str){
 s8 TE_enable_plaintext(struct TEState *CurEng,u8 *str){
 	TE_print(CurEng);
 	CurEng->PlainText = str[1];
-	return TE_print_adv(CurEng,1);
+	return TE_print_adv(CurEng,2);
 }
 //9a cmd works
 s8 TE_enable_wobble(struct TEState *CurEng,u8 *str){

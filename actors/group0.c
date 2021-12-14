@@ -33,3 +33,5 @@
 #include "hanging_leaf/model.inc.c"
 #include "hanging_leaf/collision.inc.c"
 #include "ceil_vine/model.inc.c"
+#include "floating_cloud/model.inc.c"
+#include "floating_cloud/collision.inc.c"

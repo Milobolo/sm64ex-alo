@@ -1,5 +1,6 @@
 extern struct Surface gHoverPseudoFloor;
 extern Gfx mat_spawn_border_spawn_radius[];
+extern Gfx mat_floating_cloud_cloud[];
 #include "src/game/magic.h"
 #include "src/game/level_update.h"
 
@@ -38,6 +39,11 @@ void bhvSpawnBorder_loop(void){
 	if(gMarioState->spawnObj == 0){
 		obj_mark_for_deletion(o);
 	}
+	if (gMarioState->Spell == cloud_lob){
+		o->header.gfx.scale[0] = 0.5f;
+		o->header.gfx.scale[1] = 0.6f;
+		o->header.gfx.scale[2] = 0.5f;
+	}
 }
 
 void ceil_vine_loop(void){
@@ -68,4 +74,21 @@ void hanging_leaf_loop(void){
 		o->oAnimState = 0;
 	}
 
+}
+
+void floating_cloud_loop(void){
+	o->oDistanceToMario = lateral_dist_between_objects(o,gMarioObject);
+	Gfx *F2 = segmented_to_virtual(mat_floating_cloud_cloud);
+	ScrollF2(F2+11,0,5);
+	if(cur_obj_is_mario_on_platform()){
+		gMagicHUDRequest |= CASTING_ON_PLAT;
+	}else{
+		gMagicHUDRequest &= ~CASTING_ON_PLAT;
+	}
+	if (gMarioState->Spell != cloud_lob){
+		obj_mark_for_deletion(o);
+	}
+	if (o->oAction == 1){
+		load_object_collision_model();
+	}
 }

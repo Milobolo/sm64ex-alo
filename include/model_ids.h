@@ -33,6 +33,7 @@
 #define MODEL_SPAWN_BORDER                0xE4
 #define MODEL_HANGING_LEAF                0xE5
 #define MODEL_CEIL_VINE                   0xE6
+#define MODEL_FLOATING_CLOUD              0xE7
 
 
 

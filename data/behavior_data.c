@@ -367,9 +367,24 @@ const BehaviorScript bhvHangingLeaf[] = {
     OR_INT(oFlags, OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE),
 	LOAD_COLLISION_DATA(hanging_leaf_collision),
 	SET_INT(oFaceAngleYaw,0),
+	ADD_FLOAT(oPosY,250),
 	SPAWN_CHILD(/*Model*/ MODEL_CEIL_VINE, /*Behavior*/ bhvCeilVine),
 	BEGIN_LOOP(),
     CALL_NATIVE(hanging_leaf_loop),
+    END_LOOP(),
+};
+
+extern const Collision floating_cloud_collision[];
+
+const BehaviorScript bhvFloatingCloud[] = {
+    BEGIN(OBJ_LIST_SURFACE),
+    OR_INT(oFlags, OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE),
+	LOAD_COLLISION_DATA(floating_cloud_collision),
+	SET_INT(oFaceAngleYaw,0),
+	ADD_FLOAT(oPosY,250),
+	SPAWN_CHILD(/*Model*/ MODEL_CEIL_VINE, /*Behavior*/ bhvCeilVine),
+	BEGIN_LOOP(),
+    CALL_NATIVE(floating_cloud_loop),
     END_LOOP(),
 };
 const BehaviorScript bhvCeilVine[] = {

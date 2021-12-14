@@ -2756,7 +2756,7 @@ s32 act_cast_actions(struct MarioState *m) {
 						break;
 					case cloud_lob:
 						spawn_object(m->marioObj,MODEL_SPAWN_BORDER,bhvSpawnBorder);
-						m->spawnObj = spawn_object(m->marioObj,MODEL_ICE_BLOCK,bhvIceBlock);
+						m->spawnObj = spawn_object(m->marioObj,MODEL_FLOATING_CLOUD,bhvFloatingCloud);
 						break;
 				}
 			}
@@ -2765,6 +2765,11 @@ s32 act_cast_actions(struct MarioState *m) {
 				struct Controller *cont = m->controller;
 				struct Object *block = m->spawnObj;
 				s16 angle;
+				f32 rlim;
+				if (m->Spell == cloud_lob)
+					rlim = 300.0f;
+				else
+					rlim = 800.0f;
 				if (gLakituState.mode != CAMERA_MODE_NEWCAM)
 					angle = m->area->camera->yaw;
 				else
@@ -2772,7 +2777,7 @@ s32 act_cast_actions(struct MarioState *m) {
 				f32 Zinc = -(sins(angle)*cont->stickX + coss(angle)*cont->stickY)/4.0f;
 				f32 Xinc = (coss(angle)*cont->stickX - sins(angle)*cont->stickY)/4.0f;
 				f32 Yinc;
-				if(block->oDistanceToMario >= 800.0f){
+				if(block->oDistanceToMario >= rlim){
 					if(absf(Zinc + block->oPosZ - m->pos[2]) < absf(block->oPosZ - m->pos[2])){
 						block->oPosZ += Zinc;
 					}
@@ -2784,10 +2789,15 @@ s32 act_cast_actions(struct MarioState *m) {
 					block->oPosZ += Zinc;
 				}
 				if (m->Spell != ice_block){
-					if(cont->buttonDown & A_BUTTON && (block->oPosY-m->pos[1])<400.0f){
+					f32 ylim;
+					if (m->Spell == cloud_lob)
+						ylim = 400.0f;
+					else
+						ylim = 800.0f;
+					if(cont->buttonDown & A_BUTTON && (block->oPosY-m->pos[1])<ylim){
 						block->oPosY += 10.0f;
-						
-					}if(cont->buttonDown & B_BUTTON && (block->oPosY-m->pos[1])>0.0f){
+					}
+					if(cont->buttonDown & B_BUTTON && (block->oPosY-m->pos[1])>250.0f){
 						block->oPosY -= 10.0f;
 					}
 				}
@@ -2797,6 +2807,7 @@ s32 act_cast_actions(struct MarioState *m) {
 					struct Surface *floor;
 					f32 floorHeight = find_floor(block->oPosX, block->oPosY, block->oPosZ, &floor);
 					f32 ceilHeight = find_ceil(block->oPosX, block->oPosY, block->oPosZ, &ceil);
+					f32 rlim;
 					switch(m->Spell){
 						//must have floor and floor height must be within 10 of obj
 						case ice_block:
@@ -2814,7 +2825,7 @@ s32 act_cast_actions(struct MarioState *m) {
 								}
 							}
 							break;
-						//can be thrown anywhere but oob
+						//can be thrown anywhere but oob, has smaller range
 						case cloud_lob:
 							find_floor(block->oPosX, block->oPosY, block->oPosZ, &floor);
 							if (floor)

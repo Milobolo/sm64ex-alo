@@ -8,6 +8,7 @@ extern const BehaviorScript bhvIceBlock[];
 extern const BehaviorScript bhvSpawnBorder[];
 extern const BehaviorScript bhvHangingLeaf[];
 extern const BehaviorScript bhvCeilVine[];
+extern const BehaviorScript bhvFloatingCloud[];
 
 extern const BehaviorScript editor_Scroll_Texture[];
 extern const BehaviorScript RM_Scroll_Texture[];

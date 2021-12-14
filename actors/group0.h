@@ -358,4 +358,8 @@ extern const Gfx white_particle_small_unused_dl[];
 
 #include "ceil_vine/geo_header.h"
 
+#include "floating_cloud/geo_header.h"
+
+#include "floating_cloud/collision_header.h"
+
 #endif

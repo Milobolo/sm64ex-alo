@@ -15,6 +15,7 @@ void ice_block_loop(void);
 void bhvSpawnBorder_loop(void);
 void hanging_leaf_loop(void);
 void ceil_vine_loop(void);
+void floating_cloud_loop(void);
 
 void spawn_mist_particles_variable(s32 count, s32 offsetY, f32 size);
 void bhv_spawn_star_no_level_exit(u32);

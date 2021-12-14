@@ -22,3 +22,4 @@
 #include "spawn_border/geo.inc.c"
 #include "hanging_leaf/geo.inc.c"
 #include "ceil_vine/geo.inc.c"
+#include "floating_cloud/geo.inc.c"

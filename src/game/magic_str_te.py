@@ -152,7 +152,7 @@ magic_list_env = ['[AutoNextBox()][MosaicBGBox(12,82,214,234,"magic_action_menu"
 [GenericText()][end]']
 
 
-magic_gen_shadow_fade_io = ['[EndTransition(10,0,0,0)][StartTransition(10,0,0,0)][ShadowText()][Pop()]']
+magic_gen_shadow_fade_io = ['[EndTransition(10,0,0,0)][StartTransition(10,0,0,0)][ShadowText(1)][Pop()]']
 magic_cannot_place_floor = ["[JumpLink('magic_gen_shadow_fade_io')][AutoNextBox()]ice block must be placed on floor[TimeEndStr(60)]"]
 magic_cannot_place_ceil = ["[JumpLink('magic_gen_shadow_fade_io')][AutoNextBox()]hanging leaf must be under a ceiling[TimeEndStr(60)]"]
 magic_cannot_place_oob = ["[JumpLink('magic_gen_shadow_fade_io')][AutoNextBox()]floating cloud cannot be placed out of bounds[TimeEndStr(60)]"]
