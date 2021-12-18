@@ -136,6 +136,11 @@
 #define /*0x1C0*/ oFloor                      OBJECT_FIELD_SURFACE(0x4E)
 #define /*0x1C4*/ oDeathSound                 OBJECT_FIELD_S32(0x4F)
 
+//new in SS4
+#define /*0x1A4*/ oCanSwap                    OBJECT_FIELD_S32(0x47)
+#define /*0x1A4*/ oList                       OBJECT_FIELD_S32(0x0E) //used once on a tox box
+#define /*0x1C4*/ oCeil                       OBJECT_FIELD_SURFACE(0x4F)
+
 /* Pathed (see obj_follow_path) */
 #define /*0x0FC*/ oPathedStartWaypoint     OBJECT_FIELD_WAYPOINT(0x1D)
 #define /*0x100*/ oPathedPrevWaypoint      OBJECT_FIELD_WAYPOINT(0x1E)

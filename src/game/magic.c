@@ -116,25 +116,25 @@ u32 create_magic_list_dialog(u32 list, u8 usr){
 	switch(list){
 		//item list
 		case 0:
-			for (i = 0; i<8; i++){
+			for (i = 0; i<3; i++){
 				cnt += mario_has_spell(gCurrSaveFileNum-1,i);
 			}
 			break;
 		//spell list
 		case 1:
-			for (i = 8; i<16; i++){
+			for (i = 3; i<6; i++){
 				cnt += mario_has_spell(gCurrSaveFileNum-1,i);
 			}
 			break;
 		//spirit list
 		case 2:
-			for (i = 16; i<24; i++){
+			for (i = 6; i<9; i++){
 				cnt += mario_has_spell(gCurrSaveFileNum-1,i);
 			}
 			break;
 		//env list
 		case 3:
-			for (i = 24; i<32; i++){
+			for (i = 9; i<12; i++){
 				cnt += mario_has_spell(gCurrSaveFileNum-1,i);
 			}
 			break;
@@ -168,38 +168,38 @@ u32 mario_has_spell_TE(s16 *file, u32 spell){
 }
 
 u32 Get_Spell_Sel(u32 list){
-	u8 cnt[8];
+	u8 cnt[3];
 	u32 i;
 	u8 y = TE_Engines[TE_STATE_AUX].ReturnedDialog+1;
 	switch(list){
 		//item list
 		case 0:
-			for (i = 0; i<8; i++){
+			for (i = 0; i<3; i++){
 				cnt[i] = mario_has_spell(gCurrSaveFileNum-1,i);
 			}
 			break;
 		//spell list
 		case 1:
-			for (i = 8; i<16; i++){
-				cnt[i-8] = mario_has_spell(gCurrSaveFileNum-1,i);
+			for (i = 3; i<6; i++){
+				cnt[i-3] = mario_has_spell(gCurrSaveFileNum-1,i);
 			}
 			break;
 		//spirit list
 		case 2:
-			for (i = 16; i<24; i++){
-				cnt[i-16] = mario_has_spell(gCurrSaveFileNum-1,i);
+			for (i = 6; i<9; i++){
+				cnt[i-6] = mario_has_spell(gCurrSaveFileNum-1,i);
 			}
 			break;
 		//env list
 		case 3:
-			for (i = 24; i<32; i++){
-				cnt[i-24] = mario_has_spell(gCurrSaveFileNum-1,i);
+			for (i = 9; i<12; i++){
+				cnt[i-9] = mario_has_spell(gCurrSaveFileNum-1,i);
 			}
 			break;
 	}
 	u8 x = 0;
 	u8 z = 0;
-	for (i = 0; i<8; i++){
+	for (i = 0; i<3; i++){
 		if (cnt[i]==1){
 			x += 1;
 		}
@@ -211,8 +211,40 @@ u32 Get_Spell_Sel(u32 list){
 	return z;
 }
 
+u32 mario_can_cast(void){
+	if (gMarioState->flags & MARIO_WING_CAP){
+		return 1;
+	}else{
+		return 0;
+	}
+}
+
 void mario_set_spell(u32 spell){
-	gMarioState->Spell = spell;
+	gMarioState->CastSpell = spell;
+	//update spell
+	if (spell == 0){
+		return;
+	}
+	//item
+	if(spell<ACTION_RETURN){
+		if(spell != ACTION_MAGIC_HAT){
+			gMarioState->Spell = 0;
+		}else{
+			gMarioState->Spell = spell;
+		}
+	}
+	//spell
+	else if(spell<ACTION_GIGANTIFY){
+		gMarioState->Spell = spell | (gMarioState->Spell&(~0x38));
+	}
+	//spirit
+	else if(spell<ACTION_ICE_BLOCK){
+		gMarioState->Spell = spell | (gMarioState->Spell&(~0x1c0));
+	}
+	//env
+	else{
+		gMarioState->Spell = spell | (gMarioState->Spell&(~0x1e00));
+	}
 }
 
 //file at bottom so function in here are declared before compile

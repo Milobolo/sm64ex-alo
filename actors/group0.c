@@ -35,3 +35,5 @@
 #include "ceil_vine/model.inc.c"
 #include "floating_cloud/model.inc.c"
 #include "floating_cloud/collision.inc.c"
+#include "time_sphere/model.inc.c"
+#include "return_portal/model.inc.c"

@@ -19,47 +19,43 @@ extern u32 gMagicHUDRequest;
 #define CAST_ITEM                     /* 0x00000400 */ (1 <<  10)
 
 
-//spells
+//spells inside save struct
 enum spells{
 	//items
-	//consumables (should change later to be less dumb)
-	magic_pot,
-	magic_pot2,
-	magic_pot3,
-	magic_pot4,
-	health_pot,
-	health_pot2,
-	health_pot3,
-	health_pot4,
+	magic_hat,
+	metal_cap,
+	vanish_cap,
 	//spells
-	checkpoint,
+	sp_return,
+	swap,
 	time_freeze,
-	destroy_enemy,
-	teleport_portal,
-	spell5,
-	spell6,
-	spell7,
-	spell8,
 	//spirit
 	gigantify,
 	hover,
 	stick,
-	test5,
-	test4,
-	test1,
-	test2,
-	test3,
 	//env
 	ice_block,
 	hanging_leaf,
 	cloud_lob,
-	unk4,
-	unk5,
-	unk6,
-	unk7,
-	unk8,
 	cancel,
 };
+
+//spell defines
+#define ACTION_NULL                          /* 0x00000000 */ 0
+#define ACTION_MAGIC_HAT                     /* 0x00000001 */ (1 <<  0)
+#define ACTION_METAL_CAP                     /* 0x00000002 */ (1 <<  1)
+#define ACTION_VANISH_CAP                    /* 0x00000004 */ (1 <<  2)
+#define ACTION_RETURN                        /* 0x00000008 */ (1 <<  3)
+#define ACTION_SWAP                          /* 0x00000010 */ (1 <<  4)
+#define ACTION_TIME_FREEZE                   /* 0x00000020 */ (1 <<  5)
+#define ACTION_GIGANTIFY                     /* 0x00000040 */ (1 <<  6)
+#define ACTION_HOVER                         /* 0x00000080 */ (1 <<  7)
+#define ACTION_STICK                         /* 0x00000100 */ (1 <<  8)
+#define ACTION_ICE_BLOCK                     /* 0x00000200 */ (1 <<  9)
+#define ACTION_HANGING_LEAF                  /* 0x00000400 */ (1 <<  10)
+#define ACTION_CLOUD_LOB                     /* 0x00000800 */ (1 <<  11)
+#define ACTION_CANCEL_ENV                    /* 0x00001000 */ (1 <<  12)
+
 
 
 void start_render_magic_spells_hud(void);
@@ -73,5 +69,5 @@ void list_scroll_y_dialog(void);
 u32 mario_has_spell_TE(s16 *file, u32 spell);
 u32 Get_Spell_Sel(u32 list);
 void mario_set_spell(u32 spell);
-
+u32 mario_can_cast(void);
 #endif

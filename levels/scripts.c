@@ -77,6 +77,8 @@ const LevelScript level_main_scripts_entry[] = {
     LOAD_MODEL_FROM_GEO(MODEL_HANGING_LEAF,            hanging_leaf_geo),
     LOAD_MODEL_FROM_GEO(MODEL_CEIL_VINE,               ceil_vine_geo),
     LOAD_MODEL_FROM_GEO(MODEL_FLOATING_CLOUD,          floating_cloud_geo),
+    LOAD_MODEL_FROM_GEO(MODEL_TIME_SPHERE,             time_sphere_geo),
+    LOAD_MODEL_FROM_GEO(MODEL_RETURN_PORTAL,           return_portal_geo),
 	
     LOAD_MODEL_FROM_GEO(MODEL_MARIO,                   mario_geo),
     LOAD_MODEL_FROM_GEO(MODEL_SMOKE,                   smoke_geo),

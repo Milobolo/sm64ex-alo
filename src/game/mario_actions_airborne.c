@@ -1206,7 +1206,7 @@ s32 check_wall_kick(struct MarioState *m) {
         m->faceAngle[1] += 0x8000;
 		m->wallKickTimer = 0;
         return set_mario_action(m, ACT_WALL_KICK_AIR, 0);
-    }if(m->framesSinceA < 2 && m->Spell == stick){
+    }if(m->framesSinceA < 2 && m->Spell&ACTION_STICK){
 		m->wallKickTimer = 0;
 		return set_mario_action(m, ACT_WALL_KICK_AIR, 0);
 	}
@@ -1217,7 +1217,7 @@ s32 act_backward_air_kb(struct MarioState *m) {
     if (check_wall_kick(m)) {
         return TRUE;
     }
-	else if(m->prevAction == ACT_AIR_HIT_WALL && m->Spell == stick){
+	else if(m->prevAction == ACT_AIR_HIT_WALL && m->Spell&ACTION_STICK){
 		//stick cancel or wall gone
 		if(gPlayer1Controller->buttonPressed&Z_TRIG || m->wall == NULL){
 			return set_mario_action(m, ACT_FREEFALL, 0);
@@ -1249,7 +1249,7 @@ s32 act_forward_air_kb(struct MarioState *m) {
     if (check_wall_kick(m)) {
         return TRUE;
     }
-	else if(m->prevAction == ACT_AIR_HIT_WALL && m->Spell == stick){
+	else if(m->prevAction == ACT_AIR_HIT_WALL && m->Spell&ACTION_STICK){
 		//stick cancel or wall gone
 		if(gPlayer1Controller->buttonPressed&Z_TRIG || m->wall == NULL){
 			return set_mario_action(m, ACT_FREEFALL, 0);
@@ -1414,13 +1414,13 @@ s32 act_air_hit_wall(struct MarioState *m) {
             m->faceAngle[1] += 0x8000;
             return set_mario_action(m, ACT_WALL_KICK_AIR, 0);
         }
-    } else if (m->forwardVel >= 38.0f || (m->Spell == stick)) {
+    } else if (m->forwardVel >= 38.0f || (m->Spell&ACTION_STICK)) {
         m->wallKickTimer = 5;
         if (m->vel[1] > 0.0f) {
             m->vel[1] = 0.0f;
         }
 
-        if(m->Spell != stick){
+        if(!(m->Spell&ACTION_STICK)){
 			m->particleFlags |= PARTICLE_VERTICAL_STAR;
 		}
         return set_mario_action(m, ACT_BACKWARD_AIR_KB, 0);
@@ -1821,9 +1821,9 @@ s32 act_shot_from_cannon(struct MarioState *m) {
             break;
     }
 
-    if ((m->flags & MARIO_WING_CAP) && m->vel[1] < 0.0f) {
-        set_mario_action(m, ACT_FLYING, 0);
-    }
+    // if ((m->flags & MARIO_WING_CAP) && m->vel[1] < 0.0f) {
+        // set_mario_action(m, ACT_FLYING, 0);
+    // }
 
     if ((m->forwardVel -= 0.05) < 10.0f) {
         mario_set_forward_vel(m, 10.0f);

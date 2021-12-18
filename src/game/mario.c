@@ -714,7 +714,7 @@ s16 find_floor_slope(struct MarioState *m, s16 yawOffset) {
     f32 forwardFloorY, backwardFloorY;
     f32 forwardYDelta, backwardYDelta;
     s16 result;
-	if(m->Spell == hover && m->floor->originOffset == -9999.0f){
+	if( (m->Spell&ACTION_HOVER) && m->floor->originOffset == -9999.0f){
 		return 0;
 	}
 
@@ -1072,9 +1072,10 @@ s32 set_jump_from_landing(struct MarioState *m) {
                 case ACT_DOUBLE_JUMP_LAND:
                     // If Mario has a wing cap, he ignores the typical speed
                     // requirement for a triple jump.
-                    if (m->flags & MARIO_WING_CAP) {
-                        set_mario_action(m, ACT_FLYING_TRIPLE_JUMP, 0);
-                    } else if (m->forwardVel > 20.0f) {
+                    // if (m->flags & MARIO_WING_CAP) {
+                        // set_mario_action(m, ACT_FLYING_TRIPLE_JUMP, 0);
+                    // } else 
+					if (m->forwardVel > 20.0f) {
                         set_mario_action(m, ACT_TRIPLE_JUMP, 0);
                     } else {
                         set_mario_action(m, ACT_JUMP, 0);
@@ -1728,19 +1729,11 @@ void mario_update_hitbox_and_cap_model(struct MarioState *m) {
     }
 
     if (flags & MARIO_CAP_IN_HAND) {
-        if (flags & MARIO_WING_CAP) {
-            bodyState->handState = MARIO_HAND_HOLDING_WING_CAP;
-        } else {
-            bodyState->handState = MARIO_HAND_HOLDING_CAP;
-        }
+             bodyState->handState = MARIO_HAND_HOLDING_CAP;
     }
 
     if (flags & MARIO_CAP_ON_HEAD) {
-        if (flags & MARIO_WING_CAP) {
-            bodyState->capState = MARIO_HAS_WING_CAP_ON;
-        } else {
             bodyState->capState = MARIO_HAS_DEFAULT_CAP_ON;
-        }
     }
 
     m->marioObj->hitboxRadius = 37.0f*GetMarioScaleFactors();
@@ -1794,7 +1787,7 @@ void queue_rumble_particles(void) {
 #endif
 //for TINY/HUGE mario
 f32 GetMarioScaleFactors(void){
-	if (configHUGE || (gMarioState->Spell == gigantify)){
+	if (configHUGE || (gMarioState->Spell&ACTION_GIGANTIFY)){
 		return 1.5f;
 	}else if (configTINY){
 		return 0.6f;
@@ -1804,7 +1797,7 @@ f32 GetMarioScaleFactors(void){
 	
 };
 f32 GetMarioReducedScaleFactors(void){
-	if (configHUGE || (gMarioState->Spell == gigantify)){
+	if (configHUGE || (gMarioState->Spell&ACTION_GIGANTIFY)){
 		return 1.25f;
 	}else if (configTINY){
 		return 0.75f;
@@ -1814,7 +1807,7 @@ f32 GetMarioReducedScaleFactors(void){
 	
 };
 f32 GetMarioLargeScaleFactors(void){
-	if (configHUGE || (gMarioState->Spell == gigantify)){
+	if (configHUGE || (gMarioState->Spell&ACTION_GIGANTIFY)){
 		return 1.75f;
 	}else if (configTINY){
 		return 0.5f;
@@ -2061,14 +2054,7 @@ void init_mario(void) {
     gMarioState->framesSinceB = 0xFF;
 
     gMarioState->invincTimer = 0;
-
-    if (save_file_get_flags()
-        & (SAVE_FLAG_CAP_ON_GROUND | SAVE_FLAG_CAP_ON_KLEPTO | SAVE_FLAG_CAP_ON_UKIKI
-           | SAVE_FLAG_CAP_ON_MR_BLIZZARD)) {
-        gMarioState->flags = 0;
-    } else {
-        gMarioState->flags = (MARIO_NORMAL_CAP | MARIO_CAP_ON_HEAD);
-    }
+	gMarioState->flags = (MARIO_NORMAL_CAP | MARIO_CAP_ON_HEAD | MARIO_WING_CAP);
 
     gMarioState->forwardVel = 0.0f;
     gMarioState->squishTimer = 0;

@@ -391,7 +391,7 @@ void set_mario_initial_action(struct MarioState *m, u32 spawnType, u32 actionArg
             break;
     }
 
-    set_mario_initial_cap_powerup(m);
+    // set_mario_initial_cap_powerup(m);
 }
 
 void init_mario_after_warp(void) {
@@ -1016,6 +1016,7 @@ void basic_update(UNUSED s16 *arg) {
 }
 #include "text_engine.h"
 int gPressedStart = 0;
+extern u32 gswapIndex;
 s32 play_mode_normal(void) {
     if (gCurrDemoInput != NULL) {
         print_intro_text();
@@ -1043,6 +1044,7 @@ s32 play_mode_normal(void) {
 	// }
 	// #endif
 	#endif
+	gswapIndex = 0;
 	area_update_objects();
     update_hud_values();
 

@@ -365,6 +365,7 @@ struct Object *create_object(const BehaviorScript *bhvScript) {
 
     obj->curBhvCommand = bhvScript;
     obj->behavior = behavior;
+	obj->oList = objListIndex;
 
     if (objListIndex == OBJ_LIST_UNIMPORTANT) {
         obj->activeFlags |= ACTIVE_FLAG_UNIMPORTANT;

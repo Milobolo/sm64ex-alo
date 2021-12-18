@@ -4,10 +4,12 @@
 #include "behavior_data.h"
 #include "behavior_script.h"
 #include "game/area.h"
+#include "game/level_update.h"
 #include "game/behavior_actions.h"
 #include "game/game_init.h"
 #include "game/mario.h"
 #include "game/memory.h"
+#include "game/magic.h"
 #include "game/obj_behaviors_2.h"
 #include "game/object_helpers.h"
 #include "game/object_list_processor.h"
@@ -911,6 +913,9 @@ static BhvCommandProc BehaviorCmdTable[] = {
     bhv_cmd_cylboard //38
 };
 
+struct Object *swappables[32];
+u32 gswapIndex;
+struct Object *gFreezeTime;
 // Execute the behavior script of the current object, process the object flags, and other miscellaneous code for updating objects.
 void cur_obj_update(void) {
     UNUSED u32 unused;
@@ -927,6 +932,28 @@ void cur_obj_update(void) {
     } else {
         distanceFromMario = 0.0f;
     }
+    if (objFlags & OBJ_SWAP_COMPUTE) {
+        if(gCurrentObject->oDistanceToMario<600.0f){
+			gCurrentObject->oCanSwap = 1;
+			swappables[gswapIndex] = gCurrentObject;
+			gswapIndex++;
+		}
+    } else {
+        gCurrentObject->oCanSwap = 0;
+    }
+	//time freeze
+	if((gMarioState->Spell&ACTION_TIME_FREEZE) && (gCurrentObject!=gMarioState->marioObj) && (objFlags & OBJ_FREEZE_IMMUNE != OBJ_FREEZE_IMMUNE)){
+		f32 dist = dist_between_objects(gCurrentObject, gFreezeTime);
+		//freeze this object
+		if (dist<600.0f){
+			if(gCurrentObject->oList == OBJ_LIST_SURFACE && gCurrentObject->collisionData){
+				load_object_collision_model();
+			}
+			return;
+		}
+		
+		
+	}
 
     // Calculate the angle from the object to Mario.
     if (objFlags & OBJ_FLAG_COMPUTE_ANGLE_TO_MARIO) {

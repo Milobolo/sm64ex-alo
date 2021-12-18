@@ -362,4 +362,8 @@ extern const Gfx white_particle_small_unused_dl[];
 
 #include "floating_cloud/collision_header.h"
 
+#include "time_sphere/geo_header.h"
+
+#include "return_portal/geo_header.h"
+
 #endif

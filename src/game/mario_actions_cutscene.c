@@ -2715,24 +2715,60 @@ s32 act_cast_select(struct MarioState *m) {
 	return FALSE;
 }
 extern s16 newcam_yaw;
+extern u32 gswapIndex;
+extern struct Object *swappables[32];
+extern struct Object *gFreezeTime;
+extern struct Object *gReturn;
 s32 act_cast_actions(struct MarioState *m) {
 	//spell, spirit, env, item
 	switch(m->actionArg){
 		case 0:
-			set_mario_animation(m, MARIO_ANIM_CREDITS_RAISE_HAND);
 			gMagicHUDRequest &= ~CAST_SPELL;
+			if (m->spawnObj == 0){
+				switch(m->CastSpell){
+					case ACTION_RETURN:
+						//spawn an object or if obj exists then ask for return
+						if(gReturn){
+							gReturn->activeFlags = ACTIVE_FLAG_DEACTIVATED;
+						}
+						m->spawnObj = spawn_object(m->marioObj,MODEL_RETURN_PORTAL,bhvReturnPortal);
+						gReturn = m->spawnObj;
+						set_mario_animation(m, MARIO_ANIM_BREAKDANCE);
+						break;
+					case ACTION_SWAP:
+						//check swappables
+						// spawn_object(m->marioObj,MODEL_TIME_SPHERE,bhvTimeSphere);
+						break;
+					case ACTION_TIME_FREEZE:
+						if(gFreezeTime){
+							gFreezeTime->activeFlags = ACTIVE_FLAG_DEACTIVATED;
+						}
+						m->spawnObj = spawn_object(m->marioObj,MODEL_TIME_SPHERE,bhvTimeSphere);
+						gFreezeTime = m->spawnObj;
+						set_mario_animation(m, MARIO_ANIM_BREAKDANCE);
+						break;
+				}
+			}
+			m->actionTimer++;
+			if (is_anim_at_end(m)){
+				set_mario_action(m, ACT_IDLE, 0);
+				m->spawnObj = 0;
+			}
 			break;
 		case 1:
 			set_mario_animation(m, MARIO_ANIM_TRIPLE_JUMP_LAND);
 			gMagicHUDRequest &= ~CAST_SPIRIT;
 			//handle gfx here
 			if (m->actionTimer == 0){
-				switch(m->Spell){
-					case gigantify:
+				switch(m->CastSpell){
+					case ACTION_GIGANTIFY:
+						//red particles
 						break;
-					case hover:
+					case ACTION_HOVER:
+						//yellow particles
 						break;
-					case stick:
+					case ACTION_STICK:
+						//blue particles
 						break;
 				}
 			}
@@ -2745,16 +2781,16 @@ s32 act_cast_actions(struct MarioState *m) {
 			set_mario_animation(m, MARIO_ANIM_SUMMON_STAR);
 			gMagicHUDRequest &= ~CAST_ENVIRONMENT;
 			if(m->spawnObj == 0){
-				switch(m->Spell){
-					case ice_block:
+				switch(m->CastSpell){
+					case ACTION_ICE_BLOCK:
 						spawn_object(m->marioObj,MODEL_SPAWN_BORDER,bhvSpawnBorder);
 						m->spawnObj = spawn_object(m->marioObj,MODEL_ICE_BLOCK,bhvIceBlock);
 						break;
-					case hanging_leaf:
+					case ACTION_HANGING_LEAF:
 						spawn_object(m->marioObj,MODEL_SPAWN_BORDER,bhvSpawnBorder);
 						m->spawnObj = spawn_object(m->marioObj,MODEL_HANGING_LEAF,bhvHangingLeaf);
 						break;
-					case cloud_lob:
+					case ACTION_CLOUD_LOB:
 						spawn_object(m->marioObj,MODEL_SPAWN_BORDER,bhvSpawnBorder);
 						m->spawnObj = spawn_object(m->marioObj,MODEL_FLOATING_CLOUD,bhvFloatingCloud);
 						break;
@@ -2766,17 +2802,16 @@ s32 act_cast_actions(struct MarioState *m) {
 				struct Object *block = m->spawnObj;
 				s16 angle;
 				f32 rlim;
-				if (m->Spell == cloud_lob)
+				if (m->CastSpell == ACTION_CLOUD_LOB)
 					rlim = 300.0f;
 				else
 					rlim = 800.0f;
 				if (gLakituState.mode != CAMERA_MODE_NEWCAM)
 					angle = m->area->camera->yaw;
 				else
-					angle = newcam_yaw+0x4000;
+					angle = -newcam_yaw+0x4000;
 				f32 Zinc = -(sins(angle)*cont->stickX + coss(angle)*cont->stickY)/4.0f;
 				f32 Xinc = (coss(angle)*cont->stickX - sins(angle)*cont->stickY)/4.0f;
-				f32 Yinc;
 				if(block->oDistanceToMario >= rlim){
 					if(absf(Zinc + block->oPosZ - m->pos[2]) < absf(block->oPosZ - m->pos[2])){
 						block->oPosZ += Zinc;
@@ -2788,9 +2823,9 @@ s32 act_cast_actions(struct MarioState *m) {
 					block->oPosX += Xinc;
 					block->oPosZ += Zinc;
 				}
-				if (m->Spell != ice_block){
+				if (m->CastSpell != ice_block){
 					f32 ylim;
-					if (m->Spell == cloud_lob)
+					if (m->CastSpell == ACTION_CLOUD_LOB)
 						ylim = 400.0f;
 					else
 						ylim = 800.0f;
@@ -2807,17 +2842,16 @@ s32 act_cast_actions(struct MarioState *m) {
 					struct Surface *floor;
 					f32 floorHeight = find_floor(block->oPosX, block->oPosY, block->oPosZ, &floor);
 					f32 ceilHeight = find_ceil(block->oPosX, block->oPosY, block->oPosZ, &ceil);
-					f32 rlim;
-					switch(m->Spell){
+					switch(m->CastSpell){
 						//must have floor and floor height must be within 10 of obj
-						case ice_block:
+						case ACTION_ICE_BLOCK:
 							if (floor){
 								if (floorHeight<(block->oPosY+10.0f) && floorHeight>(block->oPosY-10.0f))
 									pass = 1;
 							}
 							break;
 						//must have ceiling above at least 300 and no more than 1500 above
-						case hanging_leaf:
+						case ACTION_HANGING_LEAF:
 							if (ceil){
 								if (ceilHeight<(block->oPosY+1500.0f) && ceilHeight>(block->oPosY+300.0f)){
 									pass = 1;
@@ -2826,7 +2860,7 @@ s32 act_cast_actions(struct MarioState *m) {
 							}
 							break;
 						//can be thrown anywhere but oob, has smaller range
-						case cloud_lob:
+						case ACTION_CLOUD_LOB:
 							find_floor(block->oPosX, block->oPosY, block->oPosZ, &floor);
 							if (floor)
 								pass = 1;
@@ -2834,20 +2868,22 @@ s32 act_cast_actions(struct MarioState *m) {
 					}
 					if (pass){
 						block->oAction = 1;
+						block->oFloor = floor;
+						block->oCeil = ceil;
 						m->spawnObj = 0;
 						set_mario_action(m, ACT_IDLE, 0);
 					}else{
-						switch(m->Spell){
+						switch(m->CastSpell){
 							// must have floor and floor height must be within 10 of obj
-							case ice_block:
+							case ACTION_ICE_BLOCK:
 								SetupTextEngine(16,48,magic_cannot_place_floor, TE_STATE_BG);
 								break;
 							// must have ceiling above at least 300 and no more than 1500 above
-							case hanging_leaf:
+							case ACTION_HANGING_LEAF:
 								SetupTextEngine(16,48,magic_cannot_place_ceil, TE_STATE_BG);
 								break;
 							// can be thrown anywhere but oob
-							case cloud_lob:
+							case ACTION_CLOUD_LOB:
 								SetupTextEngine(16,48,magic_cannot_place_oob, TE_STATE_BG);
 								break;
 						}
@@ -2856,14 +2892,30 @@ s32 act_cast_actions(struct MarioState *m) {
 				//cancel cast
 				if(cont->buttonPressed & Z_TRIG){
 					obj_mark_for_deletion(block);
+					
 					m->spawnObj = 0;
 					set_mario_action(m, ACT_IDLE, 0);
 				}
 			}
 			break;
 		case 3:
-			set_mario_animation(m, MARIO_ANIM_SLIDE_MOTIONLESS);
-			gMagicHUDRequest &= ~CAST_SPELL;
+			set_mario_animation(m, MARIO_ANIM_QUICKLY_PUT_CAP_ON);
+			gMagicHUDRequest &= ~CAST_ITEM;
+			if (is_anim_at_end(m)){
+				set_mario_action(m, ACT_IDLE, 0);
+			}
+			m->flags &= (~0xF);
+			switch(m->CastSpell){
+				case ACTION_MAGIC_HAT:
+					m->flags |= (MARIO_NORMAL_CAP | MARIO_WING_CAP);
+					break;
+				case ACTION_METAL_CAP:
+					m->flags |= (MARIO_NORMAL_CAP | MARIO_METAL_CAP);
+					break;
+				case ACTION_VANISH_CAP:
+					m->flags |= (MARIO_NORMAL_CAP | MARIO_VANISH_CAP);
+					break;
+			}
 			break;
 	}
 	return FALSE;

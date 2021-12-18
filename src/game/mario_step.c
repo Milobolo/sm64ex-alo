@@ -298,7 +298,7 @@ static s32 perform_ground_quarter_step(struct MarioState *m, Vec3f nextPos) {
         if (nextPos[1] + 160.0f*Mscale >= ceilHeight) {
             return GROUND_STEP_HIT_WALL_STOP_QSTEPS;
         }
-		if(m->Spell == hover && gHoverPseudoFloor.room<90){
+		if((m->Spell&ACTION_HOVER) && gHoverPseudoFloor.room<90){
 			m->floor = &gHoverPseudoFloor;
 			m->floorHeight = m->pos[1];
 			m->particleFlags |= ACTIVE_PARTICLE_HOVER;
@@ -587,16 +587,7 @@ void apply_gravity(struct MarioState *m) {
         if (m->vel[1] < -16.0f) {
             m->vel[1] = -16.0f;
         }
-    } else if ((m->flags & MARIO_WING_CAP) && m->vel[1] < 0.0f && (m->input & INPUT_A_DOWN)) {
-        m->marioBodyState->wingFlutter = TRUE;
-
-        m->vel[1] -= 2.0f;
-        if (m->vel[1] < -37.5f) {
-            if ((m->vel[1] += 4.0f) > -37.5f) {
-                m->vel[1] = -37.5f;
-            }
-        }
-    } else {
+    }else {
         m->vel[1] -= 4.0f;
         if (m->vel[1] < -75.0f) {
             m->vel[1] = -75.0f;
