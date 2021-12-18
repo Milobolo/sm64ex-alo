@@ -708,6 +708,12 @@ void save_file_udpate_level(s32 fileIndex, struct MarioState *m) {
 	save_file_do_save(fileIndex);
 }
 
+void save_file_udpate_spell(s32 fileIndex, u32 spell) {
+	gSaveBuffer.files[fileIndex][0].abilities[spell] |= spell;
+	gSaveFileModified = TRUE;
+	save_file_do_save(fileIndex);
+}
+
 u32 save_file_get_exp(s32 fileIndex) {
     return gSaveBuffer.files[fileIndex][0].Exp;
 }

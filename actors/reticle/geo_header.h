@@ -1,0 +1,10 @@
+extern const GeoLayout reticle_geo[];
+extern Lights1 reticle_f3d_material_003_layer4_lights;
+extern u8 reticle_reticle_ci8[];
+extern u8 reticle_reticle_ci8_pal_rgba16[];
+extern Vtx reticle_Plane_002_mesh_layer_4_vtx_0[4];
+extern Gfx reticle_Plane_002_mesh_layer_4_tri_0[];
+extern Gfx mat_reticle_f3d_material_003_layer4[];
+extern Gfx mat_revert_reticle_f3d_material_003_layer4[];
+extern Gfx reticle_Plane_002_mesh_layer_4[];
+extern Gfx reticle_material_revert_render_settings[];

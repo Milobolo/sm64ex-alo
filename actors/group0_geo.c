@@ -25,3 +25,5 @@
 #include "floating_cloud/geo.inc.c"
 #include "time_sphere/geo.inc.c"
 #include "return_portal/geo.inc.c"
+#include "reticle/geo.inc.c"
+#include "hollow_box/geo.inc.c"

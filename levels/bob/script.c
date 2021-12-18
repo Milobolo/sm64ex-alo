@@ -38,6 +38,12 @@ const LevelScript level_bob_entry[] = {
 	LOAD_MODEL_FROM_GEO(MODEL_BOB_BARS_GRILLS, bob_geo_000470), 
 
 	AREA(1, bob_area_1),
+		OBJECT(MODEL_BREAKABLE_BOX_SMALL, 0, -64, 628, 0, 0, 0, 0x00000000, bhvBreakableBoxSmall),
+		OBJECT(MODEL_NONE, -461, 91, 628, 0, 0, 0, 0x00000000, bhvHiddenObject),
+		OBJECT(MODEL_NONE, -691, 369, 628, 0, 0, 0, 0x00000000, bhvHiddenObject),
+		OBJECT(MODEL_PURPLE_SWITCH, -695, -64, 628, 0, 0, 0, 0x00000000, bhvFloorSwitchHiddenObjects),
+		OBJECT(MODEL_CHUCKYA, 694, -64, 628, 0, 0, 0, 0x00000000, bhvChuckya),
+		OBJECT(MODEL_GOOMBA, 840, -64, 28, 0, 0, 0, 0x00000000, bhvGoomba),
 		TERRAIN(bob_area_1_collision),
 		MACRO_OBJECTS(bob_area_1_macro_objs),
 		SET_BACKGROUND_MUSIC(0x00, SEQ_LEVEL_GRASS),

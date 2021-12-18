@@ -44,9 +44,13 @@ void small_breakable_box_act_move(void) {
     if (sp1E & 2) {
         spawn_mist_particles();
         spawn_triangle_break_particles(20, 138, 0.7f, 3);
+		if(((o->oBehParams >> 8) & 0x1) == 0){
         obj_spawn_yellow_coins(o, 3);
+		}
         create_sound_spawner(SOUND_GENERAL_BREAK_BOX);
         o->activeFlags = ACTIVE_FLAG_DEACTIVATED;
+		create_respawner(MODEL_BREAKABLE_BOX_SMALL, bhvBreakableBoxSmall, 3000);
+		set_object_respawn_info_bits(o, 1);
     }
 
     obj_check_floor_death(sp1E, sObjFloor);

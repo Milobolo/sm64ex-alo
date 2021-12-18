@@ -36,7 +36,7 @@ void hidden_breakable_box_actions(void) {
     obj_set_hitbox(o, &sBreakableBoxHitbox);
     cur_obj_set_model(MODEL_BREAKABLE_BOX_SMALL);
     if (o->oAction == 0) {
-        cur_obj_disable_rendering();
+        cur_obj_set_model(MODEL_HOLLOW_BOX);
         cur_obj_become_intangible();
         if (o->oTimer == 0)
             breakable_box_init();
@@ -61,7 +61,7 @@ void hidden_breakable_box_actions(void) {
         load_object_collision_model();
     } else {
         cur_obj_become_intangible();
-        cur_obj_disable_rendering();
+        cur_obj_set_model(MODEL_HOLLOW_BOX);
         o->oInteractStatus = 0;
         if ((sp1C = o->oHiddenObjectUnkF4) != NULL)
             if (sp1C->oAction == 0)
@@ -73,7 +73,7 @@ void hidden_unbreakable_box_actions(void) {
     struct Object *sp1C;
     obj_set_collision_data(o, wdw_seg7_collision_07018528);
     if (o->oAction == 0) {
-        cur_obj_disable_rendering();
+        cur_obj_set_model(MODEL_HOLLOW_BOX);
         cur_obj_become_intangible();
         if (o->oHiddenObjectUnkF4 == NULL)
             o->oHiddenObjectUnkF4 = cur_obj_nearest_object_with_behavior(bhvFloorSwitchHiddenObjects);

@@ -1618,9 +1618,14 @@ void update_mario_info_for_cam(struct MarioState *m) {
 
     vec3s_copy(m->statusForCamera->faceAngle, m->faceAngle);
 
-    if (!(m->flags & MARIO_UNKNOWN_25)) {
-        vec3f_copy(m->statusForCamera->pos, m->pos);
+    if(m->flags & MARIO_CAM_FOC_OBJ){
+		vec3f_copy(m->statusForCamera->pos, &m->spawnObj->oPosX);
+	}else if (!(m->flags & MARIO_UNKNOWN_25)) {
+       vec3f_copy(m->statusForCamera->pos, m->pos);
     }
+	if(m->flags & MARIO_CAM_FOC_RISE){
+		m->statusForCamera->pos[1] += 150.0f;
+	}
 }
 
 /**

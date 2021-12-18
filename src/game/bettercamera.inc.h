@@ -726,9 +726,17 @@ static void newcam_position_cam(void) {
     shakeX = gLakituState.shakeMagnitude[1];
     shakeY = gLakituState.shakeMagnitude[0];
     //Fetch Mario's current position. Not hardcoded just for the sake of flexibility, though this specific bit is temp, because it won't always want to be focusing on Mario.
+	if(!(gMarioState->flags & MARIO_CAM_FOC_OBJ)){
     newcam_pos_target[0] = gMarioState->pos[0];
     newcam_pos_target[1] = gMarioState->pos[1]+newcam_extheight;
     newcam_pos_target[2] = gMarioState->pos[2];
+	}else if(gMarioState->flags & MARIO_CAM_FOC_OBJ){
+		vec3f_copy(&newcam_pos_target, &gMarioState->spawnObj->oPosX);
+		newcam_pos_target[1] += newcam_extheight;
+	}
+	if(gMarioState->flags & MARIO_CAM_FOC_RISE){
+		newcam_pos_target[1] += 150.0f;
+	}
     //These will set the position of the camera to where Mario is supposed to be, minus adjustments for where the camera should be, on top of.
 	f32 newcamADJ_distance = newcam_distance; //*GetMarioLargeScaleFactors();
     if (newcam_modeflags & NC_FLAG_POSX)

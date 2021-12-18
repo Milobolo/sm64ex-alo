@@ -36,6 +36,8 @@
 #define MODEL_FLOATING_CLOUD              0xE7
 #define MODEL_TIME_SPHERE                 0xE8
 #define MODEL_RETURN_PORTAL               0xE9
+#define MODEL_RETICLE                     0xEA
+#define MODEL_HOLLOW_BOX                  0xEB
 
 
 

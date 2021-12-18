@@ -913,9 +913,9 @@ static BhvCommandProc BehaviorCmdTable[] = {
     bhv_cmd_cylboard //38
 };
 
-struct Object *swappables[32];
-u32 gswapIndex;
 struct Object *gFreezeTime;
+static struct Swaps sw;
+struct Swaps *Swappables = &sw;
 // Execute the behavior script of the current object, process the object flags, and other miscellaneous code for updating objects.
 void cur_obj_update(void) {
     UNUSED u32 unused;
@@ -932,15 +932,21 @@ void cur_obj_update(void) {
     } else {
         distanceFromMario = 0.0f;
     }
-    if (objFlags & OBJ_SWAP_COMPUTE) {
-        if(gCurrentObject->oDistanceToMario<600.0f){
-			gCurrentObject->oCanSwap = 1;
-			swappables[gswapIndex] = gCurrentObject;
-			gswapIndex++;
+	if(Swappables->CheckSwap){
+		if (objFlags & OBJ_SWAP_COMPUTE == OBJ_SWAP_COMPUTE) {
+			if(gCurrentObject->oDistanceToMario<600.0f && gCurrentObject->oCanSwap != 1){
+				if(Swappables->Num<15){
+					gCurrentObject->oCanSwap = 1;
+					Swappables->SwapObjs[Swappables->Num] = gCurrentObject;
+					Swappables->Num++;
+				}
+			}else if(gCurrentObject->oDistanceToMario>600.0f){
+				gCurrentObject->oCanSwap = 0;
+			}
+		} else {
+			gCurrentObject->oCanSwap = 0;
 		}
-    } else {
-        gCurrentObject->oCanSwap = 0;
-    }
+	}
 	//time freeze
 	if((gMarioState->Spell&ACTION_TIME_FREEZE) && (gCurrentObject!=gMarioState->marioObj) && (objFlags & OBJ_FREEZE_IMMUNE != OBJ_FREEZE_IMMUNE)){
 		f32 dist = dist_between_objects(gCurrentObject, gFreezeTime);

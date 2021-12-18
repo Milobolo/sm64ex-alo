@@ -139,6 +139,8 @@ void *memmove(void *str1, const void *str2, size_t n);
 #define MARIO_KICKING                   0x00200000
 #define MARIO_TRIPPING                  0x00400000
 #define MARIO_UNKNOWN_25                0x02000000
+#define MARIO_CAM_FOC_OBJ               0x04000000 //new for SS4
+#define MARIO_CAM_FOC_RISE              0x08000000 //new for SS4
 #define MARIO_UNKNOWN_30                0x40000000
 #define MARIO_UNKNOWN_31                0x80000000
 

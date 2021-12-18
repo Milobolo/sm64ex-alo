@@ -14,6 +14,7 @@
 #include "interaction.h"
 #include "level_update.h"
 #include "mario.h"
+#include "magic.h"
 #include "mario_step.h"
 #include "memory.h"
 #include "obj_behaviors.h"
@@ -174,6 +175,17 @@ s16 mario_obj_angle_to_object(struct MarioState *m, struct Object *o) {
 
     return atan2s(dz, dx);
 }
+
+void mario_cancel_magic(struct MarioState *m){
+	if(m->spawnObj){
+		m->spawnObj->activeFlags = ACTIVE_FLAG_DEACTIVATED;
+	}
+	m->spawnObj = 0;
+	m->CastSpell = 0;
+	m->flags &= (~MARIO_CAM_FOC_OBJ | MARIO_CAM_FOC_RISE);
+	gMagicHUDRequest = CANCEL_HUD;
+}
+
 
 /**
  * Determines Mario's interaction with a given object depending on their proximity,
@@ -426,6 +438,7 @@ u32 mario_check_object_grab(struct MarioState *m) {
             if (facingDYaw >= -0x5555 && facingDYaw <= 0x5555) {
                 m->faceAngle[1] = m->interactObj->oMoveAngleYaw;
                 m->usedObj = m->interactObj;
+				mario_cancel_magic(m);
                 result = set_mario_action(m, ACT_PICKING_UP_BOWSER, 0);
             }
         } else {
@@ -434,6 +447,7 @@ u32 mario_check_object_grab(struct MarioState *m) {
                 m->usedObj = m->interactObj;
 
                 if (!(m->action & ACT_FLAG_AIR)) {
+					mario_cancel_magic(m);
                     set_mario_action(
                         m, (m->action & ACT_FLAG_DIVING) ? ACT_DIVE_PICKING_UP : ACT_PICKING_UP, 0);
                 }
@@ -734,6 +748,7 @@ u32 take_damage_and_knock_back(struct MarioState *m, struct Object *o) {
         }
 
         update_mario_sound_and_camera(m);
+		mario_cancel_magic(m);
         return drop_and_set_mario_action(m, determine_knockback_action(m, o->oDamageOrCoinValue),
                                          damage);
     }
@@ -826,6 +841,7 @@ u32 interact_star_or_key(struct MarioState *m, UNUSED u32 interactType, struct O
 #ifndef VERSION_JP
         update_mario_sound_and_camera(m);
 #endif
+		mario_cancel_magic(m);
 
         if (grandStar) {
             return set_mario_action(m, ACT_JUMBO_STAR_CUTSCENE, 0);
@@ -844,6 +860,7 @@ u32 interact_bbh_entrance(struct MarioState *m, UNUSED u32 interactType, struct 
         o->oInteractStatus = INT_STATUS_INTERACTED;
         m->interactObj = o;
         m->usedObj = o;
+		mario_cancel_magic(m);
 
         if (m->action & ACT_FLAG_AIR) {
             return set_mario_action(m, ACT_BBH_ENTER_SPIN, 0);
@@ -871,6 +888,7 @@ u32 interact_warp(struct MarioState *m, UNUSED u32 interactType, struct Object *
                 m->usedObj = o;
 
                 sJustTeleported = TRUE;
+				mario_cancel_magic(m);
                 return set_mario_action(m, ACT_TELEPORT_FADE_OUT, 0);
             }
         }
@@ -893,6 +911,7 @@ u32 interact_warp(struct MarioState *m, UNUSED u32 interactType, struct Object *
             }
 
             mario_stop_riding_object(m);
+			mario_cancel_magic(m);
             return set_mario_action(m, ACT_DISAPPEARED, (WARP_OP_WARP_OBJECT << 16) + 2);
         }
     }
@@ -910,6 +929,7 @@ u32 interact_warp_door(struct MarioState *m, UNUSED u32 interactType, struct Obj
         if (warpDoorId == 1 && !(saveFlags & SAVE_FLAG_UNLOCKED_UPSTAIRS_DOOR)) {
             if (!(saveFlags & SAVE_FLAG_HAVE_KEY_2)) {
                 if (!sDisplayingDoorText) {
+					mario_cancel_magic(m);
                     set_mario_action(m, ACT_READING_AUTOMATIC_DIALOG,
                                      (saveFlags & SAVE_FLAG_HAVE_KEY_1) ? DIALOG_023 : DIALOG_022);
                 }
@@ -925,6 +945,7 @@ u32 interact_warp_door(struct MarioState *m, UNUSED u32 interactType, struct Obj
             if (!(saveFlags & SAVE_FLAG_HAVE_KEY_1)) {
                 if (!sDisplayingDoorText) {
                     // Moat door skip was intended confirmed
+					mario_cancel_magic(m);
                     set_mario_action(m, ACT_READING_AUTOMATIC_DIALOG,
                                      (saveFlags & SAVE_FLAG_HAVE_KEY_2) ? DIALOG_023 : DIALOG_022);
                 }
@@ -949,6 +970,7 @@ u32 interact_warp_door(struct MarioState *m, UNUSED u32 interactType, struct Obj
 
             m->interactObj = o;
             m->usedObj = o;
+			mario_cancel_magic(m);
             return set_mario_action(m, doorAction, actionArg);
         }
     }
@@ -1024,7 +1046,8 @@ u32 interact_door(struct MarioState *m, UNUSED u32 interactType, struct Object *
                 enterDoorAction = ACT_UNLOCKING_STAR_DOOR;
             }
 
-            return set_mario_action(m, enterDoorAction, actionArg);
+            mario_cancel_magic(m);
+			return set_mario_action(m, enterDoorAction, actionArg);
         } else if (!sDisplayingDoorText) {
             u32 text = DIALOG_022 << 16;
 
@@ -1052,11 +1075,13 @@ u32 interact_door(struct MarioState *m, UNUSED u32 interactType, struct Object *
             text += requiredNumStars - numStars;
 
             sDisplayingDoorText = TRUE;
+			mario_cancel_magic(m);
             return set_mario_action(m, ACT_READING_AUTOMATIC_DIALOG, text);
         }
     } else if (m->action == ACT_IDLE && sDisplayingDoorText == TRUE && requiredNumStars == 70) {
         m->interactObj = o;
         m->usedObj = o;
+		mario_cancel_magic(m);
         return set_mario_action(m, ACT_ENTERING_STAR_DOOR, should_push_or_pull_door(m, o));
     }
 
@@ -1069,6 +1094,7 @@ u32 interact_cannon_base(struct MarioState *m, UNUSED u32 interactType, struct O
         o->oInteractStatus = INT_STATUS_INTERACTED;
         m->interactObj = o;
         m->usedObj = o;
+		mario_cancel_magic(m);
         return set_mario_action(m, ACT_IN_CANNON, 0);
     }
 
@@ -1105,7 +1131,8 @@ u32 interact_tornado(struct MarioState *m, UNUSED u32 interactType, struct Objec
         queue_rumble_data(30, 60);
 #endif
         
-        return set_mario_action(m, ACT_TORNADO_TWIRLING, m->action == ACT_TWIRLING);
+        mario_cancel_magic(m);
+		return set_mario_action(m, ACT_TORNADO_TWIRLING, m->action == ACT_TWIRLING);
     }
 
     return FALSE;
@@ -1128,7 +1155,7 @@ u32 interact_whirlpool(struct MarioState *m, UNUSED u32 interactType, struct Obj
 #ifdef RUMBLE_FEEDBACK  
         queue_rumble_data(30, 60);
 #endif
-        
+        mario_cancel_magic(m);
         return set_mario_action(m, ACT_CAUGHT_IN_WHIRLPOOL, 0);
     }
 
@@ -1151,6 +1178,7 @@ u32 interact_strong_wind(struct MarioState *m, UNUSED u32 interactType, struct O
 
         play_sound(SOUND_MARIO_WAAAOOOW, m->marioObj->header.gfx.cameraToObject);
         update_mario_sound_and_camera(m);
+		mario_cancel_magic(m);
         return set_mario_action(m, ACT_GETTING_BLOWN, 0);
     }
 
@@ -1180,7 +1208,8 @@ u32 interact_flame(struct MarioState *m, UNUSED u32 interactType, struct Object 
                 burningAction = ACT_BURNING_FALL;
             }
 
-            return drop_and_set_mario_action(m, burningAction, 1);
+            mario_cancel_magic(m);
+			return drop_and_set_mario_action(m, burningAction, 1);
         }
     }
 
@@ -1200,7 +1229,8 @@ u32 interact_snufit_bullet(struct MarioState *m, UNUSED u32 interactType, struct
             play_sound(SOUND_MARIO_ATTACKED, m->marioObj->header.gfx.cameraToObject);
             update_mario_sound_and_camera(m);
 
-            return drop_and_set_mario_action(m, determine_knockback_action(m, o->oDamageOrCoinValue),
+            mario_cancel_magic(m);
+			return drop_and_set_mario_action(m, determine_knockback_action(m, o->oDamageOrCoinValue),
                                              o->oDamageOrCoinValue);
         }
     }
@@ -1216,6 +1246,7 @@ u32 interact_clam_or_bubba(struct MarioState *m, UNUSED u32 interactType, struct
     if (o->oInteractionSubtype & INT_SUBTYPE_EATS_MARIO) {
         o->oInteractStatus = INT_STATUS_INTERACTED;
         m->interactObj = o;
+		mario_cancel_magic(m);
         return set_mario_action(m, ACT_EATEN_BY_BUBBA, 0);
     } else if (take_damage_and_knock_back(m, o)) {
         return TRUE;
@@ -1265,6 +1296,7 @@ u32 interact_bully(struct MarioState *m, UNUSED u32 interactType, struct Object 
         play_sound(SOUND_OBJ_BULLY_METAL, m->marioObj->header.gfx.cameraToObject);
 
         push_mario_out_of_object(m, o, 5.0f);
+		mario_cancel_magic(m);
         drop_and_set_mario_action(m, bully_knock_back_mario(m), 0);
 #ifdef RUMBLE_FEEDBACK
         queue_rumble_data(5, 80);
@@ -1289,9 +1321,11 @@ u32 interact_shock(struct MarioState *m, UNUSED u32 interactType, struct Object 
         queue_rumble_data(70, 60);
 #endif
         if (m->action & (ACT_FLAG_SWIMMING | ACT_FLAG_METAL_WATER)) {
+			mario_cancel_magic(m);
             return drop_and_set_mario_action(m, ACT_WATER_SHOCKED, 0);
         } else {
             update_mario_sound_and_camera(m);
+			mario_cancel_magic(m);
             return drop_and_set_mario_action(m, ACT_SHOCKED, actionArg);
         }
     }
@@ -1350,7 +1384,8 @@ u32 interact_hit_from_below(struct MarioState *m, UNUSED u32 interactType, struc
 #ifndef VERSION_JP
                 play_sound(SOUND_MARIO_TWIRL_BOUNCE, m->marioObj->header.gfx.cameraToObject);
 #endif
-                return drop_and_set_mario_action(m, ACT_TWIRLING, 0);
+                mario_cancel_magic(m);
+				return drop_and_set_mario_action(m, ACT_TWIRLING, 0);
             } else {
                 bounce_off_object(m, o, 30.0f);
             }
@@ -1388,7 +1423,8 @@ u32 interact_bounce_top(struct MarioState *m, UNUSED u32 interactType, struct Ob
 #ifndef VERSION_JP
                 play_sound(SOUND_MARIO_TWIRL_BOUNCE, m->marioObj->header.gfx.cameraToObject);
 #endif
-                return drop_and_set_mario_action(m, ACT_TWIRLING, 0);
+                mario_cancel_magic(m);
+				return drop_and_set_mario_action(m, ACT_TWIRLING, 0);
             } else {
                 bounce_off_object(m, o, 30.0f);
             }
@@ -1475,6 +1511,7 @@ u32 interact_koopa_shell(struct MarioState *m, UNUSED u32 interactType, struct O
 
             //! Puts Mario in ground action even when in air, making it easy to
             // escape air actions into crouch slide (shell cancel)
+			mario_cancel_magic(m);
             return set_mario_action(m, ACT_RIDING_SHELL_GROUND, 0);
         }
 
@@ -1500,7 +1537,8 @@ u32 check_object_grab_mario(struct MarioState *m, UNUSED u32 interactType, struc
 #ifdef RUMBLE_FEEDBACK
             queue_rumble_data(5, 80);
 #endif
-            return set_mario_action(m, ACT_GRABBED, 0);
+            mario_cancel_magic(m);
+			return set_mario_action(m, ACT_GRABBED, 0);
         }
     }
 
@@ -1528,6 +1566,7 @@ u32 interact_pole(struct MarioState *m, UNUSED u32 interactType, struct Object *
                 : (m->pos[1] - o->oPosY);
 
             if (lowSpeed) {
+				mario_cancel_magic(m);
                 return set_mario_action(m, ACT_GRAB_POLE_SLOW, 0);
             }
 
@@ -1538,7 +1577,8 @@ u32 interact_pole(struct MarioState *m, UNUSED u32 interactType, struct Object *
 #ifdef RUMBLE_FEEDBACK
             queue_rumble_data(5, 80);
 #endif
-            return set_mario_action(m, ACT_GRAB_POLE_FAST, 0);
+            mario_cancel_magic(m);
+			return set_mario_action(m, ACT_GRAB_POLE_FAST, 0);
         }
     }
 
@@ -1560,6 +1600,7 @@ u32 interact_hoot(struct MarioState *m, UNUSED u32 interactType, struct Object *
         queue_rumble_data(5, 80);
 #endif
         update_mario_sound_and_camera(m);
+		mario_cancel_magic(m);
         return set_mario_action(m, ACT_RIDING_HOOT, 0);
     }
 
@@ -1601,6 +1642,7 @@ u32 interact_cap(struct MarioState *m, UNUSED u32 interactType, struct Object *o
 
         if ((m->action & ACT_FLAG_IDLE) || m->action == ACT_WALKING) {
             m->flags |= MARIO_CAP_IN_HAND;
+			mario_cancel_magic(m);
             set_mario_action(m, ACT_PUTTING_ON_CAP, 0);
         } else {
             m->flags |= MARIO_CAP_ON_HEAD;
@@ -1699,6 +1741,7 @@ u32 check_read_sign(struct MarioState *m, struct Object *o) {
 
             m->interactObj = o;
             m->usedObj = o;
+			mario_cancel_magic(m);
             return set_mario_action(m, ACT_READING_SIGN, 0);
         }
     }
@@ -1722,6 +1765,7 @@ u32 check_read_sign_TE(struct MarioState *m, struct Object *o) {
 
             m->interactObj = o;
             m->usedObj = o;
+			mario_cancel_magic(m);
             return set_mario_action(m, ACT_WAITING_FOR_DIALOG, 0);
         }
     }
@@ -1743,6 +1787,7 @@ u32 check_read_sign_TE(struct MarioState *m, struct Object *o) {
 
             m->interactObj = o;
             m->usedObj = o;
+			mario_cancel_magic(m);
             return set_mario_action(m, ACT_READING_SIGN, 0);
         }
     }
@@ -1761,6 +1806,7 @@ u32 check_npc_talk(struct MarioState *m, struct Object *o) {
             m->usedObj = o;
 
             push_mario_out_of_object(m, o, -10.0f);
+			mario_cancel_magic(m);
             return set_mario_action(m, ACT_WAITING_FOR_DIALOG, 0);
         }
     }
@@ -1864,6 +1910,7 @@ void check_lava_boost(struct MarioState *m) {
         }
 
         update_mario_sound_and_camera(m);
+		mario_cancel_magic(m);
         drop_and_set_mario_action(m, ACT_LAVA_BOOST, 0);
     }
 }

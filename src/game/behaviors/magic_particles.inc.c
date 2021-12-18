@@ -49,7 +49,7 @@ void ice_block_loop(void){
 void bhvSpawnBorder_loop(void){
 	Gfx *F2 = segmented_to_virtual(mat_spawn_border_spawn_radius);
 	ScrollF2(F2+11,10,0);
-	if(gMarioState->spawnObj == 0){
+	if((gMarioState->spawnObj == 0) || (gMarioState->CastSpell == 0)){
 		obj_mark_for_deletion(o);
 	}
 	if (gMarioState->Spell&ACTION_CLOUD_LOB){
@@ -65,6 +65,14 @@ void bhvTimeSphere_loop(void){
 	if (!(gMarioState->Spell&ACTION_TIME_FREEZE)){
 		obj_mark_for_deletion(o);
 		gFreezeTime = 0;
+	}
+}
+
+void bhvSwapRing_loop(void){
+	Gfx *F2 = segmented_to_virtual(mat_time_sphere_time_sphere);
+	ScrollF2(F2+11,1,3);
+	if (!(gMarioState->CastSpell&ACTION_SWAP)){
+		obj_mark_for_deletion(o);
 	}
 }
 

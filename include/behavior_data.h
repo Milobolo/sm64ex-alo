@@ -11,6 +11,7 @@ extern const BehaviorScript bhvCeilVine[];
 extern const BehaviorScript bhvFloatingCloud[];
 extern const BehaviorScript bhvTimeSphere[];
 extern const BehaviorScript bhvReturnPortal[];
+extern const BehaviorScript bhvReticle[];
 
 extern const BehaviorScript editor_Scroll_Texture[];
 extern const BehaviorScript RM_Scroll_Texture[];

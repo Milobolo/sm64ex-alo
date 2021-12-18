@@ -42,7 +42,7 @@ void cancel_render_magic_spells_hud(void){
 void magic_hud_render_controller(struct MarioState *m){
 	if (gPlayer1Controller->buttonPressed&L_TRIG){
 		start_render_magic_spells_hud();
-	}if ( (gPlayer1Controller->buttonPressed&Z_TRIG && gMagicHUDRequest<=0x40) || gMagicHUDRequest&CANCEL_HUD){
+	}if ( ((gPlayer1Controller->buttonPressed&Z_TRIG && gMagicHUDRequest<=0x40) || gMagicHUDRequest&CANCEL_HUD) && (gMarioState->action != ACT_CAST_ACTION)){
 		cancel_render_magic_spells_hud();
 		gMagicHUDRequest=0;
 	}

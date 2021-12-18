@@ -13,6 +13,7 @@
 #include "main.h"
 #include "engine/math_util.h"
 #include "engine/graph_node.h"
+#include "engine/behavior_script.h"
 #include "area.h"
 #include "save_file.h"
 #include "sound_init.h"
@@ -1016,7 +1017,7 @@ void basic_update(UNUSED s16 *arg) {
 }
 #include "text_engine.h"
 int gPressedStart = 0;
-extern u32 gswapIndex;
+extern struct Swaps *Swappables;
 s32 play_mode_normal(void) {
     if (gCurrDemoInput != NULL) {
         print_intro_text();
@@ -1044,9 +1045,12 @@ s32 play_mode_normal(void) {
 	// }
 	// #endif
 	#endif
-	gswapIndex = 0;
+	
 	area_update_objects();
     update_hud_values();
+	if((Swappables->CheckSwap==1) && (Swappables->SwapChecked==0)){
+		Swappables->SwapChecked = 1;
+	}
 
     if (gCurrentArea != NULL) {
         update_camera(gCurrentArea->camera);

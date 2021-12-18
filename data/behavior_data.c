@@ -340,6 +340,13 @@ const BehaviorScript bhvHoverParticle[] = {
     CALL_NATIVE(hover_particle_loop),
     END_LOOP(),
 };
+
+const BehaviorScript bhvReticle[] = {
+    BEGIN(OBJ_LIST_DEFAULT),
+    OR_INT(oFlags, (OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE | OBJ_FREEZE_IMMUNE)),
+	BREAK(),
+};
+
 //just updates itself and then dies when obj is placed
 const BehaviorScript bhvSpawnBorder[] = {
     BEGIN(OBJ_LIST_DEFAULT),
@@ -364,6 +371,7 @@ const BehaviorScript bhvReturnPortal[] = {
     CALL_NATIVE(bhvReturnPortal_loop),
     END_LOOP(),
 };
+
 
 extern const Collision ice_block_collision[];
 
@@ -1876,7 +1884,7 @@ const BehaviorScript bhvHiddenObject[] = {
 
 const BehaviorScript bhvBreakableBox[] = {
     BEGIN(OBJ_LIST_SURFACE),
-    OR_INT(oFlags, OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE),
+    OR_INT(oFlags, (OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE | OBJ_SWAP_COMPUTE | OBJ_FLAG_COMPUTE_DIST_TO_MARIO)),
     LOAD_COLLISION_DATA(breakable_box_seg8_collision_08012D70),
     SET_FLOAT(oCollisionDistance, 500),
     CALL_NATIVE(bhv_init_room),
@@ -1889,7 +1897,7 @@ const BehaviorScript bhvBreakableBox[] = {
 
 const BehaviorScript bhvPushableMetalBox[] = {
     BEGIN(OBJ_LIST_SURFACE),
-    OR_INT(oFlags, OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE),
+    OR_INT(oFlags, (OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE | OBJ_SWAP_COMPUTE | OBJ_FLAG_COMPUTE_DIST_TO_MARIO)),
     LOAD_COLLISION_DATA(metal_box_seg8_collision_08024C28),
     SET_FLOAT(oCollisionDistance, 500),
     SET_HOME(),
@@ -5050,7 +5058,7 @@ const BehaviorScript bhvControllablePlatformSub[] = {
 
 const BehaviorScript bhvBreakableBoxSmall[] = {
     BEGIN(OBJ_LIST_DESTRUCTIVE),
-    OR_INT(oFlags, (OBJ_FLAG_HOLDABLE | OBJ_FLAG_COMPUTE_DIST_TO_MARIO | OBJ_FLAG_SET_FACE_YAW_TO_MOVE_YAW | OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE)),
+    OR_INT(oFlags, (OBJ_FLAG_HOLDABLE | OBJ_FLAG_COMPUTE_DIST_TO_MARIO | OBJ_FLAG_SET_FACE_YAW_TO_MOVE_YAW | OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE | OBJ_SWAP_COMPUTE)),
     DROP_TO_FLOOR(),
     SET_HOME(),
     CALL_NATIVE(bhv_breakable_box_small_init),

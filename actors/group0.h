@@ -366,4 +366,8 @@ extern const Gfx white_particle_small_unused_dl[];
 
 #include "return_portal/geo_header.h"
 
+#include "reticle/geo_header.h"
+
+#include "hollow_box/geo_header.h"
+
 #endif

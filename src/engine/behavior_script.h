@@ -27,4 +27,12 @@ void stub_behavior_script_2(void);
 
 void cur_obj_update(void);
 
+struct Swaps{
+	struct Object *SwapObjs[16];
+	u8 CheckSwap;
+	u8 SwapChecked;
+	u8 Num;
+	u8 Chosen;
+};
+
 #endif // BEHAVIOR_SCRIPT_H

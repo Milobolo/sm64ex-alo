@@ -9,7 +9,7 @@ non iterables are ignored. If you have a tuple with a single item, put a comma a
 or else it will be ignored
 """
 #This is externs delcared in this file
-externs = ("extern const Gfx star_seg3_dl_0302B870[];",)
+externs = ("extern const Gfx star_seg3_dl_0302B870[];","extern struct Object *gReturn;")
 #These are header files included in this file. Use single quotes so double quotes are delimited for filename
 headers = (r'#include "src/game/segment2.h"',r'#include "include/sm64.h"',r'#include "src/game/magic.h"',r'#include "src/game/area.h"')
 
@@ -54,7 +54,7 @@ magic_list_items = ['[AutoNextBox()][MosaicBGBox(12,82,214,234,"magic_action_men
 [CallLoop(2,"mario_has_spell_TE",2,["&gCurrSaveFileNum","metal_cap"])][MatchRtrn(2,1)]metal cap[end][GenericText()]\
 [CallLoop(2,"mario_has_spell_TE",2,["&gCurrSaveFileNum","vanish_cap"])][MatchRtrn(2,1)]vanish cap[end][GenericText()]',
 #end of the spells
-'[GenericText()][CallOnce(0,"TE_set_flag",2,["&gMagicHUDRequest","CAST_ITEM"])][AutoNextBox()][MosaicBGBox(12,82,214,234,"magic_action_menu",2,1)][CallOnce(3,"Get_Spell_Sel",1,[0])][ShadedBGBox(14,120,158,215,0,0,0,0x96)]]\n\
+'[GenericText()][CallOnce(0,"TE_set_flag",2,["&gMagicHUDRequest","CAST_ITEM"])][AutoNextBox()][MosaicBGBox(12,82,214,234,"magic_action_menu",2,1)][CallOnce(3,"Get_Spell_Sel",1,[0])][ShadedBGBox(14,92,194,215,0,0,0,0x96)]\n\
 [MatchRtrn(3,0)]Magic Cap[CallOnce(0,"mario_set_spell",1,["ACTION_MAGIC_HAT"])][Jump("magic_spirit_list_end")]\
 [MatchRtrn(3,1)]Metal Cap[CallOnce(0,"mario_set_spell",1,["ACTION_METAL_CAP"])][Jump("magic_spirit_list_end")]\
 [MatchRtrn(3,2)]vanish Cap[CallOnce(0,"mario_set_spell",1,["ACTION_VANISH_CAP"])][Jump("magic_spirit_list_end")]\
@@ -70,7 +70,7 @@ magic_list_spells = ['[AutoNextBox()][MosaicBGBox(12,82,214,234,"magic_action_me
 [CallLoop(2,"mario_has_spell_TE",2,["&gCurrSaveFileNum","swap"])][MatchRtrn(2,1)]Swap[end][GenericText()]\
 [CallLoop(2,"mario_has_spell_TE",2,["&gCurrSaveFileNum","time_freeze"])][MatchRtrn(2,1)]Time Freeze[end][GenericText()]',
 #end of the spells
-'[GenericText()][CallOnce(0,"TE_set_flag",2,["&gMagicHUDRequest","CAST_SPELL"])][AutoNextBox()][MosaicBGBox(12,82,214,234,"magic_action_menu",2,1)][CallOnce(3,"Get_Spell_Sel",1,[1])][ShadedBGBox(14,94,158,215,0,0,0,0x96)]]\n\
+'[GenericText()][CallOnce(0,"TE_set_flag",2,["&gMagicHUDRequest","CAST_SPELL"])][AutoNextBox()][MosaicBGBox(12,82,214,234,"magic_action_menu",2,1)][CallOnce(3,"Get_Spell_Sel",1,[1])][ShadedBGBox(14,94,194,215,0,0,0,0x96)]\n\
 [MatchRtrn(3,0)]Return[CallOnce(0,"mario_set_spell",1,["ACTION_RETURN"])][Jump("magic_spirit_list_end")]\
 [MatchRtrn(3,1)]Swap[CallOnce(0,"mario_set_spell",1,["ACTION_SWAP"])][Jump("magic_spirit_list_end")]\
 [MatchRtrn(3,2)]Time Freeze[CallOnce(0,"mario_set_spell",1,["ACTION_TIME_FREEZE"])][Jump("magic_spirit_list_end")]\
@@ -89,7 +89,7 @@ magic_list_spirit = ['[AutoNextBox()][MosaicBGBox(12,82,214,234,"magic_action_me
 [CallLoop(2,"mario_has_spell_TE",2,["&gCurrSaveFileNum","hover"])][MatchRtrn(2,1)]Hover[end][GenericText()]\
 [CallLoop(2,"mario_has_spell_TE",2,["&gCurrSaveFileNum","stick"])][MatchRtrn(2,1)]Stick[end][GenericText()]',
 #end of the spells
-'[GenericText()][CallOnce(0,"TE_set_flag",2,["&gMagicHUDRequest","CAST_SPIRIT"])][AutoNextBox()][MosaicBGBox(12,82,214,234,"magic_action_menu",2,1)][CallOnce(3,"Get_Spell_Sel",1,[2])][ShadedBGBox(14,90,194,215,0,0,0,0x96)]]\n\
+'[GenericText()][CallOnce(0,"TE_set_flag",2,["&gMagicHUDRequest","CAST_SPIRIT"])][AutoNextBox()][MosaicBGBox(12,82,214,234,"magic_action_menu",2,1)][CallOnce(3,"Get_Spell_Sel",1,[2])][ShadedBGBox(14,90,194,215,0,0,0,0x96)]\n\
 [MatchRtrn(3,0)]Gigantify[CallOnce(0,"mario_set_spell",1,["ACTION_GIGANTIFY"])][Jump("magic_spirit_list_end")]\
 [MatchRtrn(3,1)]Hover[CallOnce(0,"mario_set_spell",1,["ACTION_HOVER"])][Jump("magic_spirit_list_end")]\
 [MatchRtrn(3,2)]Stick[CallOnce(0,"mario_set_spell",1,["ACTION_STICK"])][Jump("magic_spirit_list_end")]\
@@ -106,7 +106,7 @@ magic_list_env = ['[AutoNextBox()][MosaicBGBox(12,82,214,234,"magic_action_menu"
 [CallLoop(2,"mario_has_spell_TE",2,["&gCurrSaveFileNum","hanging_leaf"])][MatchRtrn(2,1)]Hanging Leaf[end][GenericText()]\
 [CallLoop(2,"mario_has_spell_TE",2,["&gCurrSaveFileNum","cloud_lob"])][MatchRtrn(2,1)]Floating Cloud[end][GenericText()]',
 #end of the spells
-'[GenericText()][CallOnce(0,"TE_set_flag",2,["&gMagicHUDRequest","CAST_ENVIRONMENT"])][AutoNextBox()][MosaicBGBox(12,82,214,234,"magic_action_menu",2,1)][CallOnce(3,"Get_Spell_Sel",1,[3])][ShadedBGBox(14,108,194,215,0,0,0,0x96)]]\n\
+'[GenericText()][CallOnce(0,"TE_set_flag",2,["&gMagicHUDRequest","CAST_ENVIRONMENT"])][AutoNextBox()][MosaicBGBox(12,82,214,234,"magic_action_menu",2,1)][CallOnce(3,"Get_Spell_Sel",1,[3])][ShadedBGBox(14,108,194,215,0,0,0,0x96)]\n\
 [MatchRtrn(3,0)]Ice Block[CallOnce(0,"mario_set_spell",1,["ACTION_ICE_BLOCK"])][Jump("magic_spirit_list_end")]\
 [MatchRtrn(3,1)]Hanging Leaf[CallOnce(0,"mario_set_spell",1,["ACTION_HANGING_LEAF"])][Jump("magic_spirit_list_end")]\
 [MatchRtrn(3,2)]Floating Cloud[CallOnce(0,"mario_set_spell",1,["ACTION_CLOUD_LOB"])][Jump("magic_spirit_list_end")]\
@@ -117,3 +117,20 @@ magic_gen_shadow_fade_io = ['[EndTransition(10,0,0,0)][StartTransition(10,0,0,0)
 magic_cannot_place_floor = ["[JumpLink('magic_gen_shadow_fade_io')][AutoNextBox()]ice block must be placed on floor[TimeEndStr(60)]"]
 magic_cannot_place_ceil = ["[JumpLink('magic_gen_shadow_fade_io')][AutoNextBox()]hanging leaf must be under a ceiling[TimeEndStr(60)]"]
 magic_cannot_place_oob = ["[JumpLink('magic_gen_shadow_fade_io')][AutoNextBox()]floating cloud cannot be placed out of bounds[TimeEndStr(60)]"]
+
+
+magic_no_swaps = ['[JumpLink("magic_gen_shadow_fade_io")][AutoNextBox()]No swaps in range[Jump("magic_spirit_list_end")]']
+magic_choose_swap = ['[MosaicBGBox(12,82,214,234,"magic_action_menu",2,1)][ShadedBGBox(14,128,194,215,0,0,0,0x96)]\n\
+Swap with obj [UsrStr(0)][end]']
+
+
+magic_choose_return = ['[MosaicBGBox(12,82,214,234,"magic_action_menu",2,1)][ShadedBGBox(14,108,158,215,0,0,0,0x96)]\n\
+Select Option[DialogOptions(2)]\
+Return[end]\
+Recast[end]\
+Cancel Cast[end]\
+[MosaicBGBox(12,82,214,234,"magic_action_menu",2,1)][ShadedBGBox(14,94,194,215,0,0,0,0x96)]\n\
+[DialogResponse(0)][StartDialogBracket(1)]Returning[CallOnce(0,"TE_set_state",2,["&gReturn",2])][EndDialogBracket(1)]\
+[DialogResponse(1)][StartDialogBracket(1)]Recasting[CallOnce(0,"TE_set_state",2,["&gReturn",3])][EndDialogBracket(1)]\
+[DialogResponse(2)]Cancelling[CallOnce(0,"TE_set_state",2,["&gReturn",4])]\
+[GenericText()][Jump("magic_spirit_list_end")]']

@@ -1049,7 +1049,6 @@ s8 TE_dialog_response(struct TEState *CurEng,u8 *str){
 			}else if(str[0] == 0x87){
 				TE_print(CurEng);
 				CurEng->TempStr+=off;
-				CurEng->CurPos=0;
 				return TE_print_adv(CurEng,1);
 			}else{
 				str += 1;

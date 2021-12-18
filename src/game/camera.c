@@ -935,25 +935,16 @@ s32 update_2_directions_camera(struct Camera *c, Vec3f focus, Vec3f pos) {
  * Update the camera during 8 directional mode
  */
 s32 update_8_directions_camera(struct Camera *c, Vec3f focus, Vec3f pos) {
-    UNUSED f32 cenDistX = sMarioCamState->pos[0] - c->areaCenX;
-    UNUSED f32 cenDistZ = sMarioCamState->pos[2] - c->areaCenZ;
     s16 camYaw = s8DirModeBaseYaw + s8DirModeYawOffset;
     s16 pitch = 0x400; //look_down_slopes(camYaw);
     f32 posY;
     f32 focusY;
-    UNUSED f32 unused1;
-    UNUSED f32 unused2;
-    UNUSED f32 unused3;
     f32 yOff = 125.f;
     f32 baseDist = 1000.f; //*GetMarioLargeScaleFactors();
 
     sAreaYaw = camYaw;
     calc_y_to_curr_floor(&posY, 1.f, 200.f, &focusY, 0.9f, 200.f);
     focus_on_mario(focus, pos, posY + yOff, focusY + yOff, sLakituDist + baseDist, pitch, camYaw);
-    // pan_ahead_of_player(c);
-    // if (gCurrLevelArea == AREA_DDD_SUB) {
-        // camYaw = clamp_positions_and_find_yaw(pos, focus, 6839.f, 995.f, 5994.f, -3945.f);
-    // }
 
     return camYaw;
 }
@@ -3153,7 +3144,7 @@ void update_camera(struct Camera *c) {
 		}
 #endif
     // camera_course_processing(c);
-    stub_camera_3(c);
+    // stub_camera_3(c);
     sCButtonsPressed = find_c_buttons_pressed(sCButtonsPressed, gPlayer1Controller->buttonPressed,gPlayer1Controller->buttonDown);
 #ifdef BETTERCAMERA
 	}
@@ -3273,7 +3264,7 @@ void update_camera(struct Camera *c) {
     }
     // Start any Mario-related cutscenes
     start_cutscene(c, get_cutscene_from_mario_status(c));
-    stub_camera_2(c);
+    // stub_camera_2(c);
     gCheckingSurfaceCollisionsForCamera = FALSE;
     if (gCurrLevelNum != LEVEL_CASTLE) {
         // If fixed camera is selected as the alternate mode, then fix the camera as long as the right

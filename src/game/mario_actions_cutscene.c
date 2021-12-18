@@ -5,6 +5,7 @@
 #include "area.h"
 #include "audio/external.h"
 #include "behavior_data.h"
+#include "engine/behavior_script.h"
 #include "camera.h"
 #include "dialog_ids.h"
 #include "engine/behavior_script.h"
@@ -2715,13 +2716,76 @@ s32 act_cast_select(struct MarioState *m) {
 	return FALSE;
 }
 extern s16 newcam_yaw;
-extern u32 gswapIndex;
-extern struct Object *swappables[32];
+extern struct Object *swappables[16];
 extern struct Object *gFreezeTime;
 extern struct Object *gReturn;
+extern void render_hud_cannon_reticle(void);
+static u8 chosen = 0;
+extern f32 newcam_pos_target[3];
+extern struct Swaps *Swappables;
+
+void Zero_Swappable(void){
+	Swappables->Chosen = 0;
+	Swappables->Num = 0;
+	Swappables->CheckSwap = 0;
+	Swappables->SwapChecked = 0;
+}
+
 s32 act_cast_actions(struct MarioState *m) {
 	//spell, spirit, env, item
+	struct Controller *cont = m->controller;
 	switch(m->actionArg){
+		//swapping, just putting it here for convenience
+		case 4:
+			handle_menu_scrolling(MENU_SCROLL_VERTICAL,&Swappables->Chosen,0,Swappables->Num-1);
+			struct Object *swapObj = Swappables->SwapObjs[Swappables->Chosen];
+			if(swapObj==NULL){
+				SetupTextEngine(16,212,magic_no_swaps, TE_STATE_AUX); //overwrites current text engine
+				set_mario_action(m, ACT_IDLE, 0);
+				Zero_Swappable();
+			}
+			obj_copy_pos_and_angle(m->spawnObj,swapObj);
+			UserInputs[TE_STATE_AUX][0][0] = Swappables->Chosen;
+			UserInputs[TE_STATE_AUX][0][1] = 0x45;
+			//focus cam on swappable
+			if (gLakituState.mode != CAMERA_MODE_NEWCAM){
+				m->flags |= (MARIO_CAM_FOC_RISE | MARIO_CAM_FOC_OBJ);
+			}
+			else{
+				// newcam_pos_target[0] = swapObj->oPosX;
+				// newcam_pos_target[1] = swapObj->oPosY+400.0f;
+				// newcam_pos_target[2] = swapObj->oPosZ;
+			}
+			if(cont->buttonPressed & Z_TRIG){
+				Zero_Swappable();
+				TE_end_str(&TE_Engines[TE_STATE_AUX]);
+				set_mario_action(m, ACT_IDLE, 0);
+				m->spawnObj->activeFlags = ACTIVE_FLAG_DEACTIVATED;
+				m->spawnObj = 0;
+				m->flags &= (~MARIO_CAM_FOC_OBJ | MARIO_CAM_FOC_RISE);
+				gMagicHUDRequest = 0;
+			}
+			else if(cont->buttonPressed & L_TRIG){
+				swapObj->oHomeX = m->pos[0];
+				swapObj->oHomeY = m->pos[1];
+				swapObj->oHomeZ = m->pos[2];
+				m->pos[0] = swapObj->oPosX;
+				m->pos[1] = swapObj->oPosY+300.0f;
+				m->pos[2] = swapObj->oPosZ;
+				swapObj->oPosX = swapObj->oHomeX;
+				swapObj->oPosY = swapObj->oHomeY;
+				swapObj->oPosZ = swapObj->oHomeZ;
+				swapObj->oCanSwap = 0;
+				set_mario_action(m, ACT_SPAWN_SPIN_AIRBORNE, 0);
+				TE_end_str(&TE_Engines[TE_STATE_AUX]);
+				Zero_Swappable();
+				gMagicHUDRequest = 0;
+				m->spawnObj->activeFlags = ACTIVE_FLAG_DEACTIVATED;
+				m->spawnObj = 0;
+				m->flags &= (~MARIO_CAM_FOC_OBJ | MARIO_CAM_FOC_RISE);
+			}
+			break;
+		
 		case 0:
 			gMagicHUDRequest &= ~CAST_SPELL;
 			if (m->spawnObj == 0){
@@ -2729,15 +2793,41 @@ s32 act_cast_actions(struct MarioState *m) {
 					case ACTION_RETURN:
 						//spawn an object or if obj exists then ask for return
 						if(gReturn){
-							gReturn->activeFlags = ACTIVE_FLAG_DEACTIVATED;
+							set_mario_animation(m, MARIO_ANIM_SUMMON_STAR);
+							TE_end_str(&TE_Engines[TE_STATE_AUX]);
+							SetupTextEngine(16,212,magic_choose_return, TE_STATE_AUX); //overwrites current text engine
+							m->spawnObj = gReturn;
+							gReturn = 1;
+						}else{
+							m->spawnObj = spawn_object(m->marioObj,MODEL_RETURN_PORTAL,bhvReturnPortal);
+							gReturn = m->spawnObj;
+							set_mario_animation(m, MARIO_ANIM_BREAKDANCE);
 						}
-						m->spawnObj = spawn_object(m->marioObj,MODEL_RETURN_PORTAL,bhvReturnPortal);
-						gReturn = m->spawnObj;
-						set_mario_animation(m, MARIO_ANIM_BREAKDANCE);
+						
 						break;
 					case ACTION_SWAP:
 						//check swappables
-						// spawn_object(m->marioObj,MODEL_TIME_SPHERE,bhvTimeSphere);
+						if (Swappables->CheckSwap == 0){
+							Swappables->CheckSwap = 1;
+							Swappables->Num = 0;
+							return FALSE;
+						}else if(Swappables->CheckSwap==1 && Swappables->SwapChecked==0){
+							return FALSE;
+						}else if(Swappables->Num == 0 && Swappables->SwapChecked){
+							TE_end_str(&TE_Engines[TE_STATE_AUX]);
+							SetupTextEngine(16,212,magic_no_swaps, TE_STATE_AUX); //overwrites current text engine
+							set_mario_action(m, ACT_IDLE, 0);
+							Zero_Swappable();
+						}else{
+							set_mario_animation(m, MARIO_ANIM_SUMMON_STAR);
+							m->actionArg = 4;
+							TE_end_str(&TE_Engines[TE_STATE_AUX]);
+							SetupTextEngine(16,212,magic_choose_swap, TE_STATE_AUX); //overwrites current text engine
+							m->spawnObj = spawn_object(m->marioObj,MODEL_RETICLE,bhvReticle);
+							UserInputs[TE_STATE_AUX][0][0] = Swappables->Chosen;
+							UserInputs[TE_STATE_AUX][0][1] = 0x45;
+							return FALSE;
+						}
 						break;
 					case ACTION_TIME_FREEZE:
 						if(gFreezeTime){
@@ -2749,10 +2839,42 @@ s32 act_cast_actions(struct MarioState *m) {
 						break;
 				}
 			}
-			m->actionTimer++;
-			if (is_anim_at_end(m)){
-				set_mario_action(m, ACT_IDLE, 0);
-				m->spawnObj = 0;
+			if((gReturn == m->spawnObj) || (gReturn == 0)){
+				m->actionTimer++;
+				if (is_anim_at_end(m)){
+					set_mario_action(m, ACT_IDLE, 0);
+					m->spawnObj = 0;
+				}
+			}else{
+				//wait for dialog option select
+				switch((u32) gReturn){
+					//do nothing, just wait
+					case 1:
+						break;
+					case 2:
+						gReturn = m->spawnObj;
+						m->spawnObj = 0;
+						m->pos[0] = gReturn->oPosX;
+						m->pos[1] = gReturn->oPosY+300.0f;
+						m->pos[2] = gReturn->oPosZ;
+						set_mario_action(m, ACT_SPAWN_SPIN_AIRBORNE, 0);
+						break;
+					//recast
+					case 3:
+						m->spawnObj->activeFlags = ACTIVE_FLAG_DEACTIVATED;
+						gReturn = spawn_object(m->marioObj,MODEL_RETURN_PORTAL,bhvReturnPortal);
+						m->spawnObj = gReturn;
+						set_mario_animation(m, MARIO_ANIM_BREAKDANCE);
+						break;
+					//cancel cast
+					case 4:
+						m->spawnObj->activeFlags = ACTIVE_FLAG_DEACTIVATED;
+						m->spawnObj = 1;
+						gReturn = 0;
+						set_mario_animation(m, MARIO_ANIM_BREAKDANCE);
+						break;
+					
+				}
 			}
 			break;
 		case 1:
@@ -2780,6 +2902,7 @@ s32 act_cast_actions(struct MarioState *m) {
 		case 2:
 			set_mario_animation(m, MARIO_ANIM_SUMMON_STAR);
 			gMagicHUDRequest &= ~CAST_ENVIRONMENT;
+			m->flags |= MARIO_CAM_FOC_RISE;
 			if(m->spawnObj == 0){
 				switch(m->CastSpell){
 					case ACTION_ICE_BLOCK:
@@ -2798,7 +2921,7 @@ s32 act_cast_actions(struct MarioState *m) {
 			}
 			//do block movement and placment
 			else{
-				struct Controller *cont = m->controller;
+				m->flags |= (MARIO_CAM_FOC_RISE | MARIO_CAM_FOC_OBJ);
 				struct Object *block = m->spawnObj;
 				s16 angle;
 				f32 rlim;
@@ -2872,6 +2995,7 @@ s32 act_cast_actions(struct MarioState *m) {
 						block->oCeil = ceil;
 						m->spawnObj = 0;
 						set_mario_action(m, ACT_IDLE, 0);
+						m->flags &= (~MARIO_CAM_FOC_OBJ | MARIO_CAM_FOC_RISE);
 					}else{
 						switch(m->CastSpell){
 							// must have floor and floor height must be within 10 of obj
@@ -2892,9 +3016,9 @@ s32 act_cast_actions(struct MarioState *m) {
 				//cancel cast
 				if(cont->buttonPressed & Z_TRIG){
 					obj_mark_for_deletion(block);
-					
 					m->spawnObj = 0;
 					set_mario_action(m, ACT_IDLE, 0);
+					m->flags &= (~MARIO_CAM_FOC_OBJ | MARIO_CAM_FOC_RISE);
 				}
 			}
 			break;
