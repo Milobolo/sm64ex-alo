@@ -52,12 +52,12 @@ void hidden_breakable_box_actions(void) {
         cur_obj_become_tangible();
         if (cur_obj_wait_then_blink(360, 20))
             o->oAction = 0;
-        if (cur_obj_was_attacked_or_ground_pounded()) {
-            spawn_mist_particles();
-            spawn_triangle_break_particles(30, 138, 3.0f, 4);
-            o->oAction++;
-            cur_obj_play_sound_2(SOUND_GENERAL_BREAK_BOX);
-        }
+        // if (cur_obj_was_attacked_or_ground_pounded()) {
+            // spawn_mist_particles();
+            // spawn_triangle_break_particles(30, 138, 3.0f, 4);
+            // o->oAction++;
+            // cur_obj_play_sound_2(SOUND_GENERAL_BREAK_BOX);
+        // }
         load_object_collision_model();
     } else {
         cur_obj_become_intangible();

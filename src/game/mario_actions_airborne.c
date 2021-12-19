@@ -1208,6 +1208,7 @@ s32 check_wall_kick(struct MarioState *m) {
         return set_mario_action(m, ACT_WALL_KICK_AIR, 0);
     }if(m->framesSinceA < 2 && m->Spell&ACTION_STICK){
 		m->wallKickTimer = 0;
+		m->faceAngle[1] += 0x8000;
 		return set_mario_action(m, ACT_WALL_KICK_AIR, 0);
 	}
     return FALSE;

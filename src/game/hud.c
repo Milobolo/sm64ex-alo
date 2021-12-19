@@ -177,7 +177,7 @@ void render_dl_power_meter(s16 numHealthWedges) {
 	else
 		shiftR = 0;
 	print_text_fmt_int(GFX_DIMENSIONS_RECT_FROM_RIGHT_EDGE(58)-shiftR*12, 218, "%d", gMarioState->health>>8); //cur hp
-	print_text_fmt_int(GFX_DIMENSIONS_RECT_FROM_RIGHT_EDGE(30), 214, "%d", gMarioState->Level*5); //max hp
+	print_text_fmt_int(GFX_DIMENSIONS_RECT_FROM_RIGHT_EDGE(30), 214, "%d", 8); //max hp
 	// if (numHealthWedges != 0) {
         // gSPDisplayList(gDisplayListHead++, &dl_power_meter_health_segments_begin);
         // render_power_meter_health_segment(numHealthWedges);
