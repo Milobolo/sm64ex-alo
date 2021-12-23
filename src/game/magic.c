@@ -26,6 +26,7 @@ It will also contain basic enemy logic and enemy battle stuff like arenas, exp e
 
 //header at the top for declarations
 #include "src/game/magic_str_te.h"
+#include "src/game/magic_tuts_te.h"
 
 //vars
 u32 gMagicHUDRequest = 0;
@@ -56,6 +57,30 @@ void update_mario_exp(struct MarioState *m){
 		save_file_udpate_level(gCurrSaveFileNum - 1,  m);
 	}
 }
+
+//cringe
+extern Lights1 mario_shoes_v4_lights;
+extern Lights1 mario_shoes_hover_v4_lights;
+extern Lights1 mario_white_v4_lights;
+extern Lights1 mario_white_stick_v4_lights;
+extern Gfx mat_mario_white_v4[];
+extern Gfx mat_mario_shoes_v4[];
+
+void update_mario_colors_spirit(struct MarioState *m){
+	Gfx *gloves = segmented_to_virtual(&mat_mario_white_v4);
+	Gfx *shoes = segmented_to_virtual(&mat_mario_shoes_v4);
+	if(m->Spell & ACTION_HOVER){
+		gSPSetLights1(&shoes[5],mario_shoes_hover_v4_lights);
+	}else{
+		gSPSetLights1(&shoes[5],mario_shoes_v4_lights);
+	}
+	if(m->Spell & ACTION_STICK){
+		gSPSetLights1(&gloves[5],mario_white_stick_v4_lights);
+	}else{
+		gSPSetLights1(&gloves[5],mario_white_v4_lights);
+	}
+}
+
 
 void handle_magic_actions(struct MarioState *m){
 	if(gMagicHUDRequest & START_CAST){
@@ -96,7 +121,9 @@ u32 wait_set_mario_cast(struct MarioState *m){
 	switch (action & ACT_GROUP_MASK) {
 		case ACT_GROUP_MOVING:
 		case ACT_GROUP_STATIONARY:
-			ret = set_mario_action(m, ACT_CAST_SELECT, 0);
+			if(m->heldObj == NULL){
+				ret = set_mario_action(m, ACT_CAST_SELECT, 0);
+			}
 			break;
 
 		case ACT_GROUP_AIRBORNE:
@@ -239,7 +266,12 @@ void mario_set_spell(u32 spell){
 	}
 	//spirit
 	else if(spell<ACTION_ICE_BLOCK){
-		gMarioState->Spell = spell | (gMarioState->Spell&(~0x1c0));
+		if((gMarioState->Spell & spell) == spell){
+			gMarioState->Spell = (gMarioState->Spell&(~0x1c0));
+			gMarioState->CastSpell = ACTION_CANCEL_SPIRIT;
+		}else{
+			gMarioState->Spell = spell | (gMarioState->Spell&(~0x1c0));
+		}
 	}
 	//env
 	else{
@@ -247,5 +279,7 @@ void mario_set_spell(u32 spell){
 	}
 }
 
+
 //file at bottom so function in here are declared before compile
 #include "src/game/magic_str_te.py"
+#include "src/game/magic_tuts_te.py"

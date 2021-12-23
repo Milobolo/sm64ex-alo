@@ -79,7 +79,7 @@ extern Vtx castle_courtyard_dl_pillar_003_mesh_layer_1_vtx_1[58];
 extern Gfx castle_courtyard_dl_pillar_003_mesh_layer_1_tri_1[];
 extern Vtx castle_courtyard_dl_pillar_003_mesh_layer_1_vtx_2[4];
 extern Gfx castle_courtyard_dl_pillar_003_mesh_layer_1_tri_2[];
-extern Vtx castle_courtyard_dl_s_mesh_layer_1_vtx_0[929];
+extern Vtx castle_courtyard_dl_s_mesh_layer_1_vtx_0[470];
 extern Gfx castle_courtyard_dl_s_mesh_layer_1_tri_0[];
 extern Vtx castle_courtyard_dl_s_fire_entrance_mesh_layer_1_vtx_0[74];
 extern Gfx castle_courtyard_dl_s_fire_entrance_mesh_layer_1_tri_0[];

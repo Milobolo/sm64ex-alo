@@ -370,4 +370,10 @@ extern const Gfx white_particle_small_unused_dl[];
 
 #include "hollow_box/geo_header.h"
 
+#include "square_flat/collision_header.h"
+
+#include "square_flat/geo_header.h"
+
+#include "hint/geo_header.h"
+
 #endif

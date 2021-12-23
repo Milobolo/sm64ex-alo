@@ -17,6 +17,7 @@
 #include "interaction.h"
 #include "level_table.h"
 #include "level_update.h"
+#include "magic.h"
 #include "mario.h"
 #include "mario_actions_cutscene.h"
 #include "memory.h"
@@ -876,6 +877,29 @@ struct Object *cur_obj_find_nearest_object_with_behavior(const BehaviorScript *b
     return closestObj;
 }
 
+struct Object *cur_obj_find_nearest_object_with_behavior_and_bparam(const BehaviorScript *behavior, u32 bp) {
+    uintptr_t *behaviorAddr = segmented_to_virtual(behavior);
+    struct Object *closestObj = NULL;
+    struct Object *obj;
+    struct ObjectNode *listHead;
+
+    listHead = &gObjectLists[get_object_list_from_behavior(behaviorAddr)];
+    obj = (struct Object *) listHead->next;
+
+    while (obj != (struct Object *) listHead) {
+        if (obj->behavior == behaviorAddr) {
+            if (obj->activeFlags != ACTIVE_FLAG_DEACTIVATED && obj != o) {
+                if (obj->oBehParams == bp) {
+                    return obj;
+                }
+            }
+        }
+        obj = (struct Object *) obj->header.next;
+    }
+
+    return NULL;
+}
+
 struct Object *find_unimportant_object(void) {
     struct ObjectNode *listHead = &gObjectLists[OBJ_LIST_UNIMPORTANT];
     struct ObjectNode *obj = listHead->next;
@@ -1113,7 +1137,11 @@ void cur_obj_get_thrown_or_placed(f32 forwardVel, f32 velY, s32 thrownAction) {
         cur_obj_move_after_thrown_or_dropped(0.0f, 0.0f);
     } else {
         o->oAction = thrownAction;
-        cur_obj_move_after_thrown_or_dropped(forwardVel, velY);
+		if( (gMarioState->Spell & ACTION_GIGANTIFY) == ACTION_GIGANTIFY){
+			cur_obj_move_after_thrown_or_dropped(forwardVel*2.0f, velY*1.2f);
+		}else{
+			cur_obj_move_after_thrown_or_dropped(forwardVel, velY);
+		}
     }
 }
 
@@ -2645,6 +2673,9 @@ s32 cur_obj_update_dialog(s32 actionArg, s32 dialogFlags, s32 dialogID, UNUSED s
 
     return dialogResponse;
 }
+
+
+
 
 s32 cur_obj_update_dialog_with_cutscene(s32 actionArg, s32 dialogFlags, s32 cutsceneTable, s32 dialogID) {
     s32 dialogResponse = 0;

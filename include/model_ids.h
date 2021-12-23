@@ -38,6 +38,8 @@
 #define MODEL_RETURN_PORTAL               0xE9
 #define MODEL_RETICLE                     0xEA
 #define MODEL_HOLLOW_BOX                  0xEB
+#define MODEL_SQUARE_FLAT                 0xEC
+#define MODEL_HINT                        0xED
 
 
 

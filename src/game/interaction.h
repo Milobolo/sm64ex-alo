@@ -48,6 +48,7 @@
 
 // INTERACT_GRABBABLE
 #define INT_SUBTYPE_GRABS_MARIO 0x00000004 /* Also makes the object heavy */
+#define INT_SUBTYPE_HEAVY 0x00000008 /* only makes obj heavy */
 #define INT_SUBTYPE_HOLDABLE_NPC 0x00000010 /* Allows the object to be gently dropped, and sets vertical speed to 0 when dropped with no forwards velocity */
 #define INT_SUBTYPE_DROP_IMMEDIATELY 0x00000040 /* This gets set by grabbable NPCs that talk to Mario to make him drop them after the dialog is finished */
 #define INT_SUBTYPE_KICKABLE 0x00000100

@@ -27,3 +27,5 @@
 #include "return_portal/geo.inc.c"
 #include "reticle/geo.inc.c"
 #include "hollow_box/geo.inc.c"
+#include "square_flat/geo.inc.c"
+#include "hint/geo.inc.c"

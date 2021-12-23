@@ -8,7 +8,7 @@
 #define ACTIVE_FLAG_DEACTIVATED            0         // 0x0000
 #define ACTIVE_FLAG_ACTIVE                 (1 <<  0) // 0x0001
 #define ACTIVE_FLAG_FAR_AWAY               (1 <<  1) // 0x0002
-#define ACTIVE_FLAG_UNK2                   (1 <<  2) // 0x0004
+#define ACTIVE_FLAG_NO_COL                 (1 <<  2) // 0x0004
 #define ACTIVE_FLAG_IN_DIFFERENT_ROOM      (1 <<  3) // 0x0008
 #define ACTIVE_FLAG_UNIMPORTANT            (1 <<  4) // 0x0010
 #define ACTIVE_FLAG_INITIATED_TIME_STOP    (1 <<  5) // 0x0020

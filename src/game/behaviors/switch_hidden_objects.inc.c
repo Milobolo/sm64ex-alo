@@ -40,8 +40,12 @@ void hidden_breakable_box_actions(void) {
         cur_obj_become_intangible();
         if (o->oTimer == 0)
             breakable_box_init();
-        if (o->oHiddenObjectUnkF4 == NULL)
-            o->oHiddenObjectUnkF4 = cur_obj_nearest_object_with_behavior(bhvFloorSwitchHiddenObjects);
+			if (o->oBehParams2ndByte == 0){
+				o->oHiddenObjectUnkF4 = cur_obj_find_nearest_object_with_behavior_and_bparam(bhvFloorSwitchHiddenObjects,o->oBehParams & 0xFF);
+			}else{
+				o->oHiddenObjectUnkF4 = cur_obj_find_nearest_object_with_behavior_and_bparam(bhvFloorSwitchHeavy,o->oBehParams & 0xFF);
+				cur_obj_scale(1.5f);
+			}
         if ((sp1C = o->oHiddenObjectUnkF4) != NULL)
             if (sp1C->oAction == 2) {
                 o->oAction++;
@@ -50,14 +54,14 @@ void hidden_breakable_box_actions(void) {
             }
     } else if (o->oAction == 1) {
         cur_obj_become_tangible();
-        if (cur_obj_wait_then_blink(360, 20))
-            o->oAction = 0;
-        // if (cur_obj_was_attacked_or_ground_pounded()) {
-            // spawn_mist_particles();
-            // spawn_triangle_break_particles(30, 138, 3.0f, 4);
-            // o->oAction++;
-            // cur_obj_play_sound_2(SOUND_GENERAL_BREAK_BOX);
-        // }
+		if (o->oBehParams2ndByte == 0){
+			if (cur_obj_wait_then_blink(360, 20))
+				o->oAction = 0;
+		}else{
+			if(o->oHiddenObjectUnkF4->oAction == 0){
+				o->oAction = 0;
+			}
+		}
         load_object_collision_model();
     } else {
         cur_obj_become_intangible();
@@ -76,7 +80,7 @@ void hidden_unbreakable_box_actions(void) {
         cur_obj_set_model(MODEL_HOLLOW_BOX);
         cur_obj_become_intangible();
         if (o->oHiddenObjectUnkF4 == NULL)
-            o->oHiddenObjectUnkF4 = cur_obj_nearest_object_with_behavior(bhvFloorSwitchHiddenObjects);
+            o->oHiddenObjectUnkF4 = cur_obj_find_nearest_object_with_behavior_and_bparam(bhvFloorSwitchHiddenObjects,o->oBehParams & 0xFF);
         if ((sp1C = o->oHiddenObjectUnkF4) != NULL)
             if (sp1C->oAction == 2) {
                 o->oAction++;
@@ -92,8 +96,5 @@ void hidden_unbreakable_box_actions(void) {
 }
 
 void bhv_hidden_object_loop(void) {
-    if (o->oBehParams2ndByte == 0)
-        hidden_breakable_box_actions(); // Confused, that function has code depending on the action
-    else
-        hidden_unbreakable_box_actions();
+    hidden_breakable_box_actions(); // Confused, that function has code depending on the action
 }

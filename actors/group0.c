@@ -39,3 +39,6 @@
 #include "return_portal/model.inc.c"
 #include "reticle/model.inc.c"
 #include "hollow_box/model.inc.c"
+#include "square_flat/collision.inc.c"
+#include "square_flat/model.inc.c"
+#include "hint/model.inc.c"

@@ -61,8 +61,8 @@ Funcs = {
 	'SetRainbow':(0x46,H),
 	'SetOrigin':(0x47,H,H),
 	'Jump':(0x48,p),
-	'TransOffs':(0x49,H,H),
-	'TransAbs':(0x4A,H,H),
+	'TransOffs':(0x49,h,h),
+	'TransAbs':(0x4A,h,h),
 	#needs editing
 	'PopTransform':(0x4B,),
 	'FFSpd':(0x4c,h),

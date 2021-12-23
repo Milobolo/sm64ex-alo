@@ -7,19 +7,20 @@ struct ObjectHitbox sBreakableBoxSmallHitbox = {
     /* health:            */ 1,
     /* numLootCoins:      */ 0,
     /* radius:            */ 150,
-    /* height:            */ 250,
+    /* height:            */ 200,
     /* hurtboxRadius:     */ 150,
-    /* hurtboxHeight:     */ 250,
+    /* hurtboxHeight:     */ 200,
 };
 
 void bhv_breakable_box_small_init(void) {
-    o->oGravity = 2.5f;
-    o->oFriction = 0.99f;
-    o->oBuoyancy = 1.4f;
-    cur_obj_scale(0.4f);
+    o->oGravity = 5.5f;
+    o->oFriction = 0.7f;
+    o->oBuoyancy = 0.6f;
+    cur_obj_scale(0.7f);
     obj_set_hitbox(o, &sBreakableBoxSmallHitbox);
     o->oAnimState = 1;
     o->activeFlags |= ACTIVE_FLAG_UNK9;
+    o->oInteractionSubtype = INT_SUBTYPE_HEAVY;
 }
 
 void small_breakable_box_spawn_dust(void) {
@@ -42,15 +43,8 @@ void small_breakable_box_act_move(void) {
     }
 
     if (sp1E & 2) {
-        spawn_mist_particles();
-        spawn_triangle_break_particles(20, 138, 0.7f, 3);
-		if(((o->oBehParams >> 8) & 0x1) == 0){
-        obj_spawn_yellow_coins(o, 3);
-		}
-        create_sound_spawner(SOUND_GENERAL_BREAK_BOX);
-        o->activeFlags = ACTIVE_FLAG_DEACTIVATED;
-		create_respawner(MODEL_BREAKABLE_BOX_SMALL, bhvBreakableBoxSmall, 1000);
-		set_object_respawn_info_bits(o, 1);
+            o->oForwardVel = 0.0f;
+			o->oVelY = 0.0f;
     }
 
     obj_check_floor_death(sp1E, sObjFloor);
@@ -60,7 +54,7 @@ void breakable_box_small_released_loop(void) {
     o->oBreakableBoxSmallFramesSinceReleased++;
 
     // Begin flashing
-    if (o->oBreakableBoxSmallFramesSinceReleased > 810) {
+    if (o->oBreakableBoxSmallFramesSinceReleased > 400) {
         if (o->oBreakableBoxSmallFramesSinceReleased & 1)
             o->header.gfx.node.flags |= GRAPH_RENDER_INVISIBLE;
         else
@@ -68,7 +62,7 @@ void breakable_box_small_released_loop(void) {
     }
 
     // Despawn, and create a corkbox respawner
-    if (o->oBreakableBoxSmallFramesSinceReleased > 900) {
+    if (o->oBreakableBoxSmallFramesSinceReleased > 500) {
         create_respawner(MODEL_BREAKABLE_BOX_SMALL, bhvBreakableBoxSmall, 1000);
         o->activeFlags = ACTIVE_FLAG_DEACTIVATED;
     }
@@ -103,7 +97,7 @@ void breakable_box_small_get_dropped(void) {
     o->oBreakableBoxSmallReleased = 1;
     o->oBreakableBoxSmallFramesSinceReleased = 0;
 }
-
+#include "src/game/magic.h"
 void breakable_box_small_get_thrown(void) {
     cur_obj_become_tangible();
     cur_obj_enable_rendering_2();
@@ -111,8 +105,14 @@ void breakable_box_small_get_thrown(void) {
     o->header.gfx.node.flags &= ~GRAPH_RENDER_INVISIBLE;
     o->oHeldState = 0;
     o->oFlags &= ~0x08;
-    o->oForwardVel = 40.0f;
-    o->oVelY = 20.0f;
+	if( (gMarioState->Spell & ACTION_GIGANTIFY) == ACTION_GIGANTIFY){
+		o->oForwardVel = 40.0f;
+		o->oVelY = 35.0f;
+	}
+	else{
+		o->oForwardVel = 20.0f;
+		o->oVelY = 15.0f;
+	}
     o->oBreakableBoxSmallReleased = 1;
     o->oBreakableBoxSmallFramesSinceReleased = 0;
     o->activeFlags &= ~ACTIVE_FLAG_UNK9;

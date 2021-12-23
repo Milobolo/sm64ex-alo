@@ -1970,6 +1970,8 @@ s32 execute_mario_action(UNUSED struct Object *o) {
 		// update_mario_exp(gMarioState);
 		//handle magic action stuff
 		handle_magic_actions(gMarioState);
+		//update mario colors for spirit magic
+		update_mario_colors_spirit(gMarioState);
 
         // The function can loop through many action shifts in one frame,
         // which can lead to unexpected sub-frame behavior. Could potentially hang
@@ -2135,7 +2137,7 @@ void init_mario_from_save_file(void) {
     gMarioState->Exp = save_file_get_exp(gCurrSaveFileNum - 1);
     gMarioState->Level = save_file_get_level(gCurrSaveFileNum - 1);
 
-    gMarioState->numCoins = save_file_get_coin_count(gCurrSaveFileNum - 1);
+    gMarioState->numCoins = 0;
     gMarioState->numStars =
         save_file_get_total_star_count(gCurrSaveFileNum - 1, COURSE_MIN - 1, COURSE_MAX - 1);
     gMarioState->numKeys = 0;

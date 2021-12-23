@@ -175,15 +175,13 @@ Ready?\n\
 //Go//// Don't Go"))
 
 DEFINE_DIALOG(DIALOG_010, 1, 4, 30, 200, _("\
-You've stepped on the\n\
-Wing Cap Switch. Wearing\n\
-the Wing Cap, you can\n\
-soar through the sky.\n\
-Now Wing Caps will pop\n\
-out of all the red blocks\n\
-you find.\n\
-\n\
-Would you like to Save?\n\
+You've stepped on a\n\
+Spirit Switch. Access\n\
+your magic by pressing L\n\
+and selecting spirit.\n\
+Spirit spell buffs last\n\
+until they're cancelled.\n\
+Would you like to save?\n\
 \n\
 //Yes////No"))
 
@@ -214,20 +212,19 @@ Would you like to Save?\n\
 //Yes////No"))
 
 DEFINE_DIALOG(DIALOG_013, 1, 5, 30, 200, _("\
-You've collected 100\n\
-coins! Mario gains more\n\
+You've collected a\n\
+star! Mario gains more\n\
 power from the castle.\n\
-Do you want to Save?\n\
+Return to level start?\n\
 //Yes////No"))
 
 DEFINE_DIALOG(DIALOG_014, 1, 4, 30, 200, _("\
 Wow! Another Power Star!\n\
-Mario gains more courage\n\
-from the power of the\n\
-castle.\n\
-Do you want to Save?\n\
+Mario gains more strength\n\
+from the power of anime.\n\
+Return to level start?\n\
 \n\
-//You Bet//Not Now"))
+//You Bet//No"))
 
 DEFINE_DIALOG(DIALOG_015, 1, 4, 30, 200, _("\
 You can punch enemies to\n\

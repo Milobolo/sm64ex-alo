@@ -1,0 +1,17 @@
+extern const GeoLayout square_flat_geo[];
+extern Lights1 square_flat_side_lights;
+extern Lights1 square_flat_face_lights;
+extern u8 square_flat_Siding_brick_2_ci4[];
+extern u8 square_flat_Siding_brick_2_ci4_pal_rgba16[];
+extern u8 square_flat_OSC_O_M_METAL03CI_ci4[];
+extern u8 square_flat_OSC_O_M_METAL03CI_ci4_pal_rgba16[];
+extern Vtx square_flat_Cube_003_mesh_layer_1_vtx_0[32];
+extern Gfx square_flat_Cube_003_mesh_layer_1_tri_0[];
+extern Vtx square_flat_Cube_003_mesh_layer_1_vtx_1[10];
+extern Gfx square_flat_Cube_003_mesh_layer_1_tri_1[];
+extern Gfx mat_square_flat_side[];
+extern Gfx mat_revert_square_flat_side[];
+extern Gfx mat_square_flat_face[];
+extern Gfx mat_revert_square_flat_face[];
+extern Gfx square_flat_Cube_003_mesh_layer_1[];
+extern Gfx square_flat_material_revert_render_settings[];

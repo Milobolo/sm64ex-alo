@@ -18,6 +18,10 @@ void ceil_vine_loop(void);
 void floating_cloud_loop(void);
 void bhvTimeSphere_loop(void);
 void bhvReturnPortal_loop(void);
+void back_and_forth_loop(void);
+void up_and_down_loop(void);
+void bhv_purple_heavy_switch_loop(void);
+void bhvTEdistLoop(void);
 
 void spawn_mist_particles_variable(s32 count, s32 offsetY, f32 size);
 void bhv_spawn_star_no_level_exit(u32);

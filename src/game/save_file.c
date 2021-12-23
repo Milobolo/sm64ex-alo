@@ -531,11 +531,11 @@ void save_file_collect_star_or_key(s16 coinScore, s16 starIndex, u16 index) {
 
     s32 starFlag = 1 << starIndex;
 
-    gSaveBuffer.files[fileIndex][0].TotalCoins = coinScore;
+    // gSaveBuffer.files[fileIndex][0].TotalCoins = coinScore;
     gSaveFileModified = TRUE;
 
-	if (!(save_file_get_star_flags(fileIndex, index) & starFlag)) {
-		save_file_set_star_flags(fileIndex, index, starFlag);
+	if (!(save_file_get_star_flags(fileIndex, courseIndex) & starFlag)) {
+		save_file_set_star_flags(fileIndex, courseIndex, starFlag);
 	}
 }
 
@@ -698,8 +698,8 @@ void save_file_set_star_flags(s32 fileIndex, s32 courseIndex, u32 starFlags) {
 }
 
 u32 mario_has_spell(s16 fileIndex, u32 spell){
-	return 1; //for deb
-	//return (gSaveBuffer.files[fileIndex][0].abilities[spell]!=0);
+	// return 1; //for deb
+	return (gSaveBuffer.files[fileIndex][0].abilities[spell]!=0);
 }
 void save_file_udpate_level(s32 fileIndex, struct MarioState *m) {
 	gSaveBuffer.files[fileIndex][0].Exp = m->Exp;

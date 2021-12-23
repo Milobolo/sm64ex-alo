@@ -48,7 +48,7 @@ magic_list_items = ['[AutoNextBox()][MosaicBGBox(12,82,214,234,"magic_action_men
 [JumpLink("magic_list_start_cast")]',
 #list of all the spells goes here
 '[CallLoop(3,"create_magic_list_dialog",2,[0,12])]\
-[MatchRtrn(3,0)]item list\nempty[TransAbs(16,160)][JumpLink("magic_list_chk_cancel")][end][GenericText()][TransAbs(16,160)][JumpLink("magic_list_chk_cancel")]\
+[MatchRtrn(3,0)]no caps[TransAbs(16,160)][JumpLink("magic_list_chk_cancel")][end][GenericText()][TransAbs(16,160)][JumpLink("magic_list_chk_cancel")]\
 [MatchRtrn(3,1)][TransAbs(16,212)][CallLoop(0,"list_scroll_y_dialog",0,[])][UsrStr(12)][SetScissor(14,90,174,210)]\
 [CallLoop(2,"mario_has_spell_TE",2,["&gCurrSaveFileNum","magic_hat"])][MatchRtrn(2,1)]magic cap[end][GenericText()]\
 [CallLoop(2,"mario_has_spell_TE",2,["&gCurrSaveFileNum","metal_cap"])][MatchRtrn(2,1)]metal cap[end][GenericText()]\
@@ -106,7 +106,7 @@ magic_list_env = ['[AutoNextBox()][MosaicBGBox(12,82,214,234,"magic_action_menu"
 [CallLoop(2,"mario_has_spell_TE",2,["&gCurrSaveFileNum","hanging_leaf"])][MatchRtrn(2,1)]Hanging Leaf[end][GenericText()]\
 [CallLoop(2,"mario_has_spell_TE",2,["&gCurrSaveFileNum","cloud_lob"])][MatchRtrn(2,1)]Floating Cloud[end][GenericText()]',
 #end of the spells
-'[GenericText()][CallOnce(0,"TE_set_flag",2,["&gMagicHUDRequest","CAST_ENVIRONMENT"])][AutoNextBox()][MosaicBGBox(12,82,214,234,"magic_action_menu",2,1)][CallOnce(3,"Get_Spell_Sel",1,[3])][ShadedBGBox(14,108,194,215,0,0,0,0x96)]\n\
+'[GenericText()][CallOnce(0,"TE_set_flag",2,["&gMagicHUDRequest","CAST_ENVIRONMENT"])][AutoNextBox()][MosaicBGBox(12,82,214,234,"magic_action_menu",2,1)][CallOnce(3,"Get_Spell_Sel",1,[3])][ShadedBGBox(14,110,194,215,0,0,0,0x96)]\n\
 [MatchRtrn(3,0)]Ice Block[CallOnce(0,"mario_set_spell",1,["ACTION_ICE_BLOCK"])][Jump("magic_spirit_list_end")]\
 [MatchRtrn(3,1)]Hanging Leaf[CallOnce(0,"mario_set_spell",1,["ACTION_HANGING_LEAF"])][Jump("magic_spirit_list_end")]\
 [MatchRtrn(3,2)]Floating Cloud[CallOnce(0,"mario_set_spell",1,["ACTION_CLOUD_LOB"])][Jump("magic_spirit_list_end")]\
@@ -117,6 +117,8 @@ magic_gen_shadow_fade_io = ['[EndTransition(10,0,0,0)][StartTransition(10,0,0,0)
 magic_cannot_place_floor = ["[JumpLink('magic_gen_shadow_fade_io')][AutoNextBox()]ice block must be placed on floor[TimeEndStr(60)]"]
 magic_cannot_place_ceil = ["[JumpLink('magic_gen_shadow_fade_io')][AutoNextBox()]hanging leaf must be under a ceiling[TimeEndStr(60)]"]
 magic_cannot_place_oob = ["[JumpLink('magic_gen_shadow_fade_io')][AutoNextBox()]floating cloud cannot be placed out of bounds[TimeEndStr(60)]"]
+
+magic_spirit_cancel = ["[JumpLink('magic_gen_shadow_fade_io')][AutoNextBox()]spirit magic cancelled[TimeEndStr(60)]"]
 
 
 magic_no_swaps = ['[JumpLink("magic_gen_shadow_fade_io")][AutoNextBox()]No swaps in range[Jump("magic_spirit_list_end")]']

@@ -1,3 +1,4 @@
+#include "texscroll.h"
 #include <ultra64.h>
 #ifndef TARGET_N64
 #include <stdbool.h>
@@ -11,6 +12,7 @@
 #include "game_init.h"
 #include "level_update.h"
 #include "main.h"
+#include "magic.h"
 #include "engine/math_util.h"
 #include "engine/graph_node.h"
 #include "engine/behavior_script.h"
@@ -314,23 +316,21 @@ void init_door_warp(struct SpawnInfo *spawnInfo, u32 arg1) {
 }
 
 void set_mario_initial_cap_powerup(struct MarioState *m) {
-    u32 capCourseIndex = gCurrCourseNum - COURSE_CAP_COURSES;
 
-    switch (capCourseIndex) {
-        case COURSE_COTMC - COURSE_CAP_COURSES:
-            m->flags |= MARIO_METAL_CAP | MARIO_CAP_ON_HEAD;
-            m->capTimer = MC_LEVEL_TIME;
+    switch (gCurrCourseNum) {
+        case COURSE_COTMC:
+			if(!mario_has_spell(gCurrSaveFileNum-1,gigantify)){
+				m->Spell = ACTION_GIGANTIFY;
+			}
             break;
 
-        case COURSE_TOTWC - COURSE_CAP_COURSES:
-            m->flags |= MARIO_WING_CAP | MARIO_CAP_ON_HEAD;
-            m->capTimer = WC_LEVEL_TIME;
-            break;
+        // case COURSE_TOTWC:
+            // m->flags |= MARIO_WING_CAP | MARIO_CAP_ON_HEAD;
+            // break;
 
-        case COURSE_VCUTM - COURSE_CAP_COURSES:
-            m->flags |= MARIO_VANISH_CAP | MARIO_CAP_ON_HEAD;
-            m->capTimer = VC_LEVEL_TIME;
-            break;
+        // case COURSE_VCUTM:
+            // m->flags |= MARIO_VANISH_CAP | MARIO_CAP_ON_HEAD;
+            // break;
     }
 }
 
@@ -394,7 +394,7 @@ void set_mario_initial_action(struct MarioState *m, u32 spawnType, u32 actionArg
 
     // set_mario_initial_cap_powerup(m);
 }
-
+extern u16 sCurrentMusic;
 void init_mario_after_warp(void) {
     struct ObjectWarpNode *spawnNode = area_get_warp_node(sWarpDest.nodeId);
     u32 marioSpawnType = get_mario_spawn_type(spawnNode->object);
@@ -452,43 +452,12 @@ void init_mario_after_warp(void) {
             break;
     }
 
-    if (gCurrDemoInput == NULL) {
+    if (gCurrentArea->musicParam != sCurrentMusic) 
         set_background_music(gCurrentArea->musicParam, gCurrentArea->musicParam2, 0);
 
-        if (gMarioState->flags & MARIO_METAL_CAP) {
-            play_cap_music(SEQUENCE_ARGS(4, SEQ_EVENT_METAL_CAP));
-        }
-
-        if (gMarioState->flags & (MARIO_VANISH_CAP | MARIO_WING_CAP)) {
-            play_cap_music(SEQUENCE_ARGS(4, SEQ_EVENT_POWERUP));
-        }
-
-#ifndef VERSION_JP
-        if (gCurrLevelNum == LEVEL_BOB
-            && get_current_background_music() != SEQUENCE_ARGS(4, SEQ_LEVEL_SLIDE)
-            && sTimerRunning) {
-            play_music(SEQ_PLAYER_LEVEL, SEQUENCE_ARGS(4, SEQ_LEVEL_SLIDE), 0);
-        }
-#endif
-
-        if (sWarpDest.levelNum == LEVEL_CASTLE && sWarpDest.areaIdx == 1
-#ifndef VERSION_JP
-            && (sWarpDest.nodeId == 31 || sWarpDest.nodeId == 32)
-#else
-            && sWarpDest.nodeId == 31
-#endif
-        )
-            play_sound(SOUND_MENU_MARIO_CASTLE_WARP, gGlobalSoundSource);
-#ifndef VERSION_JP
-        if (sWarpDest.levelNum == LEVEL_CASTLE_GROUNDS && sWarpDest.areaIdx == 1
-            && (sWarpDest.nodeId == 7 || sWarpDest.nodeId == 10 || sWarpDest.nodeId == 20
-                || sWarpDest.nodeId == 30)) {
-            play_sound(SOUND_MENU_MARIO_CASTLE_WARP, gGlobalSoundSource);
-        }
-#endif
-    }
 }
-
+extern struct Object *gFreezeTime;
+extern struct Object *gReturn;
 // used for warps inside one level
 void warp_area(void) {
     if (sWarpDest.type != WARP_TYPE_NOT_WARPING) {
@@ -496,6 +465,10 @@ void warp_area(void) {
             level_control_timer(TIMER_CONTROL_HIDE);
             unload_mario_area();
             load_area(sWarpDest.areaIdx);
+			gFreezeTime = 0;
+			gReturn = 0;
+			gMarioState->spawnObj = 0;
+			gMagicHUDRequest = 0;
         }
 
         init_mario_after_warp();
@@ -797,6 +770,14 @@ s16 level_trigger_warp(struct MarioState *m, s32 warpOp) {
                 play_transition(WARP_TRANSITION_FADE_INTO_MARIO, 0x20, 0x00, 0x00, 0x00);
                 break;
 
+            case WARP_OP_RESTART:
+                sDelayedWarpTimer = 20;
+                sSourceWarpNodeId = 0X0A;
+                gSavedCourseNum = COURSE_NONE;
+                play_transition(WARP_TRANSITION_FADE_INTO_CIRCLE, 0x14, 0, 0, 0x00);
+				val04 = FALSE;
+                break;
+
             case WARP_OP_DEATH:
 				//crash the plane with no survivors
 				if(configHC){
@@ -812,16 +793,26 @@ s16 level_trigger_warp(struct MarioState *m, s32 warpOp) {
                 break;
 
             case WARP_OP_WARP_FLOOR:
-                sSourceWarpNodeId = WARP_NODE_WARP_FLOOR;
-                if (area_get_warp_node(sSourceWarpNodeId) == NULL) {
-                    if (m->numLives == 0 && !INFINITE_LIVES) {
-                        sDelayedWarpOp = WARP_OP_GAME_OVER;
-                    } else {
-                        sSourceWarpNodeId = WARP_NODE_DEATH;
-                    }
-                }
-                sDelayedWarpTimer = 20;
-                play_transition(WARP_TRANSITION_FADE_INTO_CIRCLE, 0x14, 0x00, 0x00, 0x00);
+				m->health -= 0x0100;
+				sDelayedWarpTimer = 20;
+                sSourceWarpNodeId = 0X0A;
+                gSavedCourseNum = COURSE_NONE;
+                play_transition(WARP_TRANSITION_FADE_INTO_CIRCLE, 0x14, 0, 0, 0x00);
+				if(m->spawnObj){
+					m->spawnObj->activeFlags = ACTIVE_FLAG_DEACTIVATED;
+					m->spawnObj = 0;
+				}
+				if(gFreezeTime){
+					gFreezeTime->activeFlags = ACTIVE_FLAG_DEACTIVATED;
+					gFreezeTime = 0;
+				}
+				if(gReturn){
+					gReturn->activeFlags = ACTIVE_FLAG_DEACTIVATED;
+					gReturn = 0;
+				}
+				gMagicHUDRequest = 0;
+				m->Spell = 1;
+				val04 = FALSE;
                 break;
 
             case WARP_OP_UNKNOWN_01: // enter totwc
@@ -1031,7 +1022,8 @@ s32 play_mode_normal(void) {
         }
     }
 
-    warp_area();
+    set_mario_initial_cap_powerup(gMarioState);
+	warp_area();
     check_instant_warp();
 
     if (sTimerRunning && gHudDisplay.timer < 17999) {
@@ -1238,7 +1230,7 @@ s32 update_level(void) {
 
     switch (sCurrPlayMode) {
         case PLAY_MODE_NORMAL:
-            changeLevel = play_mode_normal();
+            changeLevel = play_mode_normal(); scroll_textures();
             break;
         case PLAY_MODE_PAUSED:
             changeLevel = play_mode_paused();
@@ -1416,16 +1408,16 @@ s32 lvl_set_current_level(UNUSED s16 arg0, s32 levelNum) {
     sWarpCheckpointActive = FALSE;
     gCurrLevelNum = levelNum;
     gCurrCourseNum = gLevelToCourseNumTable[levelNum - 1];
-	if (gCurrLevelNum == LEVEL_BOB) return 0;
-
+	if (gCurrLevelNum == LEVEL_COTMC) return 0;
+	
     if (gCurrDemoInput != NULL || gCurrCreditsEntry != NULL || gCurrCourseNum == COURSE_NONE) {
         return 0;
     }
 
     if (gCurrLevelNum != LEVEL_BOWSER_1 && gCurrLevelNum != LEVEL_BOWSER_2
         && gCurrLevelNum != LEVEL_BOWSER_3) {
-        // gMarioState->numCoins = 0;
-        // gHudDisplay.coins = 0;
+        gMarioState->numCoins = 0;
+        gHudDisplay.coins = 0;
         gCurrCourseStarFlags = save_file_get_star_flags(gCurrSaveFileNum - 1, gCurrCourseNum - 1);
     }
 

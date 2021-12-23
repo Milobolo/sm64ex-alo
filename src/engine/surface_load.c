@@ -833,13 +833,17 @@ void load_object_collision_model(void) {
     if (!(gTimeStopState & TIME_STOP_ACTIVE) && marioDist < tangibleDist
         && !(gCurrentObject->activeFlags & ACTIVE_FLAG_IN_DIFFERENT_ROOM)) {
         collisionData++;
+		gCurrentObject->activeFlags &= (~ACTIVE_FLAG_NO_COL);
         transform_object_vertices(&collisionData, vertexData);
 
         // TERRAIN_LOAD_CONTINUE acts as an "end" to the terrain data.
         while (*collisionData != TERRAIN_LOAD_CONTINUE) {
             load_object_surfaces(&collisionData, vertexData);
         }
-    }
+    }else{
+		gCurrentObject->activeFlags |= ACTIVE_FLAG_NO_COL;
+		
+	}
 
 #ifndef NODRAWINGDISTANCE
     if (marioDist < gCurrentObject->oDrawingDistance) {

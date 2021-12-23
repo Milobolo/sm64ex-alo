@@ -163,6 +163,13 @@ void apply_platform_displacement(u32 isMario, struct Object *platform) {
         gMarioStates[0].platformDisplacement[2] = 0;//z - gMarioStates[0].pos[2];
 #endif
         set_mario_pos(x, y, z);
+		//if mario is casting on platform, apply platform displacement to obj
+		struct Object *block = gMarioState->spawnObj;
+		if(block != NULL){
+			block->oPosX += newObjectOffset[0] + platform->oVelX;
+			block->oPosY += newObjectOffset[1] + platform->oVelY;
+			block->oPosZ += newObjectOffset[2] + platform->oVelZ;
+		}
     } else {
         gCurrentObject->oPosX = x;
         gCurrentObject->oPosY = y;

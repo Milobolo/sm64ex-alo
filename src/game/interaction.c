@@ -770,6 +770,9 @@ u32 interact_coin(struct MarioState *m, UNUSED u32 interactType, struct Object *
 	}
 
     o->oInteractStatus = INT_STATUS_INTERACTED;
+    if (m->numCoins - o->oDamageOrCoinValue < COINS_REQ_COINSTAR && m->numCoins >= COINS_REQ_COINSTAR) {
+        bhv_spawn_star_no_level_exit(6);
+    }
 
 #ifdef RUMBLE_FEEDBACK
     if (o->oDamageOrCoinValue >= 2) {
@@ -788,7 +791,7 @@ u32 interact_water_ring(struct MarioState *m, UNUSED u32 interactType, struct Ob
 u32 interact_star_or_key(struct MarioState *m, UNUSED u32 interactType, struct Object *o) {
     u32 starIndex;
     u32 starGrabAction = ACT_STAR_DANCE_EXIT;
-    u32 noExit = 1;
+    u32 noExit = ((o->oBehParams & 0xFF)==0);
     u32 grandStar = (o->oInteractionSubtype & INT_SUBTYPE_GRAND_STAR) != 0;
 
     if (m->health >= 0x100) {
@@ -1761,7 +1764,7 @@ u32 check_read_sign_TE(struct MarioState *m, struct Object *o) {
             m->marioObj->oMarioReadingSignDYaw = facingDYaw;
             m->marioObj->oMarioReadingSignDPosX = targetX - m->pos[0];
             m->marioObj->oMarioReadingSignDPosZ = targetZ - m->pos[2];
-			SetupTextEngine(32,60,TE_Strings[o->oBehParams2ndByte],TE_STATE_MAIN);
+			SetupTextEngine(32,160,TE_Strings[o->oBehParams],TE_STATE_MAIN);
 
             m->interactObj = o;
             m->usedObj = o;

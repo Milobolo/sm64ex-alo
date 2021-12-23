@@ -135,7 +135,7 @@ void newcam_init(struct Camera *c, u8 dv)
     #endif
     newcam_tilt = 1500;
     newcam_distance_target = newcam_distance_values[dv];
-    newcam_yaw = 0x8000;
+    newcam_yaw = ((-gMarioState->faceAngle[1]-0x4000)+0x1000)&0xE000;
     //putting mode 8D here as standard, going to change newcam mode via L button
 	newcam_mode = NC_MODE_8D;
     ///This here will dictate what modes the camera will start in at the beginning of a level. Below are some examples.
@@ -168,8 +168,8 @@ static s16 newcam_clamp(s16 value, s16 min, s16 max) {
 
 void newcam_toggle(bool enabled) {
     // force-disable if a demo is being played
-    if (gCurrDemoInput)
-        enabled = false;
+    if (gCurrLevelNum==LEVEL_CASTLE_COURTYARD)
+        enabled = true;
 
     if (enabled && !newcam_active) {
         newcam_active = 1;
@@ -541,14 +541,6 @@ static void newcam_zoom_button(void)
             newcam_distance_target = newcam_distance_values[0];
 
     }
-	//swap modes via L button
-	if ((gPlayer1Controller->buttonPressed & L_TRIG) && (newcam_mode != NC_MODE_2D)){
-		newcam_mode ^= NC_FLAG_VERT;
-		newcam_tilt_acc = 0;
-		newcam_yaw_acc = 0;
-		newcam_intendedmode = newcam_mode;
-		newcam_modeflags = newcam_mode;
-	}
     if (newcam_centering && newcam_modeflags & NC_FLAG_XTURN)
     {
         newcam_yaw = approach_s16_symmetric(newcam_yaw,newcam_yaw_target,0x800);

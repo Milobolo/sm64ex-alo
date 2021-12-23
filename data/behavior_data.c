@@ -347,6 +347,14 @@ const BehaviorScript bhvReticle[] = {
 	BREAK(),
 };
 
+const BehaviorScript bhvTEhDist[] = {
+    BEGIN(OBJ_LIST_DEFAULT),
+    OR_INT(oFlags, (OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE | OBJ_FREEZE_IMMUNE | OBJ_FLAG_COMPUTE_DIST_TO_MARIO)),
+	BEGIN_LOOP(),
+    CALL_NATIVE(bhvTEdistLoop),
+    END_LOOP(),
+};
+
 //just updates itself and then dies when obj is placed
 const BehaviorScript bhvSpawnBorder[] = {
     BEGIN(OBJ_LIST_DEFAULT),
@@ -372,6 +380,30 @@ const BehaviorScript bhvReturnPortal[] = {
     END_LOOP(),
 };
 
+
+extern const Collision square_flat_collision[];
+
+const BehaviorScript bhvSquareForward[] = {
+    BEGIN(OBJ_LIST_SURFACE),
+    OR_INT(oFlags, (OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE | OBJ_FREEZE_IMMUNE)),
+	LOAD_COLLISION_DATA(square_flat_collision),
+	SET_HOME(),
+	BEGIN_LOOP(),
+    CALL_NATIVE(back_and_forth_loop),
+	CALL_NATIVE(load_object_collision_model),
+    END_LOOP(),
+};
+
+const BehaviorScript bhvSquareVert[] = {
+    BEGIN(OBJ_LIST_SURFACE),
+    OR_INT(oFlags, (OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE | OBJ_FREEZE_IMMUNE)),
+	LOAD_COLLISION_DATA(square_flat_collision),
+	SET_HOME(),
+	BEGIN_LOOP(),
+    CALL_NATIVE(up_and_down_loop),
+	CALL_NATIVE(load_object_collision_model),
+    END_LOOP(),
+};
 
 extern const Collision ice_block_collision[];
 
@@ -1866,6 +1898,17 @@ const BehaviorScript bhvFloorSwitchHardcodedModel[] = {
     END_LOOP(),
 };
 
+const BehaviorScript bhvFloorSwitchHeavy[] = {
+    BEGIN(OBJ_LIST_SURFACE),
+    // Floor switch - common:
+    OR_INT(oFlags, OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE),
+    LOAD_COLLISION_DATA(purple_switch_seg8_collision_0800C7A8),
+    BEGIN_LOOP(),
+        CALL_NATIVE(bhv_purple_heavy_switch_loop),
+        CALL_NATIVE(load_object_collision_model),
+    END_LOOP(),
+};
+
 const BehaviorScript bhvFloorSwitchHiddenObjects[] = {
     BEGIN(OBJ_LIST_SURFACE),
     SET_INT(oBehParams2ndByte, 2),
@@ -1876,7 +1919,7 @@ const BehaviorScript bhvHiddenObject[] = {
     BEGIN(OBJ_LIST_SURFACE),
     OR_INT(oFlags, OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE),
     LOAD_COLLISION_DATA(breakable_box_seg8_collision_08012D70),
-    SET_FLOAT(oCollisionDistance, 300),
+    SET_FLOAT(oCollisionDistance, 500),
     BEGIN_LOOP(),
         CALL_NATIVE(bhv_hidden_object_loop),
     END_LOOP(),
@@ -1897,10 +1940,12 @@ const BehaviorScript bhvBreakableBox[] = {
 
 const BehaviorScript bhvPushableMetalBox[] = {
     BEGIN(OBJ_LIST_SURFACE),
-    OR_INT(oFlags, (OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE | OBJ_SWAP_COMPUTE | OBJ_FLAG_COMPUTE_DIST_TO_MARIO)),
+    OR_INT(oFlags, (OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE | OBJ_SWAP_COMPUTE | OBJ_FLAG_COMPUTE_DIST_TO_MARIO | OBJ_FLAG_ACTIVE_FROM_AFAR)),
     LOAD_COLLISION_DATA(metal_box_seg8_collision_08024C28),
-    SET_FLOAT(oCollisionDistance, 500),
+    SET_FLOAT(oCollisionDistance, 2000),
+    SET_FLOAT(oDrawingDistance, 10000),
     SET_HOME(),
+	SCALE(0,200),
     BEGIN_LOOP(),
         CALL_NATIVE(bhv_pushable_loop),
         CALL_NATIVE(load_object_collision_model),
@@ -4021,7 +4066,7 @@ const BehaviorScript bhvMessagePanel[] = {
     OR_INT(oFlags, OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE),
     LOAD_COLLISION_DATA(wooden_signpost_seg3_collision_0302DD80),
     SET_INTERACT_TYPE(INTERACT_TEXT),
-    SET_INT(oInteractionSubtype, INT_SUBTYPE_SIGN),
+    SET_INT(oInteractionSubtype, INT_SUBTYPE_TE),
     DROP_TO_FLOOR(),
     SET_HITBOX(/*Radius*/ 150, /*Height*/ 80),
     SET_INT(oWoodenPostTotalMarioAngle, 0),
@@ -4036,7 +4081,7 @@ const BehaviorScript bhvSignOnWall[] = {
     BEGIN(OBJ_LIST_SURFACE),
     OR_INT(oFlags, OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE),
     SET_INTERACT_TYPE(INTERACT_TEXT),
-    SET_INT(oInteractionSubtype, INT_SUBTYPE_SIGN),
+    SET_INT(oInteractionSubtype, INT_SUBTYPE_TE),
     SET_HITBOX(/*Radius*/ 150, /*Height*/ 80),
     SET_INT(oWoodenPostTotalMarioAngle, 0),
     BEGIN_LOOP(),

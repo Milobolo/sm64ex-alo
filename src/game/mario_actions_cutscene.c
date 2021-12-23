@@ -633,8 +633,9 @@ void general_star_dance_handler(struct MarioState *m, s32 isInWater) {
                 break;
         }
     } else if (m->actionState == 1 && gDialogResponse) {
-        if (gDialogResponse == 1) {
-            save_file_do_save(gCurrSaveFileNum - 1);
+        save_file_do_save(gCurrSaveFileNum - 1);
+		if (gDialogResponse == 1) {
+            level_trigger_warp(m, WARP_OP_RESTART);
         }
         m->actionState = 2;
     } else if (m->actionState == 2 && is_anim_at_end(m)) {
@@ -756,7 +757,7 @@ s32 act_quicksand_death(struct MarioState *m) {
             play_sound_if_no_flag(m, SOUND_MARIO_WAAAOOOW, MARIO_ACTION_SOUND_PLAYED);
         }
         if ((m->quicksandDepth += 5.0f) >= 180.0f) {
-            level_trigger_warp(m, WARP_OP_DEATH);
+            level_trigger_warp(m, WARP_OP_WARP_FLOOR);
             m->actionState = 2;
         }
     }
@@ -1545,9 +1546,9 @@ s32 act_squished(struct MarioState *m) {
             if (m->actionTimer >= 15) {
                 // 1 unit of health
                 if (m->health < 0x0100) {
-                    level_trigger_warp(m, WARP_OP_DEATH);
+                    level_trigger_warp(m, WARP_OP_WARP_FLOOR);
                     // woosh, he's gone!
-                    set_mario_action(m, ACT_DISAPPEARED, 0);
+                    // set_mario_action(m, ACT_DISAPPEARED, 0);
                 } else if (m->hurtCounter == 0) {
                     // un-squish animation
                     m->squishTimer = 30;
@@ -1589,7 +1590,7 @@ s32 act_squished(struct MarioState *m) {
         m->hurtCounter = 0;
         level_trigger_warp(m, WARP_OP_DEATH);
         // woosh, he's gone!
-        set_mario_action(m, ACT_DISAPPEARED, 0);
+        // set_mario_action(m, ACT_DISAPPEARED, 0);
     }
     stop_and_set_height_to_floor(m);
     set_mario_animation(m, MARIO_ANIM_A_POSE);
@@ -2709,10 +2710,16 @@ static s32 check_for_instant_quicksand(struct MarioState *m) {
 #include "src/game/magic_str_te.h"
 
 s32 act_cast_select(struct MarioState *m) {
+	s32 step = stationary_ground_step(m);
+	//if pushed off a plat, cancel action
+	if(step == GROUND_STEP_LEFT_GROUND){
+		set_mario_action(m, ACT_IDLE, 0);
+		mario_cancel_magic(m);
+	}
 	if((gMagicHUDRequest==0) || (gMagicHUDRequest&CANCEL_HUD))
 		set_mario_action(m, ACT_IDLE, 0);
 	else
-		set_mario_animation(m, MARIO_ANIM_HANDSTAND_IDLE);
+		set_mario_animation(m, MARIO_ANIM_REACH_POCKET);
 	return FALSE;
 }
 extern s16 newcam_yaw;
@@ -2733,6 +2740,12 @@ void Zero_Swappable(void){
 
 s32 act_cast_actions(struct MarioState *m) {
 	//spell, spirit, env, item
+	s32 step = stationary_ground_step(m);
+	//if pushed off a plat, cancel action
+	if(step == GROUND_STEP_LEFT_GROUND){
+		set_mario_action(m, ACT_IDLE, 0);
+		mario_cancel_magic(m);
+	}
 	struct Controller *cont = m->controller;
 	switch(m->actionArg){
 		//swapping, just putting it here for convenience
@@ -2740,6 +2753,7 @@ s32 act_cast_actions(struct MarioState *m) {
 			handle_menu_scrolling(MENU_SCROLL_VERTICAL,&Swappables->Chosen,0,Swappables->Num-1);
 			struct Object *swapObj = Swappables->SwapObjs[Swappables->Chosen];
 			if(swapObj==NULL){
+				TE_end_str(&TE_Engines[TE_STATE_AUX]);
 				SetupTextEngine(16,212,magic_no_swaps, TE_STATE_AUX); //overwrites current text engine
 				set_mario_action(m, ACT_IDLE, 0);
 				Zero_Swappable();
@@ -2881,20 +2895,30 @@ s32 act_cast_actions(struct MarioState *m) {
 			set_mario_animation(m, MARIO_ANIM_TRIPLE_JUMP_LAND);
 			gMagicHUDRequest &= ~CAST_SPIRIT;
 			//handle gfx here
-			if (m->actionTimer == 0){
+			if (m->actionState == 0){
 				switch(m->CastSpell){
 					case ACTION_GIGANTIFY:
 						//red particles
+						m->actionState = 1;
 						break;
 					case ACTION_HOVER:
 						//yellow particles
+						m->actionState = 1;
 						break;
 					case ACTION_STICK:
 						//blue particles
+						m->actionState = 1;
+						break;
+					case ACTION_CANCEL_SPIRIT:
+						//spell cancelled
+						m->actionState = 1;
+						TE_end_str(&TE_Engines[TE_STATE_AUX]);
+						SetupTextEngine(16,212,magic_spirit_cancel, TE_STATE_AUX); //overwrites current text engine
+						gMagicHUDRequest = 0;
 						break;
 				}
 			}
-			if (m->actionTimer > 30){
+			if (is_anim_at_end(m)){
 				set_mario_action(m, ACT_IDLE, 0);
 			}
 			m->actionTimer += 1;
@@ -2926,7 +2950,7 @@ s32 act_cast_actions(struct MarioState *m) {
 				s16 angle;
 				f32 rlim;
 				if (m->CastSpell == ACTION_CLOUD_LOB)
-					rlim = 300.0f;
+					rlim = 450.0f;
 				else
 					rlim = 800.0f;
 				if (gLakituState.mode != CAMERA_MODE_NEWCAM)
@@ -2946,7 +2970,7 @@ s32 act_cast_actions(struct MarioState *m) {
 					block->oPosX += Xinc;
 					block->oPosZ += Zinc;
 				}
-				if (m->CastSpell != ice_block){
+				if (m->CastSpell != ACTION_ICE_BLOCK){
 					f32 ylim;
 					if (m->CastSpell == ACTION_CLOUD_LOB)
 						ylim = 400.0f;
@@ -2969,8 +2993,12 @@ s32 act_cast_actions(struct MarioState *m) {
 						//must have floor and floor height must be within 10 of obj
 						case ACTION_ICE_BLOCK:
 							if (floor){
-								if (floorHeight<(block->oPosY+10.0f) && floorHeight>(block->oPosY-10.0f))
+								if (floorHeight<(block->oPosY+30.0f) && floorHeight>(block->oPosY-30.0f))
 									pass = 1;
+									block->oFloor = floor;
+									if(floor->object != NULL){
+										block->parentObj = floor->object;
+									}
 							}
 							break;
 						//must have ceiling above at least 300 and no more than 1500 above
@@ -2979,6 +3007,10 @@ s32 act_cast_actions(struct MarioState *m) {
 								if (ceilHeight<(block->oPosY+1500.0f) && ceilHeight>(block->oPosY+300.0f)){
 									pass = 1;
 									block->oHomeY = ceilHeight-block->oPosY;
+									block->oCeil = ceil;
+									if(ceil->object != NULL){
+										block->parentObj = ceil->object;
+									}
 								}
 							}
 							break;

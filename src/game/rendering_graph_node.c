@@ -909,8 +909,14 @@ void geo_process_held_object(struct GraphNodeHeldObject *node) {
         gMatStack[gMatStackIndex + 1][3][1] = gMatStack[gMatStackIndex][3][1];
         gMatStack[gMatStackIndex + 1][3][2] = gMatStack[gMatStackIndex][3][2];
         mtxf_mul(gMatStack[gMatStackIndex + 1], mat, gMatStack[gMatStackIndex + 1]);
-        mtxf_scale_vec3f(gMatStack[gMatStackIndex + 1], gMatStack[gMatStackIndex + 1],
-                         node->objNode->header.gfx.scale);
+		//clear scale from the stack (by dividing by mario scale
+
+        Vec3f scale;
+		scale[0] = node->objNode->header.gfx.scale[0]*node->scale;
+		scale[1] = node->objNode->header.gfx.scale[1]*node->scale;
+		scale[2] = node->objNode->header.gfx.scale[2]*node->scale;
+		mtxf_scale_vec3f(gMatStack[gMatStackIndex + 1], gMatStack[gMatStackIndex + 1],
+                         scale);
         if (node->fnNode.func != NULL) {
             node->fnNode.func(GEO_CONTEXT_HELD_OBJ, &node->fnNode.node,
                               (struct AllocOnlyPool *) gMatStack[gMatStackIndex + 1]);

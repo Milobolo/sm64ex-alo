@@ -80,7 +80,9 @@ const LevelScript level_main_scripts_entry[] = {
     LOAD_MODEL_FROM_GEO(MODEL_TIME_SPHERE,             time_sphere_geo),
     LOAD_MODEL_FROM_GEO(MODEL_RETURN_PORTAL,           return_portal_geo),
     LOAD_MODEL_FROM_GEO(MODEL_RETICLE,                 reticle_geo),
+    LOAD_MODEL_FROM_GEO(MODEL_SQUARE_FLAT,             square_flat_geo),
     LOAD_MODEL_FROM_GEO(MODEL_HOLLOW_BOX,              hollow_box_geo),
+    LOAD_MODEL_FROM_GEO(MODEL_HINT,                    hint_geo),
 	
     LOAD_MODEL_FROM_GEO(MODEL_MARIO,                   mario_geo),
     LOAD_MODEL_FROM_GEO(MODEL_SMOKE,                   smoke_geo),

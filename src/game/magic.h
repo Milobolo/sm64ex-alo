@@ -55,6 +55,7 @@ enum spells{
 #define ACTION_HANGING_LEAF                  /* 0x00000400 */ (1 <<  10)
 #define ACTION_CLOUD_LOB                     /* 0x00000800 */ (1 <<  11)
 #define ACTION_CANCEL_ENV                    /* 0x00001000 */ (1 <<  12)
+#define ACTION_CANCEL_SPIRIT                 /* 0x00002000 */ (1 <<  13)
 
 
 
@@ -62,6 +63,7 @@ void start_render_magic_spells_hud(void);
 void cancel_render_magic_spells_hud(void);
 void magic_hud_render_controller(struct MarioState *m);
 void update_mario_exp(struct MarioState *m);
+void update_mario_colors_spirit(struct MarioState *m);
 u32 wait_set_mario_cast(struct MarioState *m);
 void handle_magic_actions(struct MarioState *m);
 u32 create_magic_list_dialog(u32 list, u8 usr);

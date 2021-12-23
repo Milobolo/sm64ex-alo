@@ -1,0 +1,10 @@
+extern const GeoLayout breakable_box_geo[];
+extern Lights1 breakable_box_SM64_breakable_box_seg8_dl_08012D48_F3D_Mat_0_lights;
+extern u8 breakable_box_m4s_wl1_00_ci4[];
+extern u8 breakable_box_m4s_wl1_00_ci4_pal_rgba16[];
+extern Vtx breakable_box__breakable_box_seg8_dl_08012D48_Obj_001_mesh_layer_1_vtx_0[24];
+extern Gfx breakable_box__breakable_box_seg8_dl_08012D48_Obj_001_mesh_layer_1_tri_0[];
+extern Gfx mat_breakable_box_SM64_breakable_box_seg8_dl_08012D48_F3D_Mat_0[];
+extern Gfx mat_revert_breakable_box_SM64_breakable_box_seg8_dl_08012D48_F3D_Mat_0[];
+extern Gfx breakable_box__breakable_box_seg8_dl_08012D48_Obj_001_mesh_layer_1[];
+extern Gfx breakable_box_material_revert_render_settings[];
