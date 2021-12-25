@@ -305,8 +305,9 @@ s32 perform_hanging_step(struct MarioState *m, Vec3f nextPos) {
     f32 ceilHeight;
     f32 floorHeight;
     f32 ceilOffset;
+	f32 Mscale = GetMarioScaleFactors();
 
-    m->wall = resolve_and_return_wall_collisions(nextPos, 50.0f, 50.0f);
+    m->wall = resolve_and_return_wall_collisions(nextPos, 50.0f*Mscale, 50.0f*Mscale);
     floorHeight = find_floor(nextPos[0], nextPos[1], nextPos[2], &floor);
     ceilHeight = vec3f_find_ceil(nextPos, nextPos[1], &ceil);
 
@@ -316,22 +317,22 @@ s32 perform_hanging_step(struct MarioState *m, Vec3f nextPos) {
     if (ceil == NULL) {
         return HANG_LEFT_CEIL;
     }
-    if (ceilHeight - floorHeight <= 160.0f) {
+    if (ceilHeight - floorHeight <= 160.0f*Mscale) {
         return HANG_HIT_CEIL_OR_OOB;
     }
     if (ceil->type != SURFACE_HANGABLE) {
         return HANG_LEFT_CEIL;
     }
 
-    ceilOffset = ceilHeight - (nextPos[1] + 160.0f);
-    if (ceilOffset < -30.0f) {
+    ceilOffset = ceilHeight - (nextPos[1] + 160.0f*Mscale);
+    if (ceilOffset < -30.0f*Mscale) {
         return HANG_HIT_CEIL_OR_OOB;
     }
-    if (ceilOffset > 30.0f) {
+    if (ceilOffset > 30.0f*Mscale) {
         return HANG_LEFT_CEIL;
     }
 
-    nextPos[1] = m->ceilHeight - 160.0f;
+    nextPos[1] = m->ceilHeight - 160.0f*Mscale;
     vec3f_copy(m->pos, nextPos);
 
     m->floor = floor;
@@ -345,15 +346,15 @@ s32 perform_hanging_step(struct MarioState *m, Vec3f nextPos) {
 s32 update_hang_moving(struct MarioState *m) {
     s32 stepResult;
     Vec3f nextPos;
-    f32 maxSpeed = 4.0f;
+    f32 maxSpeed = 16.0f;
 
-    m->forwardVel += 1.0f;
+    m->forwardVel += 4.0f;
     if (m->forwardVel > maxSpeed) {
         m->forwardVel = maxSpeed;
     }
 
     m->faceAngle[1] =
-        m->intendedYaw - approach_s32((s16)(m->intendedYaw - m->faceAngle[1]), 0, 0x800, 0x800);
+        m->intendedYaw - approach_s32((s16)(m->intendedYaw - m->faceAngle[1]), 0, 0xC00, 0xC00);
 
     m->slideYaw = m->faceAngle[1];
     m->slideVelX = m->forwardVel * sins(m->faceAngle[1]);
@@ -379,22 +380,21 @@ void update_hang_stationary(struct MarioState *m) {
     m->slideVelX = 0.0f;
     m->slideVelZ = 0.0f;
 
-    m->pos[1] = m->ceilHeight - 160.0f;
+    m->pos[1] = m->ceilHeight - (160.0f*GetMarioScaleFactors());
     vec3f_copy(m->vel, gVec3fZero);
     vec3f_copy(m->marioObj->header.gfx.pos, m->pos);
 }
 
 s32 act_start_hanging(struct MarioState *m) {
-#ifdef RUMBLE_FEEDBACK
-    if (m->actionTimer++ == 0) {
-        queue_rumble_data(5, 80);
-    }
-#endif
-    if ((m->input & INPUT_NONZERO_ANALOG) && m->actionTimer >= 31) {
+
+    m->actionTimer++;
+	if (m->actionTimer >= 8) {
         return set_mario_action(m, ACT_HANGING, 0);
     }
-
-    if (!(m->input & INPUT_A_DOWN)) {
+	if (m->input & INPUT_B_PRESSED) {
+        return set_mario_action(m, ACT_FREEFALL, 0);
+    }
+	if (m->input & INPUT_A_PRESSED) {
         return set_mario_action(m, ACT_FREEFALL, 0);
     }
 
@@ -402,10 +402,13 @@ s32 act_start_hanging(struct MarioState *m) {
         return set_mario_action(m, ACT_GROUND_POUND, 0);
     }
 
-    //! Crash if Mario's referenced ceiling is NULL (same for other hanging actions)
-    if (m->ceil->type != SURFACE_HANGABLE) {
-        return set_mario_action(m, ACT_FREEFALL, 0);
-    }
+    if (m->ceil) {
+		if (m->ceil->type != SURFACE_HANGABLE) {
+			return set_mario_action(m, ACT_FREEFALL, 0);
+		}
+	}else{
+		return set_mario_action(m, ACT_FREEFALL, 0);
+	}
 
     set_mario_animation(m, MARIO_ANIM_HANG_ON_CEILING);
     play_sound_if_no_flag(m, SOUND_ACTION_HANGING_STEP, MARIO_ACTION_SOUND_PLAYED);
@@ -423,17 +426,24 @@ s32 act_hanging(struct MarioState *m) {
         return set_mario_action(m, ACT_HANG_MOVING, m->actionArg);
     }
 
-    if (!(m->input & INPUT_A_DOWN)) {
-        return set_mario_action(m, ACT_FREEFALL, 0);
-    }
-
     if (m->input & INPUT_Z_PRESSED) {
         return set_mario_action(m, ACT_GROUND_POUND, 0);
     }
-
-    if (m->ceil->type != SURFACE_HANGABLE) {
+	if (m->input & INPUT_B_PRESSED) {
         return set_mario_action(m, ACT_FREEFALL, 0);
     }
+	if (m->input & INPUT_A_PRESSED) {
+        return set_mario_action(m, ACT_FREEFALL, 0);
+    }
+
+    if (m->ceil) {
+		if (m->ceil->type != SURFACE_HANGABLE) {
+			return set_mario_action(m, ACT_FREEFALL, 0);
+		}
+	}else{
+		return set_mario_action(m, ACT_FREEFALL, 0);
+	}
+
 
     if (m->actionArg & 1) {
         set_mario_animation(m, MARIO_ANIM_HANDSTAND_LEFT);
@@ -447,17 +457,24 @@ s32 act_hanging(struct MarioState *m) {
 }
 
 s32 act_hang_moving(struct MarioState *m) {
-    if (!(m->input & INPUT_A_DOWN)) {
-        return set_mario_action(m, ACT_FREEFALL, 0);
-    }
 
     if (m->input & INPUT_Z_PRESSED) {
         return set_mario_action(m, ACT_GROUND_POUND, 0);
     }
-
-    if (m->ceil->type != SURFACE_HANGABLE) {
+	if (m->input & INPUT_B_PRESSED) {
         return set_mario_action(m, ACT_FREEFALL, 0);
     }
+	if (m->input & INPUT_A_PRESSED) {
+        return set_mario_action(m, ACT_FREEFALL, 0);
+    }
+    if (m->ceil) {
+		if (m->ceil->type != SURFACE_HANGABLE) {
+			return set_mario_action(m, ACT_FREEFALL, 0);
+		}
+	}else{
+		return set_mario_action(m, ACT_FREEFALL, 0);
+	}
+
 
     if (m->actionArg & 1) {
         set_mario_animation(m, MARIO_ANIM_MOVE_ON_WIRE_NET_RIGHT);
@@ -548,7 +565,7 @@ s32 act_ledge_grab(struct MarioState *m) {
         m->actionTimer++;
     }
 
-    if (m->floor->normal.y < 0.9063078f) {
+    if (m->floor->normal.y < 0.8063078f) {
         return let_go_of_ledge(m);
     }
 

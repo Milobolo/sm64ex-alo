@@ -235,3 +235,35 @@ void bhvTEdistLoop(void){
 		}
 	}
 }
+
+void hang_swap_loop(void){
+	switch(o->oAction){
+		case 0:
+			load_object_collision_model();
+			if( cur_obj_is_mario_ground_pounding_platform() ){
+				o->oAction = 1;
+				gMarioState->vel[1] = -8.0f;
+			}
+			break;
+		case 1:
+			//anim rotate 3/2 times
+			o->oFaceAnglePitch += 9000 - (1500 * o->oTimer);
+			if(o->oTimer > 4){
+				o->oAction = 2;
+				o->oFaceAnglePitch = 0;
+			}
+			break;
+		case 2:
+			//put mario in hanging action
+			load_object_collision_model();
+			if(gMarioState->ceil){
+				if(gMarioState->ceil->object == o){
+					set_mario_action(gMarioState, ACT_START_HANGING, 0);
+					o->oAction = 0;
+				}
+			}
+			if( (gMarioState->action & ACT_GROUP_MASK) != ACT_GROUP_AIRBORNE){
+				o->oAction = 0;
+			}
+	}
+}

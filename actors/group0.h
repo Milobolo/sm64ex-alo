@@ -376,4 +376,8 @@ extern const Gfx white_particle_small_unused_dl[];
 
 #include "hint/geo_header.h"
 
+#include "hang_swap/geo_header.h"
+
+#include "hang_swap/collision_header.h"
+
 #endif

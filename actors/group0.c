@@ -42,3 +42,5 @@
 #include "square_flat/collision.inc.c"
 #include "square_flat/model.inc.c"
 #include "hint/model.inc.c"
+#include "hang_swap/model.inc.c"
+#include "hang_swap/collision.inc.c"

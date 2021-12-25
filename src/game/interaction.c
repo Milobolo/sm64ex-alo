@@ -474,8 +474,16 @@ u32 bully_knock_back_mario(struct MarioState *mario) {
 
     //! Conversion ratios multiply to more than 1 (could allow unbounded speed
     // with bonk cancel - but this isn't important for regular bully battery)
-    f32 bullyToMarioRatio = bully->hitboxRadius * 3 / 53;
-    f32 marioToBullyRatio = 53.0f / bully->hitboxRadius;
+	f32 bullyToMarioRatio;
+    f32 marioToBullyRatio;
+	if((gMarioState->Spell & ACTION_GIGANTIFY) == ACTION_GIGANTIFY){
+		marioToBullyRatio = 500.0f / bully->hitboxRadius;
+		bullyToMarioRatio = bully->hitboxRadius * 3 / 500.0f;
+	}else{
+		marioToBullyRatio = 53.0f / bully->hitboxRadius;
+		bullyToMarioRatio = bully->hitboxRadius * 3 / 53;
+	}
+    
 
     init_bully_collision_data(&marioData, mario->pos[0], mario->pos[2], mario->forwardVel,
                               mario->faceAngle[1], bullyToMarioRatio, 52.0f);
@@ -666,11 +674,19 @@ void bounce_back_from_attack(struct MarioState *m, u32 interaction) {
             m->action = ACT_MOVE_PUNCHING;
         }
 
-        if (m->action & ACT_FLAG_AIR) {
-            mario_set_forward_vel(m, -16.0f);
-        } else {
-            mario_set_forward_vel(m, -48.0f);
-        }
+        if((gMarioState->Spell & ACTION_GIGANTIFY) == ACTION_GIGANTIFY){
+			if (m->action & ACT_FLAG_AIR) {
+				mario_set_forward_vel(m, -2.0f);
+			} else {
+				mario_set_forward_vel(m, -8.0f);
+			}
+		}else{
+			if (m->action & ACT_FLAG_AIR) {
+				mario_set_forward_vel(m, -16.0f);
+			} else {
+				mario_set_forward_vel(m, -48.0f);
+			}
+		}
 
         set_camera_shake_from_hit(SHAKE_ATTACK);
         m->particleFlags |= PARTICLE_TRIANGLE;
@@ -1278,11 +1294,21 @@ u32 interact_bully(struct MarioState *m, UNUSED u32 interactType, struct Object 
 #ifdef RUMBLE_FEEDBACK
         queue_rumble_data(5, 80);
 #endif
-        push_mario_out_of_object(m, o, 5.0f);
+        
 
-        m->forwardVel = -16.0f;
+        if((gMarioState->Spell & ACTION_GIGANTIFY) == ACTION_GIGANTIFY){
+			push_mario_out_of_object(m, o, 1.0f);
+			m->forwardVel = -2.0f;
+		}else{
+			push_mario_out_of_object(m, o, 5.0f);
+			m->forwardVel = -16.0f;
+		}
         o->oMoveAngleYaw = m->faceAngle[1];
-        o->oForwardVel = 3392.0f / o->hitboxRadius;
+        if((gMarioState->Spell & ACTION_GIGANTIFY) == ACTION_GIGANTIFY){
+			o->oForwardVel = 6700.0f / o->hitboxRadius;
+		}else{
+			o->oForwardVel = 3392.0f / o->hitboxRadius;
+		}
 
         attack_object(o, interaction);
         bounce_back_from_attack(m, interaction);

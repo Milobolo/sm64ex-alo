@@ -381,6 +381,18 @@ const BehaviorScript bhvReturnPortal[] = {
 };
 
 
+extern const Collision hang_swap_collision[];
+
+const BehaviorScript bhvHangswap[] = {
+    BEGIN(OBJ_LIST_SURFACE),
+    OR_INT(oFlags, (OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE | OBJ_FREEZE_IMMUNE)),
+	LOAD_COLLISION_DATA(hang_swap_collision),
+	SET_HOME(),
+	BEGIN_LOOP(),
+    CALL_NATIVE(hang_swap_loop),
+    END_LOOP(),
+};
+
 extern const Collision square_flat_collision[];
 
 const BehaviorScript bhvSquareForward[] = {
@@ -4326,9 +4338,22 @@ const BehaviorScript bhvBigBullyWithMinions[] = {
     LOAD_ANIMATIONS(oAnimations, bully_seg5_anims_0500470C),
     SET_HOME(),
     CALL_NATIVE(bhv_big_bully_init),
-    CALL_NATIVE(bhv_big_bully_with_minions_init),
     BEGIN_LOOP(),
         CALL_NATIVE(bhv_big_bully_with_minions_loop),
+    END_LOOP(),
+};
+
+const BehaviorScript bhvBigBullyMinion[] = {
+    BEGIN(OBJ_LIST_GENACTOR),
+    OR_INT(oFlags, (OBJ_FLAG_SET_FACE_YAW_TO_MOVE_YAW | OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE)),
+    LOAD_ANIMATIONS(oAnimations, bully_seg5_anims_0500470C),
+    DROP_TO_FLOOR(),
+    SET_HOME(),
+    CALL_NATIVE(bhv_small_bully_init),
+    CALL_NATIVE(bhv_small_bully_minion_init),
+    BEGIN_LOOP(),
+        SET_INT(oIntangibleTimer, 0),
+        CALL_NATIVE(bhv_bully_loop),
     END_LOOP(),
 };
 

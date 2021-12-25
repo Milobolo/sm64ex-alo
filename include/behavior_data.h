@@ -16,6 +16,7 @@ extern const BehaviorScript bhvSquareForward[];
 extern const BehaviorScript bhvSquareVert[];
 extern const BehaviorScript bhvFloorSwitchHeavy[];
 extern const BehaviorScript bhvTEhDist[];
+extern const BehaviorScript bhvHangswap[];
 
 extern const BehaviorScript editor_Scroll_Texture[];
 extern const BehaviorScript RM_Scroll_Texture[];
@@ -377,6 +378,7 @@ extern const BehaviorScript bhvBobombExplosionBubble3600[];
 extern const BehaviorScript bhvRespawner[];
 extern const BehaviorScript bhvSmallBully[];
 extern const BehaviorScript bhvBigBully[];
+extern const BehaviorScript bhvBigBullyMinion[];
 extern const BehaviorScript bhvBigBullyWithMinions[];
 extern const BehaviorScript bhvSmallChillBully[];
 extern const BehaviorScript bhvBigChillBully[];

@@ -22,6 +22,7 @@ void back_and_forth_loop(void);
 void up_and_down_loop(void);
 void bhv_purple_heavy_switch_loop(void);
 void bhvTEdistLoop(void);
+void hang_swap_loop(void);
 
 void spawn_mist_particles_variable(s32 count, s32 offsetY, f32 size);
 void bhv_spawn_star_no_level_exit(u32);
@@ -348,6 +349,7 @@ void bhv_bobomb_explosion_bubble_init(void);
 void bhv_bobomb_explosion_bubble_loop(void);
 void bhv_respawner_loop(void);
 void bhv_small_bully_init(void);
+void bhv_small_bully_minion_init(void);
 void bhv_bully_loop(void);
 void bhv_big_bully_init(void);
 void bhv_big_bully_with_minions_init(void);

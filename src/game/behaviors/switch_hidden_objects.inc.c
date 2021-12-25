@@ -55,7 +55,7 @@ void hidden_breakable_box_actions(void) {
     } else if (o->oAction == 1) {
         cur_obj_become_tangible();
 		if (o->oBehParams2ndByte == 0){
-			if (cur_obj_wait_then_blink(360, 20))
+			if (cur_obj_wait_then_blink(150, 25))
 				o->oAction = 0;
 		}else{
 			if(o->oHiddenObjectUnkF4->oAction == 0){

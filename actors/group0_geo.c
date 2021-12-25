@@ -29,3 +29,4 @@
 #include "hollow_box/geo.inc.c"
 #include "square_flat/geo.inc.c"
 #include "hint/geo.inc.c"
+#include "hang_swap/geo.inc.c"

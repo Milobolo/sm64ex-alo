@@ -1,0 +1,14 @@
+extern const GeoLayout hang_swap_geo[];
+extern Lights1 hang_swap_grid_lights;
+extern u8 hang_swap_ng_ami_w_ia8[];
+extern Vtx hang_swap_Cube_004_mesh_layer_1_vtx_0[24];
+extern Gfx hang_swap_Cube_004_mesh_layer_1_tri_0[];
+extern Vtx hang_swap_Cube_004_mesh_layer_4_vtx_0[8];
+extern Gfx hang_swap_Cube_004_mesh_layer_4_tri_0[];
+extern Gfx mat_hang_swap_edge[];
+extern Gfx mat_revert_hang_swap_edge[];
+extern Gfx mat_hang_swap_grid[];
+extern Gfx mat_revert_hang_swap_grid[];
+extern Gfx hang_swap_Cube_004_mesh_layer_1[];
+extern Gfx hang_swap_Cube_004_mesh_layer_4[];
+extern Gfx hang_swap_material_revert_render_settings[];

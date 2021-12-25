@@ -40,6 +40,7 @@
 #define MODEL_HOLLOW_BOX                  0xEB
 #define MODEL_SQUARE_FLAT                 0xEC
 #define MODEL_HINT                        0xED
+#define MODEL_HANG_SWAP                   0xEF
 
 
 

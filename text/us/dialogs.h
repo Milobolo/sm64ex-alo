@@ -186,28 +186,24 @@ Would you like to save?\n\
 //Yes////No"))
 
 DEFINE_DIALOG(DIALOG_011, 1, 4, 30, 200, _("\
-You've just stepped on\n\
-the Metal Cap Switch!\n\
-The Metal Cap makes\n\
-Mario invincible.\n\
-Now Metal Caps will\n\
-pop out of all of the\n\
-green blocks you find.\n\
-\n\
-Would you like to Save?\n\
+You've stepped on a\n\
+Spell Switch. Access\n\
+your magic by pressing L\n\
+and selecting SPELL.\n\
+Spells allow you to change\n\
+the world around you.\n\
+Would you like to save?\n\
 \n\
 //Yes////No"))
 
 DEFINE_DIALOG(DIALOG_012, 1, 4, 30, 200, _("\
-You've just stepped on\n\
-the Vanish Cap Switch.\n\
-The Vanish Cap makes\n\
-Mario disappear.\n\
-Now Vanish Caps will pop\n\
-from all of the blue\n\
-blocks you find.\n\
-\n\
-Would you like to Save?\n\
+You've stepped on a\n\
+Env Switch. Access\n\
+your magic by pressing L\n\
+and selecting ENV.\n\
+ENV spells make a platform\n\
+you can manually place.\n\
+Would you like to save?\n\
 \n\
 //Yes////No"))
 
