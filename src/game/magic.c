@@ -33,7 +33,16 @@ u32 gMagicHUDRequest = 0;
 
 void start_render_magic_spells_hud(void){
 	if ( !((gMarioState->action == ACT_CAST_ACTION) || (gMagicHUDRequest&HUD_OPEN)))
-		SetupTextEngine(16,212,magic_spells_init, TE_STATE_AUX);
+		switch(gMarioState->ForceSpell){
+			default:
+			case 0:
+				SetupTextEngine(16,212,magic_spells_init, TE_STATE_AUX);
+				break;
+			case sp_return:
+				SetupTextEngine(16,212,magic_spells_spell_init, TE_STATE_AUX);
+				break;
+		}
+	
 }
 
 void cancel_render_magic_spells_hud(void){
@@ -83,10 +92,19 @@ void update_mario_colors_spirit(struct MarioState *m){
 
 
 void handle_magic_actions(struct MarioState *m){
+	if(gMagicHUDRequest & HUD_MAIN){
+		if(wait_set_mario_cast(m) == 0){
+			gMagicHUDRequest |= CAST_WAIT;
+		}else{
+			gMagicHUDRequest &= ~CAST_WAIT;
+		}
+	}
 	if(gMagicHUDRequest & START_CAST){
 		if(wait_set_mario_cast(m) != 0){
+			set_mario_action(m, ACT_CAST_SELECT, 0);
 			gMagicHUDRequest &= ~START_CAST;
 			gMagicHUDRequest |= CASTING_SEL;
+			gMagicHUDRequest &= ~CAST_WAIT;
 		}
 	}
 	if(gMagicHUDRequest & CAST_SPIRIT){
@@ -122,7 +140,7 @@ u32 wait_set_mario_cast(struct MarioState *m){
 		case ACT_GROUP_MOVING:
 		case ACT_GROUP_STATIONARY:
 			if(m->heldObj == NULL){
-				ret = set_mario_action(m, ACT_CAST_SELECT, 0);
+				ret = 1;
 			}
 			break;
 

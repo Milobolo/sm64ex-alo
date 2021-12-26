@@ -103,6 +103,10 @@ void apply_platform_displacement(u32 isMario, struct Object *platform) {
     UNUSED s16 unused2;
     UNUSED s16 unused3;
     f32 displaceMatrix[4][4];
+	
+	if(platform->oInheritDisplacement){
+		platform = platform->oInheritDisplacement;
+	}
 
     rotation[0] = platform->oAngleVelPitch;
     rotation[1] = platform->oAngleVelYaw;
@@ -166,9 +170,12 @@ void apply_platform_displacement(u32 isMario, struct Object *platform) {
 		//if mario is casting on platform, apply platform displacement to obj
 		struct Object *block = gMarioState->spawnObj;
 		if(block != NULL){
-			block->oPosX += newObjectOffset[0] + platform->oVelX;
-			block->oPosY += newObjectOffset[1] + platform->oVelY;
-			block->oPosZ += newObjectOffset[2] + platform->oVelZ;
+			struct Object *tmp = gCurrentObject;
+			gCurrentObject = block;
+			apply_platform_displacement(0,platform);
+			gCurrentObject = tmp;
+			block->oFaceAngleYaw = platform->oFaceAngleYaw;
+			block->oPosY += platform->oVelY;
 		}
     } else {
         gCurrentObject->oPosX = x;

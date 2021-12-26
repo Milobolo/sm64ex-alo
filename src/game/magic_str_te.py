@@ -13,13 +13,14 @@ externs = ("extern const Gfx star_seg3_dl_0302B870[];","extern struct Object *gR
 #These are header files included in this file. Use single quotes so double quotes are delimited for filename
 headers = (r'#include "src/game/segment2.h"',r'#include "include/sm64.h"',r'#include "src/game/magic.h"',r'#include "src/game/area.h"')
 
-magic_spells_init = ['[CallOnce(1,"TE_set_flag",2,["&gMagicHUDRequest","HUD_OPEN"])]\
+magic_spells_init = ['[CallOnce(1,"TE_set_flag",2,["&gMagicHUDRequest","HUD_OPEN | HUD_MAIN"])]\
 [StartTransition(8,255,0,0)][AutoNextBox()]\
 [MosaicBGBox(12,82,214,234,"magic_action_menu",2,1)]\n\
 [BoxTransition(0,0,-72,0)]\
 [SetScissor(14,80,230,230)]\
 [ShadedBGBox(14,80,158,215,0,0,0,0x96)]\
 [CallLoop(4,"TE_get_flag",2,["&gMagicHUDRequest","CASTING_ON_PLAT"])][MatchRtrn(4,1)][Jump("magic_on_plat")][GenericText()]\
+[CallLoop(4,"TE_get_flag",2,["&gMagicHUDRequest","CAST_WAIT"])][MatchRtrn(4,1)][Jump("magic_wait")][GenericText()]\
 [PrintGlyph("magic_d_up")]CAPS\n\
 [CallOnce(2,"mario_can_cast",0,[])][MatchRtrn(2,1)]\
 [PrintGlyph("magic_d_left")]SPELL\n\
@@ -32,6 +33,33 @@ magic_spells_init = ['[CallOnce(1,"TE_set_flag",2,["&gMagicHUDRequest","HUD_OPEN
 [BtnBranchOpen(0x200)][CallOnce(0,"mario_set_spell",1,["ACTION_NULL"])][Jump("magic_list_spells")][BtnBranchClose()]\
 [BtnBranchOpen(0x100)][CallOnce(0,"mario_set_spell",1,["ACTION_NULL"])][Jump("magic_list_spirit")][BtnBranchClose()]\
 [GenericText()][end]']
+
+magic_wait = ["cannot\ncast\nwhile\nmoving[end]"]
+
+magic_spells_spell_init = ['[CallOnce(1,"TE_set_flag",2,["&gMagicHUDRequest","HUD_OPEN | HUD_MAIN"])]\
+[StartTransition(8,255,0,0)][AutoNextBox()]\
+[MosaicBGBox(12,82,214,234,"magic_action_menu",2,1)]\n\
+[BoxTransition(0,0,-72,0)]\
+[SetScissor(14,80,230,230)]\
+[ShadedBGBox(14,80,158,215,0,0,0,0x96)]\
+[CallLoop(4,"TE_get_flag",2,["&gMagicHUDRequest","CAST_WAIT"])][MatchRtrn(4,1)][Jump("magic_wait")][GenericText()]\
+[PrintGlyph("magic_d_left")]SPELL',
+#[I explicitly do not use btn enums here because these are char arrays and btns are shorts]
+'[BtnBranchOpen(0x200)][CallOnce(0,"mario_set_spell",1,["ACTION_NULL"])][Jump("magic_list_spells")][BtnBranchClose()]\
+[end]']
+
+magic_spells_env_init = ['[CallOnce(1,"TE_set_flag",2,["&gMagicHUDRequest","HUD_OPEN | HUD_MAIN"])]\
+[StartTransition(8,255,0,0)][AutoNextBox()]\
+[MosaicBGBox(12,82,214,234,"magic_action_menu",2,1)]\n\
+[BoxTransition(0,0,-72,0)]\
+[SetScissor(14,80,230,230)]\
+[ShadedBGBox(14,80,158,215,0,0,0,0x96)]\
+[CallLoop(4,"TE_get_flag",2,["&gMagicHUDRequest","CAST_WAIT"])][MatchRtrn(4,1)][Jump("magic_wait")][GenericText()]\
+[PrintGlyph("magic_d_down")]ENV',
+#[I explicitly do not use btn enums here because these are char arrays and btns are shorts]
+'[BtnBranchOpen(0x400)][CallOnce(0,"mario_set_spell",1,["ACTION_NULL"])][Jump("magic_list_env")][BtnBranchClose()]\
+[end]']
+
 
 magic_on_plat = ['[AutoNextBox()][JumpLink("magic_gen_shadow_fade_io")][AutoNextBox()]cannot use ACTION while\non ENV platform.[SetSpd(1)][Pause(60)][AutoNextBox()][CallOnce(0,"TE_set_state",2,["&gMagicHUDRequest",0])][EndTransition(0,0,0,0)][TimeEndStr(1)][end]']
 

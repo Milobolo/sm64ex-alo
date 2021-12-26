@@ -2998,6 +2998,8 @@ s32 act_cast_actions(struct MarioState *m) {
 									block->oFloor = floor;
 									if(floor->object != NULL){
 										block->parentObj = floor->object;
+									}else{
+										block->parentObj = NULL;
 									}
 							}
 							break;
@@ -3010,6 +3012,8 @@ s32 act_cast_actions(struct MarioState *m) {
 									block->oCeil = ceil;
 									if(ceil->object != NULL){
 										block->parentObj = ceil->object;
+									}else{
+										block->parentObj = NULL;
 									}
 								}
 							}
@@ -3017,8 +3021,10 @@ s32 act_cast_actions(struct MarioState *m) {
 						//can be thrown anywhere but oob, has smaller range
 						case ACTION_CLOUD_LOB:
 							find_floor(block->oPosX, block->oPosY, block->oPosZ, &floor);
-							if (floor)
+							if (floor){
 								pass = 1;
+								block->parentObj = NULL;
+							}
 							break;
 					}
 					if (pass){

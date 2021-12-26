@@ -23,6 +23,9 @@ void up_and_down_loop(void);
 void bhv_purple_heavy_switch_loop(void);
 void bhvTEdistLoop(void);
 void hang_swap_loop(void);
+void balance_plat_loop(void);
+void balancer_loop(void);
+void balancer_init(void);
 
 void spawn_mist_particles_variable(s32 count, s32 offsetY, f32 size);
 void bhv_spawn_star_no_level_exit(u32);

@@ -350,6 +350,7 @@ struct MarioState
     /*0xC4*/ u32 Level; //for ss4
     /*0xC4*/ u32 Spell; //for ss4, bitflag for spell cast
     /*0xC4*/ u32 CastSpell; //for ss4, bitflag for spell cast
+    /*0xC4*/ u32 ForceSpell; //for ss4, bitflag for forced spell in certain areas
     /*0x78*/ struct Object *spawnObj;
     /*0xc8*/ Vec3f platformDisplacement;    //for inertia
 	/*0xd4*/ u8 SelFallDmg; //For certain objects I don't want fall damage ever

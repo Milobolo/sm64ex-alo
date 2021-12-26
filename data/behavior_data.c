@@ -393,13 +393,73 @@ const BehaviorScript bhvHangswap[] = {
     END_LOOP(),
 };
 
+extern const Collision rotating_collision[];
+
+const BehaviorScript bhvRotatingSmall[] = {
+    BEGIN(OBJ_LIST_SURFACE),
+    OR_INT(oFlags, OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE),
+	LOAD_COLLISION_DATA(rotating_collision),
+	SET_INT(oAngleVelYaw,0x200),
+	SET_FLOAT(oDrawingDistance, 20000),
+	SET_FLOAT(oCollisionDistance, 3000),
+	BEGIN_LOOP(),
+    ADD_INT(oFaceAngleYaw,0x200),
+	CALL_NATIVE(load_object_collision_model),
+    END_LOOP(),
+};
+
+const BehaviorScript bhvRotatingBig[] = {
+    BEGIN(OBJ_LIST_SURFACE),
+    OR_INT(oFlags, OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE),
+	LOAD_COLLISION_DATA(rotating_collision),
+	SCALE(0,300),
+	SET_FLOAT(oDrawingDistance, 20000),
+	SET_FLOAT(oCollisionDistance, 8000),
+	SET_INT(oAngleVelYaw,0x200),
+	BEGIN_LOOP(),
+    ADD_INT(oFaceAngleYaw,0x200),
+	CALL_NATIVE(load_object_collision_model),
+    END_LOOP(),
+};
+
+extern const Collision balance_collision[];
+extern const Collision balance_center_collision[];
+
+const BehaviorScript bhvBalancer[] = {
+    BEGIN(OBJ_LIST_SURFACE),
+    OR_INT(oFlags, OBJ_FLAG_ACTIVE_FROM_AFAR |OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE),
+	LOAD_COLLISION_DATA(balance_center_collision),
+	SET_HOME(),
+	SET_FLOAT(oDrawingDistance, 16000),
+	SET_FLOAT(oCollisionDistance, 500),
+	CALL_NATIVE(balancer_init),
+	BEGIN_LOOP(),
+    CALL_NATIVE(balancer_loop),
+	CALL_NATIVE(load_object_collision_model),
+    END_LOOP(),
+};
+
+const BehaviorScript bhvBalancePlat[] = {
+    BEGIN(OBJ_LIST_SURFACE),
+    OR_INT(oFlags, OBJ_FLAG_ACTIVE_FROM_AFAR | OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE),
+	LOAD_COLLISION_DATA(balance_collision),
+	SET_FLOAT(oDrawingDistance, 16000),
+	SET_FLOAT(oCollisionDistance, 3000),
+	BEGIN_LOOP(),
+    CALL_NATIVE(balance_plat_loop),
+	CALL_NATIVE(load_object_collision_model),
+    END_LOOP(),
+};
+
 extern const Collision square_flat_collision[];
 
 const BehaviorScript bhvSquareForward[] = {
     BEGIN(OBJ_LIST_SURFACE),
-    OR_INT(oFlags, (OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE | OBJ_FREEZE_IMMUNE)),
+    OR_INT(oFlags, OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE),
 	LOAD_COLLISION_DATA(square_flat_collision),
 	SET_HOME(),
+	SET_FLOAT(oDrawingDistance, 16000),
+	SET_FLOAT(oCollisionDistance, 3000),
 	BEGIN_LOOP(),
     CALL_NATIVE(back_and_forth_loop),
 	CALL_NATIVE(load_object_collision_model),
@@ -408,9 +468,11 @@ const BehaviorScript bhvSquareForward[] = {
 
 const BehaviorScript bhvSquareVert[] = {
     BEGIN(OBJ_LIST_SURFACE),
-    OR_INT(oFlags, (OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE | OBJ_FREEZE_IMMUNE)),
+    OR_INT(oFlags, OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE),
 	LOAD_COLLISION_DATA(square_flat_collision),
 	SET_HOME(),
+	SET_FLOAT(oDrawingDistance, 20000),
+	SET_FLOAT(oCollisionDistance, 3000),
 	BEGIN_LOOP(),
     CALL_NATIVE(up_and_down_loop),
 	CALL_NATIVE(load_object_collision_model),

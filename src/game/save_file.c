@@ -698,8 +698,12 @@ void save_file_set_star_flags(s32 fileIndex, s32 courseIndex, u32 starFlags) {
 }
 
 u32 mario_has_spell(s16 fileIndex, u32 spell){
-	return 1; //for deb
-	// return (gSaveBuffer.files[fileIndex][0].abilities[spell]!=0);
+	if(gMarioState->ForceSpell == spell){
+		return 1;
+	}else{
+		return 1; //for deb
+		// return (gSaveBuffer.files[fileIndex][0].abilities[spell]!=0);
+	}
 }
 void save_file_udpate_level(s32 fileIndex, struct MarioState *m) {
 	gSaveBuffer.files[fileIndex][0].Exp = m->Exp;

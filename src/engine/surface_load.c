@@ -472,7 +472,7 @@ static void load_static_surfaces(s16 **data, s16 *vertexData, s16 surfaceType, s
         if (surface != NULL) {
             surface->room = room;
             surface->type = surfaceType;
-            surface->flags = (s8) flags;
+            surface->flags = (s8) flags | SURFACE_FLAG_EXISTS;
 
             if (hasForce) {
                 surface->force = *(*data + 3);
@@ -768,7 +768,7 @@ void load_object_surfaces(s16 **data, s16 *vertexData) {
     hasForce = surface_has_force(surfaceType);
 
     flags = surf_has_no_cam_collision(surfaceType);
-    flags |= SURFACE_FLAG_DYNAMIC;
+    flags |= SURFACE_FLAG_DYNAMIC | SURFACE_FLAG_EXISTS;
 
     // The DDD warp is initially loaded at the origin and moved to the proper
     // position in paintings.c and doesn't update its room, so set it here.

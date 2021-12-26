@@ -14,7 +14,7 @@ struct ObjectHitbox sBreakableBoxSmallHitbox = {
 
 void bhv_breakable_box_small_init(void) {
     o->oGravity = 5.5f;
-    o->oFriction = 0.7f;
+    o->oFriction = 0.6f;
     o->oBuoyancy = 0.6f;
     cur_obj_scale(0.7f);
     obj_set_hitbox(o, &sBreakableBoxSmallHitbox);
@@ -54,17 +54,21 @@ void breakable_box_small_released_loop(void) {
     o->oBreakableBoxSmallFramesSinceReleased++;
 
     // Begin flashing
-    if (o->oBreakableBoxSmallFramesSinceReleased > 400) {
-        if (o->oBreakableBoxSmallFramesSinceReleased & 1)
-            o->header.gfx.node.flags |= GRAPH_RENDER_INVISIBLE;
-        else
-            o->header.gfx.node.flags &= ~GRAPH_RENDER_INVISIBLE;
+    if (o->oBreakableBoxSmallFramesSinceReleased > 500) {
+		if(o->oPersist == 0){
+			if (o->oBreakableBoxSmallFramesSinceReleased & 1)
+				o->header.gfx.node.flags |= GRAPH_RENDER_INVISIBLE;
+			else
+				o->header.gfx.node.flags &= ~GRAPH_RENDER_INVISIBLE;
+		}
     }
 
     // Despawn, and create a corkbox respawner
-    if (o->oBreakableBoxSmallFramesSinceReleased > 500) {
-        create_respawner(MODEL_BREAKABLE_BOX_SMALL, bhvBreakableBoxSmall, 1000);
-        o->activeFlags = ACTIVE_FLAG_DEACTIVATED;
+    if (o->oBreakableBoxSmallFramesSinceReleased > 600) {
+		if(o->oPersist ==0){
+			create_respawner(MODEL_BREAKABLE_BOX_SMALL, bhvBreakableBoxSmall, 1000);
+			o->activeFlags = ACTIVE_FLAG_DEACTIVATED;
+		}
     }
 }
 

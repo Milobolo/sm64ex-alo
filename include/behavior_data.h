@@ -17,6 +17,10 @@ extern const BehaviorScript bhvSquareVert[];
 extern const BehaviorScript bhvFloorSwitchHeavy[];
 extern const BehaviorScript bhvTEhDist[];
 extern const BehaviorScript bhvHangswap[];
+extern const BehaviorScript bhvRotatingSmall[];
+extern const BehaviorScript bhvRotatingBig[];
+extern const BehaviorScript bhvBalancer[];
+extern const BehaviorScript bhvBalancePlat[];
 
 extern const BehaviorScript editor_Scroll_Texture[];
 extern const BehaviorScript RM_Scroll_Texture[];

@@ -1,0 +1,17 @@
+extern const GeoLayout balance_geo[];
+extern Lights1 balance_balance_side_lights;
+extern Lights1 balance_balance_top_lights;
+extern u8 balance_trim_fuck_ass_ci4[];
+extern u8 balance_trim_fuck_ass_ci4_pal_rgba16[];
+extern u8 balance_MTY_O_E_BREAK01_ci4[];
+extern u8 balance_MTY_O_E_BREAK01_ci4_pal_rgba16[];
+extern Vtx balance_Cylinder_002_mesh_layer_1_vtx_0[24];
+extern Gfx balance_Cylinder_002_mesh_layer_1_tri_0[];
+extern Vtx balance_Cylinder_002_mesh_layer_1_vtx_1[14];
+extern Gfx balance_Cylinder_002_mesh_layer_1_tri_1[];
+extern Gfx mat_balance_balance_side[];
+extern Gfx mat_revert_balance_balance_side[];
+extern Gfx mat_balance_balance_top[];
+extern Gfx mat_revert_balance_balance_top[];
+extern Gfx balance_Cylinder_002_mesh_layer_1[];
+extern Gfx balance_material_revert_render_settings[];

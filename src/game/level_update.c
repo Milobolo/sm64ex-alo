@@ -321,16 +321,23 @@ void set_mario_initial_cap_powerup(struct MarioState *m) {
         case COURSE_COTMC:
 			if(!mario_has_spell(gCurrSaveFileNum-1,gigantify)){
 				m->Spell = ACTION_GIGANTIFY;
+				m->ForceSpell = gigantify;
+			}
+            break;
+        case COURSE_TOTWC:
+			if(!mario_has_spell(gCurrSaveFileNum-1,sp_return)){
+				m->ForceSpell = sp_return;
 			}
             break;
 
-        // case COURSE_TOTWC:
-            // m->flags |= MARIO_WING_CAP | MARIO_CAP_ON_HEAD;
-            // break;
-
-        // case COURSE_VCUTM:
-            // m->flags |= MARIO_VANISH_CAP | MARIO_CAP_ON_HEAD;
-            // break;
+        default:
+			m->ForceSpell = 0;
+			break;
+        case COURSE_VCUTM:
+			if(!mario_has_spell(gCurrSaveFileNum-1,sp_return)){
+				m->ForceSpell = ice_block;
+			}
+            break;
     }
 }
 

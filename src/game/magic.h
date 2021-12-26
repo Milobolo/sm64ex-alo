@@ -9,7 +9,7 @@ extern u32 gMagicHUDRequest;
 #define HUD_OPEN                      /* 0x00000001 */ (1 <<  0)
 #define START_CAST                    /* 0x00000002 */ (1 <<  1)
 #define CANCEL_CAST                   /* 0x00000004 */ (1 <<  2)
-#define HOLD_CAST                     /* 0x00000008 */ (1 <<  3)
+#define HUD_MAIN                      /* 0x00000008 */ (1 <<  3)
 #define CANCEL_HUD                    /* 0x00000010 */ (1 <<  4)
 #define CASTING_SEL                   /* 0x00000020 */ (1 <<  5)
 #define CASTING_ON_PLAT               /* 0x00000040 */ (1 <<  6)
@@ -17,6 +17,7 @@ extern u32 gMagicHUDRequest;
 #define CAST_SPIRIT                   /* 0x00000100 */ (1 <<  8)
 #define CAST_ENVIRONMENT              /* 0x00000200 */ (1 <<  9)
 #define CAST_ITEM                     /* 0x00000400 */ (1 <<  10)
+#define CAST_WAIT                     /* 0x00000800 */ (1 <<  11)
 
 
 //spells inside save struct

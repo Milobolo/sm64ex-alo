@@ -37,9 +37,8 @@ void hidden_breakable_box_actions(void) {
     cur_obj_set_model(MODEL_BREAKABLE_BOX_SMALL);
     if (o->oAction == 0) {
         cur_obj_set_model(MODEL_HOLLOW_BOX);
+		cur_obj_unhide();
         cur_obj_become_intangible();
-        if (o->oTimer == 0)
-            breakable_box_init();
 			if (o->oBehParams2ndByte == 0){
 				o->oHiddenObjectUnkF4 = cur_obj_find_nearest_object_with_behavior_and_bparam(bhvFloorSwitchHiddenObjects,o->oBehParams & 0xFF);
 			}else{
@@ -55,7 +54,7 @@ void hidden_breakable_box_actions(void) {
     } else if (o->oAction == 1) {
         cur_obj_become_tangible();
 		if (o->oBehParams2ndByte == 0){
-			if (cur_obj_wait_then_blink(150, 25))
+			if (cur_obj_wait_then_blink(200, 25))
 				o->oAction = 0;
 		}else{
 			if(o->oHiddenObjectUnkF4->oAction == 0){
@@ -66,6 +65,7 @@ void hidden_breakable_box_actions(void) {
     } else {
         cur_obj_become_intangible();
         cur_obj_set_model(MODEL_HOLLOW_BOX);
+		cur_obj_unhide();
         o->oInteractStatus = 0;
         if ((sp1C = o->oHiddenObjectUnkF4) != NULL)
             if (sp1C->oAction == 0)

@@ -140,6 +140,15 @@
 #define /*0x1A4*/ oCanSwap                    OBJECT_FIELD_S32(0x47)
 #define /*0x1A4*/ oList                       OBJECT_FIELD_S32(0x0E) //used once on a tox box
 #define /*0x1C4*/ oCeil                       OBJECT_FIELD_SURFACE(0x4F)
+#define /*0x1C4*/ oInheritDisplacement        OBJECT_FIELD_OBJ(0x0D) //used on star door only
+#define /*0x1A4*/ oPersist                    OBJECT_FIELD_S32(0x47)
+
+//balancer
+#define /*0x104*/ oChildRight                 OBJECT_FIELD_OBJ(0x1F)
+#define /*0x108*/ oChildLeft                  OBJECT_FIELD_OBJ(0x20)
+
+
+
 
 /* Pathed (see obj_follow_path) */
 #define /*0x0FC*/ oPathedStartWaypoint     OBJECT_FIELD_WAYPOINT(0x1D)

@@ -46,12 +46,12 @@ void bhv_purple_switch_loop(void) {
                 if (o->oBehParams2ndByte == 1 && gMarioObject->platform != o) {
                     o->oAction++;
                 } else {
-                    if (o->oTimer < 150) {
+                    if (o->oTimer < 200) {
                         play_sound(SOUND_GENERAL2_SWITCH_TICK_FAST, gGlobalSoundSource);
                     } else {
                         play_sound(SOUND_GENERAL2_SWITCH_TICK_SLOW, gGlobalSoundSource);
                     }
-                    if (o->oTimer > 200) {
+                    if (o->oTimer > 250) {
                         o->oAction = PURPLE_SWITCH_WAIT_FOR_MARIO_TO_GET_OFF;
                     }
                 }
@@ -96,15 +96,17 @@ void bhv_purple_heavy_switch_loop(void) {
 			struct Object *heavy_box = cur_obj_nearest_object_with_behavior(bhvBreakableBoxSmall);
             cur_obj_scale(2.0f);
             if (metal_box) {
-                if (lateral_dist_between_objects(o, metal_box) < 127.5f && absf(o->oPosY - metal_box->oPosY)<150.0f) {
+                if (lateral_dist_between_objects(o, metal_box) < 127.5f && absf(o->oPosY - metal_box->oPosY)<100.0f) {
                     o->oAction = PURPLE_SWITCH_PRESSED;
 					o->parentObj = metal_box;
+					metal_box->oPersist = 1;
 					break;
                 }
             }if (heavy_box){
-                if (lateral_dist_between_objects(o, heavy_box) < 127.5f && absf(o->oPosY - heavy_box->oPosY)<150.0f) {
+                if (lateral_dist_between_objects(o, heavy_box) < 127.5f && absf(o->oPosY - heavy_box->oPosY)<100.0f) {
                     o->oAction = PURPLE_SWITCH_PRESSED;
 					o->parentObj = heavy_box;
+					heavy_box->oPersist = 1;
 					break;
                 }
 			}
@@ -144,8 +146,9 @@ void bhv_purple_heavy_switch_loop(void) {
          * unpressed state.
          */
         case PURPLE_SWITCH_WAIT_FOR_MARIO_TO_GET_OFF:
-			if (lateral_dist_between_objects(o, o->parentObj) > 127.5f || absf(o->oPosY - o->parentObj->oPosY)>10.0f) {
+			if (lateral_dist_between_objects(o, o->parentObj) > 127.5f || absf(o->oPosY - o->parentObj->oPosY)>100.0f) {
                     o->oAction = PURPLE_SWITCH_UNPRESSED;
+					o->parentObj->oPersist = 0;
                 }
             break;
 	}

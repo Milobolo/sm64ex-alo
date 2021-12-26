@@ -13,8 +13,14 @@
 
 #include "actors/common1.h"
 
+/* Fast64 begin persistent block [includes] */
+/* Fast64 end persistent block [includes] */
+
 #include "make_const_nonconst.h"
 #include "levels/cotmc/header.h"
+
+/* Fast64 begin persistent block [scripts] */
+/* Fast64 end persistent block [scripts] */
 
 const LevelScript level_cotmc_entry[] = {
 	INIT_LEVEL(),
@@ -32,49 +38,55 @@ const LevelScript level_cotmc_entry[] = {
 	JUMP_LINK(script_func_global_18), 
 	JUMP_LINK(script_func_global_1), 
 
+	/* Fast64 begin persistent block [level commands] */
+	/* Fast64 end persistent block [level commands] */
+
 	AREA(1, cotmc_area_1),
-		WARP_NODE(0x0A, LEVEL_COTMC, 0x01, 0x0B, WARP_NO_CHECKPOINT),
+		WARP_NODE(0x0A, LEVEL_COTMC, 0x01, 0x0A, WARP_NO_CHECKPOINT),
 		WARP_NODE(240, LEVEL_BOB, 0x01, 0x1C, WARP_NO_CHECKPOINT),
 		WARP_NODE(241, LEVEL_BOB, 0x01, 0x2C, WARP_NO_CHECKPOINT),
 		WARP_NODE(0x0B, LEVEL_BOB, 0x01, 0x0C, WARP_NO_CHECKPOINT),
-		OBJECT(MODEL_BREAKABLE_BOX, -245, 3599, -147, 0, 0, 0, 0x00010001, bhvHiddenObject),
-		OBJECT(MODEL_BREAKABLE_BOX, 55, 3599, -147, 0, 0, 0, 0x00010001, bhvHiddenObject),
-		OBJECT(MODEL_BREAKABLE_BOX, 355, 3599, -147, 0, 0, 0, 0x00010001, bhvHiddenObject),
-		OBJECT(MODEL_BREAKABLE_BOX, 9992, 3406, -3563, 0, 0, 0, 0x00010000, bhvHiddenObject),
-		OBJECT(MODEL_BREAKABLE_BOX, 8138, 3009, 1859, 0, 0, 0, 0x00010002, bhvHiddenObject),
-		OBJECT(MODEL_BREAKABLE_BOX, 6459, 4673, -2084, 0, 0, 0, 0x00010000, bhvHiddenObject),
-		OBJECT(MODEL_BREAKABLE_BOX, 655, 3599, -147, 0, 0, 0, 0x00010001, bhvHiddenObject),
-		OBJECT(MODEL_BREAKABLE_BOX, 955, 3599, -147, 0, 0, 0, 0x00010001, bhvHiddenObject),
-		OBJECT(MODEL_BREAKABLE_BOX, 1255, 3599, -147, 0, 0, 0, 0x00010001, bhvHiddenObject),
-		OBJECT(MODEL_BREAKABLE_BOX, 1555, 3599, -147, 0, 0, 0, 0x00010001, bhvHiddenObject),
-		OBJECT(MODEL_CAP_SWITCH, 16187, 3745, -166, 0, -90, 0, 0x0006000A, bhvCapSwitch),
-		OBJECT(MODEL_CHUCKYA, -4278, 3514, 4257, 0, 0, 0, 0, bhvChuckya),
-		OBJECT(MODEL_CHUCKYA, -3563, 3514, 5211, 0, 0, 0, 0, bhvChuckya),
-		OBJECT(MODEL_BREAKABLE_BOX_SMALL, -3886, 3745, -7252, 0, 0, 0, 0, bhvBreakableBoxSmall),
-		OBJECT(MODEL_BREAKABLE_BOX_SMALL, 8229, 3745, -3559, 0, 0, 0, 0, bhvBreakableBoxSmall),
-		OBJECT(MODEL_CHUCKYA, -3531, 3514, 3225, 0, 0, 0, 0, bhvChuckya),
-		OBJECT(MODEL_PURPLE_SWITCH, 10566, 3745, -2091, 0, 0, 0, 0, bhvFloorSwitchHeavy),
-		OBJECT(MODEL_PURPLE_SWITCH, -8339, 4503, -147, 0, 0, 0, 1, bhvFloorSwitchHeavy),
-		OBJECT(MODEL_PURPLE_SWITCH, 6882, 3745, 3392, 0, 0, 0, 2, bhvFloorSwitchHeavy),
-		OBJECT(MODEL_NONE, 12355, 4272, -166, 0, 0, 0, 1, bhvHiddenStar),
-		OBJECT(MODEL_HINT, -3828, 2611, 8938, 0, 0, 0, 0, bhvTEhDist),
-		OBJECT(MODEL_HINT, -3828, 3745, 6657, 0, 0, 0, 1, bhvTEhDist),
-		OBJECT(MODEL_HINT, -3766, 3745, -112, 0, 0, 0, 2, bhvTEhDist),
-		OBJECT(MODEL_HINT, 15138, 3745, -112, 0, 0, 0, 3, bhvTEhDist),
-		OBJECT(MODEL_METAL_BOX, -3828, 2611, 8275, 0, 0, 0, 0x000A0000, bhvPushableMetalBox),
-		OBJECT(MODEL_METAL_BOX, 9454, 3745, 1817, 0, 0, 0, 0x000A0000, bhvPushableMetalBox),
-		OBJECT(MODEL_METAL_BOX, 5824, 3745, -128, 0, 0, 0, 0x000A0000, bhvPushableMetalBox),
-		OBJECT(MODEL_METAL_BOX, 6053, 3745, 3414, 0, 0, 0, 0x000A0000, bhvPushableMetalBox),
-		OBJECT(MODEL_NONE, 8133, 3464, 1857, 0, 0, 0, 0x000A0000, bhvHiddenStarTrigger),
-		OBJECT(MODEL_NONE, 9455, 3764, 1809, 0, 0, 0, 0x000A0000, bhvHiddenStarTrigger),
-		OBJECT(MODEL_NONE, 5820, 3764, -135, 0, 0, 0, 0x000A0000, bhvHiddenStarTrigger),
-		OBJECT(MODEL_NONE, 9989, 3787, -3572, 0, 0, 0, 0x000A0000, bhvHiddenStarTrigger),
-		OBJECT(MODEL_NONE, 6456, 4868, -2093, 0, 0, 0, 0x000A0000, bhvHiddenStarTrigger),
-		OBJECT(MODEL_CASTLE_GROUNDS_WARP_PIPE, -3828, 2611, 9605, 0, -180, 0, 0x000A0000, bhvWarpPipe),
+		OBJECT(MODEL_BREAKABLE_BOX, -123, 4224, -291, 0, 0, 0, (0 << 24) | (1 << 16) | (0 << 8) | (1), bhvHiddenObject),
+		OBJECT(MODEL_BREAKABLE_BOX, 177, 4224, -291, 0, 0, 0, (0 << 24) | (1 << 16) | (0 << 8) | (1), bhvHiddenObject),
+		OBJECT(MODEL_BREAKABLE_BOX, 477, 4224, -291, 0, 0, 0, (0 << 24) | (1 << 16) | (0 << 8) | (1), bhvHiddenObject),
+		OBJECT(MODEL_BREAKABLE_BOX, 10114, 4032, -3707, 0, 0, 0, (0 << 24) | (1 << 16) | (0 << 8) | (0), bhvHiddenObject),
+		OBJECT(MODEL_BREAKABLE_BOX, 8260, 3635, 1715, 0, 0, 0, (0 << 24) | (1 << 16) | (0 << 8) | (2), bhvHiddenObject),
+		OBJECT(MODEL_BREAKABLE_BOX, 6581, 5299, -2229, 0, 0, 0, (0 << 24) | (1 << 16) | (0 << 8) | (0), bhvHiddenObject),
+		OBJECT(MODEL_BREAKABLE_BOX, 777, 4224, -291, 0, 0, 0, (0 << 24) | (1 << 16) | (0 << 8) | (1), bhvHiddenObject),
+		OBJECT(MODEL_BREAKABLE_BOX, 1077, 4224, -291, 0, 0, 0, (0 << 24) | (1 << 16) | (0 << 8) | (1), bhvHiddenObject),
+		OBJECT(MODEL_BREAKABLE_BOX, 1377, 4224, -291, 0, 0, 0, (0 << 24) | (1 << 16) | (0 << 8) | (1), bhvHiddenObject),
+		OBJECT(MODEL_BREAKABLE_BOX, 1677, 4224, -291, 0, 0, 0, (0 << 24) | (1 << 16) | (0 << 8) | (1), bhvHiddenObject),
+		OBJECT(MODEL_CAP_SWITCH, 16309, 4370, -310, 0, -90, 0, (0 << 24) | (6 << 16) | (0 << 8) | (10), bhvCapSwitch),
+		OBJECT(MODEL_CHUCKYA, -4156, 4139, 4113, 0, 0, 0, (0 << 24) | (0 << 16) | (0 << 8) | (0), bhvChuckya),
+		OBJECT(MODEL_CHUCKYA, -3441, 4139, 5066, 0, 0, 0, (0 << 24) | (0 << 16) | (0 << 8) | (0), bhvChuckya),
+		OBJECT(MODEL_BREAKABLE_BOX_SMALL, 8351, 4370, -3704, 0, 0, 0, (0 << 24) | (0 << 16) | (0 << 8) | (0), bhvBreakableBoxSmall),
+		OBJECT(MODEL_CHUCKYA, -3409, 4139, 3081, 0, 0, 0, (0 << 24) | (0 << 16) | (0 << 8) | (0), bhvChuckya),
+		OBJECT(MODEL_BREAKABLE_BOX_SMALL, -3764, 4370, -7397, 0, 0, 0, (0 << 24) | (0 << 16) | (0 << 8) | (0), bhvBreakableBoxSmall),
+		OBJECT(MODEL_PURPLE_SWITCH, 10688, 4370, -2235, 0, 0, 0, (0 << 24) | (0 << 16) | (0 << 8) | (0), bhvFloorSwitchHeavy),
+		OBJECT(MODEL_PURPLE_SWITCH, -8217, 5129, -291, 0, 0, 0, (0 << 24) | (0 << 16) | (0 << 8) | (1), bhvFloorSwitchHeavy),
+		OBJECT(MODEL_PURPLE_SWITCH, 7004, 4370, 3248, 0, 0, 0, (0 << 24) | (0 << 16) | (0 << 8) | (2), bhvFloorSwitchHeavy),
+		OBJECT(MODEL_NONE, 12477, 4897, -310, 0, 0, 0, (0 << 24) | (0 << 16) | (0 << 8) | (1), bhvHiddenStar),
+		OBJECT(MODEL_HINT, -3706, 3237, 8794, 0, 0, 0, (0 << 24) | (0 << 16) | (0 << 8) | (0), bhvTEhDist),
+		OBJECT(MODEL_HINT, -3706, 4370, 6513, 0, 0, 0, (0 << 24) | (0 << 16) | (0 << 8) | (1), bhvTEhDist),
+		OBJECT(MODEL_HINT, -3644, 4370, -256, 0, 0, 0, (0 << 24) | (0 << 16) | (0 << 8) | (2), bhvTEhDist),
+		OBJECT(MODEL_HINT, 15260, 4370, -256, 0, 0, 0, (0 << 24) | (0 << 16) | (0 << 8) | (3), bhvTEhDist),
+		OBJECT(MODEL_METAL_BOX, -3706, 3237, 8130, 0, 0, 0, (0 << 24) | (10 << 16) | (0 << 8) | (0), bhvPushableMetalBox),
+		OBJECT(MODEL_METAL_BOX, 9576, 4370, 1673, 0, 0, 0, (0 << 24) | (10 << 16) | (0 << 8) | (0), bhvPushableMetalBox),
+		OBJECT(MODEL_METAL_BOX, 5946, 4370, -273, 0, 0, 0, (0 << 24) | (10 << 16) | (0 << 8) | (0), bhvPushableMetalBox),
+		OBJECT(MODEL_METAL_BOX, 6175, 4370, 3270, 0, 0, 0, (0 << 24) | (10 << 16) | (0 << 8) | (0), bhvPushableMetalBox),
+		OBJECT(MODEL_NONE, 8255, 4090, 1712, 0, 0, 0, (0 << 24) | (10 << 16) | (0 << 8) | (0), bhvHiddenStarTrigger),
+		OBJECT(MODEL_NONE, 9577, 4390, 1664, 0, 0, 0, (0 << 24) | (10 << 16) | (0 << 8) | (0), bhvHiddenStarTrigger),
+		OBJECT(MODEL_NONE, 5942, 4390, -280, 0, 0, 0, (0 << 24) | (10 << 16) | (0 << 8) | (0), bhvHiddenStarTrigger),
+		OBJECT(MODEL_NONE, 10111, 4413, -3716, 0, 0, 0, (0 << 24) | (10 << 16) | (0 << 8) | (0), bhvHiddenStarTrigger),
+		OBJECT(MODEL_NONE, 6578, 5493, -2238, 0, 0, 0, (0 << 24) | (10 << 16) | (0 << 8) | (0), bhvHiddenStarTrigger),
+		OBJECT(MODEL_CASTLE_GROUNDS_WARP_PIPE, -3706, 3237, 9461, 0, -180, 0, (0 << 24) | (0xB << 16) | (0 << 8) | (0), bhvWarpPipe),
+		OBJECT(MODEL_CASTLE_GROUNDS_WARP_PIPE, -3711, 3736, 8976, 0, -180, 0, (0 << 24) | (0xA << 16) | (0 << 8) | (0), bhvWarpPipe),
 		TERRAIN(cotmc_area_1_collision),
 		MACRO_OBJECTS(cotmc_area_1_macro_objs),
 		SET_BACKGROUND_MUSIC(0x00, 0x25),
 		TERRAIN_TYPE(TERRAIN_STONE),
+		/* Fast64 begin persistent block [area commands] */
+		/* Fast64 end persistent block [area commands] */
 	END_AREA(),
 
 	FREE_LEVEL_POOL(),

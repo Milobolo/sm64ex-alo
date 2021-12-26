@@ -304,7 +304,7 @@ void bhv_small_bully_minion_init(void) {
 void big_bully_spawn_star(void) {
     if (obj_lava_death() == 1) {
         spawn_mist_particles();
-        spawn_default_star(-8632.0f, -2531.0f, 5430.0f);
+        spawn_default_star(-12468.0f, -4931.0f, 7097.0f);
     }
 }
 

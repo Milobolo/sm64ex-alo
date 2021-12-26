@@ -380,4 +380,16 @@ extern const Gfx white_particle_small_unused_dl[];
 
 #include "hang_swap/collision_header.h"
 
+#include "rotating/collision_header.h"
+
+#include "rotating/geo_header.h"
+
+#include "balance/collision_header.h"
+
+#include "balance/geo_header.h"
+
+#include "balance_center/geo_header.h"
+
+#include "balance_center/collision_header.h"
+
 #endif

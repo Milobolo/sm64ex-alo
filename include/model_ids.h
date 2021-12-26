@@ -41,6 +41,9 @@
 #define MODEL_SQUARE_FLAT                 0xEC
 #define MODEL_HINT                        0xED
 #define MODEL_HANG_SWAP                   0xEF
+#define MODEL_ROT_SMALL                   0xF0
+#define MODEL_BALANCE_CENTER              0xF1
+#define MODEL_BALANCE                     0xF2
 
 
 

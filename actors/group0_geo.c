@@ -30,3 +30,6 @@
 #include "square_flat/geo.inc.c"
 #include "hint/geo.inc.c"
 #include "hang_swap/geo.inc.c"
+#include "rotating/geo.inc.c"
+#include "balance/geo.inc.c"
+#include "balance_center/geo.inc.c"

@@ -1,0 +1,10 @@
+extern const GeoLayout balance_center_geo[];
+extern Lights1 balance_center_beam_lights;
+extern u8 balance_center_grs_ashiba02b_ci4[];
+extern u8 balance_center_grs_ashiba02b_ci4_pal_rgba16[];
+extern Vtx balance_center_Cube_005_mesh_layer_1_vtx_0[63];
+extern Gfx balance_center_Cube_005_mesh_layer_1_tri_0[];
+extern Gfx mat_balance_center_beam[];
+extern Gfx mat_revert_balance_center_beam[];
+extern Gfx balance_center_Cube_005_mesh_layer_1[];
+extern Gfx balance_center_material_revert_render_settings[];

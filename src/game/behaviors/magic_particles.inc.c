@@ -27,26 +27,36 @@ void ice_block_loop(void){
 	}else{
 		gMagicHUDRequest &= ~CASTING_ON_PLAT;
 	}
-	if (!(gMarioState->Spell&ACTION_ICE_BLOCK) || (!(o->oFloor) && o->oAction == 1)){
+	if(o->oFloor){
+		if(!(o->oFloor->flags & SURFACE_FLAG_EXISTS) && o->oAction == 1){
+			obj_mark_for_deletion(o);
+		}
+	}
+	if(o->parentObj){
+		if( ((o->parentObj->activeFlags & ACTIVE_FLAG_NO_COL) == ACTIVE_FLAG_NO_COL) || (o->parentObj->activeFlags == ACTIVE_FLAG_DEACTIVATED) ){
+			obj_mark_for_deletion(o);
+		}
+	}
+	if (!(gMarioState->Spell&ACTION_ICE_BLOCK)){
 		obj_mark_for_deletion(o);
 	}else{
 		if (o->oFloor && o->oAction == 1){
-			struct Object *obj = o->oFloor->object;
+			struct Object *obj = o->parentObj;
 			if (obj != NULL){
-				if(obj->activeFlags & ACTIVE_FLAG_NO_COL || obj->activeFlags == ACTIVE_FLAG_DEACTIVATED){
-					obj_mark_for_deletion(o);
-				}
-				o->oPosX += obj->oVelX;
 				o->oPosY += obj->oVelY;
-				o->oPosZ += obj->oVelZ;
-				//copy so platform displacement happens on this obj also
-				vec3f_copy(&o->oVelX, &obj->oVelX);
+				o->oFaceAngleYaw = obj->oFaceAngleYaw;
+				apply_platform_displacement(0,obj);
+				//so platform displacement carries over properly
+				o->oInheritDisplacement = obj;
 			}
 		}
 	}
 	if (o->oAction == 1){
 		o->oOpacity = 210;
-		cur_obj_unused_init_on_floor();
+		f32 floor = find_floor_height(o->oPosX, o->oPosY, o->oPosZ);
+		if( (floor - o->oPosY) < -60.0f){
+			obj_mark_for_deletion(o);
+		}
 		load_object_collision_model();
 	}else{
 		o->oOpacity = 120;
@@ -102,34 +112,41 @@ void hanging_leaf_loop(void){
 	}else{
 		gMagicHUDRequest &= ~CASTING_ON_PLAT;
 	}
-	if (!(gMarioState->Spell&ACTION_HANGING_LEAF) || (!(o->oCeil) && o->oAction == 1)){
+	if(o->oCeil){
+		if(!(o->oCeil->flags & SURFACE_FLAG_EXISTS) && o->oAction == 1){
+			obj_mark_for_deletion(o);
+		}
+	}
+	if(o->parentObj){
+		if( ((o->parentObj->activeFlags & ACTIVE_FLAG_NO_COL) == ACTIVE_FLAG_NO_COL) || (o->parentObj->activeFlags == ACTIVE_FLAG_DEACTIVATED) ){
+			obj_mark_for_deletion(o);
+			o->oAction = 2;
+		}
+	}
+	if (!(gMarioState->Spell&ACTION_HANGING_LEAF)){
 		obj_mark_for_deletion(o);
 		o->oAction = 2;
 	}else{
-		if(o->oCeil && o->oAction == 1){
-			struct Object *obj = o->oCeil->object;
+		if (o->oCeil && o->oAction == 1){
+			struct Object *obj = o->parentObj;
 			if (obj != NULL){
-				if(obj->activeFlags & ACTIVE_FLAG_NO_COL || obj->activeFlags == ACTIVE_FLAG_DEACTIVATED){
-					obj_mark_for_deletion(o);
-					o->oAction = 2;
-				}
-				o->oPosX += obj->oVelX;
 				o->oPosY += obj->oVelY;
 				o->oHomeY += obj->oVelY;
-				o->oPosZ += obj->oVelZ;
-				//copy so platform displacement happens on this obj also
-				vec3f_copy(&o->oVelX, &obj->oVelX);
+				o->oFaceAngleYaw = obj->oFaceAngleYaw;
+				apply_platform_displacement(0,obj);
+				//so platform displacement carries over properly
+				o->oInheritDisplacement = obj;
 			}
 		}
 	}
 	if (o->oAction == 1){
 		o->oAnimState = 1;
 		load_object_collision_model();
+		o->oOpacity = 255;
 	}else{
 		o->oOpacity = 100;
 		o->oAnimState = 0;
 	}
-
 }
 
 void floating_cloud_loop(void){
@@ -265,5 +282,64 @@ void hang_swap_loop(void){
 			if( (gMarioState->action & ACT_GROUP_MASK) != ACT_GROUP_AIRBORNE){
 				o->oAction = 0;
 			}
+	}
+}
+
+//y travel is 750
+void balancer_init(void){
+	o->oChildRight = spawn_object_relative(0,0,350,0,o,MODEL_BALANCE,bhvBalancePlat);
+	o->oChildRight->oBehParams = 1;
+	o->oChildRight->oFaceAngleYaw += 0x8000;
+	o->oChildLeft = spawn_object_relative(0,0,-400,0,o,MODEL_BALANCE,bhvBalancePlat);
+	o->oAction = 2;
+}
+
+//action is 1 for when left is at top
+//action is 2 for when right is at top
+//action is 0 for when neither are at top
+void balancer_loop(void){
+	if(o->oChildLeft->oAction && o->oAction != 2){
+		//child can drop
+		approach_f32_signed(&o->oChildLeft->oVelY,-20.0f, -0.5f);
+		approach_f32_signed(&o->oChildRight->oVelY,20.0f, 0.5f);
+	}else if(o->oChildRight->oAction && o->oAction != 1){
+		//child can drop
+		approach_f32_signed(&o->oChildRight->oVelY,-20.0f, -0.5f);
+		approach_f32_signed(&o->oChildLeft->oVelY,20.0f, 0.5f);
+	}
+	if((o->oChildLeft->oAction == 0) && (o->oChildRight->oAction == 0)){
+		o->oChildRight->oVelY = approach_f32_symmetric(o->oChildRight->oVelY,0.0f, 1.0f);
+		o->oChildLeft->oVelY = approach_f32_symmetric(o->oChildLeft->oVelY,0.0f, 1.0f);
+	}
+}
+void balance_plat_loop(void){
+	if(cur_obj_is_mario_on_platform()){
+		o->oAction = 1;
+	}else{
+		o->oAction = 0;
+	}
+	o->oFaceAngleYaw += (s32) 0x8000 * (o->oVelY/750.0f) * (1-2*o->oBehParams);
+	o->oAngleVelYaw = ((s32) 0x8000 * (o->oVelY/750.0f)) * (1-2*o->oBehParams);
+	o->oVelX = coss(-o->parentObj->oFaceAngleYaw-o->oFaceAngleYaw+(0x8000*o->oBehParams)-0x4000)*220.0f+o->parentObj->oPosX - o->oPosX;
+	o->oVelZ = sins(-o->parentObj->oFaceAngleYaw-o->oFaceAngleYaw+(0x8000*o->oBehParams)-0x4000)*220.0f+o->parentObj->oPosZ - o->oPosZ;
+	cur_obj_move_using_vel();
+	//at bottom
+	if( (o->parentObj->oPosY - o->oPosY) >= 400.0f){
+		o->oPosY = o->parentObj->oPosY - 400.0f;
+		if(o->oVelY<0.0f){
+			o->oVelY = 0.0f;
+		}
+		o->oFaceAngleYaw = 0x8000*o->oBehParams;
+	}
+	//at top
+	else if( (o->parentObj->oPosY - o->oPosY) <= -350.0f){
+		o->oPosY = o->parentObj->oPosY + 350.0f;
+		if(o->oVelY>0.0f){
+			o->oVelY = 0.0f;
+		}
+		o->oFaceAngleYaw = 0x8000+(0x8000*o->oBehParams);
+		o->parentObj->oAction = o->oBehParams + 1;
+	}else{
+		o->parentObj->oAction = 0;
 	}
 }

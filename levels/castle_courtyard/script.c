@@ -13,8 +13,14 @@
 
 #include "actors/common1.h"
 
+/* Fast64 begin persistent block [includes] */
+/* Fast64 end persistent block [includes] */
+
 #include "make_const_nonconst.h"
 #include "levels/castle_courtyard/header.h"
+
+/* Fast64 begin persistent block [scripts] */
+/* Fast64 end persistent block [scripts] */
 
 const LevelScript level_castle_courtyard_entry[] = {
 	INIT_LEVEL(),
@@ -31,8 +37,11 @@ const LevelScript level_castle_courtyard_entry[] = {
 	JUMP_LINK(script_func_global_10), 
 	LOAD_MODEL_FROM_GEO(MODEL_CASTLE_GROUNDS_WARP_PIPE, warp_pipe_geo), 
 
+	/* Fast64 begin persistent block [level commands] */
+	/* Fast64 end persistent block [level commands] */
+
 	AREA(1, castle_courtyard_area_1),
-		WARP_NODE(0x0A, LEVEL_BOB, 0x01, 0x0A, WARP_NO_CHECKPOINT),
+		WARP_NODE(0x0A, LEVEL_CASTLE_COURTYARD, 0x01, 0x0A, WARP_NO_CHECKPOINT),
 		WARP_NODE(0x0B, LEVEL_BOB, 0x01, 0x0A, WARP_NO_CHECKPOINT),
 		WARP_NODE(0x0C, LEVEL_WF, 0x01, 0x0A, WARP_NO_CHECKPOINT),
 		WARP_NODE(0x0D, LEVEL_JRB, 0x01, 0x0A, WARP_NO_CHECKPOINT),
@@ -47,22 +56,25 @@ const LevelScript level_castle_courtyard_entry[] = {
 		WARP_NODE(0x2E, LEVEL_BOB, 0x01, 0x0A, WARP_NO_CHECKPOINT),
 		WARP_NODE(240, LEVEL_CASTLE_COURTYARD, 0x01, 0x01, WARP_NO_CHECKPOINT),
 		WARP_NODE(241, LEVEL_CASTLE_COURTYARD, 0x01, 0x02, WARP_NO_CHECKPOINT),
-		WARP_NODE(1, LEVEL_BOB, 0x01, 0x0A, WARP_NO_CHECKPOINT),
-		WARP_NODE(2, LEVEL_BOB, 0x01, 0x0A, WARP_NO_CHECKPOINT),
-		INSTANT_WARP(0x00, 0x02, 0, 0, 0),
-		OBJECT(MODEL_NONE, -39, 33, 97, 0, 0, 0, 0xa0000, bhvSpinAirborneWarp),
-		OBJECT(MODEL_NONE, -129, 33, 97, 0, 0, 0, 0x20000, bhvAirborneDeathWarp),
-		OBJECT(MODEL_NONE, -1908, 75, -164, 0, -180, 0, 0x2B0000, bhvAirborneDeathWarp),
-		OBJECT(MODEL_CASTLE_GROUNDS_WARP_PIPE, -3366, -244, -153, 0, 0, 0, 0x000B0000, bhvWarpPipe),
-		OBJECT(MODEL_CASTLE_GROUNDS_WARP_PIPE, 3185, -244, -153, 0, 0, 0, 0xC0000, bhvWarpPipe),
-		OBJECT(MODEL_CASTLE_GROUNDS_WARP_PIPE, -130, -244, 2988, 0, 0, 0, 0xD0000, bhvWarpPipe),
-		OBJECT(MODEL_CASTLE_GROUNDS_WARP_PIPE, -130, -244, -3490, 0, 0, 0, 0xE0000, bhvWarpPipe),
-		OBJECT(MODEL_NONE, -129, 33, 97, 0, 0, 0, 0x10000, bhvAirborneStarCollectWarp),
-		OBJECT(MODEL_NONE, -1908, 75, -164, 0, -180, 0, 0x1B0000, bhvAirborneStarCollectWarp),
+		WARP_NODE(1, LEVEL_CASTLE_COURTYARD, 0x01, 0x0A, WARP_NO_CHECKPOINT),
+		WARP_NODE(2, LEVEL_CASTLE_COURTYARD, 0x01, 0x0A, WARP_NO_CHECKPOINT),
+		OBJECT(MODEL_NONE, -39, 33, 97, 0, 0, 0, (0xA << 16), bhvSpinAirborneWarp),
+		OBJECT(MODEL_NONE, -129, 33, 97, 0, 0, 0, (0x2 << 16), bhvAirborneDeathWarp),
+		OBJECT(MODEL_NONE, -1908, 75, -164, 0, -180, 0, (0x2B << 16), bhvAirborneDeathWarp),
+		OBJECT(MODEL_NONE, -3, 75, 1555, 0, -180, 0, (0x2d << 16), bhvAirborneDeathWarp),
+		OBJECT(MODEL_CASTLE_GROUNDS_WARP_PIPE, -3366, -244, -153, 0, 0, 0, (0xB << 16), bhvWarpPipe),
+		OBJECT(MODEL_CASTLE_GROUNDS_WARP_PIPE, 3185, -244, -153, 0, 0, 0, (0xC << 16), bhvWarpPipe),
+		OBJECT(MODEL_CASTLE_GROUNDS_WARP_PIPE, -130, -244, 2988, 0, 0, 0, (0xD << 16), bhvWarpPipe),
+		OBJECT(MODEL_CASTLE_GROUNDS_WARP_PIPE, -130, -244, -3490, 0, 0, 0, (0xE << 16), bhvWarpPipe),
+		OBJECT(MODEL_NONE, -129, 33, 97, 0, 0, 0, (0x1 << 16), bhvAirborneStarCollectWarp),
+		OBJECT(MODEL_NONE, -1908, 75, -164, 0, -180, 0, (0x1b << 16), bhvAirborneStarCollectWarp),
+		OBJECT(MODEL_NONE, -3, 75, 1555, 0, -180, 0, (0x1D << 16), bhvAirborneStarCollectWarp),
 		TERRAIN(castle_courtyard_area_1_collision),
 		MACRO_OBJECTS(castle_courtyard_area_1_macro_objs),
 		SET_BACKGROUND_MUSIC(0x00, 0x23),
 		TERRAIN_TYPE(TERRAIN_GRASS),
+		/* Fast64 begin persistent block [area commands] */
+		/* Fast64 end persistent block [area commands] */
 	END_AREA(),
 
 	FREE_LEVEL_POOL(),
