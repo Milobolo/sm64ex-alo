@@ -701,8 +701,8 @@ u32 mario_has_spell(s16 fileIndex, u32 spell){
 	if(gMarioState->ForceSpell == spell){
 		return 1;
 	}else{
-		return 1; //for deb
-		// return (gSaveBuffer.files[fileIndex][0].abilities[spell]!=0);
+		// return 1; //for deb
+		return (gSaveBuffer.files[fileIndex][0].abilities[spell]!=0);
 	}
 }
 void save_file_udpate_level(s32 fileIndex, struct MarioState *m) {

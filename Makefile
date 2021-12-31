@@ -35,7 +35,7 @@ TE ?= 1
 #inside pause menu of levels
 LEVEL_SELECT ?= 0
 #puppyprint debug
-PUPPYDEBUG ?= 1
+PUPPYDEBUG ?= 0
 
 
 # Build for original N64 (no pc code)

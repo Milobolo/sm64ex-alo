@@ -486,6 +486,8 @@ const BehaviorScript bhvIceBlock[] = {
     OR_INT(oFlags, (OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE | OBJ_FREEZE_IMMUNE)),
 	LOAD_COLLISION_DATA(ice_block_collision),
 	SET_INT(oFaceAngleYaw,0),
+	SET_FLOAT(oCollisionDistance, 3000),
+	SET_HITBOX(/*Radius*/ 80, /*Height*/ 600),
 	BEGIN_LOOP(),
     CALL_NATIVE(ice_block_loop),
     END_LOOP(),
@@ -5008,6 +5010,7 @@ const BehaviorScript bhvHiddenStarTrigger[] = {
     SET_HITBOX(/*Radius*/ 100, /*Height*/ 100),
     SET_INT(oIntangibleTimer, 0),
     BEGIN_LOOP(),
+		ADD_INT(oFaceAngleYaw, 200),
         CALL_NATIVE(bhv_hidden_star_trigger_loop),
     END_LOOP(),
 };

@@ -50,3 +50,4 @@
 #include "balance/model.inc.c"
 #include "balance_center/model.inc.c"
 #include "balance_center/collision.inc.c"
+#include "trigger/model.inc.c"

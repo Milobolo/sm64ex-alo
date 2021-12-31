@@ -1,0 +1,14 @@
+extern const GeoLayout trigger_geo[];
+extern Lights1 trigger_rad_purp_halo_lights;
+extern u8 trigger_radial_purp_rgba32[];
+extern Vtx trigger_Cube_006_mesh_layer_1_vtx_0[24];
+extern Gfx trigger_Cube_006_mesh_layer_1_tri_0[];
+extern Vtx trigger_Plane_004_mesh_layer_5_vtx_0[8];
+extern Gfx trigger_Plane_004_mesh_layer_5_tri_0[];
+extern Gfx mat_trigger_crsytall[];
+extern Gfx mat_revert_trigger_crsytall[];
+extern Gfx mat_trigger_rad_purp_halo[];
+extern Gfx mat_revert_trigger_rad_purp_halo[];
+extern Gfx trigger_Cube_006_mesh_layer_1[];
+extern Gfx trigger_Plane_004_mesh_layer_5[];
+extern Gfx trigger_material_revert_render_settings[];

@@ -361,7 +361,7 @@ static void wiggler_act_shrink(void) {
 			#ifdef RM2C
             spawn_default_star(WigglerStarPos);
 			#else
-            spawn_default_star(0.0f, 2048.0f, 0.0f);
+            spawn_default_star(-335.0f, 1150.0f, 1864.0f);
 			#endif
             o->oAction = WIGGLER_ACT_FALL_THROUGH_FLOOR;
         }

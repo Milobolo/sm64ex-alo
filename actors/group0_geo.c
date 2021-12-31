@@ -33,3 +33,4 @@
 #include "rotating/geo.inc.c"
 #include "balance/geo.inc.c"
 #include "balance_center/geo.inc.c"
+#include "trigger/geo.inc.c"

@@ -44,6 +44,7 @@
 #define MODEL_ROT_SMALL                   0xF0
 #define MODEL_BALANCE_CENTER              0xF1
 #define MODEL_BALANCE                     0xF2
+#define MODEL_TRIGGER                     0xF3
 
 
 

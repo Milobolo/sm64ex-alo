@@ -392,4 +392,6 @@ extern const Gfx white_particle_small_unused_dl[];
 
 #include "balance_center/collision_header.h"
 
+#include "trigger/geo_header.h"
+
 #endif
