@@ -1,12 +1,12 @@
 // capswitch.c.inc
-
+extern struct SaveBuffer gSaveBuffer;
 void cap_switch_act_0(void) {
     o->oAnimState = o->oBehParams2ndByte;
     cur_obj_scale(0.5f);
     o->oPosY += 71.0f;
     spawn_object_relative_with_scale(0, 0, -71, 0, 0.5f, o, MODEL_CAP_SWITCH_BASE, bhvCapSwitchBase);
     if (gCurrLevelNum != LEVEL_UNKNOWN_32) {
-        if (mario_has_spell(gCurrSaveFileNum - 1,o->oBehParams2ndByte)) {
+        if ((gSaveBuffer.files[gCurrSaveFileNum - 1][0].abilities[o->oBehParams2ndByte]!=0)) {
             o->oAction = 3;
             o->header.gfx.scale[1] = 0.1f;
         } else

@@ -73,7 +73,7 @@ const LevelScript level_totwc_entry[] = {
 		OBJECT(MODEL_PURPLE_SWITCH, 2221, -440, -5, 0, 0, 0, (0 << 24) | (0 << 16) | (0 << 8) | (2), bhvFloorSwitchHiddenObjects),
 		OBJECT(MODEL_PURPLE_SWITCH, -5809, 1166, 2209, 0, 0, 0, 0, bhvFloorSwitchHiddenObjects),
 		OBJECT(MODEL_CAP_SWITCH, -8029, 3270, -4, 0, 0, 0, (0 << 24) | (3 << 16) | (0 << 8) | (11), bhvCapSwitch),
-		OBJECT(MODEL_STAR, -8603, 3456, -4, 0, 0, 0, (0 << 24) | (0 << 16) | (0 << 8) | (0), bhvStar),
+		OBJECT(MODEL_STAR, -8603, 3456, -4, 0, 0, 0, (0 << 24) | (0 << 16) | (0 << 8) | (1), bhvStar),
 		OBJECT(MODEL_CASTLE_GROUNDS_WARP_PIPE, 124, -251, 0, 0, -90, 0, (0xB << 16), bhvWarpPipe),
 		OBJECT(MODEL_NONE, -105, 216, -24, 0, 0, 0, (0xA << 16), bhvAirborneWarp),
 		TERRAIN(totwc_area_1_collision),

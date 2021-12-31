@@ -909,6 +909,9 @@ static u32 set_mario_action_airborne(struct MarioState *m, u32 action, u32 actio
             m->vel[1] = 20.0f;
             break;
     }
+	if(m->marioObj->platform){
+		m->vel[1] += m->marioObj->platform->oVelY;
+	}
 
     m->peakHeight = m->pos[1];
     m->flags |= MARIO_UNKNOWN_08;

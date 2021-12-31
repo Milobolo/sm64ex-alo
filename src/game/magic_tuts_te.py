@@ -39,3 +39,13 @@ return_intro_2 = ["[JumpLink('magic_gen_shadow_fade_io')][AutoNextBox()]Re-cast 
 return_intro_3 = ["[JumpLink('magic_gen_shadow_fade_io')][AutoNextBox()]You can update the return location anytime[TimeEndStr(160)]"]
 return_intro_4 = ["[JumpLink('magic_gen_shadow_fade_io')][AutoNextBox()]Use return to escape from one way paths[TimeEndStr(160)]"]
 return_intro_5 = ["[JumpLink('magic_gen_shadow_fade_io')][AutoNextBox()]Use return to activate switches quickly[TimeEndStr(160)]"]
+
+
+ice_sign = ["[JumpLink('magic_gen_shadow_fade_io')][AutoNextBox()][JumpLink('sign_box_setup')][TransOffs(60,0)]Env Station\n\n\
+[TransOffs(-60,0)]Ice block - A spawnable platform you can place to your liking. \
+Use to traverse gaps, and reach greater heights.[AbtnNextBox()][Jump('end_read_sign')]"]
+
+ice_intro_1 = ["[JumpLink('magic_gen_shadow_fade_io')][AutoNextBox()]Cast ice block by pressing L, press \nL again to place[TimeEndStr(160)]"]
+ice_intro_3 = ["[JumpLink('magic_gen_shadow_fade_io')][AutoNextBox()]Ice blocks must be placed on a floor[TimeEndStr(160)]"]
+ice_intro_2 = ["[JumpLink('magic_gen_shadow_fade_io')][AutoNextBox()]Ice blocks move with platforms they're placed on[TimeEndStr(160)]"]
+ice_intro_4 = ["[JumpLink('magic_gen_shadow_fade_io')][AutoNextBox()]Only one ice block can exist at a time[TimeEndStr(160)]"]

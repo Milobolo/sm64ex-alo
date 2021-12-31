@@ -4792,14 +4792,14 @@ Gfx totwc_dl_Cube_060_mesh_layer_1_tri_4[] = {
 };
 
 Vtx totwc_dl_Cube_060_mesh_layer_1_vtx_5[8] = {
-	{{{-3546, 3408, -2774},0, {-16, 6128},{0x0, 0x6A, 0x46, 0xFF}}},
-	{{{-3746, 3408, -2774},0, {2032, 6128},{0x0, 0x6A, 0x46, 0xFF}}},
-	{{{-3746, 2749, -1775},0, {2032, -4112},{0x0, 0x6A, 0x46, 0xFF}}},
-	{{{-3546, 2749, -1775},0, {-16, -4112},{0x0, 0x6A, 0x46, 0xFF}}},
-	{{{-3946, 3408, -2774},0, {-16, 6128},{0x0, 0x6A, 0x46, 0xFF}}},
-	{{{-4146, 3408, -2774},0, {2032, 6128},{0x0, 0x6A, 0x46, 0xFF}}},
-	{{{-4146, 2749, -1775},0, {2032, -4112},{0x0, 0x6A, 0x46, 0xFF}}},
-	{{{-3946, 2749, -1775},0, {-16, -4112},{0x0, 0x6A, 0x46, 0xFF}}},
+	{{{-3546, 3408, -2774},0, {-16, 6128},{0xFF, 0xEC, 0xAB, 0xFF}}},
+	{{{-3746, 3408, -2774},0, {2032, 6128},{0xFF, 0xEC, 0xAB, 0xFF}}},
+	{{{-3746, 2749, -1775},0, {2032, -4112},{0xFF, 0xEC, 0xAB, 0xFF}}},
+	{{{-3546, 2749, -1775},0, {-16, -4112},{0xFF, 0xEC, 0xAB, 0xFF}}},
+	{{{-3946, 3408, -2774},0, {-16, 6128},{0xFF, 0xEC, 0xAB, 0xFF}}},
+	{{{-4146, 3408, -2774},0, {2032, 6128},{0xFF, 0xEC, 0xAB, 0xFF}}},
+	{{{-4146, 2749, -1775},0, {2032, -4112},{0xFF, 0xEC, 0xAB, 0xFF}}},
+	{{{-3946, 2749, -1775},0, {-16, -4112},{0xFF, 0xEC, 0xAB, 0xFF}}},
 };
 
 Gfx totwc_dl_Cube_060_mesh_layer_1_tri_5[] = {
@@ -5657,6 +5657,7 @@ Gfx mat_revert_totwc_dl_castling_top[] = {
 Gfx mat_totwc_dl_super_slip[] = {
 	gsDPPipeSync(),
 	gsDPSetCombineLERP(TEXEL0, 0, SHADE, 0, 0, 0, 0, ENVIRONMENT, TEXEL0, 0, SHADE, 0, 0, 0, 0, ENVIRONMENT),
+	gsSPClearGeometryMode(G_LIGHTING),
 	gsSPTexture(65535, 65535, 0, 0, 1),
 	gsDPSetTextureLUT(G_TT_RGBA16),
 	gsDPSetTextureImage(G_IM_FMT_RGBA, G_IM_SIZ_16b, 1, totwc_dl_DRA_O_BB_ROAD01_M6_ci4_pal_rgba16),
@@ -5679,6 +5680,7 @@ Gfx mat_totwc_dl_super_slip[] = {
 
 Gfx mat_revert_totwc_dl_super_slip[] = {
 	gsDPPipeSync(),
+	gsSPSetGeometryMode(G_LIGHTING),
 	gsDPSetTextureLUT(G_TT_NONE),
 	gsSPEndDisplayList(),
 };

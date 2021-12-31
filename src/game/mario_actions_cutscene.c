@@ -2816,8 +2816,8 @@ s32 act_cast_actions(struct MarioState *m) {
 							m->spawnObj = spawn_object(m->marioObj,MODEL_RETURN_PORTAL,bhvReturnPortal);
 							gReturn = m->spawnObj;
 							set_mario_animation(m, MARIO_ANIM_BREAKDANCE);
+							play_mario_sound(m, SOUND_ACTION_TERRAIN_JUMP, SOUND_MARIO_PUNCH_WAH);
 						}
-						
 						break;
 					case ACTION_SWAP:
 						//check swappables
@@ -2872,6 +2872,7 @@ s32 act_cast_actions(struct MarioState *m) {
 						m->pos[1] = gReturn->oPosY+300.0f;
 						m->pos[2] = gReturn->oPosZ;
 						set_mario_action(m, ACT_SPAWN_SPIN_AIRBORNE, 0);
+						play_mario_sound(m, SOUND_ACTION_TERRAIN_JUMP, SOUND_MARIO_OKEY_DOKEY);
 						break;
 					//recast
 					case 3:
@@ -2879,6 +2880,7 @@ s32 act_cast_actions(struct MarioState *m) {
 						gReturn = spawn_object(m->marioObj,MODEL_RETURN_PORTAL,bhvReturnPortal);
 						m->spawnObj = gReturn;
 						set_mario_animation(m, MARIO_ANIM_BREAKDANCE);
+						play_mario_sound(m, SOUND_ACTION_TERRAIN_JUMP, SOUND_MARIO_PUNCH_WAH);
 						break;
 					//cancel cast
 					case 4:
@@ -2886,6 +2888,7 @@ s32 act_cast_actions(struct MarioState *m) {
 						m->spawnObj = 1;
 						gReturn = 0;
 						set_mario_animation(m, MARIO_ANIM_BREAKDANCE);
+						play_mario_sound(m, SOUND_ACTION_TERRAIN_JUMP, SOUND_MARIO_PUNCH_WAH);
 						break;
 					
 				}
@@ -2900,6 +2903,7 @@ s32 act_cast_actions(struct MarioState *m) {
 					case ACTION_GIGANTIFY:
 						//red particles
 						m->actionState = 1;
+						play_mario_sound(m, SOUND_ACTION_TERRAIN_JUMP, SOUND_MARIO_HAHA);
 						break;
 					case ACTION_HOVER:
 						//yellow particles
@@ -3034,6 +3038,7 @@ s32 act_cast_actions(struct MarioState *m) {
 						m->spawnObj = 0;
 						set_mario_action(m, ACT_IDLE, 0);
 						m->flags &= (~MARIO_CAM_FOC_OBJ | MARIO_CAM_FOC_RISE);
+						play_mario_sound(m, SOUND_ACTION_TERRAIN_JUMP, SOUND_GENERAL_POUND_ROCK);
 					}else{
 						switch(m->CastSpell){
 							// must have floor and floor height must be within 10 of obj

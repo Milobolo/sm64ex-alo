@@ -44,6 +44,7 @@ void ice_block_loop(void){
 			struct Object *obj = o->parentObj;
 			if (obj != NULL){
 				o->oPosY += obj->oVelY;
+				o->oVelY = obj->oVelY;
 				o->oFaceAngleYaw = obj->oFaceAngleYaw;
 				apply_platform_displacement(0,obj);
 				//so platform displacement carries over properly
@@ -131,6 +132,7 @@ void hanging_leaf_loop(void){
 			struct Object *obj = o->parentObj;
 			if (obj != NULL){
 				o->oPosY += obj->oVelY;
+				o->oVelY = obj->oVelY;
 				o->oHomeY += obj->oVelY;
 				o->oFaceAngleYaw = obj->oFaceAngleYaw;
 				apply_platform_displacement(0,obj);

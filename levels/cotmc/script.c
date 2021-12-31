@@ -80,7 +80,7 @@ const LevelScript level_cotmc_entry[] = {
 		OBJECT(MODEL_TRIGGER, 10111, 4413, -3716, 0, 0, 0, (0 << 24) | (10 << 16) | (0 << 8) | (0), bhvHiddenStarTrigger),
 		OBJECT(MODEL_TRIGGER, 6578, 5493, -2238, 0, 0, 0, (0 << 24) | (10 << 16) | (0 << 8) | (0), bhvHiddenStarTrigger),
 		OBJECT(MODEL_CASTLE_GROUNDS_WARP_PIPE, -3706, 3237, 9461, 0, -180, 0, (0 << 24) | (0xB << 16) | (0 << 8) | (0), bhvWarpPipe),
-		OBJECT(MODEL_CASTLE_GROUNDS_WARP_PIPE, -3711, 3736, 8976, 0, -180, 0, (0 << 24) | (0xA << 16) | (0 << 8) | (0), bhvWarpPipe),
+		OBJECT(MODEL_NONE, -3711, 3736, 8976, 0, -180, 0, (0 << 24) | (0xA << 16) | (0 << 8) | (0), bhvSpinAirborneWarp),
 		TERRAIN(cotmc_area_1_collision),
 		MACRO_OBJECTS(cotmc_area_1_macro_objs),
 		SET_BACKGROUND_MUSIC(0x00, 0x25),

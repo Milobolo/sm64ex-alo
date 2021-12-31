@@ -13,4 +13,10 @@ char *TE_Strings[] = {
 	&return_intro_3,
 	&return_intro_4,
 	&return_intro_5,
+	//11
+	&ice_sign,
+	&ice_intro_1,
+	&ice_intro_2,
+	&ice_intro_3,
+	&ice_intro_4,
 };
