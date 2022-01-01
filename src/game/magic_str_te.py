@@ -9,9 +9,47 @@ non iterables are ignored. If you have a tuple with a single item, put a comma a
 or else it will be ignored
 """
 #This is externs delcared in this file
-externs = ("extern const Gfx star_seg3_dl_0302B870[];","extern struct Object *gReturn;")
+externs = ("extern const Gfx star_seg3_dl_0302B870[];","extern struct Object *gReturn;","extern s8 sSelectedFileNum;")
 #These are header files included in this file. Use single quotes so double quotes are delimited for filename
-headers = (r'#include "src/game/segment2.h"',r'#include "include/sm64.h"',r'#include "src/game/magic.h"',r'#include "src/game/area.h"')
+headers = (r'#include "src/game/segment2.h"',r'#include "include/sm64.h"',r'#include "src/game/magic.h"',r'#include "src/game/area.h"',r'#include "src/game/save_file.h"',r'#include "src/menu/file_select.h"')
+
+magic_file_select = ["[SetRtrn(0)][SetEnv(0,0,0,255)][ScaleText(2.0,2.0)][TransOffs(30,0)]SHINING STARS 4\nSTAR ADVENTURE\n[ScaleText(1.0,1.0)]\
+[TransOffs(-30,0)][DialogOptions(3)]\
+CHOOSE FILE[end]\
+ERASE FILE[end]\
+COPY FILE[end]\
+CREDITS[end]\
+[SetEnv(0,0,0,255)][DialogResponse(3)][Jump('ss4_credits')]\
+[DialogResponse(2)][StartDialogBracket(1)][CallOnce(0,'TE_set_state',2,['&Op_Type',3])][ScaleText(2.0,2.0)][TransOffs(30,0)]COPY FROM FILE\n[ScaleText(1.0,1.0)][TransOffs(-30,0)][DialogOptions(1)]\
+ELEPHANT A[CallLoop(1,'TE_print_star_cnt',2,[0,0])] [UsrStr(0)] STARS[end]\
+ELEPHANT B[CallLoop(1,'TE_print_star_cnt',2,[1,1])] [UsrStr(1)] STARS[end]\
+BACK[end]\
+[DialogResponse(0)][CallOnce(0,'TE_set_state',2,['&copy',0])]\
+[DialogResponse(1)][CallOnce(0,'TE_set_state',2,['&copy',1])]\
+[DialogResponse(2)][ClearBuffer()][GotoRtrn(0)][end]\
+[EndDialogBracket(1)][SetEnv(0,0,0,255)]\
+\
+[copy files is above, choosing files below]\
+\
+[DialogResponse(0)][CallOnce(0,'TE_set_state',2,['&Op_Type',1])]\
+[DialogResponse(1)][CallOnce(0,'TE_set_state',2,['&Op_Type',2])]\
+[GenericText()][SetEnv(0,0,0,255)][ScaleText(2.0,2.0)][TransOffs(30,0)]CHOOSE FILE\n[ScaleText(1.0,1.0)][TransOffs(-30,0)][DialogOptions(2)]\
+ELEPHANT A[CallLoop(1,'TE_print_star_cnt',2,[0,0])] [UsrStr(0)] STARS[end]\
+ELEPHANT B[CallLoop(1,'TE_print_star_cnt',2,[1,1])] [UsrStr(1)] STARS[end]\
+BACK[end]\
+[DialogResponse(0)][StartDialogBracket(1)][CallOnce(0,'FS_do_operation',1,[0])][EndDialogBracket(1)]\
+[DialogResponse(1)][StartDialogBracket(1)][CallOnce(0,'FS_do_operation',1,[1])][EndDialogBracket(1)]\
+[DialogResponse(2)][ClearBuffer()][GotoRtrn(0)][end]\
+[GenericText()][SetSfx(0x5038)][CallOnce(3,'TE_get_state',1,['&Op_Type'])][MatchRtrn(3,1)][TimeEndStr(1)][end][GenericText()][ClearBuffer()][GotoRtrn(0)][end]\
+"]
+
+ss4_credits = ["[SetEnv(0,0,0,255)][TransOffs(40,0)]\
+Original levels - sm64pie\n\n\
+Remade levels - scuttlebug_raiser\n\n\
+music ports - scuttlebug_raiser\n\n\
+tools used:\n\
+fast64, decomp\
+[AbtnNextBox()][GotoRtrn(0)]"]
 
 magic_spells_init = ['[CallOnce(1,"TE_set_flag",2,["&gMagicHUDRequest","HUD_OPEN | HUD_MAIN"])]\
 [StartTransition(8,255,0,0)][AutoNextBox()]\

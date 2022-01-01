@@ -38,7 +38,7 @@ struct SaveFile
 	u32 TotalCoins; //just maintain coins between stages
 	u32 Level;
 	u32 Exp;
-	u8 abilities[32]; //idk what I'll put here yet
+	u8 abilities[16]; //idk what I'll put here yet
 
     struct SaveBlockSignature signature;
 };
@@ -57,12 +57,13 @@ struct MainMenuSaveData
     // on the high score screen.
     u32 coinScoreAges[NUM_SAVE_FILES];
     u16 soundMode;
+    u16 IntroMessage;
 
 #ifdef VERSION_EU
     u16 language;
 #define SUBTRAHEND 8
 #else
-#define SUBTRAHEND 6
+#define SUBTRAHEND 8
 #endif
 
     // Pad to match the EEPROM size of 0x200 (10 bytes on JP/US, 8 bytes on EU)

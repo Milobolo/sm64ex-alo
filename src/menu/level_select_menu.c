@@ -223,6 +223,15 @@ s32 intro_play_its_a_me_mario(void) {
     return 1;
 }
 
+static u32 msg = 0;
+extern struct SaveBuffer gSaveBuffer;
+#include "src/game/magic_str_te.h"
+#include "src/game/magic_tuts_te.h"
+s32 level_intro_message(void){
+	SetupTextEngine(16,212,magic_file_select, 0);
+	return 1;
+}
+
 s32 lvl_intro_update(s16 arg1, UNUSED s32 arg2) {
     s32 retVar;
 
@@ -238,6 +247,9 @@ s32 lvl_intro_update(s16 arg1, UNUSED s32 arg2) {
             break;
         case 3:
             retVar = level_select_input_loop();
+            break;
+        case 4:
+            retVar = level_intro_message();
             break;
     }
     return retVar;

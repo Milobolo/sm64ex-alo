@@ -1,3 +1,5 @@
+#include "include/course_table.h"
+
 s32 TE_inc_state(s32 *state){
 	s32 a = *state;
 	++*state;
@@ -48,4 +50,12 @@ s32 TE_check_password(char *password,u32 usr){
 		}
 	}
 	return 1;
+}
+
+
+void TE_print_star_cnt(s32 fileindex, s32 usr){
+	u32 cnt = save_file_get_total_star_count(fileindex, COURSE_MIN - 1, COURSE_MAX - 1);
+	UserInputs[0][usr][0] = (u32) cnt / 10;
+	UserInputs[0][usr][1] = (u32) cnt % 10;
+	UserInputs[0][usr][2] = 0x45;
 }

@@ -1,0 +1,11 @@
+extern const GeoLayout bowser_1_area_1_geo[];
+extern const GeoLayout bowser_1_area_1[];
+extern const Collision bowser_1_area_1_collision[];
+extern const MacroObject bowser_1_area_1_macro_objs[];
+extern Lights1 bowser_1_dl_ss2_black_lights;
+extern u8 bowser_1_dl__2803kd_kasanlight05_i8[];
+extern Vtx bowser_1_dl__bowser_1_seg7_dl_07002768_Obj_mesh_layer_1_vtx_0[97];
+extern Gfx bowser_1_dl__bowser_1_seg7_dl_07002768_Obj_mesh_layer_1_tri_0[];
+extern Gfx mat_bowser_1_dl_ss2_black[];
+extern Gfx bowser_1_dl__bowser_1_seg7_dl_07002768_Obj_mesh_layer_1[];
+extern Gfx bowser_1_dl_material_revert_render_settings[];

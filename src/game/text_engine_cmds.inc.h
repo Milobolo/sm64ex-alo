@@ -233,7 +233,6 @@ s8 TE_set_sfx(struct TEState *CurEng,u8 *str){
 //42 cmd works
 s8 TE_set_env_color(struct TEState *CurEng,u8 *str){
 	TE_print(CurEng);
-	CurEng->PrevEnvColorWord = CurEng->EnvColorWord;
 	CurEng->EnvColorWord = TE_get_u32(str);
 	return TE_print_adv(CurEng,5);
 }
@@ -1006,7 +1005,7 @@ s8 TE_enable_dialog_options(struct TEState *CurEng,u8 *str){
 	CurEng->TempY -= ((u16) 0xD*CurEng->ScaleF[1]);
 	CurEng->TempYOrigin = CurEng->TempY;
 	CurEng->NumDialogs = str[1];
-	if(CurEng->DialogEnd != 0){
+	if(CurEng->DialogEnd != 0 && (CurEng->LastVI+2)<gNumVblanks){
 		if(gPlayer1Controller->buttonPressed&A_BUTTON){
 			CurEng->OgStr = CurEng->DialogEnd;
 			CurEng->StackLocked = CurEng->StackDepth;
@@ -1258,6 +1257,7 @@ s8 TE_print_glyph(struct TEState *CurEng,u8 *str){
 	//pkt, timg, fmt, siz, width, height, pal, cms, cmt, masks, maskt, shifts, shiftt
 	gDPLoadTextureBlock(gDisplayListHead++,ptr,G_IM_FMT_RGBA, G_IM_SIZ_16b, 32, 32, 0,G_TX_CLAMP, G_TX_CLAMP, 5, 5, G_TX_NOLOD, G_TX_NOLOD);
 	gDPSetEnvColor(gDisplayListHead++, 255, 255, 255, 255);
+	CurEng->PrevEnvColorWord = -1;
 	gSPDisplayList(gDisplayListHead++, dl_draw_text_bg_box_TE);
 	CurEng->TotalXOff+=14;
 	TE_bg_box_finish(CurEng);

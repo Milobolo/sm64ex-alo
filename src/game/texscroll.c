@@ -18,6 +18,9 @@
 #include "src/game/texscroll/totwc_texscroll.inc.c"
 #include "src/game/texscroll/vcutm_texscroll.inc.c"
 #include "src/game/texscroll/bitdw_texscroll.inc.c"
+#include "src/game/texscroll/bowser_1_texscroll.inc.c"
+#include "src/game/texscroll/menu_texscroll.inc.c"
+#include "src/game/texscroll/castle_courtyard_texscroll.inc.c"
 void scroll_textures() {
 	if(SCROLL_CONDITION(sSegmentROMTable[0x7] == (uintptr_t)_bob_segment_7SegmentRomStart)) {
 		scroll_textures_bob();
@@ -37,6 +40,17 @@ void scroll_textures() {
 
 	if(SCROLL_CONDITION(sSegmentROMTable[0x7] == (uintptr_t)_bitdw_segment_7SegmentRomStart)) {
 		scroll_textures_bitdw();
+	}
+
+	if(SCROLL_CONDITION(sSegmentROMTable[0x7] == (uintptr_t)_bowser_1_segment_7SegmentRomStart)) {
+		scroll_textures_bowser_1();
+	}
+	if(SCROLL_CONDITION(sSegmentROMTable[0x7] == (uintptr_t)_menu_segment_7SegmentRomStart)) {
+		scroll_textures_menu();
+	}
+
+	if(SCROLL_CONDITION(sSegmentROMTable[0x7] == (uintptr_t)_castle_courtyard_segment_7SegmentRomStart)) {
+		scroll_textures_castle_courtyard();
 	}
 
 }

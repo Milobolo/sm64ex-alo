@@ -239,8 +239,10 @@ const GeoLayout geo_menu_act_selector_strings[] = {
       GEO_CLOSE_NODE(),
       GEO_ZBUFFER(0),
       GEO_OPEN_NODE(),
-         GEO_ASM(0, geo_act_selector_strings),
+         GEO_BRANCH_AND_LINK(anim_geo),
       GEO_CLOSE_NODE(),
    GEO_CLOSE_NODE(),
    GEO_END(),
 };
+
+#include "levels/menu/anim/geo.inc.c"

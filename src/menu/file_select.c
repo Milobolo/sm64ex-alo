@@ -115,7 +115,7 @@ static s8 sAllFilesExist = FALSE;
 
 // Defines the value of the save slot selected in the menu.
 // Mario A: 1 | Mario B: 2 | Mario C: 3 | Mario D: 4
-static s8 sSelectedFileNum = 0;
+s8 sSelectedFileNum = 0;
 
 // Which coin score mode to use when scoring files. 0 for local
 // coin high score, 1 for high score across all files.
@@ -285,6 +285,28 @@ static unsigned char textNew[][5] = {{ TEXT_NEW }, { TEXT_NEW_FR }, { TEXT_NEW_D
 static unsigned char starIcon[] = { GLYPH_STAR, GLYPH_SPACE };
 static unsigned char xIcon[] = { GLYPH_MULTIPLY, GLYPH_SPACE };
 #endif
+
+
+
+//ss4 vars
+s32 Op_Type = 0;
+s32 copy = 0;
+#include "src/game/text_engine.h"
+void FS_do_operation(u32 pick){
+	switch(Op_Type){
+		case 1:
+			sSelectedFileNum = pick+1;
+			break;
+		//erase
+		case 2:
+			save_file_erase(pick);
+			break;
+		case 3:
+			save_file_copy(copy,pick);
+			break;
+	}
+}
+
 
 /**
  * Yellow Background Menu Initial Action
@@ -3062,6 +3084,6 @@ s32 lvl_init_menu_values_and_cursor_pos(UNUSED s32 arg, UNUSED s32 unused) {
  * defined in load_main_menu_save_file.
  */
 s32 lvl_update_obj_and_load_file_selected(UNUSED s32 arg, UNUSED s32 unused) {
-    area_update_objects();
+    area_update_objects(); scroll_textures();
     return sSelectedFileNum;
 }

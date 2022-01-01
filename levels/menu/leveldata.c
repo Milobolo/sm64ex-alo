@@ -2024,3 +2024,5 @@ const Collision main_menu_seg7_collision[] = {
 #undef COURSE_TABLE
 
 #endif
+
+#include "levels/menu/anim/model.inc.c"

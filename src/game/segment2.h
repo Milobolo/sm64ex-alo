@@ -10,7 +10,7 @@ extern const Texture magic_d_up[];
 extern const Texture magic_d_down[];
 extern const Texture magic_d_left[];
 extern const Texture magic_d_right[];
-
+extern const Texture texture_hud_char_star[];
 
 
 extern u8 seg2_course_name_table[];

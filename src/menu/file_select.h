@@ -13,6 +13,11 @@
 #define MENU_ERASE_HOVER_YES 1
 #define MENU_ERASE_HOVER_NO 2
 
+//ss4 vars
+extern s32 Op_Type;
+extern s32 copy;
+void FS_do_operation(u32 pick);
+
 enum MainMenuButtonStates {
     MENU_BUTTON_STATE_DEFAULT,
     MENU_BUTTON_STATE_GROWING,

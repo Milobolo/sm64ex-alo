@@ -469,13 +469,13 @@ extern struct Object *gReturn;
 void warp_area(void) {
     if (sWarpDest.type != WARP_TYPE_NOT_WARPING) {
         if (sWarpDest.type == WARP_TYPE_CHANGE_AREA) {
-            level_control_timer(TIMER_CONTROL_HIDE);
-            unload_mario_area();
-            load_area(sWarpDest.areaIdx);
 			gFreezeTime = 0;
 			gReturn = 0;
 			gMarioState->spawnObj = 0;
 			gMagicHUDRequest = 0;
+            level_control_timer(TIMER_CONTROL_HIDE);
+            unload_mario_area();
+            load_area(sWarpDest.areaIdx);
         }
 
         init_mario_after_warp();
