@@ -4,6 +4,7 @@
 #include "types.h"
 
 // geo
+extern const GeoLayout geo_menu_FILE_SELECT[];
 extern const GeoLayout geo_menu_mario_save_button[];
 extern const GeoLayout geo_menu_mario_save_button_fade[];
 extern const GeoLayout geo_menu_mario_new_button[];

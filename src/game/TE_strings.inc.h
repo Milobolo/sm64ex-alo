@@ -19,4 +19,6 @@ char *TE_Strings[] = {
 	&ice_intro_2,
 	&ice_intro_3,
 	&ice_intro_4,
+	//16
+	&intro_sign,
 };

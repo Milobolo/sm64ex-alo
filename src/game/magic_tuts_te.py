@@ -23,8 +23,14 @@ a spirit spell will cancel it[TimeEndStr(160)]"]
 
 
 #5 lines max
-sign_box_setup = ["[ShadedBGBox(28,292,84,176,0,0,0,0x96)][WordWrap(288)][Pop()]"]
+sign_box_setup = ["[ShadedBGBox(28,292,72,176,0,0,0,0x96)][WordWrap(288)][Pop()]"]
 
+
+intro_sign = ["[JumpLink('magic_gen_shadow_fade_io')][AutoNextBox()][JumpLink('sign_box_setup')][TransOffs(40,0)]Welcome to the world of Shining Elephant Stars!!!\n\n\
+[TransOffs(-40,0)]Elephants are well known for their magic powers, explore 3 new types of elephant abilities \
+in these remade shining worlds.[AbtnNextBox()][JumpLink('sign_box_setup')]Access your elephant powers by pressing L while standing still, but you first must unlock\
+them by passing trials in the worlds ahead.\n\
+Good luck![AbtnNextBox()][Jump('end_read_sign')]"]
 
 gigantify_sign = ["[JumpLink('magic_gen_shadow_fade_io')][AutoNextBox()][JumpLink('sign_box_setup')][TransOffs(70,0)]Trial of spirit\n\n\
 [TransOffs(-70,0)]Gigantify - Enlarges the self and over doubles strength. \

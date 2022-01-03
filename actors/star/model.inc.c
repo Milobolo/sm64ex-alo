@@ -11,6 +11,10 @@ ALIGNED8 static const Texture star_seg3_texture_0302A6F0[] = {
 #include "actors/star/star_surface.rgba16.inc.c"
 };
 
+ALIGNED8 static const Texture custom_star_seg3_texture_0302A6F0[] = {
+#include "actors/star/custom_star_surface.rgba16.inc.c"
+};
+
 // 0x0302AEF0
 ALIGNED8 static const Texture star_seg3_texture_0302AEF0[] = {
 #include "actors/star/star_eye.rgba16.inc.c"
@@ -56,7 +60,7 @@ const Gfx star_seg3_dl_0302B870[] = {
     gsSPSetGeometryMode(G_TEXTURE_GEN),
     gsDPSetEnvColor(255, 255, 255, 255),
     gsDPSetCombineMode(G_CC_DECALFADE, G_CC_DECALFADE),
-    gsDPLoadTextureBlock(star_seg3_texture_0302A6F0, G_IM_FMT_RGBA, G_IM_SIZ_16b, 32, 32, 0, G_TX_WRAP | G_TX_NOMIRROR, G_TX_WRAP | G_TX_NOMIRROR, 5, 6, G_TX_NOLOD, G_TX_NOLOD),
+    gsDPLoadTextureBlock(custom_star_seg3_texture_0302A6F0, G_IM_FMT_RGBA, G_IM_SIZ_16b, 32, 32, 0, G_TX_WRAP | G_TX_NOMIRROR, G_TX_WRAP | G_TX_NOMIRROR, 5, 6, G_TX_NOLOD, G_TX_NOLOD),
     gsSPTexture(0x07C0, 0x07C0, 0, G_TX_RENDERTILE, G_ON),
     gsSPDisplayList(star_seg3_dl_0302B7B0),
     gsDPPipeSync(),

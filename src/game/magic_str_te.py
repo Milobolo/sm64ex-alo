@@ -20,27 +20,27 @@ ERASE FILE[end]\
 COPY FILE[end]\
 CREDITS[end]\
 [SetEnv(0,0,0,255)][DialogResponse(3)][Jump('ss4_credits')]\
-[DialogResponse(2)][StartDialogBracket(1)][CallOnce(0,'TE_set_state',2,['&Op_Type',3])][ScaleText(2.0,2.0)][TransOffs(30,0)]COPY FROM FILE\n[ScaleText(1.0,1.0)][TransOffs(-30,0)][DialogOptions(1)]\
+[DialogResponse(2)][StartDialogBracket(1)][CallOnce(0,'TE_set_state',2,['&Op_Type',3])][ScaleText(2.0,2.0)][TransOffs(30,0)]COPY FROM FILE\n[ScaleText(1.0,1.0)][TransOffs(-30,0)][DialogOptions(2)]\
 ELEPHANT A[CallLoop(1,'TE_print_star_cnt',2,[0,0])] [UsrStr(0)] STARS[end]\
 ELEPHANT B[CallLoop(1,'TE_print_star_cnt',2,[1,1])] [UsrStr(1)] STARS[end]\
 BACK[end]\
 [DialogResponse(0)][CallOnce(0,'TE_set_state',2,['&copy',0])]\
 [DialogResponse(1)][CallOnce(0,'TE_set_state',2,['&copy',1])]\
 [DialogResponse(2)][ClearBuffer()][GotoRtrn(0)][end]\
-[EndDialogBracket(1)][SetEnv(0,0,0,255)]\
+[GenericText()][SetEnv(0,0,0,255)][StartGenBracket(0)][EndDialogBracket(1)]\
 \
 [copy files is above, choosing files below]\
 \
 [DialogResponse(0)][CallOnce(0,'TE_set_state',2,['&Op_Type',1])]\
 [DialogResponse(1)][CallOnce(0,'TE_set_state',2,['&Op_Type',2])]\
-[GenericText()][SetEnv(0,0,0,255)][ScaleText(2.0,2.0)][TransOffs(30,0)]CHOOSE FILE\n[ScaleText(1.0,1.0)][TransOffs(-30,0)][DialogOptions(2)]\
+[EndGenBracket(0)][GenericText()][SetEnv(0,0,0,255)][ScaleText(2.0,2.0)][TransOffs(30,0)]CHOOSE FILE\n[ScaleText(1.0,1.0)][TransOffs(-30,0)][DialogOptions(2)]\
 ELEPHANT A[CallLoop(1,'TE_print_star_cnt',2,[0,0])] [UsrStr(0)] STARS[end]\
 ELEPHANT B[CallLoop(1,'TE_print_star_cnt',2,[1,1])] [UsrStr(1)] STARS[end]\
 BACK[end]\
 [DialogResponse(0)][StartDialogBracket(1)][CallOnce(0,'FS_do_operation',1,[0])][EndDialogBracket(1)]\
 [DialogResponse(1)][StartDialogBracket(1)][CallOnce(0,'FS_do_operation',1,[1])][EndDialogBracket(1)]\
 [DialogResponse(2)][ClearBuffer()][GotoRtrn(0)][end]\
-[GenericText()][SetSfx(0x5038)][CallOnce(3,'TE_get_state',1,['&Op_Type'])][MatchRtrn(3,1)][TimeEndStr(1)][end][GenericText()][ClearBuffer()][GotoRtrn(0)][end]\
+[GenericText()][CallOnce(3,'TE_get_state',1,['&Op_Type'])][MatchRtrn(3,1)][TimeEndStr(1)][end][GenericText()][ClearBuffer()][GotoRtrn(0)][end]\
 "]
 
 ss4_credits = ["[SetEnv(0,0,0,255)][TransOffs(40,0)]\

@@ -217,7 +217,7 @@ const GeoLayout geo_menu_file_select_strings_and_menu_cursor[] = {
 };
 
 // 0x0E000408
-const GeoLayout geo_menu_act_selector_strings[] = {
+const GeoLayout geo_menu_FILE_SELECT[] = {
    GEO_NODE_SCREEN_AREA(10, SCREEN_WIDTH/2, SCREEN_HEIGHT/2, SCREEN_WIDTH/2, SCREEN_HEIGHT/2),
    GEO_OPEN_NODE(),
       GEO_ZBUFFER(0),
@@ -240,6 +240,33 @@ const GeoLayout geo_menu_act_selector_strings[] = {
       GEO_ZBUFFER(0),
       GEO_OPEN_NODE(),
          GEO_BRANCH_AND_LINK(anim_geo),
+      GEO_CLOSE_NODE(),
+   GEO_CLOSE_NODE(),
+   GEO_END(),
+};
+const GeoLayout geo_menu_act_selector_strings[] = {
+   GEO_NODE_SCREEN_AREA(10, SCREEN_WIDTH/2, SCREEN_HEIGHT/2, SCREEN_WIDTH/2, SCREEN_HEIGHT/2),
+   GEO_OPEN_NODE(),
+      GEO_ZBUFFER(0),
+      GEO_OPEN_NODE(),
+         GEO_NODE_ORTHO(100),
+         GEO_OPEN_NODE(),
+            GEO_BACKGROUND_COLOR(0xFFFF),
+         GEO_CLOSE_NODE(),
+      GEO_CLOSE_NODE(),
+      GEO_ZBUFFER(1),
+      GEO_OPEN_NODE(),
+         GEO_CAMERA_FRUSTUM(45, 100, 25000),
+         GEO_OPEN_NODE(),
+            GEO_CAMERA(0, 0, 0, 1000, 0, 0, 0, 0x00000000),
+            GEO_OPEN_NODE(),
+               GEO_RENDER_OBJ(),
+            GEO_CLOSE_NODE(),
+         GEO_CLOSE_NODE(),
+      GEO_CLOSE_NODE(),
+      GEO_ZBUFFER(0),
+      GEO_OPEN_NODE(),
+         GEO_ASM(0, geo_act_selector_strings),
       GEO_CLOSE_NODE(),
    GEO_CLOSE_NODE(),
    GEO_END(),

@@ -296,13 +296,16 @@ void FS_do_operation(u32 pick){
 	switch(Op_Type){
 		case 1:
 			sSelectedFileNum = pick+1;
+			play_sound(SOUND_MENU_STAR_SOUND, gGlobalSoundSource);
 			break;
 		//erase
 		case 2:
 			save_file_erase(pick);
+			play_sound(SOUND_MARIO_WAAAOOOW, gGlobalSoundSource);
 			break;
 		case 3:
 			save_file_copy(copy,pick);
+			play_sound(SOUND_MENU_STAR_SOUND_OKEY_DOKEY, gGlobalSoundSource);
 			break;
 	}
 }

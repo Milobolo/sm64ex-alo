@@ -1358,7 +1358,7 @@ static void update_game_sound(void) {
 #endif
 
     process_all_sound_requests();
-    process_level_music_dynamics();
+    // process_level_music_dynamics();
 
     if (gSequencePlayers[SEQ_PLAYER_SFX].channels[0] == &gSequenceChannelNone) {
         return;

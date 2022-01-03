@@ -81,6 +81,7 @@ const GeoLayout bob_area_1_geo[] = {
 		GEO_TRANSLATE_NODE_WITH_DL(LAYER_OPAQUE, 9775, 1655, -3311, bob_dl_pillar_017_mesh_layer_1),
 		GEO_TRANSLATE_NODE_WITH_DL(LAYER_OPAQUE, 5199, 1655, -5120, bob_dl_pillar_018_mesh_layer_1),
 		GEO_TRANSLATE_NODE_WITH_DL(LAYER_OPAQUE, 5199, 1655, -4141, bob_dl_pillar_019_mesh_layer_1),
+		GEO_TRANSLATE_NODE_WITH_DL(LAYER_OPAQUE, 1106, -2515, -1145, bob_dl_Plane_079_mesh_layer_1),
 	GEO_CLOSE_NODE(),
 	GEO_RETURN(),
 };

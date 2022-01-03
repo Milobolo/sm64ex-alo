@@ -1105,7 +1105,8 @@ s32 play_mode_paused(void) {
         if (gDebugLevelSelect) {
             fade_into_special_warp(-9, 1);
         } else {
-            initiate_warp(EXIT_COURSE,0);
+            struct ObjectWarpNode *warpNode = area_get_warp_node(WARP_NODE_DEATH);
+			initiate_warp(warpNode->node.destLevel,warpNode->node.destArea,warpNode->node.destNode, 0);
             fade_into_special_warp(0, 0);
             gSavedCourseNum = COURSE_NONE;
         }
@@ -1115,7 +1116,8 @@ s32 play_mode_paused(void) {
 #ifndef TARGET_N64
     else if (gPauseScreenMode == 3) {
         // We should only be getting "int 3" to here
-        initiate_warp(EXIT_COURSE, 0);
+		struct ObjectWarpNode *warpNode = area_get_warp_node(WARP_NODE_DEATH);
+		initiate_warp(warpNode->node.destLevel,warpNode->node.destArea,warpNode->node.destNode, 0);
         fade_into_special_warp(0, 0);
         game_exit();
     }
