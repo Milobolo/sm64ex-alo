@@ -140,3 +140,6 @@ const GeoLayout intro_geo_000414[] = {
    GEO_END(),
 };
 
+
+#include "levels/intro/title/geo.inc.c"
+#include "levels/intro/elephant/geo.inc.c"

@@ -13,8 +13,8 @@ externs = ("extern const Gfx star_seg3_dl_0302B870[];","extern struct Object *gR
 #These are header files included in this file. Use single quotes so double quotes are delimited for filename
 headers = (r'#include "src/game/segment2.h"',r'#include "include/sm64.h"',r'#include "src/game/magic.h"',r'#include "src/game/area.h"',r'#include "src/game/save_file.h"',r'#include "src/menu/file_select.h"')
 
-magic_file_select = ["[SetRtrn(0)][SetEnv(0,0,0,255)][ScaleText(2.0,2.0)][TransOffs(30,0)]SHINING STARS 4\nSTAR ADVENTURE\n[ScaleText(1.0,1.0)]\
-[TransOffs(-30,0)][DialogOptions(3)]\
+magic_file_select = ["[SetRtrn(0)][SetEnv(0,0,0,255)][ScaleText(2.0,2.0)][TransOffs(40,0)]SHINING STARS 4\n[TransOffs(-50,0)]ELEPHANT STAR ADVENTURE\n[ScaleText(1.0,1.0)]\
+[TransOffs(10,0)][DialogOptions(3)]\
 CHOOSE FILE[end]\
 ERASE FILE[end]\
 COPY FILE[end]\

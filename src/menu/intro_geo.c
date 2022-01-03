@@ -56,7 +56,7 @@ Gfx *geo_intro_super_mario_64_logo(s32 state, struct GraphNode *node, UNUSED voi
     } else if (state == 1) {
         graphNode->flags = (graphNode->flags & 0xFF) | (LAYER_OPAQUE << 8);
         scaleMat = alloc_display_list(sizeof(*scaleMat));
-        dl = alloc_display_list(4 * sizeof(*dl));
+        dl = alloc_display_list(5 * sizeof(*dl));
         dlIter = dl;
 
         // determine scale based on the frame counter
@@ -88,7 +88,8 @@ Gfx *geo_intro_super_mario_64_logo(s32 state, struct GraphNode *node, UNUSED voi
         guScale(scaleMat, scaleX, scaleY, scaleZ);
 
         gSPMatrix(dlIter++, scaleMat, G_MTX_MODELVIEW | G_MTX_MUL | G_MTX_PUSH);
-        gSPDisplayList(dlIter++, &intro_seg7_dl_0700B3A0);  // draw model
+        gSPDisplayList(dlIter++, &title_Text_mesh_layer_1);  // draw model
+        gSPDisplayList(dlIter++, &title_Text_mesh_layer_5);  // draw model
         gSPPopMatrix(dlIter++, G_MTX_MODELVIEW);
         gSPEndDisplayList(dlIter);
 
@@ -122,7 +123,7 @@ Gfx *geo_intro_tm_copyright(s32 state, struct GraphNode *node, UNUSED void *cont
                 gDPSetRenderMode(dlIter++, G_RM_AA_XLU_SURF, G_RM_AA_XLU_SURF2);
                 break;
         }
-        gSPDisplayList(dlIter++, &intro_seg7_dl_0700C6A0);  // draw model
+        gSPDisplayList(dlIter++, &elephant_Plane_mesh_layer_5);  // draw model
         gSPEndDisplayList(dlIter);
 
         // Once the "Super Mario 64" logo has just about zoomed fully, fade in the "TM" and copyright text

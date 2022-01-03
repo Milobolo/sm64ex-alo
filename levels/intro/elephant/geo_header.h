@@ -1,0 +1,10 @@
+extern const GeoLayout elephant_geo[];
+extern Lights1 elephant_elephant_lights;
+extern u8 elephant_custom_elephant_head_ci8[];
+extern u8 elephant_custom_elephant_head_ci8_pal_rgba16[];
+extern Vtx elephant_Plane_mesh_layer_5_vtx_0[4];
+extern Gfx elephant_Plane_mesh_layer_5_tri_0[];
+extern Gfx mat_elephant_elephant[];
+extern Gfx mat_revert_elephant_elephant[];
+extern Gfx elephant_Plane_mesh_layer_5[];
+extern Gfx elephant_material_revert_render_settings[];

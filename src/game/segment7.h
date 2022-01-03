@@ -29,4 +29,7 @@ extern Gfx *intro_seg7_dl_0700C6A0;
 extern f32 intro_seg7_table_0700C790[];
 extern f32 intro_seg7_table_0700C880[];
 
+#include "levels/intro/title/geo_header.h"
+
+#include "levels/intro/elephant/geo_header.h"
 #endif // SEGMENT7_H
