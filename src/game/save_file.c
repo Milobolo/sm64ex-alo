@@ -528,6 +528,9 @@ void save_file_reload(void) {
 void save_file_collect_star_or_key(s16 coinScore, s16 starIndex, u16 index) {
     s32 fileIndex = gCurrSaveFileNum - 1;
     s32 courseIndex = gCurrCourseNum - 1;
+    gLastCompletedCourseNum = courseIndex + 1;
+    gLastCompletedStarNum  = starIndex + 1;
+	gGotFileCoinHiScore = FALSE;
 
     s32 starFlag = 1 << starIndex;
 

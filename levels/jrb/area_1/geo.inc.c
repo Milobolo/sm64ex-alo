@@ -109,6 +109,7 @@ const GeoLayout jrb_area_1_geo[] = {
 		GEO_TRANSLATE_ROTATE_WITH_DL(LAYER_OPAQUE, -1375, -4890, -11826, 90, 0, 60, jrb_dl_Plane_022_mesh_layer_1),
 		GEO_TRANSLATE_ROTATE_WITH_DL(LAYER_OPAQUE, 373, -4787, -7242, 90, 0, -119, jrb_dl_Plane_037_mesh_layer_1),
 		GEO_TRANSLATE_ROTATE_WITH_DL(LAYER_OPAQUE, 666, -4406, -7437, 90, 0, 61, jrb_dl_Plane_038_mesh_layer_1),
+		GEO_TRANSLATE_ROTATE_WITH_DL(LAYER_OPAQUE, 907, -5034, 4038, 90, 0, -24, jrb_dl_Plane_080_mesh_layer_1),
 	GEO_CLOSE_NODE(),
 	GEO_RETURN(),
 };

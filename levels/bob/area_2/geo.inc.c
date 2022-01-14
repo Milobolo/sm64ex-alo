@@ -3,10 +3,10 @@
 const GeoLayout bob_area_2_geo[] = {
 	GEO_NODE_START(),
 	GEO_OPEN_NODE(),
-		GEO_TRANSLATE_ROTATE_WITH_DL(LAYER_OPAQUE, -1147, 314, -558, 3, 0, 0, bob_dl_Cube_009_mesh_layer_1),
-		GEO_TRANSLATE_ROTATE_WITH_DL(LAYER_OPAQUE, -77, 488, 13, 3, 0, 0, bob_dl_Cube_010_mesh_layer_1),
-		GEO_TRANSLATE_ROTATE_WITH_DL(LAYER_OPAQUE, 66, 322, 479, 3, 90, 0, bob_dl_Cube_012_mesh_layer_1),
-		GEO_TRANSLATE_ROTATE_WITH_DL(LAYER_OPAQUE, -614, 357, -558, 3, 90, 0, bob_dl_Cube_013_mesh_layer_1),
+		GEO_TRANSLATE_ROTATE_WITH_DL(LAYER_OPAQUE, -2407, 658, -1172, 3, 0, 0, bob_dl_Cube_009_mesh_layer_1),
+		GEO_TRANSLATE_ROTATE_WITH_DL(LAYER_OPAQUE, -162, 1025, 27, 3, 0, 0, bob_dl_Cube_010_mesh_layer_1),
+		GEO_TRANSLATE_ROTATE_WITH_DL(LAYER_OPAQUE, 138, 676, 1005, 3, 90, 0, bob_dl_Cube_012_mesh_layer_1),
+		GEO_TRANSLATE_ROTATE_WITH_DL(LAYER_OPAQUE, -1290, 748, -1171, 3, 90, 0, bob_dl_Cube_013_mesh_layer_1),
 	GEO_CLOSE_NODE(),
 	GEO_RETURN(),
 };

@@ -59,7 +59,6 @@ magic_spells_init = ['[CallOnce(1,"TE_set_flag",2,["&gMagicHUDRequest","HUD_OPEN
 [ShadedBGBox(14,80,158,215,0,0,0,0x96)]\
 [CallLoop(4,"TE_get_flag",2,["&gMagicHUDRequest","CASTING_ON_PLAT"])][MatchRtrn(4,1)][Jump("magic_on_plat")][GenericText()]\
 [CallLoop(4,"TE_get_flag",2,["&gMagicHUDRequest","CAST_WAIT"])][MatchRtrn(4,1)][Jump("magic_wait")][GenericText()]\
-[PrintGlyph("magic_d_up")]CAPS\n\
 [CallOnce(2,"mario_can_cast",0,[])][MatchRtrn(2,1)]\
 [PrintGlyph("magic_d_left")]SPELL\n\
 [PrintGlyph("magic_d_right")]SPIRIT\n\

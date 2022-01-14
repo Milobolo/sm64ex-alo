@@ -65,7 +65,7 @@ const LevelScript level_cotmc_entry[] = {
 		OBJECT(MODEL_PURPLE_SWITCH, 10688, 4370, -2235, 0, 0, 0, (0 << 24) | (0 << 16) | (0 << 8) | (0), bhvFloorSwitchHeavy),
 		OBJECT(MODEL_PURPLE_SWITCH, -8217, 5129, -291, 0, 0, 0, (0 << 24) | (0 << 16) | (0 << 8) | (1), bhvFloorSwitchHeavy),
 		OBJECT(MODEL_PURPLE_SWITCH, 7004, 4370, 3248, 0, 0, 0, (0 << 24) | (0 << 16) | (0 << 8) | (2), bhvFloorSwitchHeavy),
-		OBJECT(MODEL_NONE, 12477, 4897, -310, 0, 0, 0, (0 << 24) | (0 << 16) | (0 << 8) | (1), bhvHiddenStar),
+		OBJECT(MODEL_NONE, 18205, 4897, -310, 0, 0, 0, (0 << 24) | (0 << 16) | (0 << 8) | (1), bhvHiddenStar),
 		OBJECT(MODEL_HINT, -3706, 3237, 8794, 0, 0, 0, (0 << 24) | (0 << 16) | (0 << 8) | (0), bhvTEhDist),
 		OBJECT(MODEL_HINT, -3706, 4370, 6513, 0, 0, 0, (0 << 24) | (0 << 16) | (0 << 8) | (1), bhvTEhDist),
 		OBJECT(MODEL_HINT, -3644, 4370, -256, 0, 0, 0, (0 << 24) | (0 << 16) | (0 << 8) | (2), bhvTEhDist),

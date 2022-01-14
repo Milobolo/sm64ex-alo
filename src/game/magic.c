@@ -41,6 +41,9 @@ void start_render_magic_spells_hud(void){
 			case sp_return:
 				SetupTextEngine(16,212,magic_spells_spell_init, TE_STATE_AUX);
 				break;
+			case ice_block:
+				SetupTextEngine(16,212,magic_spells_env_init, TE_STATE_AUX);
+				break;
 		}
 	
 }
