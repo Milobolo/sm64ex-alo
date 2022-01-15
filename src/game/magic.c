@@ -21,6 +21,10 @@ It will also contain basic enemy logic and enemy battle stuff like arenas, exp e
 #include "text_engine.h"
 #include "ingame_menu.h"
 #include "segment2.h"
+#include "puppyprint.h"
+#include "src/audio/seqplayer.h"
+#include "src/audio/internal.h"
+#include "src/audio/load.h"
 
 #include "magic.h"
 

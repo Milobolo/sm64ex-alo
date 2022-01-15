@@ -422,11 +422,7 @@ extern OSMesgQueue *D_SH_80350F88;
 extern OSMesgQueue *D_SH_80350FA8;
 #endif
 
-#ifdef VERSION_JP
-typedef u16 FadeT;
-#else
-typedef s32 FadeT;
-#endif
+
 
 // some sort of main thread -> sound thread dispatchers
 extern void func_802ad728(u32 bits, f32 arg);
@@ -621,7 +617,7 @@ static void seq_player_fade_to_percentage_of_volume(s32 player, FadeT fadeDurati
 /**
  * Called from threads: thread3_main, thread4_sound, thread5_game_loop
  */
-static void seq_player_fade_to_normal_volume(s32 player, FadeT fadeDuration) {
+void seq_player_fade_to_normal_volume(s32 player, FadeT fadeDuration) {
     struct SequencePlayer *seqPlayer = &gSequencePlayers[player];
 
 #if defined(VERSION_EU) || defined(VERSION_SH)
@@ -2091,8 +2087,8 @@ static u8 begin_background_music_fade(u16 fadeDuration) {
             seq_player_fade_to_target_volume(SEQ_PLAYER_LEVEL, fadeDuration, targetVolume);
         } else {
 #if defined(VERSION_JP) || defined(VERSION_US)
-            // gSequencePlayers[SEQ_PLAYER_LEVEL].volume =
-                // sBackgroundMusicDefaultVolume[sCurrentBackgroundMusicSeqId] / 127.0f;
+            gSequencePlayers[SEQ_PLAYER_LEVEL].volume =
+                0x68 / 127.0f;
 #endif
             seq_player_fade_to_normal_volume(SEQ_PLAYER_LEVEL, fadeDuration);
         }

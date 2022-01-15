@@ -638,9 +638,10 @@ void general_star_dance_handler(struct MarioState *m, s32 isInWater) {
             level_trigger_warp(m, WARP_OP_RESTART);
         }
         m->actionState = 2;
-    } else if (m->actionState == 2 && is_anim_at_end(m)) {
+    } else if (m->actionState == 2) {
         disable_time_stop();
         enable_background_sound();
+		seq_player_fade_to_normal_volume(SEQ_PLAYER_LEVEL, 60);
 		if (SHOW_STAR_MILESTONES){
 			dialogID = get_star_collection_dialog(m);
 		} else {

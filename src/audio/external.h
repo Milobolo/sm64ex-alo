@@ -25,11 +25,16 @@ extern f32 gGlobalSoundSource[3];
 extern u32 gAudioRandom;
 
 extern u8 gAudioSPTaskYieldBuffer[]; // ucode yield data ptr; only used in JP
-
+#ifdef VERSION_JP
+typedef u16 FadeT;
+#else
+typedef s32 FadeT;
+#endif
 struct SPTask *create_next_audio_frame_task(void);
 #ifdef VERSION_SH
 struct SPTask *func_sh_802f5a80(void);
 #endif
+void seq_player_fade_to_normal_volume(s32 player, FadeT fadeDuration);
 void play_sound(s32 soundBits, f32 *pos);
 void audio_signal_game_loop_tick(void);
 void seq_player_fade_out(u8 player, u16 fadeDuration);

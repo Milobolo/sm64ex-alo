@@ -29,7 +29,7 @@ static struct ObjectHitbox sWigglerHitbox = {
     /* interactType:      */ INTERACT_BOUNCE_TOP,
     /* downOffset:        */ 0,
     /* damageOrCoinValue: */ 3,
-    /* health:            */ 4,
+    /* health:            */ 5,
     /* numLootCoins:      */ 0,
     /* radius:            */ 60,
     /* height:            */ 50,
@@ -52,7 +52,7 @@ static u8 sWigglerAttackHandlers[] = {
 /**
  * Target speed while walking when wiggler has health 1, 2, 3, and 4.
  */
-static f32 sWigglerSpeeds[] = { 2.0f, 40.0f, 30.0f, 16.0f };
+static f32 sWigglerSpeeds[] = { 2.0f, 60.0f, 40.0f, 30.0f, 16.0f };
 
 /**
  * Update function for bhvWigglerBody.
@@ -153,9 +153,9 @@ void wiggler_init_segments(void) {
         cur_obj_unhide();
     }
 
-#if defined(VERSION_EU) || defined(AVOID_UB)
-    o->oHealth = 4; // This fixes Wiggler reading UB on his first frame of his acceleration, as his health is not set.
-#endif
+// #if defined(VERSION_EU) || defined(AVOID_UB)
+    o->oHealth = 5; // This fixes Wiggler reading UB on his first frame of his acceleration, as his health is not set.
+// #endif
 }
 
 /**
@@ -220,18 +220,18 @@ static void wiggler_act_walk(void) {
     o->oWigglerWalkAnimSpeed = 0.06f * o->oForwardVel;
 
     // Update text if necessary
-    if (o->oWigglerTextStatus < WIGGLER_TEXT_STATUS_COMPLETED_DIALOG) {
-        if (o->oWigglerTextStatus == WIGGLER_TEXT_STATUS_AWAIT_DIALOG) {
+    // if (o->oHealth == 5) {
+        // if (o->oWigglerTextStatus == WIGGLER_TEXT_STATUS_AWAIT_DIALOG) {
             // seq_player_lower_volume(SEQ_PLAYER_LEVEL, 60, 40);
-            o->oWigglerTextStatus = WIGGLER_TEXT_STATUS_SHOWING_DIALOG;
-        }
+            // o->oWigglerTextStatus = WIGGLER_TEXT_STATUS_SHOWING_DIALOG;
+        // }
 
         // If Mario is positioned below the wiggler, assume he entered through the
         // lower cave entrance, so don't display text.
-        if (gMarioObject->oPosY < o->oPosY || cur_obj_update_dialog_with_cutscene(2, 0, CUTSCENE_DIALOG, DIALOG_150) != 0) {
-            o->oWigglerTextStatus = WIGGLER_TEXT_STATUS_COMPLETED_DIALOG;
-        }
-    } else {
+        // if (gMarioObject->oPosY < o->oPosY || cur_obj_update_dialog_with_cutscene(2, 0, CUTSCENE_DIALOG, DIALOG_150) != 0) {
+            // o->oWigglerTextStatus = WIGGLER_TEXT_STATUS_COMPLETED_DIALOG;
+        // }
+    // } else {
         //! Every object's health is initially 2048, and wiggler's doesn't change
         //  to 4 until after this runs the first time. It indexes out of bounds
         //  and uses the value 113762.3 for one frame on US. This is fixed up
@@ -252,7 +252,7 @@ static void wiggler_act_walk(void) {
                 //  the wiggler to walk straight - past his usual radius
                 o->oWigglerWalkAwayFromWallTimer = random_linear_offset(30, 30);
             } else {
-                if (o->oHealth < 4) {
+                if (o->oHealth < 5) {
                     o->oWigglerTargetYaw = o->oAngleToMario;
                 } else if (o->oWigglerTimeUntilRandomTurn != 0) {
                     o->oWigglerTimeUntilRandomTurn -= 1;
@@ -270,9 +270,13 @@ static void wiggler_act_walk(void) {
         obj_face_yaw_approach(o->oMoveAngleYaw, 2 * yawTurnSpeed);
 
         obj_face_pitch_approach(0, 0x320);
-
+		if ((o->oTimer % (200 / o->oHealth)) == 0) {
+			cur_obj_play_sound_2(SOUND_OBJ_WIGGLER_JUMP);
+			o->oForwardVel = (f32)(6*o->oHealth) * 20.0f;
+			o->oVelY = (f32)(10*o->oHealth) + 50.0f;
+		}
         // For the first two seconds of walking, stay invulnerable
-        if (o->oTimer < 60) {
+        if (o->oTimer < ((6-o->oHealth)*30)) {
             obj_check_attacks(&sWigglerHitbox, o->oAction);
         } else if (obj_handle_attacks(&sWigglerHitbox, o->oAction, sWigglerAttackHandlers)) {
             if (o->oAction != WIGGLER_ACT_JUMPED_ON) {
@@ -282,7 +286,7 @@ static void wiggler_act_walk(void) {
             o->oWigglerWalkAwayFromWallTimer = 0;
             o->oWigglerWalkAnimSpeed = 0.0f;
         }
-    }
+	// }
 }
 /**
  * Squish and unsquish, then show text and enter either the walking or shrinking
@@ -290,7 +294,7 @@ static void wiggler_act_walk(void) {
  */
 static void wiggler_act_jumped_on(void) {
     // Text to show on first, second, and third attack.
-    s32 attackText[3] = { DIALOG_152, DIALOG_168, DIALOG_151 };
+    s32 attackText[4] = { DIALOG_152, DIALOG_168, DIALOG_151, DIALOG_150 };
 
     // Shrink until the squish speed becomes 0, then unisquish
     if (approach_f32_ptr(&o->oWigglerSquishSpeed, 0.0f, 0.05f)) {
@@ -313,12 +317,6 @@ static void wiggler_act_jumped_on(void) {
                 } else {
                     o->oAction = WIGGLER_ACT_WALK;
                     o->oMoveAngleYaw = o->oFaceAngleYaw;
-
-                    if (o->oHealth == 2) {
-                        cur_obj_play_sound_2(SOUND_OBJ_WIGGLER_JUMP);
-                        o->oForwardVel = 10.0f;
-                        o->oVelY = 70.0f;
-                    }
                 }
             }
         }

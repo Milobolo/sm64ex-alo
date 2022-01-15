@@ -401,7 +401,7 @@ const BehaviorScript bhvRotatingSmall[] = {
 	LOAD_COLLISION_DATA(rotating_collision),
 	SET_INT(oAngleVelYaw,0x200),
 	SET_FLOAT(oDrawingDistance, 20000),
-	SET_FLOAT(oCollisionDistance, 3000),
+	SET_FLOAT(oCollisionDistance, 500),
 	BEGIN_LOOP(),
     ADD_INT(oFaceAngleYaw,0x200),
 	CALL_NATIVE(load_object_collision_model),
