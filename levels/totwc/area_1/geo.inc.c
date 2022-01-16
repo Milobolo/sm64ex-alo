@@ -12,7 +12,7 @@ const GeoLayout totwc_area_1_geo[] = {
 			GEO_DISPLAY_LIST(LAYER_OPAQUE, totwc_dl_Cube_060_mesh_layer_1),
 			GEO_DISPLAY_LIST(LAYER_ALPHA, totwc_dl_Cube_060_mesh_layer_4),
 		GEO_CLOSE_NODE(),
-		GEO_TRANSLATE_NODE_WITH_DL(LAYER_TRANSPARENT, -4071, 2002, -243, totwc_dl_Cylinder_mesh_layer_5),
+		GEO_TRANSLATE_NODE_WITH_DL(LAYER_TRANSPARENT, -4071, 2444, -243, totwc_dl_Cylinder_mesh_layer_5),
 	GEO_CLOSE_NODE(),
 	GEO_RETURN(),
 };

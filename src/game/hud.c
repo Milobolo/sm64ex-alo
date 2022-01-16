@@ -352,7 +352,7 @@ void render_hud_stars(void) {
     }
 
     if (gHudDisplay.stars < 100) {
-        showX = 1;
+        showX = 0;
     }
     if (gHudDisplay.stars < 10) {
         showX = 0;

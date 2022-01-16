@@ -334,7 +334,7 @@ void set_mario_initial_cap_powerup(struct MarioState *m) {
 			m->ForceSpell = 0;
 			break;
         case COURSE_VCUTM:
-			if(!mario_has_spell(gCurrSaveFileNum-1,sp_return)){
+			if(!mario_has_spell(gCurrSaveFileNum-1,ice_block)){
 				m->ForceSpell = ice_block;
 			}
             break;
@@ -405,6 +405,7 @@ extern u16 sCurrentMusic;
 void init_mario_after_warp(void) {
     struct ObjectWarpNode *spawnNode = area_get_warp_node(sWarpDest.nodeId);
     u32 marioSpawnType = get_mario_spawn_type(spawnNode->object);
+	mario_cancel_magic(gMarioState);
 
     if (gMarioState->action != ACT_UNINITIALIZED) {
         gPlayerSpawnInfos[0].startPos[0] = (s16) spawnNode->object->oPosX;
@@ -793,6 +794,18 @@ s16 level_trigger_warp(struct MarioState *m, s32 warpOp) {
 				if (m->numLives == 0 && INFINITE_LIVES) {
                     sDelayedWarpOp = WARP_OP_GAME_OVER;
                 }
+				if(m->spawnObj){
+					m->spawnObj->activeFlags = ACTIVE_FLAG_DEACTIVATED;
+					m->spawnObj = 0;
+				}
+				if(gFreezeTime){
+					gFreezeTime->activeFlags = ACTIVE_FLAG_DEACTIVATED;
+					gFreezeTime = 0;
+				}
+				if(gReturn){
+					gReturn->activeFlags = ACTIVE_FLAG_DEACTIVATED;
+					gReturn = 0;
+				}
                 sDelayedWarpTimer = 48;
                 sSourceWarpNodeId = WARP_NODE_DEATH;
                 play_transition(WARP_TRANSITION_FADE_INTO_BOWSER, 0x30, 0x00, 0x00, 0x00);

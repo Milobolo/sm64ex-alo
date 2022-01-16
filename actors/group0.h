@@ -394,4 +394,8 @@ extern const Gfx white_particle_small_unused_dl[];
 
 #include "trigger/geo_header.h"
 
+#include "home_defense/collision_header.h"
+
+#include "home_defense/geo_header.h"
+
 #endif

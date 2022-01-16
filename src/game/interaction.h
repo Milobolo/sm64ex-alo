@@ -99,7 +99,7 @@
 #define INT_STATUS_STOP_RIDING           (1 << 22) /* 0x00400000 */
 #define INT_STATUS_TOUCHED_BOB_OMB       (1 << 23) /* 0x00800000 */
 
-
+void mario_cancel_magic(struct MarioState *m);
 s16 mario_obj_angle_to_object(struct MarioState *m, struct Object *o);
 void mario_stop_riding_object(struct MarioState *m);
 void mario_grab_used_object(struct MarioState *m);

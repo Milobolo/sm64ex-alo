@@ -57,7 +57,7 @@ const LevelScript level_vcutm_entry[] = {
 		OBJECT(MODEL_NONE, 0, 20, -110, 0, -180, 0, (0xA << 16), bhvAirborneWarp),
 		TERRAIN(vcutm_area_1_collision),
 		MACRO_OBJECTS(vcutm_area_1_macro_objs),
-		SET_BACKGROUND_MUSIC(0x00, 0x2D),
+		SET_BACKGROUND_MUSIC(0x00, 0x2B),
 		TERRAIN_TYPE(TERRAIN_STONE),
 		/* Fast64 begin persistent block [area commands] */
 		/* Fast64 end persistent block [area commands] */

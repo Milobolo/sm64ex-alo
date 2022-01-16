@@ -314,6 +314,7 @@ void balancer_loop(void){
 		o->oChildLeft->oVelY = approach_f32_symmetric(o->oChildLeft->oVelY,0.0f, 1.0f);
 	}
 }
+
 void balance_plat_loop(void){
 	if(cur_obj_is_mario_on_platform()){
 		o->oAction = 1;
@@ -343,5 +344,27 @@ void balance_plat_loop(void){
 		o->parentObj->oAction = o->oBehParams + 1;
 	}else{
 		o->parentObj->oAction = 0;
+	}
+}
+
+
+u32 sHomeDefenseActive = 0;
+void bhvHomeDefenseLoop(void){
+	if(sHomeDefenseActive){
+		load_object_collision_model();
+		cur_obj_unhide();
+	}else{
+		cur_obj_hide();
+	}
+}
+
+
+void bhv_warp_end_init(void){
+	if (mario_has_spell(gCurrSaveFileNum-1,sp_return) && mario_has_spell(gCurrSaveFileNum-1,gigantify) && mario_has_spell(gCurrSaveFileNum-1,ice_block)){
+		return;
+	}else{
+		struct Object *sign = spawn_object(o, MODEL_WOODEN_SIGNPOST, bhvMessagePanel);
+		sign->oBehParams = 17;
+		obj_mark_for_deletion(o);
 	}
 }

@@ -272,8 +272,8 @@ static void wiggler_act_walk(void) {
         obj_face_pitch_approach(0, 0x320);
 		if ((o->oTimer % (200 / o->oHealth)) == 0) {
 			cur_obj_play_sound_2(SOUND_OBJ_WIGGLER_JUMP);
-			o->oForwardVel = (f32)(6*o->oHealth) * 20.0f;
-			o->oVelY = (f32)(10*o->oHealth) + 50.0f;
+			o->oForwardVel = (f32)(3*(5-o->oHealth)) * 18.0f;
+			o->oVelY = (f32)(3*(5-o->oHealth)) + 32.0f;
 		}
         // For the first two seconds of walking, stay invulnerable
         if (o->oTimer < ((6-o->oHealth)*30)) {
@@ -292,6 +292,7 @@ static void wiggler_act_walk(void) {
  * Squish and unsquish, then show text and enter either the walking or shrinking
  * action.
  */
+extern u32 sHomeDefenseActive;
 static void wiggler_act_jumped_on(void) {
     // Text to show on first, second, and third attack.
     s32 attackText[4] = { DIALOG_152, DIALOG_168, DIALOG_151, DIALOG_150 };
@@ -314,7 +315,9 @@ static void wiggler_act_jumped_on(void) {
                 if (--o->oHealth == 1) {
                     o->oAction = WIGGLER_ACT_SHRINK;
                     cur_obj_become_intangible();
+					sHomeDefenseActive = 0;
                 } else {
+					sHomeDefenseActive = 1;
                     o->oAction = WIGGLER_ACT_WALK;
                     o->oMoveAngleYaw = o->oFaceAngleYaw;
                 }

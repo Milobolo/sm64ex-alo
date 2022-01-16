@@ -75,27 +75,27 @@ void update_mario_exp(struct MarioState *m){
 }
 
 //cringe
-extern Lights1 mario_shoes_v4_lights;
-extern Lights1 mario_shoes_hover_v4_lights;
-extern Lights1 mario_white_v4_lights;
-extern Lights1 mario_white_stick_v4_lights;
-extern Gfx mat_mario_white_v4[];
-extern Gfx mat_mario_shoes_v4[];
+// extern Lights1 mario_shoes_v4_lights;
+// extern Lights1 mario_shoes_hover_v4_lights;
+// extern Lights1 mario_white_v4_lights;
+// extern Lights1 mario_white_stick_v4_lights;
+// extern Gfx mat_mario_white_v4[];
+// extern Gfx mat_mario_shoes_v4[];
 
-void update_mario_colors_spirit(struct MarioState *m){
-	Gfx *gloves = segmented_to_virtual(&mat_mario_white_v4);
-	Gfx *shoes = segmented_to_virtual(&mat_mario_shoes_v4);
-	if(m->Spell & ACTION_HOVER){
-		gSPSetLights1(&shoes[5],mario_shoes_hover_v4_lights);
-	}else{
-		gSPSetLights1(&shoes[5],mario_shoes_v4_lights);
-	}
-	if(m->Spell & ACTION_STICK){
-		gSPSetLights1(&gloves[5],mario_white_stick_v4_lights);
-	}else{
-		gSPSetLights1(&gloves[5],mario_white_v4_lights);
-	}
-}
+// void update_mario_colors_spirit(struct MarioState *m){
+	// Gfx *gloves = segmented_to_virtual(&mat_mario_white_v4);
+	// Gfx *shoes = segmented_to_virtual(&mat_mario_shoes_v4);
+	// if(m->Spell & ACTION_HOVER){
+		// gSPSetLights1(&shoes[5],mario_shoes_hover_v4_lights);
+	// }else{
+		// gSPSetLights1(&shoes[5],mario_shoes_v4_lights);
+	// }
+	// if(m->Spell & ACTION_STICK){
+		// gSPSetLights1(&gloves[5],mario_white_stick_v4_lights);
+	// }else{
+		// gSPSetLights1(&gloves[5],mario_white_v4_lights);
+	// }
+// }
 
 
 void handle_magic_actions(struct MarioState *m){
@@ -264,7 +264,7 @@ u32 Get_Spell_Sel(u32 list){
 }
 
 u32 mario_can_cast(void){
-	if (gMarioState->flags & MARIO_WING_CAP){
+	if (mario_has_spell(gCurrSaveFileNum-1,sp_return) ||mario_has_spell(gCurrSaveFileNum-1,gigantify) ||mario_has_spell(gCurrSaveFileNum-1,ice_block)){
 		return 1;
 	}else{
 		return 0;

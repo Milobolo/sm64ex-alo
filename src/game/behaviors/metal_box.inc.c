@@ -18,6 +18,8 @@ s32 check_if_moving_over_floor(f32 a0, f32 a1) {
     f32 floorHeight;
     f32 sp18 = o->oPosZ + coss(o->oMoveAngleYaw) * a1;
     floorHeight = find_floor(sp20, o->oPosY, sp18, &sp24);
+	if (sp24 == NULL)
+		return 0;
     if (absf(floorHeight - o->oPosY) < a0) // abs
         return 1;
     else
@@ -53,4 +55,6 @@ void bhv_pushable_loop(void) {
         }
     }
     cur_obj_move_using_fvel_and_gravity();
+	o->oWallHitboxRadius = 400.f;
+	cur_obj_resolve_wall_collisions();
 }

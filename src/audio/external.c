@@ -1354,7 +1354,7 @@ static void update_game_sound(void) {
 #endif
 
     process_all_sound_requests();
-    // process_level_music_dynamics();
+    process_level_music_dynamics();
 
     if (gSequencePlayers[SEQ_PLAYER_SFX].channels[0] == &gSequenceChannelNone) {
         return;
@@ -2708,7 +2708,7 @@ void sound_reset(u8 presetId) {
     func_802ad74c(0xF2000000, 0);
 #endif
 #if defined(VERSION_JP) || defined(VERSION_US)
-    audio_reset_session(&gAudioSessionPresets[presetId]);
+    audio_reset_session(&gAudioSessionPresets[0]);
 #else
     audio_reset_session_eu(presetId);
 #endif

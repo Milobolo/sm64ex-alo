@@ -333,6 +333,22 @@
 
 //SS4 behaviors
 
+const BehaviorScript bhvWarpPipeEnd[] = {
+    BEGIN(OBJ_LIST_SURFACE),
+    OR_INT(oFlags, (OBJ_FLAG_SET_FACE_YAW_TO_MOVE_YAW | OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE | OBJ_FREEZE_IMMUNE)),
+    SET_INT(oInteractType, INTERACT_WARP),
+    LOAD_COLLISION_DATA(warp_pipe_seg3_collision_03009AC8),
+    SET_FLOAT(oDrawingDistance, 16000),
+    SET_INT(oIntangibleTimer, 0),
+    SET_HITBOX(/*Radius*/ 70, /*Height*/ 50),
+	CALL_NATIVE(bhv_warp_end_init),
+    BEGIN_LOOP(),
+        CALL_NATIVE(bhv_warp_loop),
+        CALL_NATIVE(load_object_collision_model),
+    END_LOOP(),
+};
+
+
 const BehaviorScript bhvHoverParticle[] = {
     BEGIN(OBJ_LIST_DEFAULT),
     OR_INT(oFlags, (OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE | OBJ_FREEZE_IMMUNE)),
@@ -394,6 +410,7 @@ const BehaviorScript bhvHangswap[] = {
 };
 
 extern const Collision rotating_collision[];
+extern const Collision home_defense_collision[];
 
 const BehaviorScript bhvRotatingSmall[] = {
     BEGIN(OBJ_LIST_SURFACE),
@@ -408,6 +425,14 @@ const BehaviorScript bhvRotatingSmall[] = {
     END_LOOP(),
 };
 
+const BehaviorScript bhvHomeDefense[] = {
+    BEGIN(OBJ_LIST_SURFACE),
+    OR_INT(oFlags, OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE),
+	LOAD_COLLISION_DATA(home_defense_collision),
+	BEGIN_LOOP(),
+	CALL_NATIVE(bhvHomeDefenseLoop),
+    END_LOOP(),
+};
 const BehaviorScript bhvRotatingBig[] = {
     BEGIN(OBJ_LIST_SURFACE),
     OR_INT(oFlags, OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE),

@@ -88,6 +88,7 @@ const LevelScript level_main_scripts_entry[] = {
     LOAD_MODEL_FROM_GEO(MODEL_BALANCE_CENTER,          balance_center_geo),
     LOAD_MODEL_FROM_GEO(MODEL_BALANCE,                 balance_geo),
     LOAD_MODEL_FROM_GEO(MODEL_TRIGGER,                 trigger_geo),
+    LOAD_MODEL_FROM_GEO(MODEL_HOME_DEFENSE,            home_defense_geo),
 	
     LOAD_MODEL_FROM_GEO(MODEL_MARIO,                   mario_geo),
     LOAD_MODEL_FROM_GEO(MODEL_SMOKE,                   smoke_geo),

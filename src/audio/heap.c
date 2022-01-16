@@ -1120,7 +1120,7 @@ void wait_for_audio_frames(UNUSED s32 frames) {
 void audio_reset_session(struct AudioSessionSettings *preset) {
 #else
 void audio_reset_session(void) {
-    struct AudioSessionSettingsEU *preset = &gAudioSessionPresets[gAudioResetPresetIdToLoad];
+    struct AudioSessionSettingsEU *preset = &gAudioSessionPresets[0];
     struct ReverbSettingsEU *reverbSettings;
 #endif
     s16 *mem;

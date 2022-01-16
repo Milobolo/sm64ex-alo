@@ -641,7 +641,6 @@ void general_star_dance_handler(struct MarioState *m, s32 isInWater) {
     } else if (m->actionState == 2) {
         disable_time_stop();
         enable_background_sound();
-		seq_player_fade_to_normal_volume(SEQ_PLAYER_LEVEL, 60);
 		if (SHOW_STAR_MILESTONES){
 			dialogID = get_star_collection_dialog(m);
 		} else {
@@ -2892,6 +2891,10 @@ s32 act_cast_actions(struct MarioState *m) {
 						play_mario_sound(m, SOUND_MARIO_PUNCH_WAH, 0);
 						break;
 					
+				}
+				//cancel cast
+				if(cont->buttonPressed & Z_TRIG){
+					set_mario_action(m, ACT_IDLE, 0);
 				}
 			}
 			break;

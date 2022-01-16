@@ -56,9 +56,10 @@ magic_spells_init = ['[CallOnce(1,"TE_set_flag",2,["&gMagicHUDRequest","HUD_OPEN
 [MosaicBGBox(24,94,214,234,"magic_action_menu",2,1)]\n\
 [BoxTransition(0,0,-60,0)]\
 [SetScissor(14,108,230,230)]\
-[ShadedBGBox(14,108,170,215,0,0,0,0x96)]\
+[ShadedBGBox(14,110,170,215,0,0,0,0x96)]\
+[CallLoop(3,"mario_can_cast",0,[])][MatchRtrn(3,0)][Jump("no_magic")][GenericText()][Pad()]\
 [CallLoop(4,"TE_get_flag",2,["&gMagicHUDRequest","CASTING_ON_PLAT"])][MatchRtrn(4,1)][Jump("magic_on_plat")][GenericText()]\
-[CallLoop(4,"TE_get_flag",2,["&gMagicHUDRequest","CAST_WAIT"])][MatchRtrn(4,1)][Jump("magic_wait")][GenericText()]\
+[CallLoop(4,"TE_get_flag",2,["&gMagicHUDRequest","CAST_WAIT"])][MatchRtrn(4,1)][Jump("magic_wait")][GenericText()][Pad()]\
 [CallLoop(2,"mario_has_spell_TE",2,["&gCurrSaveFileNum","sp_return"])][MatchRtrn(2,1)][PrintGlyph("magic_d_left")]RETURN\n[GenericText()]\
 [CallLoop(2,"mario_has_spell_TE",2,["&gCurrSaveFileNum","gigantify"])][MatchRtrn(2,1)][PrintGlyph("magic_d_right")]GIGANTIFY\n[GenericText()]\
 [CallLoop(2,"mario_has_spell_TE",2,["&gCurrSaveFileNum","ice_block"])][MatchRtrn(2,1)][PrintGlyph("magic_d_down")]ICE BLOCK ',
@@ -70,13 +71,14 @@ magic_spells_init = ['[CallOnce(1,"TE_set_flag",2,["&gMagicHUDRequest","HUD_OPEN
 [GenericText()][end]']
 
 magic_wait = ["cannot\ncast while\nmoving[end]"]
+no_magic = ['no magic\nunlocked[Jump("magic_spirit_list_end")]']
 
 magic_spells_spell_init = ['[CallOnce(1,"TE_set_flag",2,["&gMagicHUDRequest","HUD_OPEN | HUD_MAIN"])]\
 [StartTransition(8,255,0,0)][AutoNextBox()]\
 [MosaicBGBox(24,94,214,234,"magic_action_menu",2,1)]\n\
 [BoxTransition(0,0,-72,0)]\
 [SetScissor(14,80,230,230)]\
-[ShadedBGBox(14,80,158,215,0,0,0,0x96)]\
+[ShadedBGBox(14,110,158,215,0,0,0,0x96)]\
 [CallLoop(4,"TE_get_flag",2,["&gMagicHUDRequest","CAST_WAIT"])][MatchRtrn(4,1)][Jump("magic_wait")][GenericText()]\
 [PrintGlyph("magic_d_left")]SPELL',
 #[I explicitly do not use btn enums here because these are char arrays and btns are shorts]
@@ -88,9 +90,9 @@ magic_spells_env_init = ['[CallOnce(1,"TE_set_flag",2,["&gMagicHUDRequest","HUD_
 [MosaicBGBox(24,94,214,234,"magic_action_menu",2,1)]\n\
 [BoxTransition(0,0,-72,0)]\
 [SetScissor(14,80,230,230)]\
-[ShadedBGBox(14,80,158,215,0,0,0,0x96)]\
+[ShadedBGBox(14,110,158,215,0,0,0,0x96)]\
 [CallLoop(4,"TE_get_flag",2,["&gMagicHUDRequest","CAST_WAIT"])][MatchRtrn(4,1)][Jump("magic_wait")][GenericText()]\
-[PrintGlyph("magic_d_down")]ENV',
+[PrintGlyph("magic_d_down")]ENV ',
 #[I explicitly do not use btn enums here because these are char arrays and btns are shorts]
 '[BtnBranchOpen(0x400)][CallOnce(0,"mario_set_spell",1,["ACTION_NULL"])][Jump("magic_list_env")][BtnBranchClose()]\
 [end]']
@@ -109,19 +111,19 @@ magic_list_start_cast = ['[CallOnce(0,"TE_set_flag",2,["&gMagicHUDRequest","STAR
 
 magic_list_spells = [
 #end of the spells
-'[CallOnce(0,"TE_set_flag",2,["&gMagicHUDRequest","CAST_SPELL"])][AutoNextBox()][MosaicBGBox(24,94,214,234,"magic_action_menu",2,1)][CallOnce(3,"Get_Spell_Sel",1,[1])][ShadedBGBox(14,94,194,215,0,0,0,0x96)]\n\
+'[CallOnce(0,"TE_set_flag",2,["&gMagicHUDRequest","CAST_SPELL"])][AutoNextBox()][MosaicBGBox(24,94,214,234,"magic_action_menu",2,1)][CallOnce(3,"Get_Spell_Sel",1,[1])][ShadedBGBox(14,110,194,215,0,0,0,0x96)]\n\
 Return[CallOnce(0,"mario_set_spell",1,["ACTION_RETURN"])][Jump("magic_spirit_list_end")]\
 [GenericText()][end]']
 
 
 magic_spirit_list_end = ['[SetSpd(1)][Pause(120)][AutoNextBox()][CallOnce(0,"TE_set_state",2,["&gMagicHUDRequest",0])][TimeEndStr(1)]']
 
-magic_list_spirit = ['[CallOnce(0,"TE_set_flag",2,["&gMagicHUDRequest","CAST_SPIRIT"])][AutoNextBox()][MosaicBGBox(24,94,214,234,"magic_action_menu",2,1)][CallOnce(3,"Get_Spell_Sel",1,[2])][ShadedBGBox(14,90,194,215,0,0,0,0x96)]\n\
+magic_list_spirit = ['[CallOnce(0,"TE_set_flag",2,["&gMagicHUDRequest","CAST_SPIRIT"])][AutoNextBox()][MosaicBGBox(24,94,214,234,"magic_action_menu",2,1)][CallOnce(3,"Get_Spell_Sel",1,[2])][ShadedBGBox(14,110,194,215,0,0,0,0x96)]\n\
 Gigantify[CallOnce(0,"mario_set_spell",1,["ACTION_GIGANTIFY"])][Jump("magic_spirit_list_end")]\
 [end]']
 
 
-magic_list_env = ['[CallOnce(0,"TE_set_flag",2,["&gMagicHUDRequest","CAST_ENVIRONMENT"])][AutoNextBox()][MosaicBGBox(24,94,214,234,"magic_action_menu",2,1)][CallOnce(3,"Get_Spell_Sel",1,[3])][ShadedBGBox(14,110,194,215,0,0,0,0x96)]\n\
+magic_list_env = ['[CallOnce(0,"mario_set_spell",1,["ACTION_CANCEL_ENV"])][SetSpd(1)][Pause(1)][SetSpd(0)][CallOnce(0,"TE_set_flag",2,["&gMagicHUDRequest","CAST_ENVIRONMENT"])][AutoNextBox()][MosaicBGBox(24,94,214,234,"magic_action_menu",2,1)][CallOnce(3,"Get_Spell_Sel",1,[3])][ShadedBGBox(14,110,194,215,0,0,0,0x96)]\n\
 Ice Block[CallOnce(0,"mario_set_spell",1,["ACTION_ICE_BLOCK"])][Jump("magic_spirit_list_end")]\
 [end]']
 
@@ -135,16 +137,16 @@ magic_spirit_cancel = ["[JumpLink('magic_gen_shadow_fade_io')][AutoNextBox()]spi
 
 
 magic_no_swaps = ['[JumpLink("magic_gen_shadow_fade_io")][AutoNextBox()]No swaps in range[Jump("magic_spirit_list_end")]']
-magic_choose_swap = ['[MosaicBGBox(24,94,214,234,"magic_action_menu",2,1)][ShadedBGBox(14,128,194,215,0,0,0,0x96)]\n\
+magic_choose_swap = ['[MosaicBGBox(24,94,214,234,"magic_action_menu",2,1)][ShadedBGBox(14,110,194,215,0,0,0,0x96)]\n\
 Swap with obj [UsrStr(0)][end]']
 
 
-magic_choose_return = ['[MosaicBGBox(24,94,214,234,"magic_action_menu",2,1)][ShadedBGBox(14,108,158,215,0,0,0,0x96)]\n\
+magic_choose_return = ['[MosaicBGBox(24,94,214,234,"magic_action_menu",2,1)][ShadedBGBox(14,110,158,215,0,0,0,0x96)]\n\
 Select Option[DialogOptions(2)]\
 Return[end]\
 Recast[end]\
 Cancel Cast[end]\
-[MosaicBGBox(24,94,214,234,"magic_action_menu",2,1)][ShadedBGBox(14,94,194,215,0,0,0,0x96)]\n\
+[MosaicBGBox(24,94,214,234,"magic_action_menu",2,1)][ShadedBGBox(14,110,194,215,0,0,0,0x96)]\n\
 [DialogResponse(0)][StartDialogBracket(1)]Returning[CallOnce(0,"TE_set_state",2,["&gReturn",2])][EndDialogBracket(1)]\
 [DialogResponse(1)][StartDialogBracket(1)]Recasting[CallOnce(0,"TE_set_state",2,["&gReturn",3])][EndDialogBracket(1)]\
 [DialogResponse(2)]Cancelling[CallOnce(0,"TE_set_state",2,["&gReturn",4])]\

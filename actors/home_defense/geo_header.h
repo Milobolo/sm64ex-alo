@@ -1,0 +1,10 @@
+extern const GeoLayout home_defense_geo[];
+extern Lights1 home_defense_grate_lights;
+extern u8 home_defense_hmc_textures_01000_rgba16_ci8[];
+extern u8 home_defense_hmc_textures_01000_rgba16_ci8_pal_rgba16[];
+extern Vtx home_defense_home_defense_mesh_layer_4_vtx_0[8];
+extern Gfx home_defense_home_defense_mesh_layer_4_tri_0[];
+extern Gfx mat_home_defense_grate[];
+extern Gfx mat_revert_home_defense_grate[];
+extern Gfx home_defense_home_defense_mesh_layer_4[];
+extern Gfx home_defense_material_revert_render_settings[];

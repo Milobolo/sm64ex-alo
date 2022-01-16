@@ -1,0 +1,21 @@
+const Collision home_defense_collision[] = {
+	COL_INIT(),
+	COL_VERTEX_INIT(8),
+	COL_VERTEX(-185, 402, 18),
+	COL_VERTEX(-285, 7, -11),
+	COL_VERTEX(-257, -340, 1),
+	COL_VERTEX(6, -407, 34),
+	COL_VERTEX(256, -340, -3),
+	COL_VERTEX(283, 7, -15),
+	COL_VERTEX(190, 402, 15),
+	COL_VERTEX(8, 422, 17),
+	COL_TRI_INIT(SURFACE_HARD, 6),
+	COL_TRI(0, 1, 2),
+	COL_TRI(2, 3, 4),
+	COL_TRI(4, 5, 6),
+	COL_TRI(6, 7, 0),
+	COL_TRI(0, 2, 4),
+	COL_TRI(4, 6, 0),
+	COL_TRI_STOP(),
+	COL_END()
+};

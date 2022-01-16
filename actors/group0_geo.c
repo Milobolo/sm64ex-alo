@@ -34,3 +34,4 @@
 #include "balance/geo.inc.c"
 #include "balance_center/geo.inc.c"
 #include "trigger/geo.inc.c"
+#include "home_defense/geo.inc.c"

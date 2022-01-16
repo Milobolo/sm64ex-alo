@@ -3,6 +3,8 @@
 
 #include "types.h"
 //ss4 behaviors
+extern const BehaviorScript bhvWarpPipeEnd[];
+extern const BehaviorScript bhvHomeDefense[];
 extern const BehaviorScript bhvHoverParticle[];
 extern const BehaviorScript bhvIceBlock[];
 extern const BehaviorScript bhvSpawnBorder[];

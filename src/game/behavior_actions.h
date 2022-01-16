@@ -10,6 +10,7 @@ struct Struct802C0DF0 {
     const BehaviorScript *behavior;
 };
 //ss4 bhv functions
+void bhv_warp_end_init(void);
 void hover_particle_loop(void);
 void ice_block_loop(void);
 void bhvSpawnBorder_loop(void);
@@ -26,6 +27,7 @@ void hang_swap_loop(void);
 void balance_plat_loop(void);
 void balancer_loop(void);
 void balancer_init(void);
+void bhvHomeDefenseLoop(void);
 
 void spawn_mist_particles_variable(s32 count, s32 offsetY, f32 size);
 void bhv_spawn_star_no_level_exit(u32);

@@ -32,6 +32,9 @@ in these remade shining worlds.[AbtnNextBox()][JumpLink('sign_box_setup')]Access
 them by passing trials in the worlds ahead.\n\
 Good luck![AbtnNextBox()][Jump('end_read_sign')]"]
 
+b1_sign = ["[JumpLink('magic_gen_shadow_fade_io')][AutoNextBox()][ShadedBGBox(28,292,135,176,0,0,0,0x96)][WordWrap(252)][TransOffs(44,0)]The way shall open to the one true elephant\
+[AbtnNextBox()][Jump('end_read_sign')]"]
+
 gigantify_sign = ["[JumpLink('magic_gen_shadow_fade_io')][AutoNextBox()][JumpLink('sign_box_setup')][TransOffs(70,0)]Trial of spirit\n\n\
 [TransOffs(-70,0)]Gigantify - Enlarges the self and over doubles strength. \
 Run faster, jump higher and move heavy objects easily.[AbtnNextBox()][Jump('end_read_sign')]"]

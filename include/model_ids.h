@@ -45,6 +45,7 @@
 #define MODEL_BALANCE_CENTER              0xF1
 #define MODEL_BALANCE                     0xF2
 #define MODEL_TRIGGER                     0xF3
+#define MODEL_HOME_DEFENSE                0xF4
 
 
 

@@ -182,6 +182,7 @@ void mario_cancel_magic(struct MarioState *m){
 	}
 	m->spawnObj = 0;
 	m->CastSpell = 0;
+	m->Spell = 0;
 	m->flags &= (~MARIO_CAM_FOC_OBJ | MARIO_CAM_FOC_RISE);
 	gMagicHUDRequest = CANCEL_HUD;
 }
@@ -438,7 +439,6 @@ u32 mario_check_object_grab(struct MarioState *m) {
             if (facingDYaw >= -0x5555 && facingDYaw <= 0x5555) {
                 m->faceAngle[1] = m->interactObj->oMoveAngleYaw;
                 m->usedObj = m->interactObj;
-				mario_cancel_magic(m);
                 result = set_mario_action(m, ACT_PICKING_UP_BOWSER, 0);
             }
         } else {
@@ -447,7 +447,6 @@ u32 mario_check_object_grab(struct MarioState *m) {
                 m->usedObj = m->interactObj;
 
                 if (!(m->action & ACT_FLAG_AIR)) {
-					mario_cancel_magic(m);
                     set_mario_action(
                         m, (m->action & ACT_FLAG_DIVING) ? ACT_DIVE_PICKING_UP : ACT_PICKING_UP, 0);
                 }
