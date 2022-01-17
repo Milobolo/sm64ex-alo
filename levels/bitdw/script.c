@@ -50,7 +50,6 @@ const LevelScript level_bitdw_entry[] = {
 		WARP_NODE(0x0C, LEVEL_BOWSER_1, 0x01, 0x0A, WARP_NO_CHECKPOINT),
 		WARP_NODE(0xD, LEVEL_BITDW, 0x01, 0xD, WARP_NO_CHECKPOINT),
 		OBJECT(MODEL_BALANCE_CENTER, 689, 5037, 1574, 0, 40, 0, 0x000A0000, bhvBalancer),
-		OBJECT(MODEL_BLACK_BOBOMB, -2223, 2490, -1763, 0, -91, 0, (0), bhvBobomb),
 		OBJECT(MODEL_CHUCKYA, -126, 4459, -102, 0, -91, 0, (1), bhvChuckya),
 		OBJECT(MODEL_CHUCKYA, 2124, 2490, -1425, 0, -91, 0, (1), bhvChuckya),
 		OBJECT(MODEL_NONE, -347, 4459, 45, 0, -91, 0, (1), bhvGoombaTripletSpawner),

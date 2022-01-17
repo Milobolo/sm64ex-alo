@@ -4,6 +4,10 @@ const GeoLayout bowser_1_area_1_geo[] = {
 	GEO_NODE_START(),
 	GEO_OPEN_NODE(),
 		GEO_ROTATION_NODE_WITH_DL(LAYER_OPAQUE, 90, 0, 0, bowser_1_dl__bowser_1_seg7_dl_07002768_Obj_mesh_layer_1),
+		GEO_TRANSLATE_ROTATE_WITH_DL(LAYER_OPAQUE, -2737, 631, 0, 90, 0, 0, bowser_1_dl__bowser_1_seg7_dl_07002768_Obj_002_mesh_layer_1),
+		GEO_TRANSLATE_ROTATE_WITH_DL(LAYER_OPAQUE, 2768, 631, 0, 90, 0, 0, bowser_1_dl__bowser_1_seg7_dl_07002768_Obj_003_mesh_layer_1),
+		GEO_TRANSLATE_ROTATE_WITH_DL(LAYER_OPAQUE, 0, 631, -2775, 90, 0, 0, bowser_1_dl__bowser_1_seg7_dl_07002768_Obj_004_mesh_layer_1),
+		GEO_TRANSLATE_ROTATE_WITH_DL(LAYER_OPAQUE, -3, 631, 2711, 90, 0, 0, bowser_1_dl__bowser_1_seg7_dl_07002768_Obj_005_mesh_layer_1),
 	GEO_CLOSE_NODE(),
 	GEO_RETURN(),
 };

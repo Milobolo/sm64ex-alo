@@ -355,6 +355,7 @@ void bowser_act_walk_to_mario(void) // turn towards Mario
         }
     } else if (bowser_set_anim_look_down())
         o->oAction = 0;
+	cur_obj_resolve_wall_collisions();
 }
 
 void bowser_act_teleport(void) {
@@ -505,6 +506,7 @@ void bowser_act_jump(void) {
         }
     } else if (cur_obj_check_if_near_animation_end())
         o->oAction = 0;
+	cur_obj_resolve_wall_collisions();
 }
 
 void bowser_act_jump_towards_mario(void) {
@@ -522,6 +524,7 @@ void bowser_act_jump_towards_mario(void) {
             o->oSubAction++;
     } else if (cur_obj_check_if_near_animation_end())
         o->oAction = 0;
+	cur_obj_resolve_wall_collisions();
 }
 
 void bowser_act_hit_edge(void) {
@@ -629,6 +632,7 @@ void bowser_act_charge_mario(void) {
     }
     if (o->oMoveFlags & OBJ_MOVE_HIT_EDGE)
         o->oAction = 10;
+	cur_obj_resolve_wall_collisions();
 }
 
 s32 bowser_check_hit_mine(void) {
@@ -760,6 +764,7 @@ void bowser_spawn_grand_star_key(void) {
         gSecondCameraFocus = spawn_object(o, MODEL_STAR, bhvGrandStar);
     else {
         gSecondCameraFocus = spawn_object(o, MODEL_BOWSER_KEY, bhvBowserKey);
+		gSecondCameraFocus->oBehParams = 1;
         cur_obj_play_sound_2(SOUND_GENERAL2_BOWSER_KEY);
     }
     gSecondCameraFocus->oAngleVelYaw = o->oAngleVelYaw;

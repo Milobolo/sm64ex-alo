@@ -71,6 +71,7 @@ sm64config.txt
 !/textures/segment2/*.png
 !/textures/skyboxes/*.png
 !/levels/**/*custom*.png
+!/levels/**/*cake*.png
 !/levels/**/*custom*/**/*.png
 !/actors/**/*custom*.png
 !/actors/**/*custom*/**/*.png

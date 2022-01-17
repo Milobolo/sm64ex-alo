@@ -864,16 +864,15 @@ again to launch Bowser.\n\
 Good luck, Mario! Our\n\
 fate is in your hands."))
 
-DEFINE_DIALOG(DIALOG_067, 1, 5, 30, 200, _("\
-Tough luck, Mario!\n\
-Princess Toadstool isn't\n\
-here...Gwa ha ha!! Go\n\
-ahead--just try to grab\n\
-me by the tail!\n\
-You'll never be able to\n\
-swing ME around! A wimp\n\
-like you won't throw me\n\
-out of here! Never! Ha!"))
+DEFINE_DIALOG(DIALOG_067, 1, 4, 30, 200, _("\
+Tough luck, Elephant!\n\
+None of your elephant\n\
+powers stand a chance of\n\
+defeating me!\n\
+I've gotten rid of all\n\
+your pesky elephant props.\n\
+Fight me like a true\n\
+warrior! Gwa ha ha!!!"))
 
 DEFINE_DIALOG(DIALOG_068, 1, 5, 30, 200, _("\
 It's Lethal Lava Land!\n\
@@ -1428,19 +1427,10 @@ For today...\n\
 Now, take Star of Power.\n\
 We...sleep...darkness."))
 
-DEFINE_DIALOG(DIALOG_119, 1, 6, 30, 200, _("\
-Grrr! I was a bit\n\
-careless. This is not as I\n\
-had planned...but I still\n\
-hold the power of the\n\
-Stars, and I still have\n\
-Peach.\n\
-Bwa ha ha! You'll get no\n\
-more Stars from me! I'm\n\
-not finished with you yet,\n\
-but I'll let you go for\n\
-now. You'll pay for this...\n\
-later!"))
+DEFINE_DIALOG(DIALOG_119, 1, 3, 30, 200, _("\
+This boss fight is\n\
+accurate to the original\n\
+Shining Stars 2 Game tm."))
 
 DEFINE_DIALOG(DIALOG_120, 1, 4, 30, 200, _("\
 Ooowaah! Can it be that\n\

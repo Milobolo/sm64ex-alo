@@ -48,6 +48,9 @@ void start_render_magic_spells_hud(void){
 			case ice_block:
 				SetupTextEngine(16,212,magic_spells_env_init, TE_STATE_AUX);
 				break;
+			case 0xFF:
+				SetupTextEngine(16,212,no_magic, TE_STATE_AUX);
+				break;
 		}
 	
 }

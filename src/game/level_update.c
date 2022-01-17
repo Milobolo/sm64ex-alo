@@ -317,14 +317,14 @@ void init_door_warp(struct SpawnInfo *spawnInfo, u32 arg1) {
 
 void set_mario_initial_cap_powerup(struct MarioState *m) {
 
-    switch (gCurrCourseNum) {
-        case COURSE_COTMC:
+    switch (gCurrLevelNum) {
+        case LEVEL_COTMC:
 			if(!mario_has_spell(gCurrSaveFileNum-1,gigantify)){
 				m->Spell = ACTION_GIGANTIFY;
 				m->ForceSpell = gigantify;
 			}
             break;
-        case COURSE_TOTWC:
+        case LEVEL_TOTWC:
 			if(!mario_has_spell(gCurrSaveFileNum-1,sp_return)){
 				m->ForceSpell = sp_return;
 			}
@@ -333,10 +333,13 @@ void set_mario_initial_cap_powerup(struct MarioState *m) {
         default:
 			m->ForceSpell = 0;
 			break;
-        case COURSE_VCUTM:
+        case LEVEL_VCUTM:
 			if(!mario_has_spell(gCurrSaveFileNum-1,ice_block)){
 				m->ForceSpell = ice_block;
 			}
+            break;
+        case LEVEL_BOWSER_1:
+			m->ForceSpell = 0xFF;
             break;
     }
 }

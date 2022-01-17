@@ -55,7 +55,7 @@ magic_spells_init = ['[CallOnce(1,"TE_set_flag",2,["&gMagicHUDRequest","HUD_OPEN
 [StartTransition(8,255,0,0)][AutoNextBox()]\
 [MosaicBGBox(24,94,214,234,"magic_action_menu",2,1)]\n\
 [BoxTransition(0,0,-60,0)]\
-[SetScissor(14,108,230,230)]\
+[SetScissor(14,110,230,230)]\
 [ShadedBGBox(14,110,170,215,0,0,0,0x96)]\
 [CallLoop(3,"mario_can_cast",0,[])][MatchRtrn(3,0)][Jump("no_magic")][GenericText()][Pad()]\
 [CallLoop(4,"TE_get_flag",2,["&gMagicHUDRequest","CASTING_ON_PLAT"])][MatchRtrn(4,1)][Jump("magic_on_plat")][GenericText()]\
@@ -77,7 +77,7 @@ magic_spells_spell_init = ['[CallOnce(1,"TE_set_flag",2,["&gMagicHUDRequest","HU
 [StartTransition(8,255,0,0)][AutoNextBox()]\
 [MosaicBGBox(24,94,214,234,"magic_action_menu",2,1)]\n\
 [BoxTransition(0,0,-72,0)]\
-[SetScissor(14,80,230,230)]\
+[SetScissor(14,110,230,230)]\
 [ShadedBGBox(14,110,158,215,0,0,0,0x96)]\
 [CallLoop(4,"TE_get_flag",2,["&gMagicHUDRequest","CAST_WAIT"])][MatchRtrn(4,1)][Jump("magic_wait")][GenericText()]\
 [PrintGlyph("magic_d_left")]SPELL',
@@ -89,7 +89,7 @@ magic_spells_env_init = ['[CallOnce(1,"TE_set_flag",2,["&gMagicHUDRequest","HUD_
 [StartTransition(8,255,0,0)][AutoNextBox()]\
 [MosaicBGBox(24,94,214,234,"magic_action_menu",2,1)]\n\
 [BoxTransition(0,0,-72,0)]\
-[SetScissor(14,80,230,230)]\
+[SetScissor(14,110,230,230)]\
 [ShadedBGBox(14,110,158,215,0,0,0,0x96)]\
 [CallLoop(4,"TE_get_flag",2,["&gMagicHUDRequest","CAST_WAIT"])][MatchRtrn(4,1)][Jump("magic_wait")][GenericText()]\
 [PrintGlyph("magic_d_down")]ENV ',
@@ -99,6 +99,9 @@ magic_spells_env_init = ['[CallOnce(1,"TE_set_flag",2,["&gMagicHUDRequest","HUD_
 
 
 magic_on_plat = ['[AutoNextBox()][JumpLink("magic_gen_shadow_fade_io")][AutoNextBox()]cannot use ACTION while\non ENV platform.[SetSpd(1)][Pause(60)][AutoNextBox()][CallOnce(0,"TE_set_state",2,["&gMagicHUDRequest",0])][EndTransition(0,0,0,0)][TimeEndStr(1)][end]']
+
+no_magic = ['[AutoNextBox()][JumpLink("magic_gen_shadow_fade_io")][AutoNextBox()]Bowser has blocked\n\
+all elephant powers.[SetSpd(1)][Pause(60)][AutoNextBox()][CallOnce(0,"TE_set_state",2,["&gMagicHUDRequest",0])][EndTransition(0,0,0,0)][TimeEndStr(1)][end]']
 
 
 magic_list_chk_cancel = ['\

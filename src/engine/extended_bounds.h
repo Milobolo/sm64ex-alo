@@ -26,7 +26,7 @@
         64x64 collision cells.
 	4: 4x extended bounds (Mem saver)
         level boundaries are 4 times as big (-32768 to 32767)
-        Collision cells are the same size as vanilla, at the cost of being much slower.
+        Collision cells are twice the size as vanilla, at the cost of being much slower.
         32x32 collision cells.
     
 
@@ -39,7 +39,7 @@
 #include "macros.h"
 
 //set this to the extended bounds mode you want, then do "make clean".
-#define EXTENDED_BOUNDS_MODE 4
+#define EXTENDED_BOUNDS_MODE 1
 
 // SURFACE_POOL_SIZE and SURFACE_NODE_POOL_SIZE only matter on N64
 // On non-N64 targets, surface sizes are allocated using SYSTEM_MALLOC

@@ -15818,7 +15818,7 @@ Gfx mat_castle_courtyard_dl_sand_layer1[] = {
 	gsDPSetCombineLERP(TEXEL0, 0, TEXEL1, 0, 0, 0, 0, 1, COMBINED, 0, SHADE, 0, 0, 0, 0, COMBINED),
 	gsSPClearGeometryMode(G_LIGHTING),
 	gsDPSetCycleType(G_CYC_2CYCLE),
-	gsDPSetRenderMode(G_RM_NOOP, G_RM_AA_ZB_OPA_SURF2),
+	gsDPSetRenderMode(G_RM_AA_ZB_OPA_SURF, G_RM_NOOP),
 	gsSPTexture(65535, 65535, 0, 0, 1),
 	gsDPTileSync(),
 	gsDPSetTextureImage(G_IM_FMT_RGBA, G_IM_SIZ_16b_LOAD_BLOCK, 1, castle_courtyard_dl_Texture0141_RGB_rgba16),

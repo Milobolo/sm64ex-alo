@@ -29,7 +29,8 @@ sign_box_setup = ["[ShadedBGBox(28,292,72,176,0,0,0,0x96)][WordWrap(288)][Pop()]
 
 intro_sign = ["[JumpLink('magic_gen_shadow_fade_io')][AutoNextBox()][JumpLink('sign_box_setup')][TransOffs(40,0)]Welcome to the world of Shining Elephant Stars!!!\n\n\
 [TransOffs(-40,0)]Elephants are well known for their magic powers, explore 3 new types of elephant abilities \
-in these remade shining worlds.[AbtnNextBox()][JumpLink('sign_box_setup')]Access your elephant powers by pressing L while standing still, but you first must unlock\
+in these remade shining worlds.[AbtnNextBox()][JumpLink('sign_box_setup')]Access your elephant powers by pressing L while standing still, and cancel them with Z. \
+You'll need these powers to collect the stars, but you first must unlock\
 them by passing trials in the worlds ahead.\n\
 Good luck![AbtnNextBox()][Jump('end_read_sign')]"]
 
