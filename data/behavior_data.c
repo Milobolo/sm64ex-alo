@@ -512,8 +512,9 @@ const BehaviorScript bhvIceBlock[] = {
 	LOAD_COLLISION_DATA(ice_block_collision),
 	SET_INT(oFaceAngleYaw,0),
 	SET_FLOAT(oCollisionDistance, 3000),
-	SET_HITBOX(/*Radius*/ 80, /*Height*/ 600),
+	SET_HITBOX(/*Radius*/ 120, /*Height*/ 600),
 	BEGIN_LOOP(),
+	SET_INT(oIntangibleTimer,0),
     CALL_NATIVE(ice_block_loop),
     END_LOOP(),
 };

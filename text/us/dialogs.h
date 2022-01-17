@@ -201,8 +201,9 @@ You've stepped on a\n\
 Env Switch. Access\n\
 your magic by pressing L\n\
 and selecting ENV.\n\
-ENV spells make a platform\n\
-you can manually place.\n\
+ENV spells make a\n\
+platform you can\n\
+manually place.\n\
 Would you like to save?\n\
 \n\
 //Yes////No"))
@@ -1837,45 +1838,32 @@ pull back to slow down.\n\
 If you slide really\n\
 fast, you'll win the Star!"))
 
-DEFINE_DIALOG(DIALOG_150, 1, 5, 30, 200, _("\
-Waaaa! You've flooded my\n\
-house! Wh-why?? Look at\n\
-this mess! What am I\n\
-going to do now?\n\
-\n\
-The ceiling's ruined, the\n\
-floor is soaked...what to\n\
-do, what to do? Huff...\n\
-huff...it makes me so...\n\
-MAD!!!\n\
-Everything's been going\n\
-wrong ever since I got\n\
-this Star...It's so shiny,\n\
-but it makes me feel...\n\
-strange..."))
+DEFINE_DIALOG(DIALOG_150, 1, 4, 30, 200, _("\
+Waaaa! Intruder alert!!\n\
+Why are you in my house!\n\
+ACTIVATE HOME DEFENSE\n\
+SYSTEM ULTRA 3000\n\
+HAHAHAHAHA\n\
+You're done for now!\n\
+There's no walls for\n\
+you to hide behind!"))
 
-DEFINE_DIALOG(DIALOG_151, 1, 4, 30, 200, _("\
-I can't take this\n\
-anymore! First you get\n\
-me all wet, then you\n\
-stomp on me!\n\
-Now I'm really, really,\n\
-REALLY mad!\n\
-Waaaaaaaaaaaaaaaaa!!!"))
+DEFINE_DIALOG(DIALOG_151, 1, 2, 30, 200, _("\
+Now I'm really mad.\n\
+Take my ultra attack.....\n\
+The ELEPHANT\n\
+DESTRUCTION LUNGE!!!"))
 
 DEFINE_DIALOG(DIALOG_152, 1, 3, 30, 200, _("\
 Owwch! Uncle! Uncle!\n\
 Okay, I " GIVE_UP ". Take this\n\
 Star!\n\
-Whew! I feel better now.\n\
-I don't really need it\n\
-anymore, anyway--\n\
-I can see the stars\n\
-through my ceiling at\n\
-night.\n\
-They make me feel...\n\
-...peaceful. Please, come\n\
-back and visit anytime."))
+You're lucky the laws of\n\
+this land don't allow\n\
+me to have elephant spray.\n\
+I would have gotten rid\n\
+of you in an instant\n\
+with that."))
 
 DEFINE_DIALOG(DIALOG_153, 1, 4, 30, 200, _("\
 Hey! Who's there?\n\
@@ -2085,11 +2073,10 @@ Press [B] again to throw\n\
 something you're holding."))
 
 DEFINE_DIALOG(DIALOG_168, 1, 5, 30, 200, _("\
-Hey! Knock it off! That's\n\
-the second time you've\n\
-nailed me. Now you're\n\
-asking for it, linguine\n\
-breath!"))
+EEEEEEEEEEEEEEEE\nEEEEEEEEEEEEEEEEE\nEEEEEEEEEEEEEEEE\nEEEEEEEEEEEEEEEEEEE\nEEEEEEEEEEEEEEEE\n\
+YOU ELEPHANT.\n\
+How dare you!! Shining\n\
+Stars 2 isn't even good!!"))
 
 DEFINE_DIALOG(DIALOG_169, 1, 4, 30, 200, _("\
 Keep out!\n\

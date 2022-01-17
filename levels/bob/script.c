@@ -147,7 +147,7 @@ const LevelScript level_bob_entry[] = {
 		OBJECT(MODEL_SQUARE_FLAT, 9178, -439, 273, 0, 0, 0, (0 << 24) | (16 << 16) | (4 << 8) | (133), bhvSquareVert),
 		OBJECT(MODEL_SQUARE_FLAT, -4399, 886, -161, 0, 0, 0, (0 << 24) | (16 << 16) | (4 << 8) | (133), bhvSquareVert),
 		OBJECT(MODEL_SQUARE_FLAT, -5428, 884, -1274, 0, 0, 0, (0 << 24) | (16 << 16) | (2 << 8) | (64), bhvSquareVert),
-		OBJECT(MODEL_SQUARE_FLAT, 11385, 356, 5311, 0, -90, 0, (0 << 24) | (16 << 16) | (5 << 8) | (12), bhvSquareForward),
+		OBJECT(MODEL_SQUARE_FLAT, 11091, 356, 5311, 0, -90, 0, (0 << 24) | (16 << 16) | (4 << 8) | (0xa0), bhvSquareForward),
 		OBJECT(MODEL_SQUARE_FLAT, 2807, 1568, -9064, 0, -90, 0, (0 << 24) | (16 << 16) | (3 << 8) | (232), bhvSquareForward),
 		OBJECT(MODEL_STAR, 15404, 712, 5444, 0, 0, 0, 0x00000000, bhvStar),
 		OBJECT(MODEL_NONE, 10232, 2305, -4646, 0, -90, 0, (0 << 24) | (10 << 16) | (0 << 8) | (0), bhvAirborneWarp),

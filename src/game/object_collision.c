@@ -149,6 +149,16 @@ void check_pushable_object_collision(void) {
     }
 }
 
+void check_solid_object_collision(void) {
+    struct Object *sp1C = (struct Object *) &gObjectLists[OBJ_LIST_SURFACE];
+    struct Object *sp18 = (struct Object *) sp1C->header.next;
+
+    while (sp18 != sp1C) {
+        check_collision_in_list(sp18, (struct Object *) sp18->header.next, sp1C);
+        sp18 = (struct Object *) sp18->header.next;
+    }
+}
+
 void check_destructive_object_collision(void) {
     struct Object *sp1C = (struct Object *) &gObjectLists[OBJ_LIST_DESTRUCTIVE];
     struct Object *sp18 = (struct Object *) sp1C->header.next;
@@ -178,4 +188,5 @@ void detect_object_collisions(void) {
     check_player_object_collision();
     check_destructive_object_collision();
     check_pushable_object_collision();
+    check_solid_object_collision();
 }

@@ -176,10 +176,12 @@ s16 mario_obj_angle_to_object(struct MarioState *m, struct Object *o) {
     return atan2s(dz, dx);
 }
 
+extern struct Object *gReturn;
 void mario_cancel_magic(struct MarioState *m){
 	if(m->spawnObj){
 		m->spawnObj->activeFlags = ACTIVE_FLAG_DEACTIVATED;
 	}
+	gReturn = 0;
 	m->spawnObj = 0;
 	m->CastSpell = 0;
 	m->Spell = 0;
@@ -1938,7 +1940,7 @@ void check_lava_boost(struct MarioState *m) {
         }
 
         update_mario_sound_and_camera(m);
-		mario_cancel_magic(m);
+		// mario_cancel_magic(m);
         drop_and_set_mario_action(m, ACT_LAVA_BOOST, 0);
     }
 }

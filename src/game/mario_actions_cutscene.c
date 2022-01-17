@@ -2802,7 +2802,7 @@ s32 act_cast_actions(struct MarioState *m) {
 		
 		case 0:
 			gMagicHUDRequest &= ~CAST_SPELL;
-			if (m->spawnObj == 0){
+			if (m->tmpObj == 0){
 				switch(m->CastSpell){
 					case ACTION_RETURN:
 						//spawn an object or if obj exists then ask for return
@@ -2810,11 +2810,11 @@ s32 act_cast_actions(struct MarioState *m) {
 							set_mario_animation(m, MARIO_ANIM_SUMMON_STAR);
 							TE_end_str(&TE_Engines[TE_STATE_AUX]);
 							SetupTextEngine(16,212,magic_choose_return, TE_STATE_AUX); //overwrites current text engine
-							m->spawnObj = gReturn;
+							m->tmpObj = gReturn;
 							gReturn = 1;
 						}else{
-							m->spawnObj = spawn_object(m->marioObj,MODEL_RETURN_PORTAL,bhvReturnPortal);
-							gReturn = m->spawnObj;
+							m->tmpObj = spawn_object(m->marioObj,MODEL_RETURN_PORTAL,bhvReturnPortal);
+							gReturn = m->tmpObj;
 							set_mario_animation(m, MARIO_ANIM_BREAKDANCE);
 							play_mario_sound(m, SOUND_MARIO_PUNCH_WAH, 0);
 						}
@@ -2837,7 +2837,7 @@ s32 act_cast_actions(struct MarioState *m) {
 							m->actionArg = 4;
 							TE_end_str(&TE_Engines[TE_STATE_AUX]);
 							SetupTextEngine(16,212,magic_choose_swap, TE_STATE_AUX); //overwrites current text engine
-							m->spawnObj = spawn_object(m->marioObj,MODEL_RETICLE,bhvReticle);
+							m->tmpObj = spawn_object(m->marioObj,MODEL_RETICLE,bhvReticle);
 							UserInputs[TE_STATE_AUX][0][0] = Swappables->Chosen;
 							UserInputs[TE_STATE_AUX][0][1] = 0x45;
 							return FALSE;
@@ -2847,17 +2847,17 @@ s32 act_cast_actions(struct MarioState *m) {
 						if(gFreezeTime){
 							gFreezeTime->activeFlags = ACTIVE_FLAG_DEACTIVATED;
 						}
-						m->spawnObj = spawn_object(m->marioObj,MODEL_TIME_SPHERE,bhvTimeSphere);
-						gFreezeTime = m->spawnObj;
+						m->tmpObj = spawn_object(m->marioObj,MODEL_TIME_SPHERE,bhvTimeSphere);
+						gFreezeTime = m->tmpObj;
 						set_mario_animation(m, MARIO_ANIM_BREAKDANCE);
 						break;
 				}
 			}
-			if((gReturn == m->spawnObj) || (gReturn == 0)){
+			if((gReturn == m->tmpObj) || (gReturn == 0)){
 				m->actionTimer++;
 				if (is_anim_at_end(m)){
 					set_mario_action(m, ACT_IDLE, 0);
-					m->spawnObj = 0;
+					m->tmpObj = 0;
 				}
 			}else{
 				//wait for dialog option select
@@ -2866,8 +2866,8 @@ s32 act_cast_actions(struct MarioState *m) {
 					case 1:
 						break;
 					case 2:
-						gReturn = m->spawnObj;
-						m->spawnObj = 0;
+						gReturn = m->tmpObj;
+						m->tmpObj = 0;
 						m->pos[0] = gReturn->oPosX;
 						m->pos[1] = gReturn->oPosY+300.0f;
 						m->pos[2] = gReturn->oPosZ;
@@ -2876,16 +2876,16 @@ s32 act_cast_actions(struct MarioState *m) {
 						break;
 					//recast
 					case 3:
-						m->spawnObj->activeFlags = ACTIVE_FLAG_DEACTIVATED;
+						m->tmpObj->activeFlags = ACTIVE_FLAG_DEACTIVATED;
 						gReturn = spawn_object(m->marioObj,MODEL_RETURN_PORTAL,bhvReturnPortal);
-						m->spawnObj = gReturn;
+						m->tmpObj = gReturn;
 						set_mario_animation(m, MARIO_ANIM_BREAKDANCE);
 						play_mario_sound(m, SOUND_MARIO_PUNCH_WAH, 0);
 						break;
 					//cancel cast
 					case 4:
-						m->spawnObj->activeFlags = ACTIVE_FLAG_DEACTIVATED;
-						m->spawnObj = 1;
+						m->tmpObj->activeFlags = ACTIVE_FLAG_DEACTIVATED;
+						m->tmpObj = 1;
 						gReturn = 0;
 						set_mario_animation(m, MARIO_ANIM_BREAKDANCE);
 						play_mario_sound(m, SOUND_MARIO_PUNCH_WAH, 0);

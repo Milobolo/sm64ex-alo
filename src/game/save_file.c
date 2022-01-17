@@ -709,7 +709,7 @@ u32 mario_has_spell(s16 fileIndex, u32 spell){
 	}
 }
 void save_file_udpate_level(s32 fileIndex, struct MarioState *m) {
-	gSaveBuffer.files[fileIndex][0].Exp = m->Exp;
+	// gSaveBuffer.files[fileIndex][0].Exp = m->Exp;
 	gSaveBuffer.files[fileIndex][0].Level = m->Level;
 	gSaveFileModified = TRUE;
 	save_file_do_save(fileIndex);
@@ -722,7 +722,7 @@ void save_file_udpate_spell(s32 fileIndex, u32 spell) {
 }
 
 u32 save_file_get_exp(s32 fileIndex) {
-    return gSaveBuffer.files[fileIndex][0].Exp;
+    // return gSaveBuffer.files[fileIndex][0].Exp;
 }
 u32 save_file_get_level(s32 fileIndex) {
     return gSaveBuffer.files[fileIndex][0].Level;

@@ -66,12 +66,12 @@ void magic_hud_render_controller(struct MarioState *m){
 }
 
 void update_mario_exp(struct MarioState *m){
-	u32 Next = 100*m->Level*(m->Level/3);
-	if ((m->Level<20) && (m->Exp >= Next)){
-		m->Exp -= Next;
-		m->Level += 1;
-		save_file_udpate_level(gCurrSaveFileNum - 1,  m);
-	}
+	// u32 Next = 100*m->Level*(m->Level/3);
+	// if ((m->Level<20) && (m->Exp >= Next)){
+		// m->Exp -= Next;
+		// m->Level += 1;
+		// save_file_udpate_level(gCurrSaveFileNum - 1,  m);
+	// }
 }
 
 //cringe

@@ -909,8 +909,10 @@ static u32 set_mario_action_airborne(struct MarioState *m, u32 action, u32 actio
             m->vel[1] = 20.0f;
             break;
     }
-	if(m->marioObj->platform){
-		m->vel[1] += m->marioObj->platform->oVelY;
+	
+	if(gMarioObject->platform != NULL){
+		m->pos[1] += gMarioObject->platform->oVelY;
+		m->vel[1] += gMarioObject->platform->oVelY;
 	}
 
     m->peakHeight = m->pos[1];
@@ -2137,7 +2139,7 @@ void init_mario_from_save_file(void) {
     gMarioState->controller = &gControllers[0];
     gMarioState->animation = &D_80339D10;
 
-    gMarioState->Exp = save_file_get_exp(gCurrSaveFileNum - 1);
+    // gMarioState->Exp = save_file_get_exp(gCurrSaveFileNum - 1);
     gMarioState->Level = save_file_get_level(gCurrSaveFileNum - 1);
 
     gMarioState->numCoins = 0;

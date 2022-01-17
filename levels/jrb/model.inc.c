@@ -50,7 +50,7 @@ Lights1 jrb_dl_top_rock_lights = gdSPDefLights1(
 	0x7F, 0x7F, 0x7F,
 	0xFE, 0xFE, 0xFE, 0x28, 0x28, 0x28);
 
-Lights1 jrb_dl_sand_lights = gdSPDefLights1(
+Lights1 jrb_dl_sand_layer1_lights = gdSPDefLights1(
 	0x7F, 0x7F, 0x7F,
 	0xFE, 0xFE, 0xFE, 0x28, 0x28, 0x28);
 
@@ -78,11 +78,11 @@ Lights1 jrb_dl_lava_static_lights = gdSPDefLights1(
 	0x7F, 0x7F, 0x7F,
 	0xFE, 0xFE, 0xFE, 0x28, 0x28, 0x28);
 
-Lights1 jrb_dl_water_lights = gdSPDefLights1(
+Lights1 jrb_dl_water_layer5_lights = gdSPDefLights1(
 	0x7F, 0x7F, 0x7F,
 	0xFE, 0xFE, 0xFE, 0x28, 0x28, 0x28);
 
-Lights1 jrb_dl_sand_fade_lights = gdSPDefLights1(
+Lights1 jrb_dl_sand_fade_layer6_lights = gdSPDefLights1(
 	0x7F, 0x7F, 0x7F,
 	0xFE, 0xFE, 0xFE, 0x28, 0x28, 0x28);
 
@@ -16353,11 +16353,12 @@ Gfx mat_revert_jrb_dl_top_rock[] = {
 	gsSPEndDisplayList(),
 };
 
-Gfx mat_jrb_dl_sand[] = {
+Gfx mat_jrb_dl_sand_layer1[] = {
 	gsDPPipeSync(),
-	gsDPSetCombineLERP(TEXEL0, 0, TEXEL1, 0, 0, 0, 0, ENVIRONMENT, COMBINED, 0, SHADE, 0, 0, 0, 0, COMBINED),
+	gsDPSetCombineLERP(TEXEL0, 0, TEXEL1, 0, 0, 0, 0, 1, COMBINED, 0, SHADE, 0, 0, 0, 0, COMBINED),
 	gsSPClearGeometryMode(G_LIGHTING),
 	gsDPSetCycleType(G_CYC_2CYCLE),
+	gsDPSetRenderMode(G_RM_AA_ZB_OPA_SURF, G_RM_NOOP),
 	gsSPTexture(65535, 65535, 0, 0, 1),
 	gsDPTileSync(),
 	gsDPSetTextureImage(G_IM_FMT_RGBA, G_IM_SIZ_16b_LOAD_BLOCK, 1, jrb_dl_Texture0141_RGB_rgba16),
@@ -16375,14 +16376,15 @@ Gfx mat_jrb_dl_sand[] = {
 	gsDPPipeSync(),
 	gsDPSetTile(G_IM_FMT_I, G_IM_SIZ_4b, 4, 256, 1, 0, G_TX_WRAP | G_TX_NOMIRROR, 6, 1, G_TX_WRAP | G_TX_NOMIRROR, 6, 1),
 	gsDPSetTileSize(1, 0, 0, 252, 252),
-	gsSPSetLights1(jrb_dl_sand_lights),
+	gsSPSetLights1(jrb_dl_sand_layer1_lights),
 	gsSPEndDisplayList(),
 };
 
-Gfx mat_revert_jrb_dl_sand[] = {
+Gfx mat_revert_jrb_dl_sand_layer1[] = {
 	gsDPPipeSync(),
 	gsSPSetGeometryMode(G_LIGHTING),
 	gsDPSetCycleType(G_CYC_1CYCLE),
+	gsDPSetRenderMode(G_RM_AA_ZB_OPA_SURF, G_RM_AA_ZB_OPA_SURF2),
 	gsSPEndDisplayList(),
 };
 
@@ -16417,11 +16419,12 @@ Gfx mat_revert_jrb_dl_lava_trans[] = {
 	gsSPEndDisplayList(),
 };
 
-Gfx mat_jrb_dl_lava_fall[] = {
+Gfx mat_jrb_dl_lava_fall_layer1[] = {
 	gsDPPipeSync(),
 	gsDPSetCombineLERP(TEXEL0, 0, PRIMITIVE_ALPHA, TEXEL1, 0, 0, 0, ENVIRONMENT, COMBINED, 0, PRIMITIVE, 0, 0, 0, 0, ENVIRONMENT),
 	gsSPClearGeometryMode(G_LIGHTING),
 	gsDPSetCycleType(G_CYC_2CYCLE),
+	gsDPSetRenderMode(G_RM_NOOP, G_RM_AA_ZB_OPA_SURF2),
 	gsDPSetBlendColor(0, 0, 0, 153),
 	gsSPTexture(65535, 65535, 0, 0, 1),
 	gsDPSetTextureLUT(G_TT_RGBA16),
@@ -16458,10 +16461,11 @@ Gfx mat_jrb_dl_lava_fall[] = {
 	gsSPEndDisplayList(),
 };
 
-Gfx mat_revert_jrb_dl_lava_fall[] = {
+Gfx mat_revert_jrb_dl_lava_fall_layer1[] = {
 	gsDPPipeSync(),
 	gsSPSetGeometryMode(G_LIGHTING),
 	gsDPSetCycleType(G_CYC_1CYCLE),
+	gsDPSetRenderMode(G_RM_AA_ZB_OPA_SURF, G_RM_AA_ZB_OPA_SURF2),
 	gsDPSetTextureLUT(G_TT_NONE),
 	gsDPSetTextureLUT(G_TT_NONE),
 	gsSPEndDisplayList(),
@@ -16620,12 +16624,13 @@ Gfx mat_revert_jrb_dl_lava_static[] = {
 	gsSPEndDisplayList(),
 };
 
-Gfx mat_jrb_dl_water[] = {
+Gfx mat_jrb_dl_water_layer5[] = {
 	gsDPPipeSync(),
 	gsDPSetCombineLERP(TEXEL0, 0, TEXEL1, 0, TEXEL0, 0, TEXEL1, 0, 1, COMBINED, SHADE, COMBINED, 1, COMBINED, PRIMITIVE, COMBINED),
 	gsSPClearGeometryMode(G_CULL_BACK | G_LIGHTING),
 	gsDPSetCycleType(G_CYC_2CYCLE),
 	gsDPSetAlphaCompare(G_AC_THRESHOLD),
+	gsDPSetRenderMode(G_RM_NOOP, G_RM_AA_ZB_XLU_SURF2),
 	gsDPSetBlendColor(0, 0, 0, 51),
 	gsSPTexture(65535, 65535, 0, 0, 1),
 	gsDPTileSync(),
@@ -16645,23 +16650,25 @@ Gfx mat_jrb_dl_water[] = {
 	gsDPSetTile(G_IM_FMT_IA, G_IM_SIZ_8b, 4, 0, 1, 0, G_TX_WRAP | G_TX_NOMIRROR, 5, 2, G_TX_WRAP | G_TX_NOMIRROR, 5, 1),
 	gsDPSetTileSize(1, 0, 0, 124, 124),
 	gsDPSetPrimColor(0, 0, 254, 254, 254, 127),
-	gsSPSetLights1(jrb_dl_water_lights),
+	gsSPSetLights1(jrb_dl_water_layer5_lights),
 	gsSPEndDisplayList(),
 };
 
-Gfx mat_revert_jrb_dl_water[] = {
+Gfx mat_revert_jrb_dl_water_layer5[] = {
 	gsDPPipeSync(),
 	gsSPSetGeometryMode(G_CULL_BACK | G_LIGHTING),
 	gsDPSetCycleType(G_CYC_1CYCLE),
 	gsDPSetAlphaCompare(G_AC_NONE),
+	gsDPSetRenderMode(G_RM_AA_ZB_XLU_SURF, G_RM_AA_ZB_XLU_SURF2),
 	gsSPEndDisplayList(),
 };
 
-Gfx mat_jrb_dl_sand_fade[] = {
+Gfx mat_jrb_dl_sand_fade_layer6[] = {
 	gsDPPipeSync(),
 	gsDPSetCombineLERP(TEXEL0, 0, TEXEL1, 0, 0, 0, 0, SHADE, COMBINED, 0, SHADE, 0, 0, 0, 0, COMBINED),
 	gsSPClearGeometryMode(G_LIGHTING),
 	gsDPSetCycleType(G_CYC_2CYCLE),
+	gsDPSetRenderMode(G_RM_NOOP, G_RM_AA_ZB_XLU_DECAL2),
 	gsSPTexture(65535, 65535, 0, 0, 1),
 	gsDPTileSync(),
 	gsDPSetTextureImage(G_IM_FMT_RGBA, G_IM_SIZ_16b_LOAD_BLOCK, 1, jrb_dl_Texture0141_RGB_rgba16),
@@ -16679,14 +16686,15 @@ Gfx mat_jrb_dl_sand_fade[] = {
 	gsDPPipeSync(),
 	gsDPSetTile(G_IM_FMT_I, G_IM_SIZ_4b, 4, 256, 1, 0, G_TX_WRAP | G_TX_NOMIRROR, 6, 1, G_TX_WRAP | G_TX_NOMIRROR, 6, 1),
 	gsDPSetTileSize(1, 0, 0, 252, 252),
-	gsSPSetLights1(jrb_dl_sand_fade_lights),
+	gsSPSetLights1(jrb_dl_sand_fade_layer6_lights),
 	gsSPEndDisplayList(),
 };
 
-Gfx mat_revert_jrb_dl_sand_fade[] = {
+Gfx mat_revert_jrb_dl_sand_fade_layer6[] = {
 	gsDPPipeSync(),
 	gsSPSetGeometryMode(G_LIGHTING),
 	gsDPSetCycleType(G_CYC_1CYCLE),
+	gsDPSetRenderMode(G_RM_AA_ZB_XLU_DECAL, G_RM_AA_ZB_XLU_DECAL2),
 	gsSPEndDisplayList(),
 };
 
@@ -16905,15 +16913,15 @@ Gfx jrb_dl_level_005_mesh_layer_1[] = {
 	gsSPDisplayList(mat_jrb_dl_top_rock),
 	gsSPDisplayList(jrb_dl_level_005_mesh_layer_1_tri_2),
 	gsSPDisplayList(mat_revert_jrb_dl_top_rock),
-	gsSPDisplayList(mat_jrb_dl_sand),
+	gsSPDisplayList(mat_jrb_dl_sand_layer1),
 	gsSPDisplayList(jrb_dl_level_005_mesh_layer_1_tri_3),
-	gsSPDisplayList(mat_revert_jrb_dl_sand),
+	gsSPDisplayList(mat_revert_jrb_dl_sand_layer1),
 	gsSPDisplayList(mat_jrb_dl_lava_trans),
 	gsSPDisplayList(jrb_dl_level_005_mesh_layer_1_tri_4),
 	gsSPDisplayList(mat_revert_jrb_dl_lava_trans),
-	gsSPDisplayList(mat_jrb_dl_lava_fall),
+	gsSPDisplayList(mat_jrb_dl_lava_fall_layer1),
 	gsSPDisplayList(jrb_dl_level_005_mesh_layer_1_tri_5),
-	gsSPDisplayList(mat_revert_jrb_dl_lava_fall),
+	gsSPDisplayList(mat_revert_jrb_dl_lava_fall_layer1),
 	gsSPDisplayList(mat_jrb_dl_igneous_rock),
 	gsSPDisplayList(jrb_dl_level_005_mesh_layer_1_tri_6),
 	gsSPDisplayList(mat_revert_jrb_dl_igneous_rock),
@@ -16937,16 +16945,16 @@ Gfx jrb_dl_level_005_mesh_layer_5[] = {
 };
 
 Gfx jrb_dl_level_006_mesh_layer_5[] = {
-	gsSPDisplayList(mat_jrb_dl_water),
+	gsSPDisplayList(mat_jrb_dl_water_layer5),
 	gsSPDisplayList(jrb_dl_level_006_mesh_layer_5_tri_0),
-	gsSPDisplayList(mat_revert_jrb_dl_water),
+	gsSPDisplayList(mat_revert_jrb_dl_water_layer5),
 	gsSPEndDisplayList(),
 };
 
 Gfx jrb_dl_level_007_mesh_layer_6[] = {
-	gsSPDisplayList(mat_jrb_dl_sand_fade),
+	gsSPDisplayList(mat_jrb_dl_sand_fade_layer6),
 	gsSPDisplayList(jrb_dl_level_007_mesh_layer_6_tri_0),
-	gsSPDisplayList(mat_revert_jrb_dl_sand_fade),
+	gsSPDisplayList(mat_revert_jrb_dl_sand_fade_layer6),
 	gsSPEndDisplayList(),
 };
 

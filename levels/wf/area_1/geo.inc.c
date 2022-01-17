@@ -23,7 +23,7 @@ const GeoLayout wf_area_1_geo[] = {
 		GEO_TRANSLATE_ROTATE_WITH_DL(LAYER_OPAQUE, 6043, 1122, 3646, 0, 53, 0, wf_dl_level_009_mesh_layer_1),
 		GEO_TRANSLATE_NODE_WITH_DL(LAYER_OPAQUE, 130, 1849, -22, wf_dl_level_010_mesh_layer_1),
 		GEO_TRANSLATE_NODE_WITH_DL(LAYER_OPAQUE, 130, 1849, -22, wf_dl_level_013_mesh_layer_1),
-		GEO_TRANSLATE_ROTATE_WITH_DL(LAYER_OPAQUE, 4442, 1844, 681, 0, 21, 0, wf_dl_level_014_mesh_layer_1),
+		GEO_TRANSLATE_ROTATE_WITH_DL(LAYER_OPAQUE, 4442, 1514, 681, 0, 21, 0, wf_dl_level_014_mesh_layer_1),
 		GEO_TRANSLATE_ROTATE_WITH_DL(LAYER_OPAQUE, 4597, 2851, -817, 0, 21, 0, wf_dl_level_015_mesh_layer_1),
 		GEO_TRANSLATE_ROTATE_WITH_DL(LAYER_OPAQUE, -307, 815, -4246, 0, 28, 0, wf_dl_on_QS_plat_002_mesh_layer_1),
 		GEO_TRANSLATE_ROTATE_WITH_DL(LAYER_OPAQUE, -456, 815, -3079, 0, -79, 0, wf_dl_on_QS_plat_003_mesh_layer_1),

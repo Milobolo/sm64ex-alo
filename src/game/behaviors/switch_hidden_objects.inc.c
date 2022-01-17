@@ -52,7 +52,7 @@ void hidden_breakable_box_actions(void) {
                 cur_obj_unhide();
             }
     } else if (o->oAction == 1) {
-        cur_obj_become_tangible();
+        // cur_obj_become_tangible();
 		if (o->oBehParams2ndByte == 0){
 			if (cur_obj_wait_then_blink(200, 25))
 				o->oAction = 0;
@@ -88,7 +88,7 @@ void hidden_unbreakable_box_actions(void) {
                 cur_obj_unhide();
             }
     } else {
-        cur_obj_become_tangible();
+        // cur_obj_become_tangible();
         if (cur_obj_wait_then_blink(360, 20))
             o->oAction = 0;
         load_object_collision_model();

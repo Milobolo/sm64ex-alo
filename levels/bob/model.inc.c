@@ -14,7 +14,7 @@ Lights1 bob_dl_cave_ceiling_lights = gdSPDefLights1(
 	0x7F, 0x7F, 0x7F,
 	0xFE, 0xFE, 0xFE, 0x28, 0x28, 0x28);
 
-Lights1 bob_dl_qs_lights = gdSPDefLights1(
+Lights1 bob_dl_qs_layer1_lights = gdSPDefLights1(
 	0x7F, 0x7F, 0x7F,
 	0xFE, 0xFE, 0xFE, 0x28, 0x28, 0x28);
 
@@ -50,7 +50,7 @@ Lights1 bob_dl_wall_lights = gdSPDefLights1(
 	0x7F, 0x7F, 0x7F,
 	0xFE, 0xFE, 0xFE, 0x28, 0x28, 0x28);
 
-Lights1 bob_dl_sand_lights = gdSPDefLights1(
+Lights1 bob_dl_sand_layer1_lights = gdSPDefLights1(
 	0x7F, 0x7F, 0x7F,
 	0xFE, 0xFE, 0xFE, 0x28, 0x28, 0x28);
 
@@ -12656,15 +12656,15 @@ Vtx bob_dl_level_mesh_layer_1_vtx_0[221] = {
 	{{{3978, -1423, 9984},0, {9179, 7921},{0x3, 0x7E, 0xF4, 0xFF}}},
 	{{{4419, -1423, 9984},0, {9637, 7921},{0x0, 0x7F, 0xF6, 0xFF}}},
 	{{{4426, -1382, 10394},0, {9644, 8348},{0x0, 0x54, 0xA1, 0xFF}}},
-	{{{7378, -1353, 10357},0, {12715, 8309},{0xC2, 0x49, 0xAC, 0xFF}}},
+	{{{7378, -1353, 10357},0, {12715, 8309},{0xBB, 0x45, 0xAF, 0xFF}}},
 	{{{4419, -1423, 9984},0, {9637, 7921},{0x0, 0x7F, 0xF6, 0xFF}}},
 	{{{4426, -1382, 10394},0, {9644, 8348},{0x0, 0x54, 0xA1, 0xFF}}},
-	{{{7420, -1385, 10033},0, {12759, 7972},{0xAD, 0x5F, 0xEE, 0xFF}}},
+	{{{7420, -1385, 10033},0, {12759, 7972},{0xA6, 0x59, 0xF0, 0xFF}}},
 	{{{4390, -1556, 7631},0, {9607, 5474},{0x0, 0x7F, 0xF9, 0xFF}}},
 	{{{7297, -1554, 7675},0, {12631, 5519},{0xFF, 0x7F, 0xF9, 0xFF}}},
-	{{{7458, -1422, 9551},0, {12799, 7471},{0xDD, 0x73, 0xD7, 0xFF}}},
+	{{{7458, -1422, 9551},0, {12799, 7471},{0xD9, 0x6F, 0xD1, 0xFF}}},
 	{{{8531, -1535, 7680},0, {13914, 5524},{0xA7, 0x5B, 0xFB, 0xFF}}},
-	{{{8515, -1405, 9433},0, {13898, 7348},{0xB3, 0x4E, 0xC0, 0xFF}}},
+	{{{8515, -1405, 9433},0, {13898, 7348},{0xB4, 0x4B, 0xBB, 0xFF}}},
 	{{{8509, -1635, 5870},0, {13892, 3642},{0xA7, 0x5B, 0xFD, 0xFF}}},
 	{{{7259, -1654, 5867},0, {12591, 3639},{0xFF, 0x7F, 0xFB, 0xFF}}},
 	{{{8494, -1690, 4351},0, {13876, 2062},{0xA7, 0x57, 0x19, 0xFF}}},
@@ -15135,11 +15135,11 @@ Vtx bob_dl_level_mesh_layer_1_vtx_2[185] = {
 	{{{8839, -528, 10007},0, {-4118, -2657},{0xE3, 0xBC, 0x73, 0xFF}}},
 	{{{8569, -549, 9565},0, {-4488, -2333},{0xE3, 0xBC, 0x73, 0xFF}}},
 	{{{8582, -528, 10010},0, {-4074, -2417},{0xE3, 0xBC, 0x73, 0xFF}}},
-	{{{7573, -602, 9722},0, {-4186, -1427},{0xE3, 0xBC, 0x73, 0xFF}}},
-	{{{7555, -565, 10037},0, {-3888, -1462},{0xE3, 0xBC, 0x73, 0xFF}}},
+	{{{7458, -602, 9551},0, {-4186, -1427},{0xE3, 0xBC, 0x73, 0xFF}}},
+	{{{7420, -565, 10033},0, {-3888, -1462},{0xE3, 0xBC, 0x73, 0xFF}}},
 	{{{8582, -528, 10010},0, {-4074, -2417},{0xE3, 0xBC, 0x73, 0xFF}}},
-	{{{7555, -565, 10037},0, {-3888, -1462},{0xE3, 0xBC, 0x73, 0xFF}}},
-	{{{7469, -502, 10371},0, {-3557, -1436},{0xE3, 0xBC, 0x73, 0xFF}}},
+	{{{7420, -565, 10033},0, {-3888, -1462},{0xE3, 0xBC, 0x73, 0xFF}}},
+	{{{7378, -502, 10357},0, {-3557, -1436},{0xE3, 0xBC, 0x73, 0xFF}}},
 	{{{8541, -510, 10321},0, {-3777, -2428},{0xE3, 0xBC, 0x73, 0xFF}}},
 	{{{8843, -475, 10314},0, {-3828, -2710},{0xE3, 0xBC, 0x73, 0xFF}}},
 	{{{8839, -528, 10007},0, {-4118, -2657},{0xE3, 0xBC, 0x73, 0xFF}}},
@@ -15569,7 +15569,7 @@ Vtx bob_dl_level_mesh_layer_1_vtx_5[159] = {
 	{{{4456, -462, 10366},0, {7103, 1948},{0xF5, 0xB8, 0x87, 0xFF}}},
 	{{{3947, -431, 10366},0, {7862, 1884},{0xF5, 0xB8, 0x87, 0xFF}}},
 	{{{4454, 579, 10282},0, {7072, 387},{0xF5, 0x8B, 0x55, 0xFF}}},
-	{{{7469, -502, 10371},0, {2605, 2108},{0xE3, 0xBC, 0x73, 0xFF}}},
+	{{{7378, -502, 10357},0, {2605, 2108},{0xE3, 0xBC, 0x73, 0xFF}}},
 	{{{7313, 571, 10270},0, {2803, 494},{0xF5, 0x8B, 0x55, 0xFF}}},
 	{{{8485, 522, 10208},0, {1050, 596},{0xF5, 0x8B, 0x55, 0xFF}}},
 	{{{8541, -510, 10321},0, {1003, 2148},{0xE3, 0xBC, 0x73, 0xFF}}},
@@ -15653,11 +15653,11 @@ Vtx bob_dl_level_mesh_layer_1_vtx_5[159] = {
 	{{{8515, -1405, 9433},0, {22, 3367},{0xF5, 0x7E, 0x62, 0xFF}}},
 	{{{8569, -549, 9565},0, {-249, 2031},{0xE3, 0xBC, 0x73, 0xFF}}},
 	{{{7458, -1422, 9551},0, {1586, 3647},{0xF5, 0x7E, 0x62, 0xFF}}},
-	{{{7573, -602, 9722},0, {1647, 2386},{0xE3, 0xBC, 0x73, 0xFF}}},
+	{{{7458, -602, 9551},0, {1647, 2386},{0xE3, 0xBC, 0x73, 0xFF}}},
 	{{{7420, -1385, 10033},0, {2293, 3488},{0xF5, 0x7E, 0x62, 0xFF}}},
-	{{{7555, -565, 10037},0, {2104, 2263},{0xE3, 0xBC, 0x73, 0xFF}}},
+	{{{7420, -565, 10033},0, {2104, 2263},{0xE3, 0xBC, 0x73, 0xFF}}},
 	{{{7378, -1353, 10357},0, {2770, 3375},{0xF5, 0x7E, 0x62, 0xFF}}},
-	{{{7469, -502, 10371},0, {2605, 2108},{0xE3, 0xBC, 0x73, 0xFF}}},
+	{{{7378, -502, 10357},0, {2605, 2108},{0xE3, 0xBC, 0x73, 0xFF}}},
 	{{{4456, -462, 10366},0, {7103, 1948},{0xF5, 0xB8, 0x87, 0xFF}}},
 	{{{4426, -1382, 10394},0, {7180, 3320},{0xF5, 0x7E, 0x62, 0xFF}}},
 	{{{3947, -431, 10366},0, {7862, 1884},{0xF5, 0xB8, 0x87, 0xFF}}},
@@ -19809,10 +19809,11 @@ Gfx mat_revert_bob_dl_cave_ceiling[] = {
 	gsSPEndDisplayList(),
 };
 
-Gfx mat_bob_dl_qs[] = {
+Gfx mat_bob_dl_qs_layer1[] = {
 	gsDPPipeSync(),
-	gsDPSetCombineLERP(TEXEL0, 0, TEXEL1, 0, 0, 0, 0, ENVIRONMENT, COMBINED, 0, SHADE, 0, 0, 0, 0, COMBINED),
+	gsDPSetCombineLERP(TEXEL0, 0, TEXEL1, 0, 0, 0, 0, 1, COMBINED, 0, SHADE, 0, 0, 0, 0, COMBINED),
 	gsDPSetCycleType(G_CYC_2CYCLE),
+	gsDPSetRenderMode(G_RM_NOOP, G_RM_AA_ZB_OPA_SURF2),
 	gsSPTexture(65535, 65535, 0, 0, 1),
 	gsDPTileSync(),
 	gsDPSetTextureImage(G_IM_FMT_RGBA, G_IM_SIZ_16b_LOAD_BLOCK, 1, bob_dl_cs_narakucloud01_alb_rgba16),
@@ -19830,13 +19831,14 @@ Gfx mat_bob_dl_qs[] = {
 	gsDPPipeSync(),
 	gsDPSetTile(G_IM_FMT_RGBA, G_IM_SIZ_16b, 8, 256, 1, 0, G_TX_WRAP | G_TX_NOMIRROR, 5, 0, G_TX_WRAP | G_TX_NOMIRROR, 5, 0),
 	gsDPSetTileSize(1, 0, 0, 124, 124),
-	gsSPSetLights1(bob_dl_qs_lights),
+	gsSPSetLights1(bob_dl_qs_layer1_lights),
 	gsSPEndDisplayList(),
 };
 
-Gfx mat_revert_bob_dl_qs[] = {
+Gfx mat_revert_bob_dl_qs_layer1[] = {
 	gsDPPipeSync(),
 	gsDPSetCycleType(G_CYC_1CYCLE),
+	gsDPSetRenderMode(G_RM_AA_ZB_OPA_SURF, G_RM_AA_ZB_OPA_SURF2),
 	gsSPEndDisplayList(),
 };
 
@@ -20086,11 +20088,12 @@ Gfx mat_revert_bob_dl_wall[] = {
 	gsSPEndDisplayList(),
 };
 
-Gfx mat_bob_dl_sand[] = {
+Gfx mat_bob_dl_sand_layer1[] = {
 	gsDPPipeSync(),
-	gsDPSetCombineLERP(TEXEL0, 0, TEXEL1, 0, 0, 0, 0, ENVIRONMENT, COMBINED, 0, SHADE, 0, 0, 0, 0, COMBINED),
+	gsDPSetCombineLERP(TEXEL0, 0, TEXEL1, 0, 0, 0, 0, 1, COMBINED, 0, SHADE, 0, 0, 0, 0, COMBINED),
 	gsSPClearGeometryMode(G_LIGHTING),
 	gsDPSetCycleType(G_CYC_2CYCLE),
+	gsDPSetRenderMode(G_RM_AA_ZB_OPA_SURF, G_RM_NOOP),
 	gsSPTexture(65535, 65535, 0, 0, 1),
 	gsDPTileSync(),
 	gsDPSetTextureImage(G_IM_FMT_RGBA, G_IM_SIZ_16b_LOAD_BLOCK, 1, bob_dl_Texture0141_RGB_rgba16),
@@ -20108,14 +20111,15 @@ Gfx mat_bob_dl_sand[] = {
 	gsDPPipeSync(),
 	gsDPSetTile(G_IM_FMT_I, G_IM_SIZ_4b, 4, 256, 1, 0, G_TX_WRAP | G_TX_NOMIRROR, 6, 1, G_TX_WRAP | G_TX_NOMIRROR, 6, 1),
 	gsDPSetTileSize(1, 0, 0, 252, 252),
-	gsSPSetLights1(bob_dl_sand_lights),
+	gsSPSetLights1(bob_dl_sand_layer1_lights),
 	gsSPEndDisplayList(),
 };
 
-Gfx mat_revert_bob_dl_sand[] = {
+Gfx mat_revert_bob_dl_sand_layer1[] = {
 	gsDPPipeSync(),
 	gsSPSetGeometryMode(G_LIGHTING),
 	gsDPSetCycleType(G_CYC_1CYCLE),
+	gsDPSetRenderMode(G_RM_AA_ZB_OPA_SURF, G_RM_AA_ZB_OPA_SURF2),
 	gsSPEndDisplayList(),
 };
 
@@ -20510,9 +20514,9 @@ Gfx bob_dl_Cube_010_mesh_layer_1[] = {
 	gsSPDisplayList(mat_bob_dl_cave_ceiling),
 	gsSPDisplayList(bob_dl_Cube_010_mesh_layer_1_tri_0),
 	gsSPDisplayList(mat_revert_bob_dl_cave_ceiling),
-	gsSPDisplayList(mat_bob_dl_qs),
+	gsSPDisplayList(mat_bob_dl_qs_layer1),
 	gsSPDisplayList(bob_dl_Cube_010_mesh_layer_1_tri_1),
-	gsSPDisplayList(mat_revert_bob_dl_qs),
+	gsSPDisplayList(mat_revert_bob_dl_qs_layer1),
 	gsSPDisplayList(mat_bob_dl_cave_wall),
 	gsSPDisplayList(bob_dl_Cube_010_mesh_layer_1_tri_2),
 	gsSPDisplayList(mat_revert_bob_dl_cave_wall),
@@ -20860,15 +20864,15 @@ Gfx bob_dl_Cube_035_mesh_layer_1[] = {
 };
 
 Gfx bob_dl_level_mesh_layer_1[] = {
-	gsSPDisplayList(mat_bob_dl_qs),
+	gsSPDisplayList(mat_bob_dl_qs_layer1),
 	gsSPDisplayList(bob_dl_level_mesh_layer_1_tri_0),
-	gsSPDisplayList(mat_revert_bob_dl_qs),
+	gsSPDisplayList(mat_revert_bob_dl_qs_layer1),
 	gsSPDisplayList(mat_bob_dl_wall),
 	gsSPDisplayList(bob_dl_level_mesh_layer_1_tri_1),
 	gsSPDisplayList(mat_revert_bob_dl_wall),
-	gsSPDisplayList(mat_bob_dl_sand),
+	gsSPDisplayList(mat_bob_dl_sand_layer1),
 	gsSPDisplayList(bob_dl_level_mesh_layer_1_tri_2),
-	gsSPDisplayList(mat_revert_bob_dl_sand),
+	gsSPDisplayList(mat_revert_bob_dl_sand_layer1),
 	gsSPDisplayList(mat_bob_dl_rock_detail),
 	gsSPDisplayList(bob_dl_level_mesh_layer_1_tri_3),
 	gsSPDisplayList(mat_revert_bob_dl_rock_detail),

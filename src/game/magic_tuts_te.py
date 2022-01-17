@@ -18,6 +18,7 @@ end_read_sign = ["[MarioAction('ACT_IDLE')][TimeEndStr(1)][end]"]
 gigantify_intro_1 = ["[JumpLink('magic_gen_shadow_fade_io')][AutoNextBox()]While large you can push metal boxes[TimeEndStr(160)]"]
 gigantify_intro_2 = ["[JumpLink('magic_gen_shadow_fade_io')][AutoNextBox()]Normally heavy objects become light[TimeEndStr(160)]"]
 gigantify_intro_3 = ["[JumpLink('magic_gen_shadow_fade_io')][AutoNextBox()]You can use heavy objects to press\nbig switches[TimeEndStr(160)]"]
+gigantify_intro_5 = ["[JumpLink('magic_gen_shadow_fade_io')][AutoNextBox()]Ground Pound boxes to reset\ntheir position[TimeEndStr(160)]"]
 gigantify_intro_4 = ["[JumpLink('magic_gen_shadow_fade_io')][AutoNextBox()]Access the spell in the spirit menu. Recasting\n\
 a spirit spell will cancel it[TimeEndStr(160)]"]
 
@@ -56,5 +57,5 @@ Use to traverse gaps, and reach greater heights.[AbtnNextBox()][Jump('end_read_s
 
 ice_intro_1 = ["[JumpLink('magic_gen_shadow_fade_io')][AutoNextBox()]Cast ice block by pressing L, press \nL again to place[TimeEndStr(160)]"]
 ice_intro_3 = ["[JumpLink('magic_gen_shadow_fade_io')][AutoNextBox()]Ice blocks must be placed on a floor[TimeEndStr(160)]"]
-ice_intro_2 = ["[JumpLink('magic_gen_shadow_fade_io')][AutoNextBox()]Ice blocks move with platforms they're placed on[TimeEndStr(160)]"]
+ice_intro_2 = ["[JumpLink('magic_gen_shadow_fade_io')][AutoNextBox()]Ice blocks move with platforms\nthey're placed on[TimeEndStr(160)]"]
 ice_intro_4 = ["[JumpLink('magic_gen_shadow_fade_io')][AutoNextBox()]Only one ice block can exist at a time[TimeEndStr(160)]"]

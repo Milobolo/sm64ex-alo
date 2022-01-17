@@ -22,4 +22,5 @@ char *TE_Strings[] = {
 	//16
 	&intro_sign,
 	&b1_sign,
+	&gigantify_intro_5,
 };
