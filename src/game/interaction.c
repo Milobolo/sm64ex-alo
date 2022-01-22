@@ -1326,7 +1326,7 @@ u32 interact_bully(struct MarioState *m, UNUSED u32 interactType, struct Object 
         play_sound(SOUND_OBJ_BULLY_METAL, m->marioObj->header.gfx.cameraToObject);
 
         push_mario_out_of_object(m, o, 5.0f);
-		mario_cancel_magic(m);
+		// mario_cancel_magic(m);
         drop_and_set_mario_action(m, bully_knock_back_mario(m), 0);
 #ifdef RUMBLE_FEEDBACK
         queue_rumble_data(5, 80);

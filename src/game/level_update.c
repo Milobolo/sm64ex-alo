@@ -794,7 +794,7 @@ s16 level_trigger_warp(struct MarioState *m, s32 warpOp) {
 				if(configHC){
 					int i=1/0;
 				}
-				if (m->numLives == 0 && INFINITE_LIVES) {
+				if (m->numLives == 0 && !INFINITE_LIVES) {
                     sDelayedWarpOp = WARP_OP_GAME_OVER;
                 }
 				if(m->spawnObj){
