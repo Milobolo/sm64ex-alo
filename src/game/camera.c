@@ -1242,7 +1242,7 @@ void mode_8_directions_camera(struct Camera *c) {
 			s8DirModeYawOffset += DEGREES(1);
 		}
 		else if (gPlayer1Controller->buttonPressed & U_JPAD) {
-			s8DirModeYawOffset = (gMarioState->faceAngle[1]+0x9000)&0xE000;
+			s8DirModeYawOffset = gMarioState->faceAngle[1];
 		}
 		else if (gPlayer1Controller->buttonPressed & D_JPAD) {
 			s8DirModeYawOffset = (s8DirModeYawOffset+0x1000)&0xE000;
@@ -10905,7 +10905,7 @@ u8 sZoomOutAreaMasks[] = {
 	ZOOMOUT_AREA_MASK(1, 0, 0, 0, 1, 0, 0, 0), // SA             | BITS
 	ZOOMOUT_AREA_MASK(1, 0, 0, 0, 0, 0, 0, 0), // LLL            | DDD
 	ZOOMOUT_AREA_MASK(1, 0, 0, 0, 0, 0, 0, 0), // WF             | ENDING
-	ZOOMOUT_AREA_MASK(1, 0, 0, 0, 0, 0, 0, 0), // COURTYARD      | PSS
+	ZOOMOUT_AREA_MASK(0, 0, 0, 0, 0, 0, 0, 0), // COURTYARD      | PSS
 	ZOOMOUT_AREA_MASK(1, 0, 0, 0, 1, 0, 0, 0), // COTMC          | TOTWC
 	ZOOMOUT_AREA_MASK(1, 0, 0, 0, 1, 0, 0, 0), // BOWSER_1       | WMOTR
 	ZOOMOUT_AREA_MASK(0, 0, 0, 0, 1, 0, 0, 0), // Unused         | BOWSER_2
