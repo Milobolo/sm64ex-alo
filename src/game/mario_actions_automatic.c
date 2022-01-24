@@ -348,6 +348,7 @@ s32 update_hang_moving(struct MarioState *m) {
     Vec3f nextPos;
     f32 maxSpeed = 16.0f;
 
+
     m->forwardVel += 4.0f;
     if (m->forwardVel > maxSpeed) {
         m->forwardVel = maxSpeed;
@@ -381,6 +382,7 @@ void update_hang_stationary(struct MarioState *m) {
     m->slideVelZ = 0.0f;
 
     m->pos[1] = m->ceilHeight - (160.0f*GetMarioScaleFactors());
+
     vec3f_copy(m->vel, gVec3fZero);
     vec3f_copy(m->marioObj->header.gfx.pos, m->pos);
 }

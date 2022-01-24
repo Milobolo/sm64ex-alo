@@ -233,6 +233,7 @@ s8 TE_set_sfx(struct TEState *CurEng,u8 *str){
 //42 cmd works
 s8 TE_set_env_color(struct TEState *CurEng,u8 *str){
 	TE_print(CurEng);
+	CurEng->PrevEnvColorWord = CurEng->EnvColorWord;
 	CurEng->EnvColorWord = TE_get_u32(str);
 	return TE_print_adv(CurEng,5);
 }
@@ -717,7 +718,7 @@ void TE_clear_box_tr(struct TEState *CurEng){
 void TE_bg_box_setup(struct TEState *CurEng){
 	//print shadow with plaintext
 	if(CurEng->PlainText){
-		u32 Env = CurEng->EnvColorWord;
+		s32 Env = CurEng->EnvColorWord;
 		CurEng->EnvColorWord = 0x10101000 | CurEng->EnvColorByte[3];
 		CurEng->TempX += 1;
 		CurEng->TempY -= 1;
@@ -980,7 +981,7 @@ s8 TE_set_cutscene(struct TEState *CurEng,u8 *str){
 s8 TE_scale_text(struct TEState *CurEng,u8 *str){
 	//TE print but with scale placed after resetting X pos
 	if(CurEng->PlainText){
-		u32 Env = CurEng->EnvColorWord;
+		s32 Env = CurEng->EnvColorWord;
 		CurEng->EnvColorWord = 0x10101000 | CurEng->EnvColorByte[3];
 		CurEng->TempX += 1;
 		CurEng->TempY -= 1;
@@ -1203,7 +1204,7 @@ s8 TE_set_mario_action(struct TEState *CurEng,u8 *str){
 	gMarioState->action = TE_get_ptr(str,str);
 	return TE_advBlen(CurEng,5);
 }
-//aa cmd
+//aa cmd works
 s8 TE_box_transition(struct TEState *CurEng,u8 *str){
 	CurEng->BoxTrXi = (s16) (TE_get_s16(str)*CurEng->TrPct);
 	CurEng->BoxTrXf = (s16) (TE_get_s16(str+2)*CurEng->TrPct);
@@ -1273,7 +1274,7 @@ s8 TE_line_break(struct TEState *CurEng,u8 *str){
 	//modified print function to make printing not fuck with X pos
 	//rather inefficient but I'm lazy
 	if(CurEng->PlainText){
-		u32 Env = CurEng->EnvColorWord;
+		s32 Env = CurEng->EnvColorWord;
 		CurEng->EnvColorWord = 0x10101000 | CurEng->EnvColorByte[3];
 		CurEng->TempX += 1;
 		CurEng->TempY -= 1;

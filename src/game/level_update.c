@@ -465,7 +465,6 @@ void init_mario_after_warp(void) {
 
     if (gCurrentArea->musicParam != sCurrentMusic) 
         set_background_music(gCurrentArea->musicParam, gCurrentArea->musicParam2, 0);
-
 }
 extern struct Object *gFreezeTime;
 extern struct Object *gReturn;
@@ -577,6 +576,46 @@ void check_instant_warp(void) {
         }
     }
 }
+#if IS_64_BIT
+struct F2{
+	unsigned int Y:12;
+	unsigned int X:12;
+	unsigned int MSB:8;
+};
+#else
+struct F2{
+	unsigned int MSB:8;
+	unsigned int X:12;
+	unsigned int Y:12;
+};
+#endif
+union PosBytes{
+	u32 pos;
+	char bytes[4];
+};
+union WDBytes{
+	uintptr_t w0;
+	struct F2 SetTile;
+};
+void ScrollF2(Gfx *F2,u32 x, u32 y){
+	union PosBytes Xspd;
+	union PosBytes Yspd;
+	union WDBytes F2B;
+	Xspd.pos = x;
+	Yspd.pos = y;
+	F2B.w0 = F2->words.w0;
+	#if IS_64_BIT
+	#define FLOAT_BYTE 2
+	#else
+	#define FLOAT_BYTE 1
+	#endif
+	F2B.SetTile.X+=Xspd.pos;//Xspd.bytes[FLOAT_BYTE];
+	F2B.SetTile.Y+=Yspd.pos;//Yspd.bytes[FLOAT_BYTE];
+	F2B.SetTile.X=F2B.SetTile.X%0x200;
+	F2B.SetTile.Y=F2B.SetTile.Y%0x200;
+	F2->words.w0 = F2B.w0;
+}
+
 #if IS_64_BIT
 struct F2{
 	unsigned int Y:12;
