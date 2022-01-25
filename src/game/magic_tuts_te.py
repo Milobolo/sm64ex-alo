@@ -19,8 +19,8 @@ gigantify_intro_1 = ["[JumpLink('magic_gen_shadow_fade_io')][AutoNextBox()]While
 gigantify_intro_2 = ["[JumpLink('magic_gen_shadow_fade_io')][AutoNextBox()]Normally heavy objects become light[TimeEndStr(160)]"]
 gigantify_intro_3 = ["[JumpLink('magic_gen_shadow_fade_io')][AutoNextBox()]You can use heavy objects to press\nbig switches[TimeEndStr(160)]"]
 gigantify_intro_5 = ["[JumpLink('magic_gen_shadow_fade_io')][AutoNextBox()]Ground Pound boxes to reset\ntheir position[TimeEndStr(160)]"]
-gigantify_intro_4 = ["[JumpLink('magic_gen_shadow_fade_io')][AutoNextBox()]Access the spell in the spirit menu. Recasting\n\
-a spirit spell will cancel it[TimeEndStr(160)]"]
+gigantify_intro_4 = ["[JumpLink('magic_gen_shadow_fade_io')][AutoNextBox()]You cannot wallkick while enlarged, recast\n\
+gigantify to cancel it[TimeEndStr(160)]"]
 
 
 #5 lines max
@@ -39,7 +39,7 @@ b1_sign = ["[JumpLink('magic_gen_shadow_fade_io')][AutoNextBox()][ShadedBGBox(28
 
 gigantify_sign = ["[JumpLink('magic_gen_shadow_fade_io')][AutoNextBox()][JumpLink('sign_box_setup')][TransOffs(70,0)]Trial of spirit\n\n\
 [TransOffs(-70,0)]Gigantify - Enlarges the self and over doubles strength. \
-Run faster, jump higher and move heavy objects easily.[AbtnNextBox()][Jump('end_read_sign')]"]
+Run faster, jump higher and move heavy objects easily, but you cannot wallkick.[AbtnNextBox()][Jump('end_read_sign')]"]
 
 return_sign = ["[JumpLink('magic_gen_shadow_fade_io')][AutoNextBox()][JumpLink('sign_box_setup')][TransOffs(60,0)]Temple of spellcraft\n\n\
 [TransOffs(-60,0)]Return - A sigil the caster can return to at anytime. \

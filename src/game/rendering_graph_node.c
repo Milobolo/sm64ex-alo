@@ -816,8 +816,11 @@ void geo_process_held_object(struct GraphNodeHeldObject *node) {
         vec3f_copy(gMatStack[gMatStackIndex + 1][3], gMatStack[gMatStackIndex][3]);
         mtxf_copy(tempMtx, gMatStack[gMatStackIndex + 1]);
         mtxf_mul(gMatStack[gMatStackIndex + 1], mat, tempMtx);
-		vec3f_mul(node->objNode->header.gfx.scale,node->scale)
-        mtxf_scale_vec3f(gMatStack[gMatStackIndex + 1], gMatStack[gMatStackIndex + 1], node->objNode->header.gfx.scale);
+		Vec3f scale;
+		scale[0] = node->objNode->header.gfx.scale[0]*node->scale;
+		scale[1] = node->objNode->header.gfx.scale[1]*node->scale;
+		scale[2] = node->objNode->header.gfx.scale[2]*node->scale;
+        mtxf_scale_vec3f(gMatStack[gMatStackIndex + 1], gMatStack[gMatStackIndex + 1], scale);
 
         if (node->fnNode.func != NULL) {
             node->fnNode.func(GEO_CONTEXT_HELD_OBJ, &node->fnNode.node, (struct AllocOnlyPool *) gMatStack[gMatStackIndex + 1]);

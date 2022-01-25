@@ -69,7 +69,7 @@ const LevelScript level_cotmc_entry[] = {
 		OBJECT(MODEL_HINT, -9225, 3237, 8794, 0, 0, 0, (0 << 24) | (0 << 16) | (0 << 8) | (0), bhvTEhDist),
 		OBJECT(MODEL_HINT, -9225, 4370, 6513, 0, 0, 0, (0 << 24) | (0 << 16) | (0 << 8) | (1), bhvTEhDist),
 		OBJECT(MODEL_HINT, -9163, 4370, -256, 0, 0, 0, (0 << 24) | (0 << 16) | (0 << 8) | (2), bhvTEhDist),
-		OBJECT(MODEL_HINT, 9741, 4370, -256, 0, 0, 0, (0 << 24) | (0 << 16) | (0 << 8) | (3), bhvTEhDist),
+		OBJECT(MODEL_HINT, 6927, 4370, -256, 0, 0, 0, (0 << 24) | (0 << 16) | (0 << 8) | (3), bhvTEhDist),
 		OBJECT(MODEL_HINT, -909, 4370, -287, 0, 0, 0, (0 << 24) | (0 << 16) | (0 << 8) | (18), bhvTEhDist),
 		OBJECT(MODEL_METAL_BOX, -9225, 3237, 8130, 0, 0, 0, (0 << 24) | (10 << 16) | (0 << 8) | (0), bhvPushableMetalBox),
 		OBJECT(MODEL_METAL_BOX, 4057, 4370, 1673, 0, 0, 0, (0 << 24) | (10 << 16) | (0 << 8) | (0), bhvPushableMetalBox),

@@ -27,22 +27,18 @@ static ShadowRectangle sShadowRectangles[2] = {
     { 4.0f, 3.6f, TRUE }, // Whomp
 };
 
-
 struct Shadow gCurrShadow;
 struct Shadow *s = &gCurrShadow;
-
 
 /**
  * Shrink a shadow when its parent object is further from the floor, given the
  * initial size of the shadow and the current distance.
  */
 f32 scale_shadow_with_distance(f32 initial, f32 distFromFloor) {
-
     if (distFromFloor <= 0.0f) {
         return initial;
     } else if (distFromFloor >= 600.0f) {
         return initial * 0.5f;
->>>>>>> master
     } else {
         return initial * (1.0f - ((distFromFloor * 0.5f) / 600.0f));
     }
@@ -59,26 +55,7 @@ s32 dim_shadow_with_distance(u8 solidity, f32 distFromFloor) {
     } else if (distFromFloor >= 600.0f) {
         return 120;
     } else {
-<<<<<<< HEAD
-        ret = ((120 - solidity) * distFromFloor) / 600.0f + (f32) solidity;
-        return ret;
-    }
-}
-
-/**
- * Return the water level below a shadow, or 0 if the water level is below
- * -10,000.
- */
-f32 get_water_level_below_shadow(struct Shadow *s) {
-    f32 waterLevel = find_water_level(s->parentX, s->parentZ);
-    if (waterLevel < FLOOR_LOWER_LIMIT_SHADOW) {
-        return 0;
-    } else if (s->parentY >= waterLevel && s->floorHeight <= waterLevel) {
-        gShadowAboveWaterOrLava = TRUE;
-        return waterLevel;
-=======
         return (((120 - solidity) * distFromFloor) / 600.0f) + (f32) solidity;
->>>>>>> master
     }
 }
 
@@ -96,182 +73,11 @@ s32 init_shadow(f32 distToShadow, s16 shadowScale, s8 shadowType, u8 overwriteSo
     if (shadowType != SHADOW_SQUARE_PERMANENT) {
         // Set solidity and scale based on distance.
 
-<<<<<<< HEAD
-    s->floorHeight = find_floor_height_and_data(s->parentX, s->parentY, s->parentZ, &floorGeometry);
-
-    if (gEnvironmentRegions != 0) {
-        waterLevel = get_water_level_below_shadow(s);
-    }
-    if (gShadowAboveWaterOrLava) {
-        //! @bug Use of potentially undefined variable `waterLevel`
-        s->floorHeight = waterLevel;
-
-        // Assume that the water is flat.
-        s->floorNormalX = 0;
-        s->floorNormalY = 1.0f;
-        s->floorNormalZ = 0;
-        s->floorOriginOffset = -waterLevel;
-    } else {
-        // Don't draw a shadow if the floor is lower than expected possible,
-        // or if the y-normal is negative (an unexpected result).
-        if (s->floorHeight < FLOOR_LOWER_LIMIT_SHADOW || floorGeometry->normalY <= 0.0) {
-            return 1;
-        }
-
-        s->floorNormalX = floorGeometry->normalX;
-        s->floorNormalY = floorGeometry->normalY;
-        s->floorNormalZ = floorGeometry->normalZ;
-        s->floorOriginOffset = floorGeometry->originOffset;
-    }
-
-    if (overwriteSolidity) {
-        s->solidity = dim_shadow_with_distance(overwriteSolidity, yPos - s->floorHeight);
-    }
-
-    s->shadowScale = scale_shadow_with_distance(shadowScale, yPos - s->floorHeight);
-
-    s->floorDownwardAngle = atan2_deg(s->floorNormalZ, s->floorNormalX);
-
-    floorSteepness = sqrtf(s->floorNormalX * s->floorNormalX + s->floorNormalZ * s->floorNormalZ);
-
-    // This if-statement avoids dividing by 0.
-    if (floorSteepness == 0.0f) {
-        s->floorTilt = 0;
-    } else {
-        s->floorTilt = 90.0f - atan2_deg(floorSteepness, s->floorNormalY);
-    }
-    return 0;
-}
-
-/**
- * Given a `vertexNum` from a shadow with nine vertices, update the
- * texture coordinates corresponding to that vertex. That is:
- *      0 = (-15, -15)         1 = (0, -15)         2 = (15, -15)
- *      3 = (-15,   0)         4 = (0,   0)         5 = (15,   0)
- *      6 = (-15,  15)         7 = (0,  15)         8 = (15,  15)
- */
-void get_texture_coords_9_vertices(s8 vertexNum, s16 *textureX, s16 *textureY) {
-    *textureX = vertexNum % 3 * 15 - 15;
-    *textureY = vertexNum / 3 * 15 - 15;
-}
-
-/**
- * Given a `vertexNum` from a shadow with four vertices, update the
- * texture coordinates corresponding to that vertex. That is:
- *      0 = (-15, -15)         1 = (15, -15)
- *      2 = (-15,  15)         3 = (15,  15)
- */
-void get_texture_coords_4_vertices(s8 vertexNum, s16 *textureX, s16 *textureY) {
-    *textureX = (vertexNum % 2) * 2 * 15 - 15;
-    *textureY = (vertexNum / 2) * 2 * 15 - 15;
-}
-
-/**
- * Make a shadow's vertex at a position relative to its parent.
- *
- * @param vertices A preallocated display list for vertices
- * @param index Index into `vertices` to insert the vertex
- * @param relX,relY,relZ Vertex position relative to its parent object
- * @param alpha Opacity of the vertex
- * @param shadowVertexType One of SHADOW_WITH_9_VERTS or SHADOW_WITH_4_VERTS
- */
-void make_shadow_vertex_at_xyz(Vtx *vertices, s8 index, f32 relX, f32 relY, f32 relZ, u8 alpha,
-                               s8 shadowVertexType) {
-    s16 vtxX = round_float(relX);
-    s16 vtxY = round_float(relY);
-    s16 vtxZ = round_float(relZ);
-    s16 textureX, textureY;
-
-    switch (shadowVertexType) {
-        case SHADOW_WITH_9_VERTS:
-            get_texture_coords_9_vertices(index, &textureX, &textureY);
-            break;
-        case SHADOW_WITH_4_VERTS:
-            get_texture_coords_4_vertices(index, &textureX, &textureY);
-            break;
-    }
-
-    // Move the shadow up and over slightly while standing on a flying carpet.
-    if (sMarioOnFlyingCarpet) {
-        vtxX += 5;
-        vtxY += 5;
-        vtxZ += 5;
-    }
-    make_vertex(vertices, index, vtxX, vtxY, vtxZ, textureX << 5, textureY << 5, 255, 255, 255,
-                alpha // shadows are black
-    );
-}
-
-/**
- * Given an (x, z)-position close to a shadow, extrapolate the y-position
- * according to the floor's normal vector.
- */
-f32 extrapolate_vertex_y_position(struct Shadow s, f32 vtxX, f32 vtxZ) {
-    return -(s.floorNormalX * vtxX + s.floorNormalZ * vtxZ + s.floorOriginOffset) / s.floorNormalY;
-}
-
-/**
- * Given a shadow vertex with the given `index`, return the corresponding texture
- * coordinates ranging in the square with corners at (-1, -1), (1, -1), (-1, 1),
- * and (1, 1) in the x-z plane. See `get_texture_coords_9_vertices()` and
- * `get_texture_coords_4_vertices()`, which have similar functionality, but
- * return 15 times these values.
- */
-void get_vertex_coords(s8 index, s8 shadowVertexType, s8 *xCoord, s8 *zCoord) {
-    *xCoord = index % (3 - shadowVertexType) - 1;
-    *zCoord = index / (3 - shadowVertexType) - 1;
-
-    // This just corrects the 4-vertex case to have consistent results with the
-    // 9-vertex case.
-    if (shadowVertexType == SHADOW_WITH_4_VERTS) {
-        if (*xCoord == 0) {
-            *xCoord = 1;
-        }
-        if (*zCoord == 0) {
-            *zCoord = 1;
-        }
-    }
-}
-
-/**
- * Populate `xPosVtx`, `yPosVtx`, and `zPosVtx` with the (x, y, z) position of the
- * shadow vertex with the given index. If the shadow is to have 9 vertices,
- * then each of those vertices is clamped down to the floor below it. Otherwise,
- * in the 4 vertex case, the vertex positions are extrapolated from the center
- * of the shadow.
- *
- * In practice, due to the if-statement in `make_shadow_vertex()`, the 9
- * vertex and 4 vertex cases are identical, and the above-described clamping
- * behavior is overwritten.
- */
-void calculate_vertex_xyz(s8 index, struct Shadow s, f32 *xPosVtx, f32 *yPosVtx, f32 *zPosVtx,
-                          s8 shadowVertexType) {
-    f32 tiltedScale = cosf(s.floorTilt * M_PI / 180.0f) * s.shadowScale;
-    f32 downwardAngle = s.floorDownwardAngle * M_PI / 180.0f;
-    f32 halfScale;
-    f32 halfTiltedScale;
-    s8 xCoordUnit;
-    s8 zCoordUnit;
-    struct FloorGeometry *dummy;
-
-    // This makes xCoordUnit and yCoordUnit each one of -1, 0, or 1.
-    get_vertex_coords(index, shadowVertexType, &xCoordUnit, &zCoordUnit);
-
-    halfScale = (xCoordUnit * s.shadowScale) / 2.0f;
-    halfTiltedScale = (zCoordUnit * tiltedScale) / 2.0f;
-
-    *xPosVtx = (halfTiltedScale * sinf(downwardAngle)) + (halfScale * cosf(downwardAngle)) + s.parentX;
-    *zPosVtx = (halfTiltedScale * cosf(downwardAngle)) - (halfScale * sinf(downwardAngle)) + s.parentZ;
-
-    if (gShadowAboveWaterOrLava) {
-        *yPosVtx = s.floorHeight;
-=======
         if (overwriteSolidity) {
             s->solidity = dim_shadow_with_distance(overwriteSolidity, distToShadow);
         }
 
         baseScale = scale_shadow_with_distance(shadowScale, distToShadow);
->>>>>>> master
     } else {
         s->solidity = overwriteSolidity;
         baseScale = shadowScale;
@@ -340,21 +146,6 @@ s32 correct_shadow_solidity_for_animations(u8 initialSolidity) {
 /**
  * Slightly change the height of a shadow in levels with lava.
  */
-<<<<<<< HEAD
-void correct_lava_shadow_height(struct Shadow *s) {
-    if (gCurrLevelNum == LEVEL_BITFS && sSurfaceTypeBelowShadow == SURFACE_BURNING) {
-        if (s->floorHeight < -3000.0f) {
-            s->floorHeight = -3062.0f;
-            gShadowAboveWaterOrLava = TRUE;
-        } else if (s->floorHeight > 3400.0f) {
-            s->floorHeight = 3492.0f;
-            gShadowAboveWaterOrLava = TRUE;
-        }
-    } else if (gCurrLevelNum == LEVEL_LLL && gCurrAreaIndex == 1
-               && sSurfaceTypeBelowShadow == SURFACE_BURNING) {
-        s->floorHeight = 5.0f;
-        gShadowAboveWaterOrLava = TRUE;
-=======
 void correct_lava_shadow_height(f32 *floorHeight) {
     if (gCurrLevelNum == LEVEL_BITFS) {
         if (*floorHeight < -3000.0f) {
@@ -368,7 +159,6 @@ void correct_lava_shadow_height(f32 *floorHeight) {
                && gCurrAreaIndex == 1) {
         *floorHeight = 5.0f;
         s->isDecal = FALSE;
->>>>>>> master
     }
 }
 #endif

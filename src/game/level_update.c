@@ -405,6 +405,7 @@ void set_mario_initial_action(struct MarioState *m, u32 spawnType, u32 actionArg
     // set_mario_initial_cap_powerup(m);
 }
 extern u16 sCurrentMusic;
+extern s16 newcam_yaw;
 void init_mario_after_warp(void) {
     struct ObjectWarpNode *spawnNode = area_get_warp_node(sWarpDest.nodeId);
     u32 marioSpawnType = get_mario_spawn_type(spawnNode->object);
@@ -436,6 +437,7 @@ void init_mario_after_warp(void) {
     }
 
     reset_camera(gCurrentArea->camera);
+	newcam_yaw = -gMarioState->faceAngle[1]-0x4000;
     sWarpDest.type = WARP_TYPE_NOT_WARPING;
     sDelayedWarpOp = WARP_OP_NONE;
 
@@ -575,45 +577,6 @@ void check_instant_warp(void) {
             }
         }
     }
-}
-#if IS_64_BIT
-struct F2{
-	unsigned int Y:12;
-	unsigned int X:12;
-	unsigned int MSB:8;
-};
-#else
-struct F2{
-	unsigned int MSB:8;
-	unsigned int X:12;
-	unsigned int Y:12;
-};
-#endif
-union PosBytes{
-	u32 pos;
-	char bytes[4];
-};
-union WDBytes{
-	uintptr_t w0;
-	struct F2 SetTile;
-};
-void ScrollF2(Gfx *F2,u32 x, u32 y){
-	union PosBytes Xspd;
-	union PosBytes Yspd;
-	union WDBytes F2B;
-	Xspd.pos = x;
-	Yspd.pos = y;
-	F2B.w0 = F2->words.w0;
-	#if IS_64_BIT
-	#define FLOAT_BYTE 2
-	#else
-	#define FLOAT_BYTE 1
-	#endif
-	F2B.SetTile.X+=Xspd.pos;//Xspd.bytes[FLOAT_BYTE];
-	F2B.SetTile.Y+=Yspd.pos;//Yspd.bytes[FLOAT_BYTE];
-	F2B.SetTile.X=F2B.SetTile.X%0x200;
-	F2B.SetTile.Y=F2B.SetTile.Y%0x200;
-	F2->words.w0 = F2B.w0;
 }
 
 #if IS_64_BIT

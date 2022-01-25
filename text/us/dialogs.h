@@ -219,9 +219,9 @@ DEFINE_DIALOG(DIALOG_014, 1, 4, 30, 200, _("\
 Wow! Another Power Star!\n\
 Mario gains more strength\n\
 from the power of anime.\n\
-Return to level start?\n\
+Warp back to the start?\n\
 \n\
-//You Bet//No"))
+//Stay here//Return"))
 
 DEFINE_DIALOG(DIALOG_015, 1, 4, 30, 200, _("\
 You can punch enemies to\n\

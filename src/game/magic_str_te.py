@@ -57,7 +57,7 @@ magic_spells_init = ['[CallOnce(1,"TE_set_flag",2,["&gMagicHUDRequest","HUD_OPEN
 [BoxTransition(0,0,-60,0)]\
 [SetScissor(14,110,230,230)]\
 [ShadedBGBox(14,110,170,215,0,0,0,0x96)]\
-[CallLoop(3,"mario_can_cast",0,[])][MatchRtrn(3,0)][Jump("no_magic")][GenericText()][Pad()]\
+[CallLoop(3,"mario_can_cast",0,[])][MatchRtrn(3,0)][Jump("no_magic_unlock")][GenericText()][Pad()]\
 [CallLoop(4,"TE_get_flag",2,["&gMagicHUDRequest","CASTING_ON_PLAT"])][MatchRtrn(4,1)][Jump("magic_on_plat")][GenericText()]\
 [CallLoop(4,"TE_get_flag",2,["&gMagicHUDRequest","CAST_WAIT"])][MatchRtrn(4,1)][Jump("magic_wait")][GenericText()][Pad()]\
 [CallLoop(2,"mario_has_spell_TE",2,["&gCurrSaveFileNum","sp_return"])][MatchRtrn(2,1)][PrintGlyph("magic_d_left")]RETURN\n[GenericText()]\
@@ -71,7 +71,7 @@ magic_spells_init = ['[CallOnce(1,"TE_set_flag",2,["&gMagicHUDRequest","HUD_OPEN
 [GenericText()][end]']
 
 magic_wait = ["cannot\ncast while\nmoving[end]"]
-no_magic = ['no magic\nunlocked[Jump("magic_spirit_list_end")]']
+no_magic_unlock = ['no magic\nunlocked[Jump("magic_spirit_list_end")]']
 
 magic_spells_spell_init = ['[CallOnce(1,"TE_set_flag",2,["&gMagicHUDRequest","HUD_OPEN | HUD_MAIN"])]\
 [StartTransition(8,255,0,0)][AutoNextBox()]\

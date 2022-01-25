@@ -634,7 +634,7 @@ void general_star_dance_handler(struct MarioState *m, s32 isInWater) {
         }
     } else if (m->actionState == 1 && gDialogResponse) {
         save_file_do_save(gCurrSaveFileNum - 1);
-		if (gDialogResponse == 1) {
+		if (gDialogResponse == 2) {
             level_trigger_warp(m, WARP_OP_RESTART);
         }
         m->actionState = 2;

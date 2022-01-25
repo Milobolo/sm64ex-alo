@@ -233,7 +233,6 @@ s8 TE_set_sfx(struct TEState *CurEng,u8 *str){
 //42 cmd works
 s8 TE_set_env_color(struct TEState *CurEng,u8 *str){
 	TE_print(CurEng);
-	CurEng->PrevEnvColorWord = CurEng->EnvColorWord;
 	CurEng->EnvColorWord = TE_get_u32(str);
 	return TE_print_adv(CurEng,5);
 }
@@ -1015,6 +1014,7 @@ s8 TE_enable_dialog_options(struct TEState *CurEng,u8 *str){
 			CurEng->StrEnd = 0;
 			CurEng->NumDialogs = 0;
 			CurEng->DisplayingDialog = 0;
+			CurEng->HoveredDialog = 0;
 			CurEng->LastVI = gNumVblanks;
 			CurEng->ReturnedDialog = CurEng->HoveredDialog;
 			return -1;

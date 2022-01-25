@@ -3538,7 +3538,7 @@ void init_camera(struct Camera *c) {
 	if (newcam_active){
 		gLakituState.mode = CAMERA_MODE_NEWCAM;
 		gLakituState.defMode = CAMERA_MODE_NEWCAM;
-		newcam_init(c, 0);
+		newcam_init(c, 1);
 		newcam_init_settings();
 	}
 #endif

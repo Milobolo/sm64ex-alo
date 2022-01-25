@@ -279,6 +279,7 @@ void TE_transition_active(struct TEState *CurEng,struct Transition *Tr,u8 flip){
 	CurEng->EnvColorWord = (CurEng->EnvColorWord&0xFFFFFF00) | (u8) TarAlpha;
 	TE_set_env(CurEng);
 	CurEng->EnvColorWord = Env;
+	CurEng->TrPct = Pct;
 	// print_generic_string(CurEng->TempX+Xoff+CurEng->TransX,CurEng->TempY+Yoff+CurEng->TransY,&StrBuffer[CurEng->state]);
 	print_small_text_TE(CurEng->ScaleF[0],CurEng->ScaleF[1],CurEng->TempX+Xoff+CurEng->TransX,CurEng->TempY+Yoff+CurEng->TransY,&StrBuffer[CurEng->state], PRINT_TEXT_ALIGN_LEFT, PRINT_ALL);
 }
