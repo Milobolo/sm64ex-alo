@@ -10,6 +10,7 @@ struct Struct802C0DF0 {
     const BehaviorScript *behavior;
 };
 //ss4 bhv functions
+void bhvHomeDefenseinit(void);
 void bhv_warp_end_init(void);
 void hover_particle_loop(void);
 void ice_block_loop(void);

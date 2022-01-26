@@ -45,7 +45,7 @@ return_sign = ["[JumpLink('magic_gen_shadow_fade_io')][AutoNextBox()][JumpLink('
 [TransOffs(-60,0)]Return - A sigil the caster can return to at anytime. \
 Escape from traps, deep pits and save travel time.[AbtnNextBox()][Jump('end_read_sign')]"]
 
-return_intro_1 = ["[JumpLink('magic_gen_shadow_fade_io')][AutoNextBox()]Cast return by pressing L and\nchoosing spell[TimeEndStr(160)]"]
+return_intro_1 = ["[JumpLink('magic_gen_shadow_fade_io')][AutoNextBox()]Cast return by pressing L and\nchoosing return[TimeEndStr(160)]"]
 return_intro_2 = ["[JumpLink('magic_gen_shadow_fade_io')][AutoNextBox()]Re-cast return to appear above your sigil[TimeEndStr(160)]"]
 return_intro_3 = ["[JumpLink('magic_gen_shadow_fade_io')][AutoNextBox()]You can update the return location anytime[TimeEndStr(160)]"]
 return_intro_4 = ["[JumpLink('magic_gen_shadow_fade_io')][AutoNextBox()]Use return to escape from one way paths[TimeEndStr(160)]"]

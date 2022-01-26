@@ -429,6 +429,7 @@ const BehaviorScript bhvHomeDefense[] = {
     BEGIN(OBJ_LIST_SURFACE),
     OR_INT(oFlags, OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE),
 	LOAD_COLLISION_DATA(home_defense_collision),
+	CALL_NATIVE(bhvHomeDefenseinit),
 	BEGIN_LOOP(),
 	CALL_NATIVE(bhvHomeDefenseLoop),
     END_LOOP(),

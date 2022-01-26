@@ -861,7 +861,6 @@ u32 interact_star_or_key(struct MarioState *m, UNUSED u32 interactType, struct O
 #ifndef VERSION_JP
         update_mario_sound_and_camera(m);
 #endif
-		mario_cancel_magic(m);
 
         if (grandStar) {
             return set_mario_action(m, ACT_JUMBO_STAR_CUTSCENE, 0);

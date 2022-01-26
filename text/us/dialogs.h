@@ -213,7 +213,7 @@ You've collected a\n\
 star! Mario gains more\n\
 power from the castle.\n\
 Return to level start?\n\
-//Yes////No"))
+//No////Yes"))
 
 DEFINE_DIALOG(DIALOG_014, 1, 4, 30, 200, _("\
 Wow! Another Power Star!\n\
@@ -1957,30 +1957,12 @@ We hope that you like it!\n\
 Enjoy!!!"
 #endif
 
-DEFINE_DIALOG(DIALOG_161, 1, 4, 30, 200, _("\
-Mario!!!\n\
-" YOSHI_IT " that really you???\n\
-It has been so long since\n\
-our last adventure!\n\
-They told me that I might\n\
-see you if I waited here,\n\
-but I'd just about given\n\
-up hope!\n\
-Is it true? Have you\n\
-really beaten Bowser? And\n\
-restored the Stars to the\n\
-castle?\n\
-And saved the Princess?\n\
-I knew you could do it!\n\
-Now I have a very special\n\
-message for you.\n\
-『Thanks for playing Super\n\
-Mario 64! This is the\n\
-end of the game, but not\n\
-the end of the fun." \
-KEEP_ON_PLAYING "』\n\
-\n\
-The Super Mario 64 Team"))
+DEFINE_DIALOG(DIALOG_161, 1, 3, 30, 200, _("\
+You didn't see that.\n\
+A trick of the elephant\n\
+eyes it was yes.\n\
+AHEM.....\n\n\n\
+DIE INVADDERRRRRRRR"))
 
 DEFINE_DIALOG(DIALOG_162, 1, 4, 30, 200, _("\
 No, no, no! Not you\n\

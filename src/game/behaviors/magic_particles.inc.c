@@ -349,6 +349,9 @@ void balance_plat_loop(void){
 
 
 u32 sHomeDefenseActive = 0;
+void bhvHomeDefenseinit(void){
+	sHomeDefenseActive = 0;
+}
 void bhvHomeDefenseLoop(void){
 	if(sHomeDefenseActive){
 		load_object_collision_model();

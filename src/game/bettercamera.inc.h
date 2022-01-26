@@ -431,10 +431,10 @@ static void newcam_zoom_button(void)
     else
         newcam_yaw_target = newcam_yaw;
 }
-
+static s16 waterflag;
 static void newcam_update_values(void) {
     //For tilt, this just limits it so it doesn't go further than 90 degrees either way. 90 degrees is actually 16384, but can sometimes lead to issues, so I just leave it shy of 90.
-    u8 waterflag = 0;
+
 	newcam_mode = newcam_intendedmode;
 	newcam_modeflags = newcam_mode;
 	if (!newcam_active){
@@ -477,10 +477,15 @@ static void newcam_update_values(void) {
         case ACT_FLYING: waterflag = 1; break;
     }
 
-    if (gMarioState->action & ACT_FLAG_SWIMMING) {
+    if (gMarioState->action & ACT_FLAG_SWIMMING && !waterflag) {
         if (gMarioState->forwardVel > 2)
-        waterflag = 1;
-    }
+			waterflag = newcam_tilt;
+    }else{
+		if(waterflag && !(gMarioState->action & ACT_FLAG_SWIMMING)){
+			newcam_tilt = waterflag;
+			waterflag = 0;
+		}
+	}
 
     if (waterflag && newcam_modeflags & NC_FLAG_XTURN && !(newcam_modeflags & NC_FLAG_ZOOM_ULTRA)) {
         newcam_yaw = (approach_s16_symmetric(newcam_yaw,-gMarioState->faceAngle[1]-0x4000,(gMarioState->forwardVel*128)));

@@ -2895,6 +2895,10 @@ s32 act_cast_actions(struct MarioState *m) {
 				//cancel cast
 				if(cont->buttonPressed & Z_TRIG){
 					set_mario_action(m, ACT_IDLE, 0);
+					TE_end_str(&TE_Engines[TE_STATE_AUX]);
+					gMagicHUDRequest=0;
+					gReturn = m->tmpObj;
+					m->tmpObj = 0;
 				}
 			}
 			break;

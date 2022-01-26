@@ -245,6 +245,10 @@ static void wiggler_act_walk(void) {
                 // If >1200 away from home, turn to home
                 o->oWigglerTargetYaw = o->oAngleToMario;
             }
+			if(cur_obj_lateral_dist_to_home()>1700.0f){
+				cur_obj_set_pos_to_home_and_stop();
+				o->oAction = 8;
+			}
 
             if (obj_bounce_off_walls_edges_objects(&o->oWigglerTargetYaw)) {
                 //! If the wiggler could self-intersect, or intersect a different
@@ -328,6 +332,19 @@ static void wiggler_act_jumped_on(void) {
     }
 
     obj_check_attacks(&sWigglerHitbox, o->oAction);
+}
+
+static void wiggler_secret_dialog(void) {
+    // Text to show on first, second, and third attack.
+    s32 attackText = DIALOG_161 ;
+
+	if (o->oTimer > 30) {
+		if (cur_obj_update_dialog_with_cutscene(2, 0, CUTSCENE_DIALOG, attackText) != 0) {
+			// funni text
+			o->oAction = WIGGLER_ACT_WALK;
+			o->oMoveAngleYaw = o->oFaceAngleYaw;
+		}
+	}
 }
 
 /**
@@ -439,6 +456,9 @@ void bhv_wiggler_update(void) {
                     break;
                 case WIGGLER_ACT_FALL_THROUGH_FLOOR:
                     wiggler_act_fall_through_floor();
+                    break;
+                case 8:
+                    wiggler_secret_dialog();
                     break;
             }
 

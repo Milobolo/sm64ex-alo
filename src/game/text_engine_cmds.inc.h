@@ -1014,9 +1014,9 @@ s8 TE_enable_dialog_options(struct TEState *CurEng,u8 *str){
 			CurEng->StrEnd = 0;
 			CurEng->NumDialogs = 0;
 			CurEng->DisplayingDialog = 0;
-			CurEng->HoveredDialog = 0;
 			CurEng->LastVI = gNumVblanks;
 			CurEng->ReturnedDialog = CurEng->HoveredDialog;
+			CurEng->HoveredDialog = 0;
 			return -1;
 		}else{
 			handle_menu_scrolling(MENU_SCROLL_VERTICAL,&CurEng->HoveredDialog,0,CurEng->NumDialogs);
