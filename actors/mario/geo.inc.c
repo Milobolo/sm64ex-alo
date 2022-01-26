@@ -863,7 +863,7 @@ const GeoLayout mario_002_switch_opt0_001_switch_opt0_000_switch_headmodel_opt0_
 const GeoLayout mario_geo[] = {
 	GEO_NODE_START(),
 	GEO_OPEN_NODE(),
-		GEO_SHADOW(1, 180, 100),
+		GEO_SHADOW(SHADOW_CIRCLE_PLAYER, 190, 100),
 		GEO_OPEN_NODE(),
 			GEO_SCALE(LAYER_FORCE, 16384),
 			GEO_OPEN_NODE(),

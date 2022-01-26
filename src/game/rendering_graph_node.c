@@ -586,8 +586,6 @@ void geo_process_shadow(struct GraphNodeShadow *node) {
     if (gCurGraphNodeCamera != NULL && gCurGraphNodeObject != NULL) {
         Vec3f shadowPos;
         f32 shadowScale;
-		Mat4 mtxf;
-		Mtx *mtx;
 
         if (gCurGraphNodeHeldObject != NULL) {
             get_pos_from_transform_mtx(shadowPos, gMatStack[gMatStackIndex],
@@ -630,13 +628,13 @@ void geo_process_shadow(struct GraphNodeShadow *node) {
                                                   node->shadowSolidity, node->shadowType, shifted);
 
         if (shadowList != NULL) {
-            mtx = alloc_display_list(sizeof(*mtx));
-            gMatStackIndex++;
-            mtxf_translate(mtxf, shadowPos);
-            mtxf_mul(gMatStack[gMatStackIndex], mtxf, *gCurGraphNodeCamera->matrixPtr);
-            mtxf_to_mtx(mtx, gMatStack[gMatStackIndex]);
-            gMatStackFixed[gMatStackIndex] = mtx;
-			geo_append_display_list((void *) VIRTUAL_TO_PHYSICAL(shadowList), 6);
+            mtxf_shadow(gMatStack[gMatStackIndex + 1], *gCurGraphNodeCamera->matrixPtr,
+                gCurrShadow.floorNormal, shadowPos, gCurrShadow.scale, gCurGraphNodeObject->angle[1]);
+
+            inc_mat_stack();
+            geo_append_display_list(
+                (void *) VIRTUAL_TO_PHYSICAL(shadowList), 6);
+
             gMatStackIndex--;
         }
     }

@@ -267,6 +267,7 @@ void vec3f_cross(Vec3f dest, Vec3f a, Vec3f b);
 void vec3f_normalize(Vec3f dest);
 f32 vec3f_length(Vec3f a);
 f32 vec3f_dot(Vec3f a, Vec3f b);
+void mtxf_shadow(Mat4 dest, Mat4 src, Vec3f upDir, Vec3f pos, Vec3f scale, s32 yaw);
 void mtxf_copy(register Mat4 dest,register Mat4 src);
 void mtxf_identity(register Mat4 mtx);
 void mtxf_translate(Mat4 dest, Vec3f b);
