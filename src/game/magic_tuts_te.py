@@ -15,21 +15,23 @@ headers = (r'#include "src/game/segment2.h"',r'#include "include/sm64.h"',r'#inc
 
 end_read_sign = ["[MarioAction('ACT_IDLE')][TimeEndStr(1)][end]"]
 
-gigantify_intro_1 = ["[JumpLink('magic_gen_shadow_fade_io')][AutoNextBox()]While large you can push metal boxes[TimeEndStr(160)]"]
-gigantify_intro_2 = ["[JumpLink('magic_gen_shadow_fade_io')][AutoNextBox()]Normally heavy objects become light[TimeEndStr(160)]"]
+gigantify_intro_1 = ["[JumpLink('magic_gen_shadow_fade_io')][AutoNextBox()]Press L and Dpad Right to cast gigantify[TimeEndStr(160)]"]
+gigantify_intro_2 = ["[JumpLink('magic_gen_shadow_fade_io')][AutoNextBox()]While Large normally heavy objects become light[TimeEndStr(160)]"]
 gigantify_intro_3 = ["[JumpLink('magic_gen_shadow_fade_io')][AutoNextBox()]You can use heavy objects to press\nbig switches[TimeEndStr(160)]"]
 gigantify_intro_5 = ["[JumpLink('magic_gen_shadow_fade_io')][AutoNextBox()]Ground Pound boxes to reset\ntheir position[TimeEndStr(160)]"]
 gigantify_intro_4 = ["[JumpLink('magic_gen_shadow_fade_io')][AutoNextBox()]You cannot wallkick while enlarged, recast\n\
 gigantify to cancel it[TimeEndStr(160)]"]
 
+no_jabo = ["[JumpLink('magic_gen_shadow_fade_io')][AutoNextBox()][WordWrap(310)]Do NOT play this hack on JABO graphics plugin. \
+Graphical glitches from bad plugins may severely impair gameplay.[TimeEndStr(300)]"]
 
 #5 lines max
-sign_box_setup = ["[ShadedBGBox(28,292,72,176,0,0,0,0x96)][WordWrap(288)][Pop()]"]
+sign_box_setup = ["[ShadedBGBox(28,292,62,176,0,0,0,0x96)][WordWrap(288)][Pop()]"]
 
 
 intro_sign = ["[JumpLink('magic_gen_shadow_fade_io')][AutoNextBox()][JumpLink('sign_box_setup')][TransOffs(40,0)]Welcome to the world of Shining Elephant Stars!!!\n\n\
 [TransOffs(-40,0)]Elephants are well known for their magic powers, explore 3 new types of elephant abilities \
-in these remade shining worlds.[AbtnNextBox()][JumpLink('sign_box_setup')]Access your elephant powers by pressing L while standing still, and cancel them with Z. \
+in these remade shining worlds.[AbtnNextBox()][JumpLink('sign_box_setup')]Access your elephant powers by pressing L and using the Dpad. You can cancel them with Z. \
 You'll need these powers to collect the stars, but you first must unlock\
 them by passing trials in the worlds ahead.\n\
 Good luck![AbtnNextBox()][Jump('end_read_sign')]"]
@@ -38,14 +40,16 @@ b1_sign = ["[JumpLink('magic_gen_shadow_fade_io')][AutoNextBox()][ShadedBGBox(28
 [AbtnNextBox()][Jump('end_read_sign')]"]
 
 gigantify_sign = ["[JumpLink('magic_gen_shadow_fade_io')][AutoNextBox()][JumpLink('sign_box_setup')][TransOffs(70,0)]Trial of spirit\n\n\
-[TransOffs(-70,0)]Gigantify - Enlarges the self and over doubles strength. \
-Run faster, jump higher and move heavy objects easily, but you cannot wallkick.[AbtnNextBox()][Jump('end_read_sign')]"]
+[TransOffs(-70,0)]Gigantify - Enlarges the self and increase strength. \
+You can move heavy objects easily, but you cannot wallkick.\n\
+Cast with L and Dpad Right[AbtnNextBox()][Jump('end_read_sign')]"]
 
 return_sign = ["[JumpLink('magic_gen_shadow_fade_io')][AutoNextBox()][JumpLink('sign_box_setup')][TransOffs(60,0)]Temple of spellcraft\n\n\
 [TransOffs(-60,0)]Return - A sigil the caster can return to at anytime. \
-Escape from traps, deep pits and save travel time.[AbtnNextBox()][Jump('end_read_sign')]"]
+Escape from traps, deep pits and save travel time.\n\
+Cast with L and Dpad Left. Recast to activate.[AbtnNextBox()][Jump('end_read_sign')]"]
 
-return_intro_1 = ["[JumpLink('magic_gen_shadow_fade_io')][AutoNextBox()]Cast return by pressing L and\nchoosing return[TimeEndStr(160)]"]
+return_intro_1 = ["[JumpLink('magic_gen_shadow_fade_io')][AutoNextBox()]Press L and Dpad Left to cast return[TimeEndStr(160)]"]
 return_intro_2 = ["[JumpLink('magic_gen_shadow_fade_io')][AutoNextBox()]Re-cast return to appear above your sigil[TimeEndStr(160)]"]
 return_intro_3 = ["[JumpLink('magic_gen_shadow_fade_io')][AutoNextBox()]You can update the return location anytime[TimeEndStr(160)]"]
 return_intro_4 = ["[JumpLink('magic_gen_shadow_fade_io')][AutoNextBox()]Use return to escape from one way paths[TimeEndStr(160)]"]
@@ -54,9 +58,10 @@ return_intro_5 = ["[JumpLink('magic_gen_shadow_fade_io')][AutoNextBox()]Use retu
 
 ice_sign = ["[JumpLink('magic_gen_shadow_fade_io')][AutoNextBox()][JumpLink('sign_box_setup')][TransOffs(60,0)]Env Station\n\n\
 [TransOffs(-60,0)]Ice block - A spawnable platform you can place to your liking. \
-Use to traverse gaps, and reach greater heights.[AbtnNextBox()][Jump('end_read_sign')]"]
+Use to traverse gaps, and reach greater heights.\n\
+Cast with L and Dpad Down. Use L to place.[AbtnNextBox()][Jump('end_read_sign')]"]
 
-ice_intro_1 = ["[JumpLink('magic_gen_shadow_fade_io')][AutoNextBox()]Cast ice block by pressing L, press \nL again to place[TimeEndStr(160)]"]
+ice_intro_1 = ["[JumpLink('magic_gen_shadow_fade_io')][AutoNextBox()]Press L and Dpad Down to cast ice block\npress L again to place[TimeEndStr(160)]"]
 ice_intro_3 = ["[JumpLink('magic_gen_shadow_fade_io')][AutoNextBox()]Ice blocks must be placed on a floor[TimeEndStr(160)]"]
 ice_intro_2 = ["[JumpLink('magic_gen_shadow_fade_io')][AutoNextBox()]Ice blocks move with platforms\nthey're placed on[TimeEndStr(160)]"]
 ice_intro_4 = ["[JumpLink('magic_gen_shadow_fade_io')][AutoNextBox()]Only one ice block can exist at a time[TimeEndStr(160)]"]

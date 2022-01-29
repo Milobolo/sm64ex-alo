@@ -192,7 +192,6 @@ extern Gfx mat_revert_castle_courtyard_dl_blinder_layer0[];
 extern Gfx mat_castle_courtyard_dl_stone_border[];
 extern Gfx mat_revert_castle_courtyard_dl_stone_border[];
 extern Gfx mat_castle_courtyard_dl_atrium_floor[];
-extern Gfx mat_revert_castle_courtyard_dl_atrium_floor[];
 extern Gfx mat_castle_courtyard_dl_arch_insides[];
 extern Gfx mat_revert_castle_courtyard_dl_arch_insides[];
 extern Gfx mat_castle_courtyard_dl_ARCH_WALL[];

@@ -278,7 +278,7 @@ static int ivrt(u8 axis) {
             return -1;
     }
 }
-
+u8 sDpadMove = 0;
 static void newcam_rotate_button(void)
 {
 	if(!newcam_analogue){
@@ -308,16 +308,26 @@ static void newcam_rotate_button(void)
 			newcam_centering = 1;
 		}
 	}
-	if ((gPlayer1Controller->buttonDown & L_JPAD)  && !(gMagicHUDRequest&HUD_OPEN)&& newcam_analogue == 0)
+	if ((gPlayer1Controller->buttonPressed & L_JPAD || sDpadMove&2)  && !(gMagicHUDRequest&HUD_OPEN)&& newcam_analogue == 0)
 	{
-		newcam_yaw_target = newcam_yaw_target+(ivrt(0)*0x80);
-		newcam_centering = 1;
+		if(gPlayer1Controller->buttonDown & L_JPAD){
+			sDpadMove = 2;
+			newcam_yaw_target = newcam_yaw_target+(ivrt(0)*0x80);
+			newcam_centering = 1;
+		}else{
+			sDpadMove &= ~2;
+		}
 	}
 	else
-	if ((gPlayer1Controller->buttonDown & R_JPAD)  && !(gMagicHUDRequest&HUD_OPEN)&& newcam_analogue == 0)
+	if ((gPlayer1Controller->buttonPressed & R_JPAD || sDpadMove)  && !(gMagicHUDRequest&HUD_OPEN)&& newcam_analogue == 0)
 	{
-		newcam_yaw_target = newcam_yaw_target-(ivrt(0)*0x80);
-		newcam_centering = 1;
+		if(gPlayer1Controller->buttonDown & R_JPAD){
+			sDpadMove = 1;
+			newcam_yaw_target = newcam_yaw_target-(ivrt(0)*0x80);
+			newcam_centering = 1;
+		}else{
+			sDpadMove &= ~1;
+		}
 	}
 	else
 	if ((gPlayer1Controller->buttonPressed & D_JPAD)  && !(gMagicHUDRequest&HUD_OPEN) && newcam_analogue == 0)
@@ -331,7 +341,7 @@ static void newcam_rotate_button(void)
 		}
 	}
 	else
-	if (gPlayer1Controller->buttonDown & U_JPAD && !(gMagicHUDRequest&HUD_OPEN) && newcam_analogue == 0)
+	if ((gPlayer1Controller->buttonPressed & U_JPAD) && !(gMagicHUDRequest&HUD_OPEN) && newcam_analogue == 0)
 	{
 		newcam_yaw_target = -gMarioState->faceAngle[1]-0x4000; //conversion from sm64 angles to newcam angle system
 		newcam_centering = 1;

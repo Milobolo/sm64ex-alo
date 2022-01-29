@@ -175,10 +175,10 @@ Ready?\n\
 //Go//// Don't Go"))
 
 DEFINE_DIALOG(DIALOG_010, 1, 4, 30, 200, _("\
-You've stepped on a\n\
-Spirit Switch. Access\n\
+You've stepped on the\n\
+GIGANTIFY Switch. Access\n\
 your magic by pressing L\n\
-and selecting spirit.\n\
+and pressing Dpad Right.\n\
 Spirit spell buffs last\n\
 until they're cancelled.\n\
 Would you like to save?\n\
@@ -187,23 +187,23 @@ Would you like to save?\n\
 
 DEFINE_DIALOG(DIALOG_011, 1, 4, 30, 200, _("\
 You've stepped on a\n\
-Spell Switch. Access\n\
+Return Switch. Access\n\
 your magic by pressing L\n\
-and selecting SPELL.\n\
-Spells allow you to change\n\
-the world around you.\n\
+and pressing Dpad Left.\n\
+Recast to use the spells\n\
+effect.\n\
 Would you like to save?\n\
 \n\
 //Yes////No"))
 
 DEFINE_DIALOG(DIALOG_012, 1, 4, 30, 200, _("\
 You've stepped on a\n\
-Env Switch. Access\n\
+Ice Block Switch. Access\n\
 your magic by pressing L\n\
-and selecting ENV.\n\
-ENV spells make a\n\
+and pressing Dpad Down.\n\
+Ice block makes a\n\
 platform you can\n\
-manually place.\n\
+manually place with L.\n\
 Would you like to save?\n\
 \n\
 //Yes////No"))
@@ -1428,9 +1428,9 @@ Now, take Star of Power.\n\
 We...sleep...darkness."))
 
 DEFINE_DIALOG(DIALOG_119, 1, 3, 30, 200, _("\
-This boss fight is\n\
-accurate to the original\n\
-Shining Stars 2 Game tm."))
+I fell off + \n\
+BDR best + play BDR11\n\
+coming 2022."))
 
 DEFINE_DIALOG(DIALOG_120, 1, 4, 30, 200, _("\
 Ooowaah! Can it be that\n\

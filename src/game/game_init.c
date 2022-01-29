@@ -319,7 +319,7 @@ void rendering_init(void) {
     send_display_list(&gGfxPool->spTask);
 	//yep, its jabo
 	if(gFrameBuffer0[0] == 0xff){
-		gJaboCheck = 0;
+		gJaboCheck = 1;
 	}
     // Skip incrementing the initial framebuffer index on emulators so that they display immediately as the Gfx task finishes
     if ((*(volatile u32 *)0xA4100010) != 0) { // Read RDP Clock Register, has a value of zero on emulators

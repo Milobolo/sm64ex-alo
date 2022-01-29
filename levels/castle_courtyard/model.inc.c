@@ -15316,7 +15316,6 @@ Gfx mat_revert_castle_courtyard_dl_stone_border[] = {
 Gfx mat_castle_courtyard_dl_atrium_floor[] = {
 	gsDPPipeSync(),
 	gsDPSetCombineLERP(TEXEL0, 0, SHADE, 0, 0, 0, 0, ENVIRONMENT, TEXEL0, 0, SHADE, 0, 0, 0, 0, ENVIRONMENT),
-	gsSPClearGeometryMode(G_CULL_BACK),
 	gsSPTexture(65535, 65535, 0, 0, 1),
 	gsDPTileSync(),
 	gsDPSetTextureImage(G_IM_FMT_I, G_IM_SIZ_8b_LOAD_BLOCK, 1, castle_courtyard_dl_kpa_floor_ctif_i8),
@@ -15327,12 +15326,6 @@ Gfx mat_castle_courtyard_dl_atrium_floor[] = {
 	gsDPSetTile(G_IM_FMT_I, G_IM_SIZ_8b, 4, 0, 0, 0, G_TX_WRAP | G_TX_NOMIRROR, 5, 0, G_TX_WRAP | G_TX_NOMIRROR, 5, 0),
 	gsDPSetTileSize(0, 0, 0, 124, 124),
 	gsSPSetLights1(castle_courtyard_dl_atrium_floor_lights),
-	gsSPEndDisplayList(),
-};
-
-Gfx mat_revert_castle_courtyard_dl_atrium_floor[] = {
-	gsDPPipeSync(),
-	gsSPSetGeometryMode(G_CULL_BACK),
 	gsSPEndDisplayList(),
 };
 
@@ -15818,7 +15811,7 @@ Gfx mat_castle_courtyard_dl_sand_layer1[] = {
 	gsDPSetCombineLERP(TEXEL0, 0, TEXEL1, 0, 0, 0, 0, 1, COMBINED, 0, SHADE, 0, 0, 0, 0, COMBINED),
 	gsSPClearGeometryMode(G_LIGHTING),
 	gsDPSetCycleType(G_CYC_2CYCLE),
-	gsDPSetRenderMode(G_RM_AA_ZB_OPA_SURF, G_RM_NOOP),
+	gsDPSetRenderMode(G_RM_NOOP, G_RM_AA_ZB_OPA_SURF2),
 	gsSPTexture(65535, 65535, 0, 0, 1),
 	gsDPTileSync(),
 	gsDPSetTextureImage(G_IM_FMT_RGBA, G_IM_SIZ_16b_LOAD_BLOCK, 1, castle_courtyard_dl_Texture0141_RGB_rgba16),
@@ -16153,7 +16146,6 @@ Gfx castle_courtyard_dl_d_stone_mesh_layer_0[] = {
 Gfx castle_courtyard_dl_e_atrium_mesh_layer_1[] = {
 	gsSPDisplayList(mat_castle_courtyard_dl_atrium_floor),
 	gsSPDisplayList(castle_courtyard_dl_e_atrium_mesh_layer_1_tri_0),
-	gsSPDisplayList(mat_revert_castle_courtyard_dl_atrium_floor),
 	gsSPDisplayList(mat_castle_courtyard_dl_arch_insides),
 	gsSPDisplayList(castle_courtyard_dl_e_atrium_mesh_layer_1_tri_1),
 	gsSPDisplayList(mat_revert_castle_courtyard_dl_arch_insides),

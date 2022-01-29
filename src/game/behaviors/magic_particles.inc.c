@@ -58,7 +58,10 @@ void ice_block_loop(void){
 		if( (floor - o->oPosY) < -60.0f){
 			obj_mark_for_deletion(o);
 		}
-		load_object_collision_model();
+		//check if this thing is squishing mario
+		if(dist_between_objects(o,gMarioObject)>60.0f){
+			load_object_collision_model();
+		}
 	}else{
 		o->oOpacity = 120;
 	}

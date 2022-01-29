@@ -9,6 +9,8 @@
 #include "types.h"
 #include "buffers/framebuffers.h"
 #include "game/game_init.h"
+#include "game/magic.h"
+#include "game/text_engine.h"
 #include "audio/external.h"
 #include "prevent_bss_reordering.h"
 
@@ -39,7 +41,6 @@ static s32 sTmCopyrightAlpha;
 /**
  * Geo callback to render the "Super Mario 64" logo on the title screen
  */
-extern u8 gJaboCheck;
 Gfx *geo_intro_super_mario_64_logo(s32 state, struct GraphNode *node, UNUSED void *context) {
     struct GraphNode *graphNode = node;
     Gfx *dl = NULL;
@@ -80,10 +81,6 @@ Gfx *geo_intro_super_mario_64_logo(s32 state, struct GraphNode *node, UNUSED voi
             scaleX = 0.0f;
             scaleY = 0.0f;
             scaleZ = 0.0f;
-			//if jabo print a msg
-			if(gJaboCheck == 0){
-				//print msg
-			}
         }
         guScale(scaleMat, scaleX, scaleY, scaleZ);
 

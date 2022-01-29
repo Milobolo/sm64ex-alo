@@ -48,7 +48,9 @@ Original levels - sm64pie\n\n\
 Remade levels - scuttlebug_raiser\n\n\
 music ports - scuttlebug_raiser\n\n\
 tools used:\n\
-fast64, decomp\
+fast64, decomp\n\n\n\n\
+Special Thanks:\n\
+lincrash, sm64pie, zel\nthecozies, kaze, hyena kun\
 [AbtnNextBox()][GotoRtrn(0)]"]
 
 magic_spells_init = ['[CallOnce(1,"TE_set_flag",2,["&gMagicHUDRequest","HUD_OPEN | HUD_MAIN"])]\
@@ -80,7 +82,7 @@ magic_spells_spell_init = ['[CallOnce(1,"TE_set_flag",2,["&gMagicHUDRequest","HU
 [SetScissor(14,110,230,230)]\
 [ShadedBGBox(14,110,158,215,0,0,0,0x96)]\
 [CallLoop(4,"TE_get_flag",2,["&gMagicHUDRequest","CAST_WAIT"])][MatchRtrn(4,1)][Jump("magic_wait")][GenericText()]\
-[PrintGlyph("magic_d_left")]SPELL',
+[PrintGlyph("magic_d_left")]RETURN',
 #[I explicitly do not use btn enums here because these are char arrays and btns are shorts]
 '[BtnBranchOpen(0x200)][CallOnce(0,"mario_set_spell",1,["ACTION_NULL"])][Jump("magic_list_spells")][BtnBranchClose()]\
 [end]']
@@ -92,9 +94,21 @@ magic_spells_env_init = ['[CallOnce(1,"TE_set_flag",2,["&gMagicHUDRequest","HUD_
 [SetScissor(14,110,230,230)]\
 [ShadedBGBox(14,110,158,215,0,0,0,0x96)]\
 [CallLoop(4,"TE_get_flag",2,["&gMagicHUDRequest","CAST_WAIT"])][MatchRtrn(4,1)][Jump("magic_wait")][GenericText()]\
-[PrintGlyph("magic_d_down")]ENV ',
+[PrintGlyph("magic_d_down")]ICE BLOCK ',
 #[I explicitly do not use btn enums here because these are char arrays and btns are shorts]
 '[BtnBranchOpen(0x400)][CallOnce(0,"mario_set_spell",1,["ACTION_NULL"])][Jump("magic_list_env")][BtnBranchClose()]\
+[end]']
+
+magic_spells_spirit_init = ['[CallOnce(1,"TE_set_flag",2,["&gMagicHUDRequest","HUD_OPEN | HUD_MAIN"])]\
+[StartTransition(8,255,0,0)][AutoNextBox()]\
+[MosaicBGBox(24,94,214,234,"magic_action_menu",2,1)]\n\
+[BoxTransition(0,0,-72,0)]\
+[SetScissor(14,110,230,230)]\
+[ShadedBGBox(14,110,158,215,0,0,0,0x96)]\
+[CallLoop(4,"TE_get_flag",2,["&gMagicHUDRequest","CAST_WAIT"])][MatchRtrn(4,1)][Jump("magic_wait")][GenericText()]\
+[PrintGlyph("magic_d_right")]GIGANTIFY',
+#[I explicitly do not use btn enums here because these are char arrays and btns are shorts]
+'[BtnBranchOpen(0x100)][CallOnce(0,"mario_set_spell",1,["ACTION_NULL"])][Jump("magic_list_spirit")][BtnBranchClose()]\
 [end]']
 
 

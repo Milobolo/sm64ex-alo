@@ -40,7 +40,7 @@ const GeoLayout bob_area_1_geo[] = {
 			GEO_DISPLAY_LIST(LAYER_TRANSPARENT, bob_dl_level_mesh_layer_5),
 			GEO_DISPLAY_LIST(LAYER_ALPHA, bob_dl_level_mesh_layer_4),
 		GEO_CLOSE_NODE(),
-		GEO_TRANSLATE_NODE_WITH_DL(LAYER_TRANSPARENT_DECAL, 8889, 1669, -4636, bob_dl_level_001_mesh_layer_6),
+		GEO_TRANSLATE_NODE_WITH_DL(LAYER_TRANSPARENT_DECAL, 8889, 1663, -4636, bob_dl_level_001_mesh_layer_6),
 		GEO_TRANSLATE_NODE_WITH_DL(LAYER_OPAQUE, 4137, 964, -4637, bob_dl_level_002_mesh_layer_1),
 		GEO_OPEN_NODE(),
 			GEO_DISPLAY_LIST(LAYER_ALPHA, bob_dl_level_002_mesh_layer_4),

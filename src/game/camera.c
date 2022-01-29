@@ -1218,6 +1218,7 @@ void mode_2_directions_camera(struct Camera *c) {
  * A mode that only has 8 camera angles, 45 degrees apart
  */
 #include "magic.h"
+extern u8 sDpadMove;
 void mode_8_directions_camera(struct Camera *c) {
     Vec3f pos;
     UNUSED u8 unused[8];
@@ -1235,14 +1236,24 @@ void mode_8_directions_camera(struct Camera *c) {
     }
 	// extra functionality, disable when action menu up SS4 only
 	if(!(gMagicHUDRequest&HUD_OPEN)){
-		if (gPlayer1Controller->buttonDown & L_JPAD) {
-			s8DirModeYawOffset -= DEGREES(1);
+		if (gPlayer1Controller->buttonDown & L_JPAD || sDpadMove&2) {
+			if(gPlayer1Controller->buttonDown & L_JPAD){
+				sDpadMove = 2;
+				s8DirModeYawOffset -= DEGREES(1);
+			}else{
+				sDpadMove &= ~2;
+			}
 		}
-		else if (gPlayer1Controller->buttonDown & R_JPAD) {
-			s8DirModeYawOffset += DEGREES(1);
+		else if (gPlayer1Controller->buttonPressed & R_JPAD || sDpadMove&1) {
+			if(gPlayer1Controller->buttonDown & R_JPAD){
+				sDpadMove = 1;
+				s8DirModeYawOffset += DEGREES(1);
+			}else{
+				sDpadMove &= ~1;
+			}
 		}
 		else if (gPlayer1Controller->buttonPressed & U_JPAD) {
-			s8DirModeYawOffset = gMarioState->faceAngle[1];
+			s8DirModeYawOffset = -gMarioState->faceAngle[1];
 		}
 		else if (gPlayer1Controller->buttonPressed & D_JPAD) {
 			s8DirModeYawOffset = (s8DirModeYawOffset+0x1000)&0xE000;

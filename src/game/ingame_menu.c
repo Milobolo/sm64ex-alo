@@ -982,7 +982,7 @@ void render_dialog_box_type(struct DialogEntry *dialog, s8 linesPerBox) {
     }
 
     create_dl_translation_matrix(MENU_MTX_PUSH, X_VAL1, Y_VAL1, 0);
-    create_dl_scale_matrix(MENU_MTX_NOPUSH, 1.1f, ((f32) linesPerBox / Y_VAL2) + 0.1, 1.0f);
+    create_dl_scale_matrix(MENU_MTX_NOPUSH, 1.2f, ((f32) linesPerBox / Y_VAL2) + 0.1, 1.0f);
 
     gSPDisplayList(gDisplayListHead++, dl_draw_text_bg_box);
     gSPPopMatrix(gDisplayListHead++, G_MTX_MODELVIEW);
