@@ -2864,6 +2864,14 @@ s32 act_cast_actions(struct MarioState *m) {
 				switch((u32) gReturn){
 					//do nothing, just wait
 					case 1:
+						//catch breakthrough somehow??
+						if(TE_Engines[TE_STATE_AUX].OgStr==0){
+							set_mario_action(m, ACT_IDLE, 0);
+							TE_end_str(&TE_Engines[TE_STATE_AUX]);
+							gMagicHUDRequest = 0;
+							gReturn = m->tmpObj;
+							m->tmpObj = 0;
+						}
 						break;
 					case 2:
 						gReturn = m->tmpObj;
@@ -2896,7 +2904,7 @@ s32 act_cast_actions(struct MarioState *m) {
 				if(cont->buttonPressed & Z_TRIG){
 					set_mario_action(m, ACT_IDLE, 0);
 					TE_end_str(&TE_Engines[TE_STATE_AUX]);
-					gMagicHUDRequest=0;
+					gMagicHUDRequest = 0;
 					gReturn = m->tmpObj;
 					m->tmpObj = 0;
 				}
@@ -3070,6 +3078,7 @@ s32 act_cast_actions(struct MarioState *m) {
 					m->spawnObj = 0;
 					set_mario_action(m, ACT_IDLE, 0);
 					m->flags &= (~MARIO_CAM_FOC_OBJ | MARIO_CAM_FOC_RISE);
+					gMagicHUDRequest = 0;
 				}
 			}
 			break;
