@@ -16,7 +16,7 @@ headers = (r'#include "src/game/segment2.h"',r'#include "include/sm64.h"',r'#inc
 end_read_sign = ["[MarioAction('ACT_IDLE')][TimeEndStr(1)][end]"]
 
 gigantify_intro_1 = ["[JumpLink('magic_gen_shadow_fade_io')][AutoNextBox()]Press L and Dpad Right to cast gigantify[TimeEndStr(160)]"]
-gigantify_intro_2 = ["[JumpLink('magic_gen_shadow_fade_io')][AutoNextBox()]While Large normally heavy objects become light[TimeEndStr(160)]"]
+gigantify_intro_2 = ["[JumpLink('magic_gen_shadow_fade_io')][AutoNextBox()]While Large normally heavy\nobjects become light[TimeEndStr(160)]"]
 gigantify_intro_3 = ["[JumpLink('magic_gen_shadow_fade_io')][AutoNextBox()]You can use heavy objects to press\nbig switches[TimeEndStr(160)]"]
 gigantify_intro_5 = ["[JumpLink('magic_gen_shadow_fade_io')][AutoNextBox()]Ground Pound boxes to reset\ntheir position[TimeEndStr(160)]"]
 gigantify_intro_4 = ["[JumpLink('magic_gen_shadow_fade_io')][AutoNextBox()]You cannot wallkick while enlarged, recast\n\

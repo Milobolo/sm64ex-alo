@@ -3078,7 +3078,6 @@ s32 act_cast_actions(struct MarioState *m) {
 					m->spawnObj = 0;
 					set_mario_action(m, ACT_IDLE, 0);
 					m->flags &= (~MARIO_CAM_FOC_OBJ | MARIO_CAM_FOC_RISE);
-					gMagicHUDRequest = 0;
 				}
 			}
 			break;

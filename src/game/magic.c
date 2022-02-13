@@ -36,7 +36,7 @@ It will also contain basic enemy logic and enemy battle stuff like arenas, exp e
 u32 gMagicHUDRequest = 0;
 
 void start_render_magic_spells_hud(void){
-	if ( !((gMarioState->action == ACT_CAST_ACTION) || (gMagicHUDRequest&HUD_OPEN)))
+	if ( !((gMarioState->action == ACT_CAST_ACTION) || (gMagicHUDRequest&HUD_OPEN))){
 		switch(gMarioState->ForceSpell){
 			default:
 			case 0:
@@ -55,7 +55,7 @@ void start_render_magic_spells_hud(void){
 				SetupTextEngine(16,212,no_magic, TE_STATE_AUX);
 				break;
 		}
-	
+	}
 }
 
 void cancel_render_magic_spells_hud(void){

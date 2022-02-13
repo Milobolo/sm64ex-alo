@@ -202,6 +202,7 @@ void back_and_forth_loop(void){
 			o->oForwardVel = 0;
 			if(o->oTimer>=60){
 				o->oAction = 0;
+				cur_obj_set_pos_to_home();
 			}
 			break;
 	}
@@ -240,6 +241,7 @@ void up_and_down_loop(void){
 			if(o->oTimer>=60){
 				o->oAction = 0;
 				o->oVelY = (f32) bp2;
+				cur_obj_set_pos_to_home();
 			}
 			break;
 	}
