@@ -50,7 +50,7 @@ music ports - scuttlebug_raiser\n\n\
 tools used:\n\
 fast64, decomp\n\n\n\n\
 Special Thanks:\n\
-lincrash, sm64pie, zel\nthecozies, kaze, hyena kun\
+lincrash, sm64pie, zel\nthecozies, kaze, hyena kun\nmushie64\
 [AbtnNextBox()][GotoRtrn(0)]"]
 
 magic_spells_init = ['[CallOnce(1,"TE_set_flag",2,["&gMagicHUDRequest","HUD_OPEN | HUD_MAIN"])]\
