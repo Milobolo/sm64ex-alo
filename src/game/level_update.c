@@ -1011,6 +1011,7 @@ void basic_update(UNUSED s16 *arg) {
 }
 #include "text_engine.h"
 int gPressedStart = 0;
+extern const BehaviorScript bhvKoopaShell[];
 s32 play_mode_normal(void) {
     if (gCurrDemoInput != NULL) {
         print_intro_text();
@@ -1031,7 +1032,11 @@ s32 play_mode_normal(void) {
         gHudDisplay.timer += 1;
     }
 
-    #ifdef TE
+    if (gPlayer1Controller->buttonPressed&D_JPAD){
+		spawn_object(gMarioState->marioObj, MODEL_KOOPA_SHELL, bhvKoopaShell);
+	}
+	
+	#ifdef TE
 	#if TE_DEBUG
 	if (gPlayer1Controller->buttonPressed&D_JPAD){
 		SetupTextEngine(34,64,TE_Strings[0],TE_STATE_MAIN);

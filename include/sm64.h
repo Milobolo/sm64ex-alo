@@ -80,6 +80,7 @@ void *memmove(void *str1, const void *str2, size_t n);
 #define GROUND_STEP_HIT_WALL                 2
 #define GROUND_STEP_HIT_WALL_STOP_QSTEPS     2
 #define GROUND_STEP_HIT_WALL_CONTINUE_QSTEPS 3
+#define GROUND_STEP_ENTERED_WATER 4
 
 #define AIR_STEP_CHECK_LEDGE_GRAB 0x00000001
 #define AIR_STEP_CHECK_HANG       0x00000002
@@ -89,6 +90,7 @@ void *memmove(void *str1, const void *str2, size_t n);
 #define AIR_STEP_HIT_WALL        2
 #define AIR_STEP_GRABBED_LEDGE   3
 #define AIR_STEP_GRABBED_CEILING 4
+#define AIR_STEP_SHELL_ENTERED_WATER 5
 #define AIR_STEP_HIT_LAVA_WALL   6
 
 #define WATER_STEP_NONE        0

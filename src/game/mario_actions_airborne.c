@@ -14,6 +14,7 @@
 #include "mario_step.h"
 #include "rumble_init.h"
 #include "save_file.h"
+#include "behavior_data.h"
 #ifdef BETTERCAMERA
 #include "bettercamera.h"
 #endif
@@ -712,11 +713,103 @@ s32 act_riding_shell_air(struct MarioState *m) {
     play_mario_sound(m, SOUND_ACTION_TERRAIN_JUMP, 0);
     set_mario_animation(m, MARIO_ANIM_JUMP_RIDING_SHELL);
 
+    // transfer the timer from the previous action
+    if (m->actionArg > 0) {
+        m->actionTimer = m->actionArg;
+        m->actionArg = 0;
+    } else {
+        // double jump
+        // putting this in an else statement ensures that the same A press is not used for the double
+        // jump
+        if (m->input & INPUT_A_PRESSED && m->actionState != 2 && m->actionState != 3) {
+            m->actionState = 2;
+            m->vel[1] = 60.0f;
+            m->particleFlags |= PARTICLE_MIST_CIRCLE;
+            play_sound(SOUND_GENERAL_SWISH_WATER, m->marioObj->header.gfx.cameraToObject);
+        }
+    }
+
+    //this is in place for the transition from water shell to air shell
+    if (!m->riddenObj) {
+        m->faceAngle[0] = 0;
+        m->faceAngle[2] = 0;
+        m->interactObj = spawn_object(m->marioObj, MODEL_KOOPA_SHELL, bhvKoopaShell);
+            m->usedObj = m->interactObj;
+            m->riddenObj = m->interactObj;
+
+            attack_object(m->interactObj, 0x40);
+    }
+
+    m->actionTimer++;
+
+
+    //ground pound
+    if (m->input & INPUT_Z_PRESSED && m->actionState != 3) {
+        m->actionState = 3;
+        m->forwardVel *= 0.7f;
+        // the timer is set to 40 so that the dash will be ready when you get back to the ground
+        m->actionTimer = 40;
+
+        play_sound(SOUND_ACTION_SPIN, m->marioObj->header.gfx.cameraToObject);
+    }
+
+    if (m->actionState == 3) {
+        // stall in the air for a bit
+        if (m->actionTimer < 45) {
+            m->marioObj->header.gfx.angle[1] += 0x3333;
+        }
+        if (m->actionTimer < 50) {
+            m->vel[1] = 12.0f;
+        }
+        // shoot downward
+        if (m->actionTimer == 50) {
+            m->vel[1] = -90.0f;
+        }
+    }
+
+    // manual deceleration in air during a dash
+    if (m->forwardVel < 128.0f && m->forwardVel > 64.0f) {
+        m->forwardVel -= (f32) m->actionTimer / 15.0f;
+    }
+    if (m->forwardVel > 128.0f) {
+        m->forwardVel = 128.0f;
+    }
+
+    // accelerate downwards during pound
+    if (m->actionState == 3) {
+        m->vel[1] -= 10.0f;
+        if (m->vel[1] < -90.0f) {
+            m->marioObj->header.gfx.scale[1] = 1.0f + (-1.0f * m->vel[1] / 180.0f);
+        }
+    }
+
     update_air_without_turn(m);
 
     switch (perform_air_step(m, 0)) {
         case AIR_STEP_LANDED:
-            set_mario_action(m, ACT_RIDING_SHELL_GROUND, 1);
+            if (m->actionState == 3) {
+
+                // ground pounds go straight into water
+                if (m->floor == &gWaterSurfacePseudoFloor) {
+                    if (m->riddenObj != NULL) {
+                        m->riddenObj->oInteractStatus = INT_STATUS_STOP_RIDING;
+                        m->riddenObj = NULL;
+                    }
+                    play_sound(SOUND_ACTION_UNKNOWN430, m->marioObj->header.gfx.cameraToObject);
+                    m->particleFlags |= PARTICLE_WATER_SPLASH;
+                    m->pos[1] -= 50;
+                     m->usedObj = spawn_object(m->marioObj, MODEL_KOOPA_SHELL, bhvKoopaShellUnderwater);
+                     mario_grab_used_object(m);
+                    m->marioBodyState->grabPos = GRAB_POS_LIGHT_OBJ;
+                    set_mario_action(m, ACT_WATER_SHELL_SWIMMING, (u32)(s32)m->forwardVel);
+                } else {
+                    m->particleFlags |= PARTICLE_MIST_CIRCLE;
+                    play_sound(SOUND_OBJ_POUNDING1, m->marioObj->header.gfx.cameraToObject);
+                    set_mario_action(m, ACT_RIDING_SHELL_GROUND, m->actionTimer);
+                }
+            } else {
+                set_mario_action(m, ACT_RIDING_SHELL_GROUND, m->actionTimer);
+            }
             break;
 
         case AIR_STEP_HIT_WALL:
@@ -725,6 +818,18 @@ s32 act_riding_shell_air(struct MarioState *m) {
 
         case AIR_STEP_HIT_LAVA_WALL:
             lava_boost_on_wall(m);
+            break;
+
+        case AIR_STEP_SHELL_ENTERED_WATER:
+            if (m->riddenObj != NULL) {
+                m->riddenObj->oInteractStatus = INT_STATUS_STOP_RIDING;
+                m->riddenObj = NULL;
+            }
+            play_sound(SOUND_ACTION_UNKNOWN430, m->marioObj->header.gfx.cameraToObject);
+            m->particleFlags |= PARTICLE_WATER_SPLASH;
+            m->pos[1] -= 50;
+            //changes action but doesnt spawn a shell. the shell will spawn in the action itself.
+            set_mario_action(m, ACT_WATER_SHELL_SWIMMING, (u32)(s32)m->forwardVel);
             break;
     }
 
@@ -887,7 +992,7 @@ s32 act_water_jump(struct MarioState *m) {
     switch (perform_air_step(m, AIR_STEP_CHECK_LEDGE_GRAB)) {
         case AIR_STEP_LANDED:
             set_mario_action(m, ACT_JUMP_LAND, 0);
-            set_camera_mode(m->area->camera, m->area->camera->defMode, 1);
+            //set_camera_mode(m->area->camera, m->area->camera->defMode, 1);
             break;
 
         case AIR_STEP_HIT_WALL:
@@ -899,7 +1004,7 @@ s32 act_water_jump(struct MarioState *m) {
             set_mario_animation(m, MARIO_ANIM_IDLE_ON_LEDGE);
 #endif
             set_mario_action(m, ACT_LEDGE_GRAB, 0);
-            set_camera_mode(m->area->camera, m->area->camera->defMode, 1);
+            //set_camera_mode(m->area->camera, m->area->camera->defMode, 1);
             break;
 
         case AIR_STEP_HIT_LAVA_WALL:
@@ -915,17 +1020,69 @@ s32 act_hold_water_jump(struct MarioState *m) {
         return drop_and_set_mario_action(m, ACT_FREEFALL, 0);
     }
 
+	// transfer actionArg to actionState if holding a shell
+	if (m->actionArg == 4) {
+		m->vel[1] = m->forwardVel * 1.9f;
+		m->forwardVel *= 1.6f;
+		m->actionArg = 0;
+		m->actionState = 4;
+
+		// the water cam is awful for this, just use the normal one instead
+		////set_camera_mode(m->area->camera, m->area->camera->defMode, 1);
+	 }
+	m->actionTimer += 1;
+
     if (m->forwardVel < 15.0f) {
         mario_set_forward_vel(m, 15.0f);
     }
+	//if Z is pressed midair, mario will do a flip and then go back to riding his shell
+	if (m->input & INPUT_Z_PRESSED && m->actionState != 6) {
+		m->actionState = 6;
+		m->actionTimer = 0;
+	}
 
-    play_mario_sound(m, SOUND_ACTION_UNKNOWN432, 0);
-    set_mario_animation(m, MARIO_ANIM_JUMP_WITH_LIGHT_OBJ);
+	// apparently air step doesnt use fvel???
+	m->vel[0] = m->forwardVel * coss(m->faceAngle[0]) * sins(m->faceAngle[1]);
+	m->vel[2] = m->forwardVel * coss(m->faceAngle[0]) * coss(m->faceAngle[1]);
+
+
+	play_mario_sound(m, SOUND_ACTION_UNKNOWN432, 0);
+
+	// if holding the shell, do a midair spin instead of a normal jump
+	if (m->actionState == 4) {
+		set_mario_animation(m, MARIO_ANIM_SLIDE_DIVE);
+		m->marioObj->header.gfx.angle[2] += 0x2000;
+		m->marioObj->header.gfx.angle[0] = -0x80 * m->vel[1];
+	} else {
+		set_mario_animation(m, MARIO_ANIM_JUMP_WITH_LIGHT_OBJ);
+	}
+
+	//frontflip a few times and then go into the air shell action
+	if (m->actionState == 6) {
+		if (m->actionTimer < 10) {
+			m->marioObj->header.gfx.angle[0] += 0x3333;
+			m->marioObj->header.gfx.angle[2] = 0;
+		}
+		else {
+			m->heldObj = NULL;
+				//set_camera_mode(m->area->camera, m->area->camera->defMode, 1);
+			return set_mario_action(m, ACT_RIDING_SHELL_JUMP, m->actionTimer);
+		}
+	}
 
     switch (perform_air_step(m, 0)) {
         case AIR_STEP_LANDED:
-            set_mario_action(m, ACT_HOLD_JUMP_LAND, 0);
-            set_camera_mode(m->area->camera, m->area->camera->defMode, 1);
+            // only under extreme circumstances would you be able to hold something other than a shell
+            // underwater. still, better safe than sorry
+            if (m->actionState == 4 || m->actionState == 6) {
+                set_mario_action(m, ACT_RIDING_SHELL_GROUND, m->actionState);
+                m->heldObj = NULL;
+
+                //set_camera_mode(m->area->camera, m->area->camera->defMode, 1);
+            } else {
+                set_mario_action(m, ACT_HOLD_JUMP_LAND, m->actionState);
+                //set_camera_mode(m->area->camera, m->area->camera->defMode, 1);
+            }
             break;
 
         case AIR_STEP_HIT_WALL:

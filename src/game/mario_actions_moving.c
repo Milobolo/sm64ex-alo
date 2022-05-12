@@ -371,7 +371,8 @@ void update_shell_speed(struct MarioState *m) {
     if (targetSpeed > maxTargetSpeed) {
         targetSpeed = maxTargetSpeed;
     }
-    if (targetSpeed < 24.0f) {
+    //make sure a minimum speed isnt being set when braking
+    if (targetSpeed < 24.0f && !(m->input & INPUT_Z_DOWN)) {
         targetSpeed = 24.0f;
     }
 
@@ -383,9 +384,27 @@ void update_shell_speed(struct MarioState *m) {
         m->forwardVel -= 1.0f;
     }
 
+    if (m->actionState == 1) {
+        m->forwardVel -= (f32) m->actionTimer / 10.0f;
+        //increase max speed for the shell dash
+        if (m->forwardVel > 128.0f) { 
+           m->forwardVel = 128.0f;
+       }
+       if (m->forwardVel < 64.0f) { 
+           m->actionState = 0;
+        }
+    }
     //! No backward speed cap (shell hyperspeed)
-    if (m->forwardVel > 64.0f) {
-        m->forwardVel = 64.0f;
+    else {
+        //use vanilla speed
+        if (m->forwardVel > 64.0f) {
+            m->forwardVel = 64.0f;
+        }
+    }
+
+    //braking
+    if (m->input & INPUT_Z_DOWN) {
+        m->forwardVel *= 0.9;
     }
 
     m->faceAngle[1] =
@@ -1250,11 +1269,46 @@ s32 act_hold_decelerating(struct MarioState *m) {
 s32 act_riding_shell_ground(struct MarioState *m) {
     s16 startYaw = m->faceAngle[1];
 
-    if (m->input & INPUT_A_PRESSED) {
-        return set_mario_action(m, ACT_RIDING_SHELL_JUMP, 0);
+    //transfer the timer from the previous action
+    if (m->actionArg > 0) {
+        m->actionTimer = m->actionArg;
+        m->actionArg = 0;
     }
 
-    if (m->input & INPUT_Z_PRESSED) {
+    //this is in place for the transition from water shell to ground shell
+    if (!m->riddenObj) {
+        m->faceAngle[0] = 0;
+        m->faceAngle[2] = 0;
+        m->interactObj = spawn_object(m->marioObj, MODEL_KOOPA_SHELL, bhvKoopaShell);
+            m->usedObj = m->interactObj;
+            m->riddenObj = m->interactObj;
+
+            attack_object(m->interactObj, 0x40);
+    }
+
+    m->actionTimer++;
+
+    if (m->input & INPUT_A_PRESSED) {
+        return set_mario_action(m, ACT_RIDING_SHELL_JUMP, m->actionTimer);
+    }
+
+    //shell dash
+    if (m->input & INPUT_B_PRESSED && m->actionState != 1 && m->actionTimer >= 60) {
+        m->particleFlags |= PARTICLE_VERTICAL_STAR;
+        play_sound(SOUND_OBJ_CANNON4, m->marioObj->header.gfx.cameraToObject);
+        set_camera_shake_from_hit(SHAKE_HIT_FROM_BELOW);
+        //make mario go at least max shell speed
+        m->forwardVel *= 2.0f;
+        if (m->forwardVel < 64.0f) {
+            m->forwardVel = 64.0f;
+        }
+        //set state to shell dash, reset timer
+        m->actionState = 1;
+        m->actionTimer = 0;
+    }
+
+    //get off the shell
+    if (m->input & INPUT_Z_DOWN && m->input & INPUT_B_PRESSED) {
         mario_stop_riding_object(m);
         if (m->forwardVel < 24.0f) {
             mario_set_forward_vel(m, 24.0f);
@@ -1271,12 +1325,32 @@ s32 act_riding_shell_ground(struct MarioState *m) {
             break;
 
         case GROUND_STEP_HIT_WALL:
+            //no more shell breaking! instead, mario will just lose all speed
+            /*
             mario_stop_riding_object(m);
             play_sound(m->flags & MARIO_METAL_CAP ? SOUND_ACTION_METAL_BONK : SOUND_ACTION_BONK,
                        m->marioObj->header.gfx.cameraToObject);
             m->particleFlags |= PARTICLE_VERTICAL_STAR;
             set_mario_action(m, ACT_BACKWARD_GROUND_KB, 0);
+            */
+            m->forwardVel = 0;
             break;
+
+        case GROUND_STEP_ENTERED_WATER:
+            return FALSE;
+    }
+
+    //if mario presses Z over a water surface, switch to the water shell
+    if (m->floor == &gWaterSurfacePseudoFloor && m->input & INPUT_Z_PRESSED) {
+        if (m->riddenObj != NULL) {
+            m->riddenObj->oInteractStatus = INT_STATUS_STOP_RIDING;
+            m->riddenObj = NULL;
+        }
+        m->usedObj = spawn_object(m->marioObj, MODEL_KOOPA_SHELL, bhvKoopaShellUnderwater);
+        mario_grab_used_object(m);
+        m->marioBodyState->grabPos = GRAB_POS_LIGHT_OBJ;
+        m->pos[1] -= 50;
+        set_mario_action(m, ACT_WATER_SHELL_SWIMMING, (u32)(s32)m->forwardVel);
     }
 
     tilt_body_ground_shell(m, startYaw);

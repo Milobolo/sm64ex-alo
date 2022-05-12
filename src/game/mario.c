@@ -745,14 +745,14 @@ void update_mario_sound_and_camera(struct MarioState *m) {
         raise_background_noise(2);
         gCameraMovementFlags &= ~CAM_MOVE_C_UP_MODE;
         // Go back to the last camera mode
-        set_camera_mode(m->area->camera, -1, 1);
+        //set_camera_mode(m->area->camera, -1, 1);
     } else if (action == ACT_SLEEPING) {
         raise_background_noise(2);
     }
 
     if (!(action & (ACT_FLAG_SWIMMING | ACT_FLAG_METAL_WATER))) {
         if (camPreset == CAMERA_MODE_BEHIND_MARIO || camPreset == CAMERA_MODE_WATER_SURFACE) {
-            set_camera_mode(m->area->camera, m->area->camera->defMode, 1);
+            //set_camera_mode(m->area->camera, m->area->camera->defMode, 1);
         }
     }
 }
@@ -1180,10 +1180,28 @@ s32 check_common_hold_action_exits(struct MarioState *m) {
 }
 
 /**
+ * Transitions Mario from a submerged action to an airborne action.
+ * You may want to change these actions to fit your hack
+ */
+s32 transition_submerged_to_airborne(struct MarioState *m) {
+    ////set_camera_mode(m->area->camera, m->area->camera->defMode, 1);
+
+    vec3_zero(m->angleVel);
+
+    if (m->heldObj == NULL) {
+        if (m->input & INPUT_A_DOWN) return set_mario_action(m, ACT_DIVE, 0);
+        else return set_mario_action(m, ACT_FREEFALL, 0);
+    } else {
+        if (m->input & INPUT_A_DOWN) return set_mario_action(m, ACT_HOLD_JUMP, 0);
+        else return set_mario_action(m, ACT_HOLD_FREEFALL, 0);
+    }
+}
+
+/**
  * Transitions Mario from a submerged action to a walking action.
  */
 s32 transition_submerged_to_walking(struct MarioState *m) {
-    set_camera_mode(m->area->camera, m->area->camera->defMode, 1);
+    ////set_camera_mode(m->area->camera, m->area->camera->defMode, 1);
 
     vec3s_set(m->angleVel, 0, 0, 0);
 
@@ -1212,11 +1230,23 @@ s32 set_water_plunge_action(struct MarioState *m) {
         m->faceAngle[0] = 0;
     }
 
-    if (m->area->camera->mode != CAMERA_MODE_WATER_SURFACE) {
-        set_camera_mode(m->area->camera, CAMERA_MODE_WATER_SURFACE, 1);
-    }
+	if (m->area->camera->mode != CAMERA_MODE_WATER_SURFACE) {
+		//set_camera_mode(m->area->camera, CAMERA_MODE_WATER_SURFACE, 1);
+	}
+	if (m->actionState == 4 || (m->actionState == 6 && m->heldObj)) {
+		//do the water plunge stuff without entering the water plunge action
+		play_sound(SOUND_ACTION_UNKNOWN430, m->marioObj->header.gfx.cameraToObject);
+		if (m->peakHeight - m->pos[1] > 1150.0f) {
+			play_sound(SOUND_MARIO_HAHA_2, m->marioObj->header.gfx.cameraToObject);
+		}
+		m->pos[1] -= 200.0f;
+		m->vel[1] = -30.0f;
+		m->particleFlags |= PARTICLE_WATER_SPLASH;
+		//cut straight to water shell swimming to avoid being slowed down and action transition hell
+			return set_mario_action(m, ACT_WATER_SHELL_SWIMMING, (u32)(s32)m->forwardVel);
+		}
+     return set_mario_action(m, ACT_WATER_PLUNGE, 0);
 
-    return set_mario_action(m, ACT_WATER_PLUNGE, 0);
 }
 
 /**
@@ -1242,7 +1272,7 @@ void squish_mario_model(struct MarioState *m) {
                 else if (Cheats.TinyMario) {
                     vec3f_set(m->marioObj->header.gfx.scale, 0.2f, 0.2f, 0.2f);
                 }
-                else {
+                else if (m->action != ACT_RIDING_SHELL_FALL && m->action != ACT_RIDING_SHELL_JUMP) {
                     vec3f_set(m->marioObj->header.gfx.scale, 1.0f, 1.0f, 1.0f);
                 }
             }
@@ -1497,15 +1527,15 @@ void set_submerged_cam_preset_and_spawn_bubbles(struct MarioState *m) {
 
         if (m->action & ACT_FLAG_METAL_WATER) {
             if (camPreset != CAMERA_MODE_CLOSE) {
-                set_camera_mode(m->area->camera, CAMERA_MODE_CLOSE, 1);
+                //set_camera_mode(m->area->camera, CAMERA_MODE_CLOSE, 1);
             }
         } else {
             if ((heightBelowWater > 800.0f) && (camPreset != CAMERA_MODE_BEHIND_MARIO)) {
-                set_camera_mode(m->area->camera, CAMERA_MODE_BEHIND_MARIO, 1);
+                //set_camera_mode(m->area->camera, CAMERA_MODE_BEHIND_MARIO, 1);
             }
 
             if ((heightBelowWater < 400.0f) && (camPreset != CAMERA_MODE_WATER_SURFACE)) {
-                set_camera_mode(m->area->camera, CAMERA_MODE_WATER_SURFACE, 1);
+                //set_camera_mode(m->area->camera, CAMERA_MODE_WATER_SURFACE, 1);
             }
 
             // As long as Mario isn't drowning or at the top

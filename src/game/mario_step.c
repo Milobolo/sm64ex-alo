@@ -8,6 +8,7 @@
 #include "game_init.h"
 #include "interaction.h"
 #include "mario_step.h"
+#include "behavior_data.h"
 #include "pc/configfile.h"
 static s16 sMovingSandSpeeds[] = { 12, 8, 4, 0 };
 
@@ -283,10 +284,27 @@ static s32 perform_ground_quarter_step(struct MarioState *m, Vec3f nextPos) {
         return GROUND_STEP_HIT_WALL_STOP_QSTEPS;
     }
 
-    if ((m->action & ACT_FLAG_RIDING_SHELL) && floorHeight < waterLevel) {
-        floorHeight = waterLevel;
-        floor = &gWaterSurfacePseudoFloor;
-        floor->originOffset = floorHeight; //! Wrong origin offset (no effect)
+    if (m->action & ACT_FLAG_RIDING_SHELL) {
+        if (m->pos[1] < waterLevel - 100) {
+            if (m->riddenObj != NULL) {
+                m->riddenObj->oInteractStatus = INT_STATUS_STOP_RIDING;
+                m->riddenObj = NULL;
+            }
+
+            m->usedObj = spawn_object(m->marioObj, MODEL_KOOPA_SHELL, bhvKoopaShellUnderwater);
+            mario_grab_used_object(m);
+            m->marioBodyState->grabPos = GRAB_POS_LIGHT_OBJ;
+            set_mario_action(m, ACT_WATER_SHELL_SWIMMING, (u32)(s32)m->forwardVel);
+            m->pos[0] = nextPos[0];
+            m->pos[1] = MIN(m->pos[1], waterLevel - 120);
+            m->pos[2] = nextPos[2];
+            return GROUND_STEP_ENTERED_WATER;
+        }
+        else if (floorHeight < waterLevel) {
+            floorHeight = waterLevel;
+            floor = &gWaterSurfacePseudoFloor;
+            floor->originOffset = -floorHeight;
+        }
     }
 
     if (nextPos[1] > floorHeight + 100.0f*Mscale) {
@@ -337,7 +355,11 @@ s32 perform_ground_step(struct MarioState *m) {
         intendedPos[1] = m->pos[1];
 
         stepResult = perform_ground_quarter_step(m, intendedPos);
-        if (stepResult == GROUND_STEP_LEFT_GROUND || stepResult == GROUND_STEP_HIT_WALL_STOP_QSTEPS) {
+        if (
+            stepResult == GROUND_STEP_LEFT_GROUND
+            || stepResult == GROUND_STEP_HIT_WALL_STOP_QSTEPS
+            || stepResult == GROUND_STEP_ENTERED_WATER
+        ) {
             break;
         }
     }
@@ -429,10 +451,27 @@ s32 perform_air_quarter_step(struct MarioState *m, Vec3f intendedPos, u32 stepAr
         return AIR_STEP_HIT_WALL;
     }
 
-    if ((m->action & ACT_FLAG_RIDING_SHELL) && floorHeight < waterLevel) {
-        floorHeight = waterLevel;
-        floor = &gWaterSurfacePseudoFloor;
-        floor->originOffset = floorHeight; //! Incorrect origin offset (no effect)
+    if (m->action & ACT_FLAG_RIDING_SHELL) {
+        if (m->pos[1] < waterLevel - 100) {
+            if (m->riddenObj != NULL) {
+                m->riddenObj->oInteractStatus = INT_STATUS_STOP_RIDING;
+                m->riddenObj = NULL;
+            }
+
+            m->usedObj = spawn_object(m->marioObj, MODEL_KOOPA_SHELL, bhvKoopaShellUnderwater);
+            mario_grab_used_object(m);
+            m->marioBodyState->grabPos = GRAB_POS_LIGHT_OBJ;
+            set_mario_action(m, ACT_WATER_SHELL_SWIMMING, (u32)(s32)m->forwardVel);
+            m->pos[0] = nextPos[0];
+            m->pos[1] = MIN(m->pos[1], waterLevel - 120);
+            m->pos[2] = nextPos[2];
+            return AIR_STEP_SHELL_ENTERED_WATER;
+        }
+        else if (floorHeight < waterLevel) {
+            floorHeight = waterLevel;
+            floor = &gWaterSurfacePseudoFloor;
+            floor->originOffset = -floorHeight;
+        }
     }
 
     //! This check uses f32, but findFloor uses short (overflow jumps)
@@ -643,7 +682,8 @@ s32 perform_air_step(struct MarioState *m, u32 stepArg) {
 
         if (quarterStepResult == AIR_STEP_LANDED || quarterStepResult == AIR_STEP_GRABBED_LEDGE
             || quarterStepResult == AIR_STEP_GRABBED_CEILING
-            || quarterStepResult == AIR_STEP_HIT_LAVA_WALL) {
+            || quarterStepResult == AIR_STEP_HIT_LAVA_WALL
+			|| quarterStepResult == AIR_STEP_SHELL_ENTERED_WATER) {
 				if(configSM){
 					extern u8 Super_Jump_Count;
 					extern u8 Super_Can_Jump;
@@ -680,7 +720,17 @@ s32 perform_air_step(struct MarioState *m, u32 stepArg) {
     apply_vertical_wind(m);
 
     vec3f_copy(m->marioObj->header.gfx.pos, m->pos);
-    vec3s_set(m->marioObj->header.gfx.angle, 0, m->faceAngle[1], 0);
+
+     //stop copying rotations if mario is doing a shell ground pound or a water shell spin.
+    if (
+        m->action != ACT_RIDING_SHELL_JUMP
+        && m->action != ACT_RIDING_SHELL_FALL
+        && m->action != ACT_HOLD_WATER_JUMP
+        && m->actionState != 3
+        && m->actionState != 4
+    ) {
+        vec3s_set(m->marioObj->header.gfx.angle, 0, m->faceAngle[1], 0);
+    }
 
     return stepResult;
 }

@@ -77,6 +77,8 @@ void bhv_koopa_shell_loop(void) {
                     koopa_shell_spawn_sparkles(10.0f);
             } else
                 koopa_shell_spawn_sparkles(10.0f);
+            o->oFaceAngleRoll = 0;
+            o->oFaceAnglePitch = 0;
             o->oFaceAngleYaw = gMarioObject->oMoveAngleYaw;
             if (o->oInteractStatus & INT_STATUS_STOP_RIDING) {
                 obj_mark_for_deletion(o);
