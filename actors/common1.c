@@ -164,3 +164,4 @@ UNUSED static const u64 binid_22 = 22;
 #include "Switchblock_Switch_MOP/texture.inc.c"
 
 #endif
+#include "deo/model.inc.c"

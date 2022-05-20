@@ -332,6 +332,112 @@
     BC_PTR(dropletParams)
 
 
+const BehaviorScript bhvTEOnTrigger[] = {
+    BEGIN(OBJ_LIST_GENACTOR),
+    BEGIN_LOOP(),
+        CALL_NATIVE(bhvTEOnSpawn_Trigger),
+    END_LOOP(),
+};
+const BehaviorScript bhvTEOnSpawn[] = {
+    BEGIN(OBJ_LIST_GENACTOR),
+    BEGIN_LOOP(),
+        CALL_NATIVE(bhvTEOnSpawn_loop),
+    END_LOOP(),
+};
+
+const BehaviorScript bhvMrITE[] = {
+    BEGIN(OBJ_LIST_GENACTOR),
+    OR_INT(oFlags, (OBJ_FLAG_COMPUTE_ANGLE_TO_MARIO | OBJ_FLAG_COMPUTE_DIST_TO_MARIO | OBJ_FLAG_SET_FACE_YAW_TO_MOVE_YAW | OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE)),
+    SET_INTERACT_TYPE(INTERACT_TEXT),
+    SET_HITBOX(/*Radius*/ 200, /*Height*/ 120),
+	SET_FLOAT(oDrawingDistance, 20000),
+    BILLBOARD(),
+	SPAWN_CHILD(/*Model*/ MODEL_MR_I_IRIS, /*Behavior*/ bhvMrIBody),
+    SET_MODEL(MODEL_MR_I),
+    SET_INT(oInteractionSubtype, INT_SUBTYPE_NPC_TE),
+	SET_INT(oInteractStatus, 0),
+    BEGIN_LOOP(),
+        SET_INT(oIntangibleTimer, 0),
+        CALL_NATIVE(bhv_bobomb_buddy_loop_TE),
+    END_LOOP(),
+};
+
+const BehaviorScript bhvMrBlizzardTE[] = {
+    BEGIN(OBJ_LIST_GENACTOR),
+    OR_INT(oFlags, (OBJ_FLAG_COMPUTE_ANGLE_TO_MARIO | OBJ_FLAG_COMPUTE_DIST_TO_MARIO | OBJ_FLAG_SET_FACE_YAW_TO_MOVE_YAW | OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE)),
+    SET_INTERACT_TYPE(INTERACT_TEXT),
+    SET_HITBOX(/*Radius*/ 200, /*Height*/ 250),
+	SET_FLOAT(oDrawingDistance, 20000),
+	ADD_FLOAT(oPosY, 24),
+    LOAD_ANIMATIONS(oAnimations, snowman_seg5_anims_0500D118),
+    ANIMATE(0),
+    SET_INT(oInteractionSubtype, INT_SUBTYPE_NPC_TE),
+	SET_INT(oInteractStatus, 0),
+    BEGIN_LOOP(),
+        SET_INT(oIntangibleTimer, 0),
+        CALL_NATIVE(bhv_bobomb_buddy_loop_TE),
+    END_LOOP(),
+};
+
+const BehaviorScript bhvDorrieCutscene[] = {
+    BEGIN(OBJ_LIST_SURFACE),
+    LOAD_COLLISION_DATA(dorrie_seg6_collision_0600F644),
+    OR_INT(oFlags, (OBJ_FLAG_COMPUTE_ANGLE_TO_MARIO | OBJ_FLAG_COMPUTE_DIST_TO_MARIO | OBJ_FLAG_SET_FACE_YAW_TO_MOVE_YAW | OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE)),
+    LOAD_ANIMATIONS(oAnimations, dorrie_seg6_anims_0600F638),
+    SET_FLOAT(oCollisionDistance, 30000),
+    SET_INTERACT_TYPE(INTERACT_TEXT),
+    SET_HITBOX(/*Radius*/ 900, /*Height*/ 120),
+	SET_FLOAT(oDrawingDistance, 20000),
+    ANIMATE(0),
+    SET_INT(oInteractionSubtype, INT_SUBTYPE_NPC_TE),
+    SET_INT(oAction, 0),
+    SET_HOME(),
+    BEGIN_LOOP(),
+        CALL_NATIVE(bhv_dorrie_cutscene_loop),
+    END_LOOP(),
+};
+
+const BehaviorScript bhvGoombaTE[] = {
+    BEGIN(OBJ_LIST_GENACTOR),
+    OR_INT(oFlags, (OBJ_FLAG_ACTIVE_FROM_AFAR |OBJ_FLAG_COMPUTE_ANGLE_TO_MARIO |  OBJ_FLAG_COMPUTE_DIST_TO_MARIO | OBJ_FLAG_SET_FACE_YAW_TO_MOVE_YAW | OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE)),
+    LOAD_ANIMATIONS(oAnimations, goomba_seg8_anims_0801DA4C),
+	CALL_NATIVE(bhv_goomba_TE_init),
+    SET_INTERACT_TYPE(INTERACT_TEXT),
+    DROP_TO_FLOOR(),
+    SET_HITBOX(/*Radius*/ 100, /*Height*/ 60),
+	SET_FLOAT(oDrawingDistance, 20000),
+    ANIMATE(0),
+    SET_INT(oInteractionSubtype, INT_SUBTYPE_NPC_TE),
+    SET_HOME(),
+	SET_INT(oInteractStatus, 0),
+    BEGIN_LOOP(),
+        SET_INT(oIntangibleTimer, 0),
+        CALL_NATIVE(bhv_bobomb_buddy_loop_TE),
+        CALL_NATIVE(bhv_anime_goomba_TE_loop),
+    END_LOOP(),
+};
+
+const BehaviorScript bhvPinkBuddyTE[] = {
+    BEGIN(OBJ_LIST_GENACTOR),
+    OR_INT(oFlags, (OBJ_FLAG_COMPUTE_ANGLE_TO_MARIO | OBJ_FLAG_HOLDABLE | OBJ_FLAG_COMPUTE_DIST_TO_MARIO | OBJ_FLAG_SET_FACE_YAW_TO_MOVE_YAW | OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE)),
+    LOAD_ANIMATIONS(oAnimations, bobomb_seg8_anims_0802396C),
+    SET_INTERACT_TYPE(INTERACT_TEXT),
+    DROP_TO_FLOOR(),
+    SET_HITBOX(/*Radius*/ 100, /*Height*/ 60),
+	SET_FLOAT(oDrawingDistance, 20000),
+    ANIMATE(0),
+    SET_INT(oInteractionSubtype, INT_SUBTYPE_NPC_TE),
+    SET_HOME(),
+	SET_INT(oInteractStatus, 0),
+    BEGIN_LOOP(),
+        SET_INT(oIntangibleTimer, 0),
+        CALL_NATIVE(bhv_bobomb_buddy_loop_TE),
+        CALL_NATIVE(bhv_bobomb_blink),
+    END_LOOP(),
+};
+
+
+
 const BehaviorScript bhvStarDoor[] = {
     BEGIN(OBJ_LIST_SURFACE),
     SET_INT(oInteractType, INTERACT_DOOR),
@@ -4749,7 +4855,7 @@ const BehaviorScript bhvRedCoin[] = {
     OR_INT(oFlags, OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE),
 	#if USE3DCOINS
 	#else
-    BILLBOARD(),
+    // BILLBOARD(),
 	#endif
     SET_INT(oIntangibleTimer, 0),
     SET_INT(oAnimState, -1),
@@ -4757,11 +4863,11 @@ const BehaviorScript bhvRedCoin[] = {
     CALL_NATIVE(bhv_red_coin_init),
     BEGIN_LOOP(),
         CALL_NATIVE(bhv_red_coin_loop),
-		#if USE3DCOINS
+		// #if USE3DCOINS
 		ADD_INT(oFaceAngleYaw,2560),
-		#else
+		// #else
 		ADD_INT(oAnimState, 1),
-		#endif
+		// #endif
     END_LOOP(),
 };
 

@@ -269,11 +269,11 @@ void TE_transition_active(struct TEState *CurEng,struct Transition *Tr,u8 flip){
 	u32 Time = (gNumVblanks-Tr->TransVI);
 	f32 Pct = ((f32) Time) / ((f32) Tr->TransLength);
 	f32 Spd = ((f32)Tr->TransSpeed)/((f32) Tr->TransLength);
-	u16 Dir = Tr->TransDir<<16;
-	u16 Yoff = (u16) (sins(Dir)*Spd*Time);
-	u16 Xoff = (u16) (coss(Dir)*Spd*Time);
-	//should never be true really
-	if (Pct>1.0f){
+	u16 Dir = Tr->TransDir<<8;
+	s16 Yoff = (s16) (sins(Dir)*Spd*Time);
+	s16 Xoff = (s16) (coss(Dir)*Spd*Time);
+	//should only ever be 1
+	if (Pct >= 1.0f){
 		Pct = 1.0f;
 		Time = Tr->TransLength;
 		//disable start transition and set temp X+Y offsets to match total distance traveled
@@ -285,12 +285,13 @@ void TE_transition_active(struct TEState *CurEng,struct Transition *Tr,u8 flip){
 			Yoff = 0;
 		}
 	}
-	TarAlpha = CurAlpha + (TarAlpha-CurAlpha)*Pct;
+	if(TarAlpha != CurAlpha){
+		TarAlpha = CurAlpha + (TarAlpha-CurAlpha)*Pct;
+	}
 	CurEng->EnvColorWord = (CurEng->EnvColorWord&0xFFFFFF00) | (u8) TarAlpha;
 	TE_set_env(CurEng);
 	CurEng->EnvColorWord = Env;
 	CurEng->TrPct = Pct;
-	// print_generic_string(CurEng->TempX+Xoff+CurEng->TransX,CurEng->TempY+Yoff+CurEng->TransY,&StrBuffer[CurEng->state]);
 	print_small_text_TE(CurEng->ScaleF[0],CurEng->ScaleF[1],CurEng->TempX+Xoff+CurEng->TransX,CurEng->TempY+Yoff+CurEng->TransY,&StrBuffer[CurEng->state],CurEng);
 }
 
@@ -317,11 +318,8 @@ void TE_print(struct TEState *CurEng){
 }
 
 void TE_add_new_char(struct TEState *CurEng,u32 VI_inc){
-	//I should use macros here but I'm not really sure how they work
-	if(CurEng->SfxArg){
-		play_sound((CurEng->SfxArg<<16)+0x81, gGlobalSoundSource);
-		CurEng->SfxArg = 0;
-	}else if(CurEng->CheckBlip && getTEspd(CurEng)){
+	//I should use macros here but I'm not really sure how they work for terrain
+	if(CurEng->CheckBlip && getTEspd(CurEng)){
 		play_sound(0x16FF81, gGlobalSoundSource);
 	}
 	CurEng->StrEnd+=1;

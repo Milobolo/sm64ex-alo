@@ -246,6 +246,10 @@
 #define CUTSCENE_EXIT_FALL_WMOTR      180
 #define CUTSCENE_ENTER_POOL           181
 
+
+#define CUTSCENE_ANIME_GOOMBAS        182
+#define CUTSCENE_DORRIE_INVITE        183
+
 /**
  * Stop the cutscene.
  */

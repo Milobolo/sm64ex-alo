@@ -67,3 +67,5 @@
 #include "Switchblock_Switch_MOP/geo.inc.c"
 
 #endif
+
+#include "deo/geo.inc.c"

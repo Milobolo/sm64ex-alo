@@ -33,6 +33,13 @@
     "1E_cutscene_intro": ["1B"],
     "1F_cutscene_victory": ["1A"],
     "20_cutscene_ending": ["23"],
-    "21_menu_file_select": ["24"],
-    "22_cutscene_lakitu": {"ifdef": ["VERSION_US", "VERSION_EU", "VERSION_SH"], "banks": ["1B"]}
+    "21_menu_file_select": null,
+    "21_custom_Crossing_Those_Hills_-_Final_Fantasy_IX": ["0C"],
+    "22_cutscene_lakitu": {"ifdef": ["VERSION_US", "VERSION_EU", "VERSION_SH"], "banks": ["1B"]},
+    "23_custom_Sewer_Speedway_-_Crash_Team_Racing": ["0C"],
+    "24_custom_Undella_Town_-_Pokemon_Black_White": ["0C"],
+    "25_custom_Fly_to_the_Leaden_Sky_-_Battle_Garegga": ["0C"],
+    "26_custom_Macalania_Forest_-_Final_Fantaxy_X": ["0C"],
+    "27_custom_Island_Fortress_-_Suikoden": ["0C"],
+    "28_custom_Todesengel_-_Saga_Frontier_2": ["0C"]
 }

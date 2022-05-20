@@ -2,7 +2,7 @@
 //These are commonly referred to as tweaks
 
 #define MARIO_START_LIVES 4
-#define INFINITE_LIVES 0
+#define INFINITE_LIVES 1
 #define START_LEVEL LEVEL_CASTLE_GROUNDS
 #define COINS_REQ_COINSTAR 100
 //level, area, warp ID
@@ -14,7 +14,7 @@
 #define INCLUDE_MOP 0
 //an array
 #define STAR_MILESTONES  1, 3, 8, 30, 50, 70
-#define SHOW_STAR_MILESTONES 1
+#define SHOW_STAR_MILESTONES 0
 
 #define KING_BOMB_FVEL 3.0f
 #define KING_BOMB_YAWVEL 0x100
@@ -101,6 +101,6 @@
 
 #define SHOW_STARS 1
 #define SHOW_COINS 1
-#define SHOW_LIVES 1
+#define SHOW_LIVES 0
 #define SHOW_CAM 1
 #define SHOW_TIME 1

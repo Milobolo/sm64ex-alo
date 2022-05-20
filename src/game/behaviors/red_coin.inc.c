@@ -78,4 +78,7 @@ void bhv_red_coin_loop(void) {
         // Despawn the coin.
         o->oInteractStatus = 0;
     }
+	if(gCurrLevelNum != LEVEL_BOB){
+		o->header.gfx.node.flags |= GRAPH_RENDER_BILLBOARD;
+	}
 }

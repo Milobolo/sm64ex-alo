@@ -224,6 +224,11 @@
 /* Mario Sound Effects (US/EU only) */
 #define SOUND_PEACH_DEAR_MARIO                   /* 0x2428FF80 */ SOUND_ARG_LOAD(SOUND_BANK_VOICE,    0x28, 0xFF, SOUND_NO_PRIORITY_LOSS | SOUND_DISCRETE)
 
+
+
+#define SOUND_SNORT                              /* 0x2427FF80 */ SOUND_ARG_LOAD(SOUND_BANK_VOICE,    0x27, 0xFF, SOUND_NO_PRIORITY_LOSS |SOUND_DISCRETE)
+
+
 // A random number 0-4 is added to the sound ID before playing, producing one of
 // Yahoo! (60% chance), Waha! (20%), or Yippee! (20%).
 #define SOUND_MARIO_YAHOO_WAHA_YIPPEE            /* 0x242B8080 */ SOUND_ARG_LOAD(SOUND_BANK_VOICE,    0x2B, 0x80, SOUND_NO_PRIORITY_LOSS | SOUND_DISCRETE)

@@ -26,6 +26,14 @@ void play_penguin_walking_sound(s32 walk);
 s32 update_angle_from_move_flags(s32 *angle);
 void cur_obj_spawn_strong_wind_particles(s32 windSpread, f32 scale, f32 relPosX, f32 relPosY, f32 relPosZ);
 
+//cutscene object stuff
+extern u32 DorriCutsceneFlags;
+extern u8 GetCurrentCutscene(void);
+extern void Star_Anime_Goomba_Cutscene(void);
+extern void Dorrie_Invite_Cutscene(void);
+
+
+
 #if INCLUDE_MOP
 void bhv_flip_block_loop(void);
 void bhv_noteblock_loop(void);
@@ -48,6 +56,15 @@ void bhv_move_rotate_loop(void);
 void bhv_green_switchboard_loop(void);
 void bhv_green_switchboard_init(void);
 #endif
+
+void bhv_dorrie_cutscene_loop(void);
+void bhvTEOnSpawn_Trigger(void);
+void bhv_anime_goomba_TE_loop(void);
+void bhv_goomba_TE_init(void);
+void bhv_bobomb_blink(void);
+void bhvTEOnSpawn_loop(void);
+void bhv_bobomb_buddy_loop_TE(void);
+
 
 void uv_update_scroll(void);
 void bhv_cap_switch_loop(void);

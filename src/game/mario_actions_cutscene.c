@@ -2655,37 +2655,8 @@ static s32 act_credits_cutscene(struct MarioState *m) {
 }
 
 static s32 act_end_waving_cutscene(struct MarioState *m) {
-    if (m->actionState == 0) {
-        m->statusForCamera->cameraEvent = CAM_EVENT_START_END_WAVING;
 
-        sEndPeachObj = spawn_object_abs_with_rot(gCurrentObject, 0, MODEL_PEACH, bhvEndPeach, 60, 906,
-                                                 -1180, 0, 0, 0);
-
-        sEndRightToadObj = spawn_object_abs_with_rot(gCurrentObject, 0, MODEL_TOAD, bhvEndToad, 180,
-                                                     906, -1170, 0, 0, 0);
-
-        sEndLeftToadObj = spawn_object_abs_with_rot(gCurrentObject, 0, MODEL_TOAD, bhvEndToad, -180,
-                                                    906, -1170, 0, 0, 0);
-
-        sEndPeachObj->oOpacity = 255;
-        sEndRightToadObj->oOpacity = 255;
-        sEndLeftToadObj->oOpacity = 255;
-
-        sEndPeachAnimation = 11;
-        sEndToadAnims[0] = 6;
-        sEndToadAnims[1] = 7;
-
-        m->actionState = 1;
-    }
-
-    set_mario_animation(m, MARIO_ANIM_CREDITS_WAVING);
-    stop_and_set_height_to_floor(m);
-
-    m->marioObj->header.gfx.angle[1] += 0x8000;
-    m->marioObj->header.gfx.pos[0] -= 60.0f;
-    m->marioBodyState->handState = MARIO_HAND_RIGHT_OPEN;
-
-    if (m->actionTimer++ == 300) {
+    if (m->actionTimer++ == 15) {
         level_trigger_warp(m, WARP_OP_CREDITS_END);
     }
 

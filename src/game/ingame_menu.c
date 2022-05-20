@@ -855,9 +855,9 @@ void print_hud_my_score_coins(s32 useCourseCoinScore, s8 fileNum, s8 courseNum, 
     s16 numCoins;
 
     if (!useCourseCoinScore) {
-        numCoins = (u16)(save_file_get_max_coin_score(courseNum) & 0xFFFF);
+        // numCoins = (u16)(save_file_get_max_coin_score(courseNum) & 0xFFFF);
     } else {
-        numCoins = save_file_get_course_coin_score(fileNum, courseNum);
+        // numCoins = save_file_get_course_coin_score(fileNum, courseNum);
     }
 
     if (numCoins != 0) {
@@ -2295,7 +2295,7 @@ void render_pause_my_score_coins(void) {
     gDPSetEnvColor(gDisplayListHead++, 255, 255, 255, gDialogTextAlpha);
 
     if (courseIndex < COURSE_STAGES_COUNT) {
-        print_hud_my_score_coins(1, gCurrSaveFileNum - 1, courseIndex, 178, 103);
+        // print_hud_my_score_coins(1, gCurrSaveFileNum - 1, courseIndex, 178, 103);
         print_hud_my_score_stars(gCurrSaveFileNum - 1, courseIndex, 118, 103);
     }
 
@@ -2622,7 +2622,7 @@ void render_pause_castle_main_strings(s16 x, s16 y) {
 #ifdef VERSION_EU
         print_generic_string(x + 44, y - 5, textX);
 #endif
-        int_to_str(save_file_get_course_coin_score(gCurrSaveFileNum - 1, gDialogLineNum), strVal);
+        // int_to_str(save_file_get_course_coin_score(gCurrSaveFileNum - 1, gDialogLineNum), strVal);
         print_generic_string(x + 54, y - 5, strVal);
 #ifdef VERSION_EU
         print_generic_string(x - 17, y + 30, courseName);

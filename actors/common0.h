@@ -203,4 +203,10 @@ extern const GeoLayout test_platform_geo[];
 extern const Gfx unknown_seg8_dl_08026260[];
 extern const Collision unknown_seg8_collision_080262F8[];
 
+#include "goomba_anime/header.h"
+
+#include "goomba_anime/geo_header.h"
+
+#include "goomba/geo_header.h"
+
 #endif

@@ -6,6 +6,7 @@
 #include "engine/surface_collision.h"
 #include "macros.h"
 #include "types.h"
+#include "text_engine.h"
 
 #ifdef RM2C
 #include "behavior_actions.h"
@@ -51,6 +52,7 @@ void bobomb_buddy_cannon_dialog(s16 dialogFirstText, s16 dialogSecondText);
 void bobomb_buddy_act_talk(void);
 void bobomb_buddy_act_turn_to_talk(void);
 void bobomb_buddy_actions(void);
+void bhv_bobomb_buddy_loop_TE(void);
 void bhv_bobomb_buddy_loop(void);
 void bhv_cannon_closed_init(void);
 void cannon_door_act_opening(void);

@@ -1,5 +1,5 @@
 #include <PR/ultratypes.h>
-
+#include "game_init.h"
 #include "sm64.h"
 #include "mario.h"
 #include "audio/external.h"
@@ -1287,6 +1287,20 @@ s32 act_riding_shell_ground(struct MarioState *m) {
     }
 
     m->actionTimer++;
+	
+    //get off the shell
+    if (m->floor->type == SURFACE_NO_FOOTING ) {
+		mario_stop_riding_object(m);
+		return set_mario_action(m, ACT_STOMACH_SLIDE, 0);
+		
+	}
+    if (m->input & INPUT_Z_DOWN && m->input & INPUT_A_PRESSED) {
+        mario_stop_riding_object(m);
+        if (m->forwardVel > 24.0f) {
+            mario_set_forward_vel(m, 24.0f);
+        }
+        return set_jumping_action(m, ACT_JUMP, 0);
+	}
 
     if (m->input & INPUT_A_PRESSED) {
         return set_mario_action(m, ACT_RIDING_SHELL_JUMP, m->actionTimer);
@@ -1307,7 +1321,7 @@ s32 act_riding_shell_ground(struct MarioState *m) {
         m->actionTimer = 0;
     }
 
-    //get off the shell
+
     if (m->input & INPUT_Z_DOWN && m->input & INPUT_B_PRESSED) {
         mario_stop_riding_object(m);
         if (m->forwardVel < 24.0f) {
@@ -1347,6 +1361,7 @@ s32 act_riding_shell_ground(struct MarioState *m) {
             m->riddenObj = NULL;
         }
         m->usedObj = spawn_object(m->marioObj, MODEL_KOOPA_SHELL, bhvKoopaShellUnderwater);
+		m->usedObj->oFlags |= OBJ_FLAG_HOLDABLE;
         mario_grab_used_object(m);
         m->marioBodyState->grabPos = GRAB_POS_LIGHT_OBJ;
         m->pos[1] -= 50;
@@ -1575,7 +1590,10 @@ s32 act_hold_butt_slide(struct MarioState *m) {
 s32 act_crouch_slide(struct MarioState *m) {
     s32 cancel;
 
-    if (m->input & INPUT_ABOVE_SLIDE) {
+	if (m->floor->type == SURFACE_NO_FOOTING) {
+		return set_mario_action(m, ACT_STOMACH_SLIDE, 0);
+	}
+	if (m->input & INPUT_ABOVE_SLIDE) {
         return set_mario_action(m, ACT_BUTT_SLIDE, 0);
     }
 
@@ -2072,7 +2090,7 @@ s32 act_hold_quicksand_jump_land(struct MarioState *m) {
                                             ACT_HOLD_FREEFALL);
     return cancel;
 }
-
+extern const BehaviorScript bhvKoopaShell[];
 s32 check_common_moving_cancels(struct MarioState *m) {
     if (m->pos[1] < m->waterLevel - 100) {
         return set_water_plunge_action(m);
@@ -2091,6 +2109,22 @@ s32 check_common_moving_cancels(struct MarioState *m) {
             return drop_and_set_mario_action(m, ACT_STANDING_DEATH, 0);
         }
     }
+	if (gPlayer1Controller->buttonPressed&L_TRIG) {
+		if (!(m->action & ACT_FLAG_RIDING_SHELL)) {
+			struct Object *obj = spawn_object(m->marioObj, MODEL_KOOPA_SHELL, bhvKoopaShell);
+			m->interactObj = obj;
+			m->usedObj = obj;
+			m->riddenObj = obj;
+			attack_object(obj, 0x40); // INT_HIT_FROM_ABOVE
+
+			update_mario_sound_and_camera(m);
+			mario_drop_held_object(m);
+
+			//! Puts Mario in ground action even when in air, making it easy to
+			// escape air actions into crouch slide (shell cancel)
+			return set_mario_action(m, ACT_RIDING_SHELL_GROUND, 0);
+		}
+	}
 
     return FALSE;
 }

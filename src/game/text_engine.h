@@ -45,6 +45,7 @@ struct TEState{
 	/* 0x18 */ u16 SfxArg;
 	/* 0x1A */ u8 CheckBlip;
 	/* 0x60 */ u8 ScissorSet;
+	/* NEW  */ u8 LowerVolume;
 	/* 0x1C */ u8 *ReturnUsrStr;
 	/* 0x20 */ s16 OgSeqID;
 	/* 0x22 */ s16 NewSeqID;
@@ -123,7 +124,8 @@ union FloatWord{
 	f32 F;
 };
 #include "text_engine_helpers.h"
-
+extern s32 gTEStopCutscene;
+extern s32 gTEAdvCutscene;
 extern u8 StrBuffer[NumEngines][0x100];
 extern u8 CmdBuffer[NumEngines][0x400];
 extern u32 TimerBuffer[NumEngines][64]; //stores timers necessary for certain cmds with their own cycles and stuff
@@ -222,6 +224,7 @@ s8 TE_scale_text(struct TEState *CurEng,u8 *str);
 s8 TE_enable_dialog_options(struct TEState *CurEng,u8 *str);
 s8 TE_dialog_response(struct TEState *CurEng,u8 *str);
 s8 TE_screen_shake(struct TEState *CurEng,u8 *str);
+s8 TE_lower_volume(struct TEState *CurEng,u8 *str);
 //camera cmds
 s8 TE_trigger_warp(struct TEState *CurEng,u8 *str);
 //object cmds

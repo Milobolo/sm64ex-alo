@@ -34,7 +34,7 @@ struct SaveFile
     // cannon is open.
     u8 courseStars[COURSE_COUNT];
 
-    u8 courseCoinScores[COURSE_STAGES_COUNT];
+    u8 PowerWord[COURSE_STAGES_COUNT];
 
     struct SaveBlockSignature signature;
 };
@@ -148,6 +148,9 @@ extern struct WarpCheckpoint gWarpCheckpoint;
 extern s8 gMainMenuDataModified;
 extern s8 gSaveFileModified;
 
+void Load_Power_Word(void);
+void Save_Power_Word(void);
+
 void save_file_set_challenges(void);
 s32 save_file_get_challenge(u32 flag);
 void save_file_init_challenges(void);
@@ -168,7 +171,6 @@ u32 save_file_get_flags(void);
 u32 save_file_get_star_flags(s32 fileIndex, s32 courseIndex);
 u32 save_file_get_cannon_flags(s32 fileIndex, s32 courseIndex);
 void save_file_set_star_flags(s32 fileIndex, s32 courseIndex, u32 starFlags);
-s32 save_file_get_course_coin_score(s32 fileIndex, s32 courseIndex);
 s32 save_file_is_cannon_unlocked(void);
 void save_file_set_cannon_unlocked(void);
 void save_file_set_cap_pos(s16 x, s16 y, s16 z);

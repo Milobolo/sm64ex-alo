@@ -1,0 +1,10 @@
+extern void scroll_sts_mat_wf_dl_scroll();
+extern void scroll_wf_dl_slate_mesh_layer_1_vtx_0();
+extern void scroll_sts_mat_wf_dl_star_pattern();
+extern void scroll_wf_dl_slate_001_mesh_layer_1_vtx_0();
+extern void scroll_wf_dl_slate_002_mesh_layer_1_vtx_0();
+extern void scroll_wf_dl_slate_003_mesh_layer_1_vtx_0();
+extern void scroll_wf_dl_slate_004_mesh_layer_1_vtx_0();
+extern void scroll_wf_dl_slate_005_mesh_layer_1_vtx_0();
+extern void scroll_sts_mat_wf_dl_water_layer5();
+extern void scroll_wf();

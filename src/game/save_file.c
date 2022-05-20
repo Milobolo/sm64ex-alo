@@ -10,6 +10,7 @@
 #include "level_table.h"
 #include "course_table.h"
 #include "rumble_init.h"
+#include "text_engine.h"
 #include "macros.h"
 #include "pc/ini.h"
 #include "pc/configfile.h"
@@ -541,17 +542,9 @@ void save_file_collect_star_or_key(s16 coinScore, s16 starIndex) {
         //! Compares the coin score as a 16 bit value, but only writes the 8 bit
         // truncation. This can allow a high score to decrease.
 
-        if (coinScore > ((u16) save_file_get_max_coin_score(courseIndex) & 0xFFFF)) {
-            sUnusedGotGlobalCoinHiScore = 1;
-        }
-
-        if (coinScore > save_file_get_course_coin_score(fileIndex, courseIndex)) {
-            gSaveBuffer.files[fileIndex][0].courseCoinScores[courseIndex] = coinScore;
-            touch_coin_score_age(fileIndex, courseIndex);
-
-            gGotFileCoinHiScore = TRUE;
-            gSaveFileModified = TRUE;
-        }
+        // if (coinScore > ((u16) save_file_get_max_coin_score(courseIndex) & 0xFFFF)) {
+            // sUnusedGotGlobalCoinHiScore = 1;
+        // }
     }
 
     switch (gCurrLevelNum) {
@@ -588,24 +581,24 @@ s32 save_file_exists(s32 fileIndex) {
  * of the save file with this score.
  */
 u32 save_file_get_max_coin_score(s32 courseIndex) {
-    s32 fileIndex;
-    s32 maxCoinScore = -1;
-    s32 maxScoreAge = -1;
-    s32 maxScoreFileNum = 0;
+    // s32 fileIndex;
+    // s32 maxCoinScore = -1;
+    // s32 maxScoreAge = -1;
+    // s32 maxScoreFileNum = 0;
 
-    for (fileIndex = 0; fileIndex < NUM_SAVE_FILES; fileIndex++) {
-        if (save_file_get_star_flags(fileIndex, courseIndex) != 0) {
-            s32 coinScore = save_file_get_course_coin_score(fileIndex, courseIndex);
-            s32 scoreAge = get_coin_score_age(fileIndex, courseIndex);
+    // for (fileIndex = 0; fileIndex < NUM_SAVE_FILES; fileIndex++) {
+        // if (save_file_get_star_flags(fileIndex, courseIndex) != 0) {
+            // s32 coinScore = save_file_get_course_coin_score(fileIndex, courseIndex);
+            // s32 scoreAge = get_coin_score_age(fileIndex, courseIndex);
 
-            if (coinScore > maxCoinScore || (coinScore == maxCoinScore && scoreAge > maxScoreAge)) {
-                maxCoinScore = coinScore;
-                maxScoreAge = scoreAge;
-                maxScoreFileNum = fileIndex + 1;
-            }
-        }
-    }
-    return (maxScoreFileNum << 16) + max(maxCoinScore, 0);
+            // if (coinScore > maxCoinScore || (coinScore == maxCoinScore && scoreAge > maxScoreAge)) {
+                // maxCoinScore = coinScore;
+                // maxScoreAge = scoreAge;
+                // maxScoreFileNum = fileIndex + 1;
+            // }
+        // }
+    // }
+    // return (maxScoreFileNum << 16) + max(maxCoinScore, 0);
 }
 
 s32 save_file_get_course_star_count(s32 fileIndex, s32 courseIndex) {
@@ -656,6 +649,17 @@ void save_file_set_challenges(void) {
 	gSaveFileModified = TRUE;
 	save_file_do_save(gCurrSaveFileNum - 1);
 }
+
+void Load_Power_Word(void){
+	bcopy(&gSaveBuffer.files[gCurrSaveFileNum - 1][0].PowerWord,&UserInputs[0][0],15);
+}
+void Save_Power_Word(void){
+	bcopy(&UserInputs[0][0],&gSaveBuffer.files[gCurrSaveFileNum - 1][0].PowerWord,15);
+	
+	gSaveFileModified = TRUE;
+	save_file_do_save(gCurrSaveFileNum - 1);
+}
+
 s32 save_file_get_challenge(u32 flag) {
 	return ((gSaveBuffer.files[gCurrSaveFileNum - 1][0].Challenges&flag)!=0);
 }
@@ -736,9 +740,6 @@ void save_file_set_star_flags(s32 fileIndex, s32 courseIndex, u32 starFlags) {
     gSaveFileModified = TRUE;
 }
 
-s32 save_file_get_course_coin_score(s32 fileIndex, s32 courseIndex) {
-    return gSaveBuffer.files[fileIndex][0].courseCoinScores[courseIndex];
-}
 
 /**
  * Return TRUE if the cannon is unlocked in the current course.

@@ -1,0 +1,13 @@
+extern const GeoLayout deo_geo[];
+extern Lights1 deo_deodorant_lights;
+extern Lights1 deo_deo_label_lights;
+extern u8 deo_Deo_rgba32[];
+extern Vtx deo_Cube_010_mesh_layer_1_vtx_0[181];
+extern Gfx deo_Cube_010_mesh_layer_1_tri_0[];
+extern Vtx deo_Cube_010_mesh_layer_1_vtx_1[8];
+extern Gfx deo_Cube_010_mesh_layer_1_tri_1[];
+extern Gfx mat_deo_deodorant[];
+extern Gfx mat_deo_deo_label[];
+extern Gfx mat_revert_deo_deo_label[];
+extern Gfx deo_Cube_010_mesh_layer_1[];
+extern Gfx deo_material_revert_render_settings[];

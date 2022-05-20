@@ -1,0 +1,6 @@
+extern Lights1 goomba_SM64_goomba_seg8_dl_0801B5C8_F3D_Mat_0_lights;
+extern u8 goomba_goomba_face_rgba16_rgba16[];
+extern Vtx goomba__goomba_seg8_dl_0801B5C8_Obj_mesh_vtx_0[204];
+extern Gfx goomba__goomba_seg8_dl_0801B5C8_Obj_mesh_tri_0[];
+extern Gfx mat_goomba_SM64_goomba_seg8_dl_0801B5C8_F3D_Mat_0[];
+extern Gfx goomba__goomba_seg8_dl_0801B5C8_Obj_mesh[];

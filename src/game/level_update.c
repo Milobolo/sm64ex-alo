@@ -1,3 +1,4 @@
+#include "texscroll.h"
 #include <ultra64.h>
 #ifndef TARGET_N64
 #include <stdbool.h>
@@ -785,6 +786,7 @@ s16 level_trigger_warp(struct MarioState *m, s32 warpOp) {
                 }
                 sDelayedWarpTimer = 48;
                 sSourceWarpNodeId = WARP_NODE_DEATH;
+				val04 = !music_changed_through_warp(sSourceWarpNodeId);
                 play_transition(WARP_TRANSITION_FADE_INTO_BOWSER, 0x30, 0x00, 0x00, 0x00);
                 play_sound(SOUND_MENU_BOWSER_LAUGH, gGlobalSoundSource);
                 break;
@@ -799,6 +801,7 @@ s16 level_trigger_warp(struct MarioState *m, s32 warpOp) {
                     }
                 }
                 sDelayedWarpTimer = 20;
+				val04 = !music_changed_through_warp(sSourceWarpNodeId);
                 play_transition(WARP_TRANSITION_FADE_INTO_CIRCLE, 0x14, 0x00, 0x00, 0x00);
                 break;
 
@@ -1032,10 +1035,6 @@ s32 play_mode_normal(void) {
         gHudDisplay.timer += 1;
     }
 
-    if (gPlayer1Controller->buttonPressed&D_JPAD){
-		spawn_object(gMarioState->marioObj, MODEL_KOOPA_SHELL, bhvKoopaShell);
-	}
-	
 	#ifdef TE
 	#if TE_DEBUG
 	if (gPlayer1Controller->buttonPressed&D_JPAD){
@@ -1242,7 +1241,7 @@ s32 update_level(void) {
 
     switch (sCurrPlayMode) {
         case PLAY_MODE_NORMAL:
-            changeLevel = play_mode_normal();
+            changeLevel = play_mode_normal(); scroll_textures();
             break;
         case PLAY_MODE_PAUSED:
             changeLevel = play_mode_paused();
@@ -1296,6 +1295,14 @@ s32 init_level(void) {
     } else {
         if (gPlayerSpawnInfos[0].areaIndex >= 0) {
             load_mario_area();
+			struct ObjectWarpNode *spawnNode = area_get_warp_node(sWarpDest.nodeId);
+			gPlayerSpawnInfos[0].startPos[0] = (s16) spawnNode->object->oPosX;
+			gPlayerSpawnInfos[0].startPos[1] = (s16) spawnNode->object->oPosY;
+			gPlayerSpawnInfos[0].startPos[2] = (s16) spawnNode->object->oPosZ;
+
+			gPlayerSpawnInfos[0].startAngle[0] = 0;
+			gPlayerSpawnInfos[0].startAngle[1] = spawnNode->object->oMoveAngleYaw;
+			gPlayerSpawnInfos[0].startAngle[2] = 0;
             init_mario();
         }
 
@@ -1382,6 +1389,7 @@ s32 lvl_init_from_save_file(UNUSED s16 arg0, s32 levelNum) {
     }
 #endif
     sWarpDest.type = WARP_TYPE_NOT_WARPING;
+    sWarpDest.nodeId = 0xA;
     sDelayedWarpOp = WARP_OP_NONE;
     gNeverEnteredCastle =
 #if !SKIP_INTRO_CUTSCENE
@@ -1420,6 +1428,10 @@ s32 lvl_set_current_level(UNUSED s16 arg0, s32 levelNum) {
     sWarpCheckpointActive = FALSE;
     gCurrLevelNum = levelNum;
     gCurrCourseNum = gLevelToCourseNumTable[levelNum - 1];
+	if (gCurrLevelNum == LEVEL_JRB) return 0;
+	if (gCurrLevelNum == LEVEL_CCM) return 0;
+		if (gCurrLevelNum == LEVEL_WF) return 0;
+	if (gCurrLevelNum == LEVEL_BOB) return 0;
 
     if (gCurrDemoInput != NULL || gCurrCreditsEntry != NULL || gCurrCourseNum == COURSE_NONE) {
         return 0;

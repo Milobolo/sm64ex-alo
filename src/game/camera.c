@@ -3537,8 +3537,13 @@ void init_camera(struct Camera *c) {
         set_fixed_cam_axis_sa_lobby(c->mode);
     }
     store_lakitu_cam_info_for_c_up(c);
-    gLakituState.yaw = calculate_yaw(c->focus, c->pos);
+    gLakituState.yaw = gMarioState->faceAngle[1]-0X4000;
     gLakituState.nextYaw = gLakituState.yaw;
+	f32 dist;
+	s16 pitch;
+	s16 yaw;
+	vec3f_get_dist_and_angle(c->focus, c->pos, &dist, &pitch, &yaw);
+	vec3f_set_dist_and_angle(c->focus, c->pos, dist, pitch, gLakituState.yaw);
     c->yaw = gLakituState.yaw;
     c->nextYaw = gLakituState.yaw;
 
@@ -7256,6 +7261,66 @@ void cutscene_unsoften_music(UNUSED struct Camera *c) {
 static void stub_camera_5(UNUSED struct Camera *c) {
 }
 
+
+// scut cutscene functions
+
+s32 gTEStopCutscene;
+s32 gTEAdvCutscene;
+
+BAD_RETURN(s32) cutscene_goomba_pan_deo(UNUSED struct Camera *c) {
+	approach_vec3f_asymptotic(c->focus,sCutsceneVars[2].point,0.05f,0.05f,0.05f);
+	approach_vec3f_asymptotic(c->pos,sCutsceneVars[3].point,0.05f,0.02f,0.05f);
+}
+
+BAD_RETURN(s32) cutscene_goomba_pan_back(UNUSED struct Camera *c) {
+	approach_vec3f_asymptotic(c->focus,sCutsceneVars[0].point,0.04f,0.04f,0.04f);
+	approach_vec3f_asymptotic(c->pos,sCutsceneVars[1].point,0.04f,0.04f,0.04f);
+	vec3f_set(sCutsceneVars[2].point, -12337.0f, 752.0f, -832.0f);
+	vec3f_set(sCutsceneVars[3].point, -7144.0f, 1538.0f, 2794.0f);
+}
+
+BAD_RETURN(s32) cutscene_goomba_pan(UNUSED struct Camera *c) {
+	approach_vec3f_asymptotic(c->focus,sCutsceneVars[2].point,0.02f,0.02f,0.02f);
+	approach_vec3f_asymptotic(c->pos,sCutsceneVars[3].point,0.02f,0.02f,0.02f);
+}
+
+BAD_RETURN(s32) cutscene_goomba_init(UNUSED struct Camera *c) {
+	vec3f_copy(sCutsceneVars[0].point,c->focus);
+	vec3f_copy(sCutsceneVars[1].point,c->pos);
+	vec3f_set(sCutsceneVars[2].point, 4084.0f, 134.0f, -6554.0f);
+	vec3f_set(sCutsceneVars[3].point, 4670.0f, 470.0f, -4545.0f);
+	f32 dist;
+	s16 pitch, yaw;
+	vec3f_get_dist_and_angle(c->focus, c->pos, &dist, &pitch, &yaw);
+	yaw = 0x4000;
+	vec3f_set_dist_and_angle(c->focus, c->pos, dist, pitch, yaw);
+}
+
+BAD_RETURN(s32) cutscene_dorrie_pan(struct Camera *c) {
+	approach_vec3f_asymptotic(c->focus,sCutsceneVars[0].point,0.02f,0.02f,0.02f);
+	approach_vec3f_asymptotic(c->pos,sCutsceneVars[2].point,0.02f,0.02f,0.02f);
+}
+
+BAD_RETURN(s32) cutscene_dorrie_init(struct Camera *c) {
+	vec3f_set(sCutsceneVars[0].point, -5316.0f, 250.0f, -1890.0f);
+	f32 dist;
+	s16 pitch, yaw;
+	vec3f_get_dist_and_angle(sCutsceneVars[0].point, c->pos, &dist, &pitch, &yaw);
+	dist = 1200.0f;
+	yaw = 0x4000;
+	pitch = 0x1000;
+	vec3f_set_dist_and_angle(sCutsceneVars[1].point, sCutsceneVars[2].point, dist, pitch, yaw);
+}
+
+BAD_RETURN(s32) cutscene_wait(struct Camera *c) {
+}
+BAD_RETURN(s32) cutscene_hard_stop(struct Camera *c) {
+	c->cutscene = 0;
+	gCutsceneTimer = CUTSCENE_STOP;
+	gTEStopCutscene = 0;
+}
+
+
 BAD_RETURN(s32) cutscene_unused_start(UNUSED struct Camera *c) {
 }
 
@@ -10442,6 +10507,24 @@ BAD_RETURN(s32) cutscene_door_mode(struct Camera *c) {
  * Cutscenes
  ******************************************************************************************************/
 
+//scut cutscenes
+
+struct Cutscene sCutsceneDorrieInvite[] = {
+	{ cutscene_dorrie_init, 1 },
+	{ cutscene_dorrie_pan, 90 },
+	{ cutscene_wait, CUTSCENE_LOOP },
+	{ cutscene_hard_stop, CUTSCENE_LOOP },
+};
+
+struct Cutscene sCutsceneAnimeGoombas[] = {
+	{ cutscene_goomba_init, CUTSCENE_LOOP },
+	{ cutscene_goomba_pan, CUTSCENE_LOOP },
+	{ cutscene_goomba_pan_back, CUTSCENE_LOOP },
+	{ cutscene_goomba_pan_deo, CUTSCENE_LOOP },
+	{ cutscene_hard_stop, CUTSCENE_LOOP },
+};
+
+
 /**
  * Cutscene that plays when Mario beats the game.
  */
@@ -10889,9 +10972,9 @@ u8 sZoomOutAreaMasks[] = {
 	ZOOMOUT_AREA_MASK(0, 0, 0, 0, 0, 0, 0, 0), // Unused         | Unused
 	ZOOMOUT_AREA_MASK(1, 0, 0, 0, 1, 0, 0, 0), // BBH            | CCM
 	ZOOMOUT_AREA_MASK(1, 0, 0, 0, 1, 0, 0, 0), // CASTLE_INSIDE  | HMC
-	ZOOMOUT_AREA_MASK(1, 0, 0, 0, 1, 1, 0, 0), // SSL            | BOB
+	ZOOMOUT_AREA_MASK(1, 0, 0, 0, 1, 0, 0, 0), // SSL            | BOB
 	ZOOMOUT_AREA_MASK(1, 0, 0, 0, 1, 0, 0, 0), // SL             | WDW
-	ZOOMOUT_AREA_MASK(0, 0, 0, 0, 1, 1, 0, 0), // JRB            | THI
+	ZOOMOUT_AREA_MASK(1, 0, 0, 0, 1, 1, 0, 0), // JRB            | THI
 	ZOOMOUT_AREA_MASK(0, 0, 0, 0, 1, 0, 0, 0), // TTC            | RR
 	ZOOMOUT_AREA_MASK(1, 0, 0, 0, 1, 0, 0, 0), // CASTLE_GROUNDS | BITDW
 	ZOOMOUT_AREA_MASK(1, 0, 0, 0, 1, 0, 0, 0), // VCUTM          | BITFS
@@ -11238,6 +11321,7 @@ struct CutsceneSplinePoint sCcmOutsideCreditsSplineFocus[] = {
  * Note that CAM_FLAG_SMOOTH_MOVEMENT is cleared while a cutscene is playing, so cutscenes set it for
  * the duration they want the flag to be active.
  */
+
 void play_cutscene(struct Camera *c) {
     UNUSED u32 pad[3];
     UNUSED s16 unusedYawFocToMario;
@@ -11301,6 +11385,8 @@ void play_cutscene(struct Camera *c) {
         CUTSCENE(CUTSCENE_RACE_DIALOG, sCutsceneDialog)
         CUTSCENE(CUTSCENE_ENTER_PYRAMID_TOP, sCutsceneEnterPyramidTop)
         CUTSCENE(CUTSCENE_SSL_PYRAMID_EXPLODE, sCutscenePyramidTopExplode)
+        CUTSCENE(CUTSCENE_ANIME_GOOMBAS, sCutsceneAnimeGoombas)
+        CUTSCENE(CUTSCENE_DORRIE_INVITE, sCutsceneDorrieInvite)
     }
 
 #undef CUTSCENE
@@ -11317,6 +11403,11 @@ void play_cutscene(struct Camera *c) {
             sCutsceneShot += 1;
             gCutsceneTimer = 0;
         }
+		if(gTEAdvCutscene){
+            sCutsceneShot += 1;
+            gCutsceneTimer = 0;
+			gTEAdvCutscene = 0;
+		}
     } else {
         sMarioCamState->cameraEvent = 0;
         sCutsceneShot = 0;

@@ -1,3 +1,4 @@
+#include "src/game/texscroll.h"
 #include <PR/ultratypes.h>
 
 #include "audio/external.h"
@@ -313,13 +314,13 @@ void print_act_selector_strings(void) {
     gSPDisplayList(gDisplayListHead++, dl_ia_text_begin);
     gDPSetEnvColor(gDisplayListHead++, 0, 0, 0, 255);
     // Print the "MY SCORE" text if the coin score is more than 0
-    if (save_file_get_course_coin_score(gCurrSaveFileNum - 1, gCurrCourseNum - 1) != 0) {
-#ifdef VERSION_EU
-        print_generic_string(95, 118, myScore[language]);
-#else
-        print_generic_string(102, 118, myScore);
-#endif
-    }
+    // if (save_file_get_course_coin_score(gCurrSaveFileNum - 1, gCurrCourseNum - 1) != 0) {
+// #ifdef VERSION_EU
+        // print_generic_string(95, 118, myScore[language]);
+// #else
+        // print_generic_string(102, 118, myScore);
+// #endif
+    // }
 
 #ifdef VERSION_EU
     print_generic_string(get_str_x_pos_from_center(160, currLevelName + 3, 10.0f), 33, currLevelName + 3);
@@ -438,7 +439,7 @@ s32 lvl_update_obj_and_load_act_button_actions(UNUSED s32 arg, UNUSED s32 unused
         }
     }
 
-    area_update_objects();
+    area_update_objects(); scroll_textures();
     sActSelectorMenuTimer++;
     return sLoadedActNum;
 }

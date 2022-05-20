@@ -4,7 +4,7 @@
 // Surface Types
 #define SURFACE_DEFAULT                      0x0000 // Environment default
 #define SURFACE_BURNING                      0x0001 // Lava / Frostbite (in SL), but is used mostly for Lava
-#define SURFACE_0004                         0x0004 // Unused, has no function and has parameters
+#define SURFACE_NO_FOOTING                   0x0004 // cannot be stood on
 #define SURFACE_HANGABLE                     0x0005 // Ceiling that Mario can climb on
 #define SURFACE_SLOW                         0x0009 // Slow down Mario, unused
 #define SURFACE_DEATH_PLANE                  0x000A // Death floor

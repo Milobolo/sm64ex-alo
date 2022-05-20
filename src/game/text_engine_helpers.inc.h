@@ -29,6 +29,9 @@ s32 TE_set_flag(s32 *flag,u32 bit){
 	*flag |= bit;
 	return 1;
 }
+s32 Check_Cur_Course_Stars(void){
+	return save_file_get_course_star_count(gCurrSaveFileNum - 1, gCurrCourseNum - 1);
+}
 void TE_print_star_cnt(s32 fileindex, s32 usr, u8 eng){
 	u32 cnt = save_file_get_total_star_count(fileindex, COURSE_MIN - 1, COURSE_MAX - 1);
 	UserInputs[eng][usr][0] = (u32) cnt / 10;

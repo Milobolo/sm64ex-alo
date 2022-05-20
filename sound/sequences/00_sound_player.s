@@ -2028,7 +2028,7 @@ sound_ref .sound_mario_drowning
 sound_ref .sound_mario_punch_wah
 sound_ref .sound_mario_uh
 sound_ref .sound_mario_hrmm
-sound_ref .sound_mario_wah2
+sound_ref .sound_snort
 .ifdef VERSION_JP
   sound_ref .sound_mario_jump_hoo
   sound_ref .sound_mario_jump_hoo
@@ -2238,6 +2238,21 @@ chan_end
 .layer_D09:
 layer_transpose -2
 layer_note1 39, 0x7f, 105
+layer_end
+
+
+.sound_snort:
+chan_setbank 8
+chan_setinstr 14
+chan_setlayer 0, .layer_snort
+chan_end
+
+.layer_snort:
+layer_transpose 0
+layer_somethingon
+layer_portamento 2, 40, 60
+layer_note1 32, 0x30, 74
+layer_note1 30, 0x30, 84
 layer_end
 
 .sound_mario_snoring1:

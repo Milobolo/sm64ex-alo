@@ -736,6 +736,7 @@ s32 act_riding_shell_air(struct MarioState *m) {
         m->interactObj = spawn_object(m->marioObj, MODEL_KOOPA_SHELL, bhvKoopaShell);
             m->usedObj = m->interactObj;
             m->riddenObj = m->interactObj;
+			m->usedObj->oFlags |= OBJ_FLAG_HOLDABLE;
 
             attack_object(m->interactObj, 0x40);
     }
@@ -1030,6 +1031,14 @@ s32 act_hold_water_jump(struct MarioState *m) {
 		// the water cam is awful for this, just use the normal one instead
 		////set_camera_mode(m->area->camera, m->area->camera->defMode, 1);
 	 }
+	//similar to the above check, but doesnt set yvel
+	if (m->actionArg == 40) {
+		m->forwardVel *= 1.6f;
+		m->actionArg = 0;
+		m->actionState = 4;
+		set_camera_mode(m->area->camera, m->area->camera->defMode, 1);
+	}
+	 
 	m->actionTimer += 1;
 
     if (m->forwardVel < 15.0f) {
@@ -1064,7 +1073,10 @@ s32 act_hold_water_jump(struct MarioState *m) {
 			m->marioObj->header.gfx.angle[2] = 0;
 		}
 		else {
-			m->heldObj = NULL;
+            if (m->heldObj != NULL) {
+                mark_obj_for_deletion(m->heldObj);
+                m->heldObj = NULL;
+            }
 				//set_camera_mode(m->area->camera, m->area->camera->defMode, 1);
 			return set_mario_action(m, ACT_RIDING_SHELL_JUMP, m->actionTimer);
 		}
@@ -1076,7 +1088,10 @@ s32 act_hold_water_jump(struct MarioState *m) {
             // underwater. still, better safe than sorry
             if (m->actionState == 4 || m->actionState == 6) {
                 set_mario_action(m, ACT_RIDING_SHELL_GROUND, m->actionState);
+            if (m->heldObj != NULL) {
+                mark_obj_for_deletion(m->heldObj);
                 m->heldObj = NULL;
+            }
 
                 //set_camera_mode(m->area->camera, m->area->camera->defMode, 1);
             } else {
@@ -1654,7 +1669,9 @@ s32 act_butt_slide_air(struct MarioState *m) {
             if (m->actionState == 0 && m->vel[1] < 0.0f && m->floor->normal.y >= 0.9848077f) {
                 m->vel[1] = -m->vel[1] / 2.0f;
                 m->actionState = 1;
-            } else {
+            } else if (m->floor->type == SURFACE_NO_FOOTING) {
+				set_mario_action(m, ACT_STOMACH_SLIDE, 0);
+			} else {
                 set_mario_action(m, ACT_BUTT_SLIDE, 0);
             }
             play_mario_landing_sound(m, SOUND_ACTION_TERRAIN_LANDING);

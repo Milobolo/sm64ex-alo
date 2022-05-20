@@ -10,6 +10,42 @@
 
 // SM64 (US/JP/EU/SH) Segment 02
 
+ALIGNED8 const Texture MrI_portrait[] = {
+#include "textures/segment2/custom_I.rgba16.inc.c"
+};
+
+ALIGNED8 const Texture blizzard_portrait[] = {
+#include "textures/segment2/custom_blizzard.rgba16.inc.c"
+};
+
+ALIGNED8 const Texture chuckya_portrait[] = {
+#include "textures/segment2/custom_chuckya.rgba16.inc.c"
+};
+
+ALIGNED8 const Texture chomp_portrait[] = {
+#include "textures/segment2/custom_chomp.rgba16.inc.c"
+};
+
+ALIGNED8 const Texture pink_bobomb_portrait[] = {
+#include "textures/segment2/custom_pink_bobomb.rgba16.inc.c"
+};
+
+ALIGNED8 const Texture koopa_portrait[] = {
+#include "textures/segment2/custom_koopa.rgba16.inc.c"
+};
+
+ALIGNED8 const Texture mario_portrait[] = {
+#include "textures/segment2/custom_mario.rgba16.inc.c"
+};
+
+ALIGNED8 const Texture goomba_portrait[] = {
+#include "textures/segment2/custom_goomba.rgba16.inc.c"
+};
+
+ALIGNED8 const Texture dorrie_portrait[] = {
+#include "textures/segment2/custom_dorrie.rgba16.inc.c"
+};
+
 ALIGNED8 const Texture small_font[] = {
 #include "textures/segment2/custom_text.i4.inc.c"
 };

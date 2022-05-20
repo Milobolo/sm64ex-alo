@@ -1,5 +1,5 @@
 #include <PR/ultratypes.h>
-
+#include "game_init.h"
 #include "sm64.h"
 #include "area.h"
 #include "audio/external.h"
@@ -1040,6 +1040,9 @@ s32 act_ground_pound_land(struct MarioState *m) {
         return set_mario_action(m, ACT_FREEFALL, 0);
     }
 
+    if (m->floor->type == SURFACE_NO_FOOTING) {
+		return set_mario_action(m, ACT_STOMACH_SLIDE, 0);
+	}
     if (m->input & INPUT_ABOVE_SLIDE) {
         return set_mario_action(m, ACT_BUTT_SLIDE, 0);
     }
@@ -1075,7 +1078,7 @@ s32 act_first_person(struct MarioState *m) {
     set_mario_animation(m, MARIO_ANIM_FIRST_PERSON);
     return FALSE;
 }
-
+extern const BehaviorScript bhvKoopaShell[];
 s32 check_common_stationary_cancels(struct MarioState *m) {
     if (m->pos[1] < m->waterLevel - 100) {
         if (m->action == ACT_SPAWN_SPIN_LANDING) {
@@ -1096,6 +1099,22 @@ s32 check_common_stationary_cancels(struct MarioState *m) {
             return drop_and_set_mario_action(m, ACT_STANDING_DEATH, 0);
         }
     }
+	if (gPlayer1Controller->buttonPressed&L_TRIG){
+		if (!(m->action & ACT_FLAG_RIDING_SHELL)) {
+			struct Object *obj = spawn_object(m->marioObj, MODEL_KOOPA_SHELL, bhvKoopaShell);
+			m->interactObj = obj;
+			m->usedObj = obj;
+			m->riddenObj = obj;
+			attack_object(obj, 0x40); // INT_HIT_FROM_ABOVE
+
+			update_mario_sound_and_camera(m);
+			mario_drop_held_object(m);
+
+			return set_mario_action(m, ACT_RIDING_SHELL_GROUND, 0);
+		}
+	}
+	
+	
     return FALSE;
 }
 

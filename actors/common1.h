@@ -298,4 +298,6 @@ extern const GeoLayout Switchblock_Switch_MOP[];
 extern const Collision col_Switchblock_Switch_MOP_0x7d7348[];
 #endif
 
+#include "deo/geo_header.h"
+
 #endif

@@ -91,7 +91,9 @@ static void mr_blizzard_act_spawn_snowball(void) {
  */
 
 static void mr_blizzard_act_hide_unhide(void) {
-
+	if (o->oBehParams2ndByte == 0x20) {
+		o->oMrBlizzardScale = 4.0f;
+	}
     if (o->oDistanceToMario < 1000.0f) {
         // If Mario is in range, move to rising action, make Mr. Blizzard visible,
         // make Mr. Blizzard tangible, and initialize GraphYVel.
@@ -150,7 +152,12 @@ static void mr_blizzard_act_rotate(void) {
     // While Mr. Blizzard is on the ground, rotate toward Mario at
     // 8.4375 degrees/frame.
     if (o->oMoveFlags & OBJ_MOVE_MASK_ON_GROUND) {
-        cur_obj_rotate_yaw_toward(o->oAngleToMario, 0x600);
+		if (o->oBehParams2ndByte == 0x20) {
+			cur_obj_rotate_yaw_toward(o->oAngleToMario, 0x500);
+		}else{
+			cur_obj_rotate_yaw_toward(o->oAngleToMario, 0x600);
+		}
+        
 
         // Modify the ChangeInDizziness based on Mario's angle to Mr. Blizzard.
         angleDiff = o->oAngleToMario - o->oMoveAngleYaw;
@@ -248,9 +255,12 @@ static void mr_blizzard_act_death(void) {
         if (o->oMrBlizzardScale != 0.0f) {
             if ((o->oMrBlizzardScale -= 0.03f) <= 0.0f) {
                 o->oMrBlizzardScale = 0.0f;
-                if (!(o->oBehParams & 0x0000FF00)) {
-                    obj_spawn_loot_yellow_coins(o, o->oNumLootCoins, 20.0f);
-                    set_object_respawn_info_bits(o, 1);
+				if (o->oBehParams2ndByte == 0x20) {
+					spawn_default_star(10432, 3981, -6034);
+					obj_mark_for_deletion(o);
+				}else if (!(o->oBehParams & 0x0000FF00)) {
+					obj_spawn_loot_yellow_coins(o, o->oNumLootCoins, 20.0f);
+					set_object_respawn_info_bits(o, 1);
                 }
             }
             // Reset Mr. Blizzard if Mario leaves its radius.
@@ -258,7 +268,11 @@ static void mr_blizzard_act_death(void) {
             cur_obj_init_animation_with_sound(1);
 
             o->oAction = MR_BLIZZARD_ACT_SPAWN_SNOWBALL;
-            o->oMrBlizzardScale = 1.0f;
+			if (o->oBehParams2ndByte == 0x20) {
+				o->oMrBlizzardScale = 4.0f;
+			}else{
+				o->oMrBlizzardScale = 1.0f;
+			}
             o->oMrBlizzardGraphYOffset = -200.0f;
             o->oFaceAngleRoll = 0;
             o->oMrBlizzardDizziness = o->oMrBlizzardChangeInDizziness = 0.0f;
@@ -420,7 +434,7 @@ static void mr_blizzard_snowball_act_1(void) {
             if (marioDist > 800.0f) {
                 marioDist = 800.0f;
             }
-if(configBE){
+if(configBE || (o->oBehParams2ndByte == 0x20)){
             // Launch the snowball relative to Mario's distance from the snowball.
             o->oMoveAngleYaw = (s32)(o->parentObj->oMoveAngleYaw + 4000 - marioDist * 4.0f);
             o->oForwardVel = 80.0f;

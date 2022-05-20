@@ -595,7 +595,10 @@ s32 mario_facing_downhill(struct MarioState *m, s32 turnYaw) {
 u32 mario_floor_is_slippery(struct MarioState *m) {
     f32 normY;
 
-    if ((m->area->terrainType & TERRAIN_MASK) == TERRAIN_SLIDE
+    if(m->floor->type == SURFACE_NO_FOOTING){
+		return TRUE;
+	}
+	if ((m->area->terrainType & TERRAIN_MASK) == TERRAIN_SLIDE
         && m->floor->normal.y < 0.9998477f //~cos(1 deg)
     ) {
         return TRUE;
@@ -943,7 +946,9 @@ static u32 set_mario_action_moving(struct MarioState *m, u32 action, UNUSED u32 
             break;
 
         case ACT_BEGIN_SLIDING:
-            if (mario_facing_downhill(m, FALSE)) {
+			if (m->floor->type == SURFACE_NO_FOOTING) {
+				action = ACT_STOMACH_SLIDE;
+			}else if (mario_facing_downhill(m, FALSE)) {
                 action = ACT_BUTT_SLIDE;
             } else {
                 action = ACT_STOMACH_SLIDE;
@@ -2082,7 +2087,8 @@ void init_mario(void) {
 
     unused80339F10 = 0;
 
-    gMarioState->actionTimer = 0;
+    Load_Power_Word();
+	gMarioState->actionTimer = 0;
     gMarioState->framesSinceA = 0xFF;
     gMarioState->framesSinceB = 0xFF;
 

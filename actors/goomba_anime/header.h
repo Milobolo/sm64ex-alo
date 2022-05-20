@@ -1,0 +1,10 @@
+extern Lights1 goomba_anime_hair_lights;
+extern Lights1 goomba_anime_SM64_goomba_seg8_dl_0801B5C8_F3D_Mat_0_lights;
+extern u8 goomba_anime_goomba_face_rgba16_rgba16[];
+extern Vtx goomba_anime_Sphere_001_mesh_vtx_0[1446];
+extern Gfx goomba_anime_Sphere_001_mesh_tri_0[];
+extern Vtx goomba_anime_Sphere_001_mesh_vtx_1[204];
+extern Gfx goomba_anime_Sphere_001_mesh_tri_1[];
+extern Gfx mat_goomba_anime_hair[];
+extern Gfx mat_goomba_anime_SM64_goomba_seg8_dl_0801B5C8_F3D_Mat_0[];
+extern Gfx goomba_anime_Sphere_001_mesh[];

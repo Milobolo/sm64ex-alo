@@ -4,6 +4,19 @@
 #include <PR/ultratypes.h>
 #include <PR/gbi.h>
 
+extern const Texture MrI_portrait[];
+extern const Texture blizzard_portrait[];
+extern const Texture chuckya_portrait[];
+extern const Texture chuckya_portrait[];
+extern const Texture chomp_portrait[];
+extern const Texture pink_bobomb_portrait[];
+extern const Texture koopa_portrait[];
+extern const Texture mario_portrait[];
+extern const Texture goomba_portrait[];
+extern const Texture dorrie_portrait[];
+
+
+
 extern u8 seg2_course_name_table[];
 extern u8 seg2_act_name_table[];
 extern Gfx dl_rgba16_text_begin[];

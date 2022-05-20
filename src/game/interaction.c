@@ -774,10 +774,12 @@ u32 interact_water_ring(struct MarioState *m, UNUSED u32 interactType, struct Ob
     return FALSE;
 }
 
+//absolutely shameful code
+extern u8 TE_collect_star_no_exit;
 u32 interact_star_or_key(struct MarioState *m, UNUSED u32 interactType, struct Object *o) {
     u32 starIndex;
     u32 starGrabAction = ACT_STAR_DANCE_EXIT;
-    u32 noExit = (o->oInteractionSubtype & INT_SUBTYPE_NO_EXIT) != 0;
+    u32 noExit = (o->oInteractionSubtype & INT_SUBTYPE_NO_EXIT || ((o->oBehParams &&0xFF) != 0)) != 0;
     u32 grandStar = (o->oInteractionSubtype & INT_SUBTYPE_GRAND_STAR) != 0;
 
     if (m->health >= 0x100) {
@@ -795,6 +797,7 @@ u32 interact_star_or_key(struct MarioState *m, UNUSED u32 interactType, struct O
 
         if (noExit) {
             starGrabAction = ACT_STAR_DANCE_NO_EXIT;
+			TE_collect_star_no_exit = 1;
         }
 
         if (m->action & ACT_FLAG_SWIMMING) {
@@ -1474,7 +1477,7 @@ u32 interact_koopa_shell(struct MarioState *m, UNUSED u32 interactType, struct O
 
             attack_object(o, interaction);
             update_mario_sound_and_camera(m);
-            play_shell_music();
+            // play_shell_music();
             mario_drop_held_object(m);
 
             //! Puts Mario in ground action even when in air, making it easy to
@@ -1722,7 +1725,7 @@ u32 check_read_sign_TE(struct MarioState *m, struct Object *o) {
             m->marioObj->oMarioReadingSignDYaw = facingDYaw;
             m->marioObj->oMarioReadingSignDPosX = targetX - m->pos[0];
             m->marioObj->oMarioReadingSignDPosZ = targetZ - m->pos[2];
-			SetupTextEngine(32,60,TE_Strings[o->oBehParams],TE_STATE_MAIN);
+			SetupTextEngine(32,60,TE_Strings[o->oBehParams&0xFFFF],TE_STATE_MAIN);
 
             m->interactObj = o;
             m->usedObj = o;
@@ -1732,6 +1735,27 @@ u32 check_read_sign_TE(struct MarioState *m, struct Object *o) {
 
     return FALSE;
 }
+
+u32 check_npc_talk_TE(struct MarioState *m, struct Object *o) {
+    if ((m->input & READ_MASK) && mario_can_talk(m, 1)) {
+        s16 facingDYaw = mario_obj_angle_to_object(m, o) - m->faceAngle[1];
+        if (facingDYaw >= -0x4000 && facingDYaw <= 0x4000) {
+            o->oInteractStatus = INT_STATUS_INTERACTED;
+
+            m->interactObj = o;
+            m->usedObj = o;
+			o->oTextEngine = &TE_Engines[TE_STATE_MAIN];
+			SetupTextEngine(32,60,TE_Strings[o->oBehParams&0xFFFF],TE_STATE_MAIN);
+
+            push_mario_out_of_object(m, o, -10.0f);
+            return set_mario_action(m, ACT_WAITING_FOR_DIALOG, 0);
+        }
+    }
+
+    push_mario_out_of_object(m, o, -10.0f);
+    return FALSE;
+}
+
 #else
 //just a normal sign if no def
 u32 check_read_sign_TE(struct MarioState *m, struct Object *o) {
@@ -1753,6 +1777,25 @@ u32 check_read_sign_TE(struct MarioState *m, struct Object *o) {
 
     return FALSE;
 }
+
+u32 check_npc_talk_TE(struct MarioState *m, struct Object *o) {
+    if ((m->input & READ_MASK) && mario_can_talk(m, 1)) {
+        s16 facingDYaw = mario_obj_angle_to_object(m, o) - m->faceAngle[1];
+        if (facingDYaw >= -0x4000 && facingDYaw <= 0x4000) {
+            o->oInteractStatus = INT_STATUS_INTERACTED;
+
+            m->interactObj = o;
+            m->usedObj = o;
+
+            push_mario_out_of_object(m, o, -10.0f);
+            return set_mario_action(m, ACT_WAITING_FOR_DIALOG, 0);
+        }
+    }
+
+    push_mario_out_of_object(m, o, -10.0f);
+    return FALSE;
+}
+
 #endif
 
 u32 check_npc_talk(struct MarioState *m, struct Object *o) {
@@ -1780,6 +1823,8 @@ u32 interact_text(struct MarioState *m, UNUSED u32 interactType, struct Object *
         interact = check_read_sign(m, o);
     } else if (o->oInteractionSubtype & INT_SUBTYPE_TE) {
         interact = check_read_sign_TE(m, o);
+    } else if (o->oInteractionSubtype & INT_SUBTYPE_NPC_TE) {
+		interact = check_npc_talk_TE(m, o);
     } else if (o->oInteractionSubtype & INT_SUBTYPE_NPC) {
         interact = check_npc_talk(m, o);
     } else {

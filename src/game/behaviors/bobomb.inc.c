@@ -370,6 +370,14 @@ void bobomb_buddy_cannon_dialog(s16 dialogFirstText, s16 dialogSecondText) {
     }
 }
 
+void bobomb_buddy_act_talk_TE(void) {
+    struct TEState *eng = o->oTextEngine;
+	if (eng->OgStr == NULL) {
+		o->oBobombBuddyHasTalkedToMario = BOBOMB_BUDDY_HAS_TALKED;
+		o->oInteractStatus = 0;
+		o->oAction = BOBOMB_BUDDY_ACT_IDLE;
+	}
+}
 void bobomb_buddy_act_talk(void) {
     if (set_mario_npc_dialog(1) == 2) {
         o->activeFlags |= ACTIVE_FLAG_INITIATED_TIME_STOP;
@@ -433,4 +441,25 @@ void bhv_bobomb_buddy_loop(void) {
     curr_obj_random_blink(&o->oBobombBuddyBlinkTimer);
 
     o->oInteractStatus = 0;
+}
+
+void bhv_bobomb_buddy_loop_TE(void) {
+    switch (o->oAction) {
+        case BOBOMB_BUDDY_ACT_IDLE:
+            bobomb_buddy_act_idle();
+            break;
+
+        case BOBOMB_BUDDY_ACT_TURN_TO_TALK:
+            bobomb_buddy_act_turn_to_talk();
+            break;
+
+        case BOBOMB_BUDDY_ACT_TALK:
+            bobomb_buddy_act_talk_TE();
+            break;
+    }
+	o->oInteractStatus = 0;
+}
+
+void bhv_bobomb_blink(void) {
+    curr_obj_random_blink(&o->oBobombBuddyBlinkTimer);
 }
