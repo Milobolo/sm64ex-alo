@@ -34,9 +34,10 @@ s32 Check_Cur_Course_Stars(void){
 }
 void TE_print_star_cnt(s32 fileindex, s32 usr, u8 eng){
 	u32 cnt = save_file_get_total_star_count(fileindex, COURSE_MIN - 1, COURSE_MAX - 1);
-	UserInputs[eng][usr][0] = (u32) cnt / 10;
-	UserInputs[eng][usr][1] = (u32) cnt % 10;
+	UserInputs[eng][usr][0] = (u8) cnt / 10;
+	UserInputs[eng][usr][1] = (u8) cnt % 10;
 	UserInputs[eng][usr][2] = 0x45;
+	UserInputs[eng][usr][3] = 0x45;
 }
 s32 TE_check_password(char *password,u32 usr){
 	char *input = UserInputs[0][usr];
@@ -59,3 +60,5 @@ s32 TE_check_password(char *password,u32 usr){
 	}
 	return 1;
 }
+#include "text_strings.h"
+char GS_password[] = {Pass1};

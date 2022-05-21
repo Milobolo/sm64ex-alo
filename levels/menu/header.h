@@ -60,4 +60,6 @@ extern const u8 eu_course_strings_de_table[];
 extern const LevelScript level_main_menu_entry_1[];
 extern const LevelScript level_main_menu_entry_2[];
 
+#include "levels/menu/FS/geo_header.h"
+
 #endif

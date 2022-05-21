@@ -1,0 +1,13 @@
+extern const GeoLayout wdw_area_1_geo[];
+extern const GeoLayout wdw_area_1[];
+extern const Collision wdw_area_1_collision[];
+extern const MacroObject wdw_area_1_macro_objs[];
+extern Lights1 wdw_dl_evil_lair_floor_lights;
+extern u8 wdw_dl_cs_brokentile04_alb_ci8[];
+extern u8 wdw_dl_cs_brokentile04_alb_ci8_pal_rgba16[];
+extern Vtx wdw_dl_Plane_014_mesh_layer_5_vtx_0[37];
+extern Gfx wdw_dl_Plane_014_mesh_layer_5_tri_0[];
+extern Gfx mat_wdw_dl_evil_lair_floor[];
+extern Gfx mat_revert_wdw_dl_evil_lair_floor[];
+extern Gfx wdw_dl_Plane_014_mesh_layer_5[];
+extern Gfx wdw_dl_material_revert_render_settings[];

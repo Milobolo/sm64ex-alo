@@ -256,6 +256,8 @@ static void mr_blizzard_act_death(void) {
             if ((o->oMrBlizzardScale -= 0.03f) <= 0.0f) {
                 o->oMrBlizzardScale = 0.0f;
 				if (o->oBehParams2ndByte == 0x20) {
+					//get star to not inherit BP
+					o->oBehParams = 0;
 					spawn_default_star(10432, 3981, -6034);
 					obj_mark_for_deletion(o);
 				}else if (!(o->oBehParams & 0x0000FF00)) {

@@ -286,6 +286,33 @@ static unsigned char starIcon[] = { GLYPH_STAR, GLYPH_SPACE };
 static unsigned char xIcon[] = { GLYPH_MULTIPLY, GLYPH_SPACE };
 #endif
 
+//ss4 vars
+s32 Op_Type = 0;
+s32 copy = 0;
+#include "src/game/text_engine.h"
+void FS_do_operation(u32 pick){
+	switch(Op_Type){
+		case 1:
+			sSelectedFileNum = pick+1;
+			play_sound(SOUND_MENU_STAR_SOUND, gGlobalSoundSource);
+			break;
+		//erase
+		case 2:
+			save_file_erase(pick);
+			play_sound(SOUND_MARIO_WAAAOOOW, gGlobalSoundSource);
+			break;
+		case 3:
+			save_file_copy(copy,pick);
+			play_sound(SOUND_MENU_STAR_SOUND_OKEY_DOKEY, gGlobalSoundSource);
+			break;
+	}
+}
+
+
+
+
+
+
 /**
  * Yellow Background Menu Initial Action
  * Rotates the background at 180 grades and it's scale.
@@ -3064,4 +3091,26 @@ s32 lvl_init_menu_values_and_cursor_pos(UNUSED s32 arg, UNUSED s32 unused) {
 s32 lvl_update_obj_and_load_file_selected(UNUSED s32 arg, UNUSED s32 unused) {
     area_update_objects();
     return sSelectedFileNum;
+}
+
+s32 lvl_hang(UNUSED s32 arg, UNUSED s32 unused) {
+    return 0;
+}
+
+
+extern s32 sRegister;
+
+s32 lvl_set_start(UNUSED s32 arg, UNUSED s32 unused) {
+	// return LEVEL_BOWSER_1;
+	if(save_file_get_flags() & SAVE_FLAG_DDD_MOVED_BACK){
+		return LEVEL_SL;
+	}
+	else if(save_file_get_flags() & SAVE_FLAG_UNLOCKED_UPSTAIRS_DOOR){
+		return LEVEL_WDW;
+	}
+	else if(save_file_get_flags() & SAVE_FLAG_UNLOCKED_BASEMENT_DOOR){
+		return LEVEL_CASTLE;
+	}
+	
+	return LEVEL_BOB;
 }

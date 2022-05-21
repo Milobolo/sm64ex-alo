@@ -3,6 +3,8 @@
 
 #include "types.h"
 
+extern const BehaviorScript bhvSetFlag[];
+extern const BehaviorScript bhvKoopaTE[];
 extern const BehaviorScript bhvMrITE[];
 extern const BehaviorScript bhvMrBlizzardTE[];
 extern const BehaviorScript bhvDorrieCutscene[];

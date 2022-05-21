@@ -344,6 +344,32 @@ const BehaviorScript bhvTEOnSpawn[] = {
         CALL_NATIVE(bhvTEOnSpawn_loop),
     END_LOOP(),
 };
+const BehaviorScript bhvSetFlag[] = {
+    BEGIN(OBJ_LIST_GENACTOR),
+    CALL_NATIVE(bhvSetFlag_init),
+    BREAK(),
+};
+
+const BehaviorScript bhvKoopaTE[] = {
+    BEGIN(OBJ_LIST_GENACTOR),
+    OR_INT(oFlags, (OBJ_FLAG_ACTIVE_FROM_AFAR |OBJ_FLAG_COMPUTE_ANGLE_TO_MARIO |  OBJ_FLAG_COMPUTE_DIST_TO_MARIO | OBJ_FLAG_SET_FACE_YAW_TO_MOVE_YAW | OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE)),
+    LOAD_ANIMATIONS(oAnimations, koopa_seg6_anims_06011364),
+    SET_INTERACT_TYPE(INTERACT_TEXT),
+    DROP_TO_FLOOR(),
+    SET_HITBOX(/*Radius*/ 300, /*Height*/ 60),
+	SET_FLOAT(oDrawingDistance, 20000),
+    ANIMATE(7),
+    SET_INT(oInteractionSubtype, INT_SUBTYPE_NPC_TE),
+    SET_HOME(),
+	SET_INT(oInteractStatus, 0),
+	SCALE(0,250),
+	CALL_NATIVE(bhv_goomba_TE_init),
+    BEGIN_LOOP(),
+        SET_INT(oIntangibleTimer, 0),
+        CALL_NATIVE(bhv_bobomb_buddy_loop_TE),
+        CALL_NATIVE(bhv_anime_goomba_TE_loop),
+    END_LOOP(),
+};
 
 const BehaviorScript bhvMrITE[] = {
     BEGIN(OBJ_LIST_GENACTOR),
@@ -351,6 +377,7 @@ const BehaviorScript bhvMrITE[] = {
     SET_INTERACT_TYPE(INTERACT_TEXT),
     SET_HITBOX(/*Radius*/ 200, /*Height*/ 120),
 	SET_FLOAT(oDrawingDistance, 20000),
+	CALL_NATIVE(bhv_goomba_TE_init),
     BILLBOARD(),
 	SPAWN_CHILD(/*Model*/ MODEL_MR_I_IRIS, /*Behavior*/ bhvMrIBody),
     SET_MODEL(MODEL_MR_I),
@@ -359,6 +386,7 @@ const BehaviorScript bhvMrITE[] = {
     BEGIN_LOOP(),
         SET_INT(oIntangibleTimer, 0),
         CALL_NATIVE(bhv_bobomb_buddy_loop_TE),
+        CALL_NATIVE(bhv_anime_goomba_TE_loop),
     END_LOOP(),
 };
 
@@ -368,6 +396,7 @@ const BehaviorScript bhvMrBlizzardTE[] = {
     SET_INTERACT_TYPE(INTERACT_TEXT),
     SET_HITBOX(/*Radius*/ 200, /*Height*/ 250),
 	SET_FLOAT(oDrawingDistance, 20000),
+	CALL_NATIVE(bhv_goomba_TE_init),
 	ADD_FLOAT(oPosY, 24),
     LOAD_ANIMATIONS(oAnimations, snowman_seg5_anims_0500D118),
     ANIMATE(0),
@@ -376,6 +405,7 @@ const BehaviorScript bhvMrBlizzardTE[] = {
     BEGIN_LOOP(),
         SET_INT(oIntangibleTimer, 0),
         CALL_NATIVE(bhv_bobomb_buddy_loop_TE),
+        CALL_NATIVE(bhv_anime_goomba_TE_loop),
     END_LOOP(),
 };
 
@@ -388,7 +418,7 @@ const BehaviorScript bhvDorrieCutscene[] = {
     SET_INTERACT_TYPE(INTERACT_TEXT),
     SET_HITBOX(/*Radius*/ 900, /*Height*/ 120),
 	SET_FLOAT(oDrawingDistance, 20000),
-    ANIMATE(0),
+    ANIMATE(1),
     SET_INT(oInteractionSubtype, INT_SUBTYPE_NPC_TE),
     SET_INT(oAction, 0),
     SET_HOME(),

@@ -222,9 +222,9 @@ Do you want to Save?\n\
 
 DEFINE_DIALOG(DIALOG_014, 1, 4, 30, 200, _("\
 Wow! Another Power Star!\n\
-Mario gains more courage\n\
-from the power of the\n\
-castle.\n\
+Mario gains more power\n\
+for the fight against\n\
+anime.\n\
 Do you want to Save?\n\
 \n\
 //You Bet//Not Now"))
@@ -870,16 +870,11 @@ again to launch Bowser.\n\
 Good luck, Mario! Our\n\
 fate is in your hands."))
 
-DEFINE_DIALOG(DIALOG_067, 1, 5, 30, 200, _("\
+DEFINE_DIALOG(DIALOG_067, 1, 4, 30, 200, _("\
 Tough luck, Mario!\n\
-Princess Toadstool isn't\n\
-here...Gwa ha ha!! Go\n\
-ahead--just try to grab\n\
-me by the tail!\n\
-You'll never be able to\n\
-swing ME around! A wimp\n\
-like you won't throw me\n\
-out of here! Never! Ha!"))
+You will never defeat me,\n\
+putting a stop to all anime!\n\
+Anime will live forever!!"))
 
 DEFINE_DIALOG(DIALOG_068, 1, 5, 30, 200, _("\
 It's Lethal Lava Land!\n\
@@ -1434,19 +1429,12 @@ For today...\n\
 Now, take Star of Power.\n\
 We...sleep...darkness."))
 
-DEFINE_DIALOG(DIALOG_119, 1, 6, 30, 200, _("\
-Grrr! I was a bit\n\
-careless. This is not as I\n\
-had planned...but I still\n\
-hold the power of the\n\
-Stars, and I still have\n\
-Peach.\n\
-Bwa ha ha! You'll get no\n\
-more Stars from me! I'm\n\
-not finished with you yet,\n\
-but I'll let you go for\n\
-now. You'll pay for this...\n\
-later!"))
+DEFINE_DIALOG(DIALOG_119, 1, 5, 30, 200, _("\
+Ahhhhh!\n\
+I shouldn't have taken all\n\
+that DMT. I will return\n\
+and anime will be stronger\n\
+than ever before!!!"))
 
 DEFINE_DIALOG(DIALOG_120, 1, 4, 30, 200, _("\
 Ooowaah! Can it be that\n\

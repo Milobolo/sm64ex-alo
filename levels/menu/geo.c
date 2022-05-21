@@ -204,13 +204,13 @@ const GeoLayout geo_menu_file_select_strings_and_menu_cursor[] = {
          GEO_OPEN_NODE(),
             GEO_CAMERA(0, 0, 0, 1000, 0, 0, 0, 0x00000000),
             GEO_OPEN_NODE(),
-               GEO_RENDER_OBJ(),
+               // GEO_RENDER_OBJ(),
             GEO_CLOSE_NODE(),
          GEO_CLOSE_NODE(),
       GEO_CLOSE_NODE(),
       GEO_ZBUFFER(0),
       GEO_OPEN_NODE(),
-         GEO_ASM(0, geo_file_select_strings_and_menu_cursor),
+         GEO_BRANCH_AND_LINK(FS_geo),
       GEO_CLOSE_NODE(),
    GEO_CLOSE_NODE(),
    GEO_END(),
@@ -244,3 +244,5 @@ const GeoLayout geo_menu_act_selector_strings[] = {
    GEO_CLOSE_NODE(),
    GEO_END(),
 };
+
+#include "levels/menu/FS/geo.inc.c"

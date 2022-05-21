@@ -21,3 +21,7 @@ UNUSED static const u64 binid_1 = 1;
 #include "snowman/anims/data.inc.c"
 #include "snowman/anims/table.inc.c"
 UNUSED static const u64 binid_2 = 2;
+
+#include "koopa/model.inc.c"
+#include "koopa/anims/data.inc.c"
+#include "koopa/anims/table.inc.c"

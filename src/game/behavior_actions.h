@@ -15,6 +15,7 @@ void bhv_spawn_star_no_level_exit(u32);
 void bhv_star_door_loop_2(void);
 void spawn_triangle_break_particles(s16 numTris, s16 triModel, f32 triSize, s16 triAnimState);
 
+void bhvSetFlag_init(void);
 void spawn_mist_from_global(void);
 void clear_particle_flags(u32 flags);
 void spawn_wind_particles(s16 pitch, s16 yaw);
@@ -27,6 +28,7 @@ s32 update_angle_from_move_flags(s32 *angle);
 void cur_obj_spawn_strong_wind_particles(s32 windSpread, f32 scale, f32 relPosX, f32 relPosY, f32 relPosZ);
 
 //cutscene object stuff
+extern u32 gGoombaState;
 extern u32 DorriCutsceneFlags;
 extern u8 GetCurrentCutscene(void);
 extern void Star_Anime_Goomba_Cutscene(void);

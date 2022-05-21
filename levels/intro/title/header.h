@@ -1,0 +1,13 @@
+extern Lights1 title_Spike_mat_lights;
+extern Lights1 title_Text_mat_lights;
+extern u8 title_MarioParty3_492049DF_2_1_ci_ci8[];
+extern u8 title_MarioParty3_492049DF_2_1_ci_ci8_pal_rgba16[];
+extern Vtx title_Plane_010_mesh_vtx_0[52];
+extern Gfx title_Plane_010_mesh_tri_0[];
+extern Vtx title_Plane_010_mesh_vtx_1[730];
+extern Gfx title_Plane_010_mesh_tri_1[];
+extern Gfx mat_title_Spike_mat[];
+extern Gfx mat_revert_title_Spike_mat[];
+extern Gfx mat_title_Text_mat[];
+extern Gfx mat_revert_title_Text_mat[];
+extern Gfx title_Plane_010_mesh[];

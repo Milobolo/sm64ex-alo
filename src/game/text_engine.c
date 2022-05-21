@@ -328,18 +328,22 @@ void TE_add_new_char(struct TEState *CurEng,u32 VI_inc){
 	TE_add_char2buf(CurEng);
 }
 
+static s32 get_char_space(u8 chr, struct TEState *CurEng){
+	s32 textX, textY, offsetY, spaceX;
+	if(!CurEng->Ascii){
+		get_char_from_byte_sm64(chr,&textX, &textY, &spaceX, &offsetY);
+	}else{
+		get_char_from_byte_ascii(chr,&textX, &textY, &spaceX, &offsetY);
+	}
+	return ((s32)(spaceX*CurEng->ScaleF[0]))+1;
+}
+
+
 void TE_add_char2buf(struct TEState *CurEng){
 	u8 CharWrite;
 	//get char
 	CharWrite = CurEng->TempStr[CurEng->CurPos];
-	//increase X pos
-	s32 textX, textY, offsetY, spaceX;
-	if(!CurEng->Ascii){
-		get_char_from_byte_sm64(CharWrite,&textX, &textY, &spaceX, &offsetY);
-	}else{
-		get_char_from_byte_ascii(CharWrite,&textX, &textY, &spaceX, &offsetY);
-	}
-	CurEng->TotalXOff += ((u32)(spaceX*CurEng->ScaleF[0]))+1;
+	CurEng->TotalXOff += get_char_space(CharWrite,CurEng);
 	//write char to buffer
 	StrBuffer[CurEng->state][CurEng->CurPos] = CharWrite;
 	StrBuffer[CurEng->state][CurEng->CurPos+1] = 0xFF;
@@ -355,8 +359,8 @@ void TE_add_char2buf(struct TEState *CurEng){
 		new = 0xFE;
 	}
 	if (CurEng->WordWrap){
-		u8 Nxt = TE_find_next_space(CurEng,CurEng->TempStr);
-		if((CurEng->TempX+(u32)((CurEng->TotalXOff+(Nxt*8))*CurEng->ScaleF[0]))>(CurEng->WordWrap)){
+		s32 Nxt = TE_find_next_space(CurEng,CurEng->TempStr);
+		if((CurEng->TempX+(u32)(CurEng->TotalXOff+Nxt))>(CurEng->WordWrap)){
 			TE_line_break(CurEng,CurEng->OgStr);
 			if(!((CurEng->TempStr[CurEng->CurPos-1]==space)||(CurEng->TempStr[CurEng->CurPos-1]==new))){
 				CurEng->TempStr-=1;
@@ -365,9 +369,10 @@ void TE_add_char2buf(struct TEState *CurEng){
 	}
 }
 
-u8 TE_find_next_space(struct TEState *CurEng,u8 *str){
-	u8 x = 0;
-	u8 CharWrite = str[CurEng->CurPos+x];
+s32 TE_find_next_space(struct TEState *CurEng,u8 *str){
+	s32 x = 0;
+	u8 z = 0;
+	u8 CharWrite = str[CurEng->CurPos+z];
 	u8 space;
 	if(CurEng->Ascii){
 		space = ' ';
@@ -375,7 +380,7 @@ u8 TE_find_next_space(struct TEState *CurEng,u8 *str){
 		space = 0x9E;
 	}
 	while(CharWrite != space){
-		CharWrite = str[CurEng->CurPos+x];
+		CharWrite = str[CurEng->CurPos+z];
 		//generic
 		if(CurEng->Ascii){
 			if(CharWrite == 0xFF | CharWrite == "\n"){
@@ -386,13 +391,15 @@ u8 TE_find_next_space(struct TEState *CurEng,u8 *str){
 				break;
 			}
 		}
-		x++;
-		if(x>100){
+		x += get_char_space(CharWrite,CurEng);
+		z++;
+		if(x>340){
 			break; //fail condition
 		}
 	}
 	return x;
 }
+
 void TE_add_to_cmd_buffer(struct TEState *CurEng,u8 *str,u8 len){
 	u32 i;
 	union PtrByte Offset;

@@ -18,6 +18,10 @@
 #define TEXT_VARIABLE_X _("×")
 #define TEXT_UNFILLED_STAR _("☆")
 
+
+#define Pass1 _("CursedBloods")
+
+
 /**
  * Global Text
  */

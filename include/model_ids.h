@@ -377,6 +377,7 @@
 #define MODEL_MR_BLIZZARD_HIDDEN          0x55        // mr_blizzard_hidden_geo
 #define MODEL_MR_BLIZZARD                 0x56        // mr_blizzard_geo
 #define MODEL_PENGUIN                     0x57        // penguin_geo
+#define MODEL_KOOPA_WITH_SHELL            0x58        // koopa_with_shell_geo
 
 // group 8
 #define MODEL_CAP_SWITCH_EXCLAMATION      0x54        // cap_switch_exclamation_seg5_dl_05002E00
@@ -428,7 +429,7 @@
 // group 14
 #define MODEL_PIRANHA_PLANT               0x64        // piranha_plant_geo
 #define MODEL_WHOMP                       0x67        // whomp_geo
-#define MODEL_KOOPA_WITH_SHELL            0x68        // koopa_with_shell_geo
+
 #define MODEL_METALLIC_BALL               0x65        // metallic_ball_geo
 #define MODEL_CHAIN_CHOMP                 0x66        // chain_chomp
 #define MODEL_KOOPA_FLAG                  0x6A        // koopa_flag_geo
@@ -449,7 +450,7 @@
 #define MODEL_SCUTTLEBUG                  0x65        // scuttlebug_geo
 #define MODEL_MR_I_IRIS                   0x66        // mr_i_iris_geo
 #define MODEL_MR_I                        0x67        // mr_i_geo
-#define MODEL_DORRIE                      0x68        // dorrie_geo
+#define MODEL_DORRIE                      0x69        // dorrie_geo
 
 // other models
 #define MODEL_YELLOW_COIN                 0x74        // yellow_coin_geo

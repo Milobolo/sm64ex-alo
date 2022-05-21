@@ -124,6 +124,9 @@ union FloatWord{
 	f32 F;
 };
 #include "text_engine_helpers.h"
+
+extern char GS_password[];
+
 extern s32 gTEStopCutscene;
 extern s32 gTEAdvCutscene;
 extern u8 StrBuffer[NumEngines][0x100];
@@ -157,7 +160,7 @@ void TE_reset_Xpos(struct TEState *CurEng);
 void TE_print(struct TEState *CurEng);
 void TE_transition_print(struct TEState *CurEng);
 void TE_transition_active(struct TEState *CurEng,struct Transition *Tr,u8 flip);
-u8 TE_find_next_space(struct TEState *CurEng,u8 *str);
+s32 TE_find_next_space(struct TEState *CurEng,u8 *str);
 s8 TE_jump_cmds(struct TEState *CurEng,u8 cmd,u8 *str);
 s8 TE_advBlen(struct TEState *CurEng,u16 len);
 s8 TE_print_adv(struct TEState *CurEng,u16 len);

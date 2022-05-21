@@ -70,16 +70,46 @@ void bhv_dorrie_cutscene_loop(void){
 	}
 }
 
-void SavePowerWorld(void){
-	
+void bhvSetFlag_init(void){
+	save_file_set_flags(o->oBehParams);
+	save_file_do_save(gCurrSaveFileNum - 1);
 }
 
+u32 gGoombaState = 0;
+
 void bhv_anime_goomba_TE_loop(void){
-	
+	switch(o->oUnk1A8){
+		case 0:
+			if(gGoombaState && o->oTextEngine){
+				o->oUnk1A8 = 1;
+			}
+			break;
+		case 1:
+			o->oMrBlizzardScale -= 0.03f;
+			cur_obj_scale(o->oMrBlizzardScale);
+			if(o->oMrBlizzardScale < 0.1f){
+				o->oUnk1A8 = 2;
+			}
+			break;
+		case 2:
+			gGoombaState = 0;
+			spawn_mist_particles_variable(0, 0, 150.0f);
+			spawn_triangle_break_particles(30, 138, 3.0f, 4);
+			spawn_object(o, MODEL_RED_COIN, bhvRedCoin);
+			// obj_spawn_loot_coins(o, 1, 20.0f, bhvRedCoin, 0, MODEL_RED_COIN);
+			obj_mark_for_deletion(o);
+			o->oUnk1A8 = 0;
+			cur_obj_play_sound_2(SOUND_OBJ_SNOWMAN_EXPLODE);
+			break;
+		
+	}
 }
 
 void bhv_goomba_TE_init(void){
 	o->oAnimState = o->oBehParams2ndByte;
+	o->oMrBlizzardScale = o->header.gfx.scale[0];
+	o->oUnk1A8 = 0;
+	gGoombaState = 0;
 }
 
 static void obj_start_TE(void){

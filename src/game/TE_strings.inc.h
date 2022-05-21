@@ -21,4 +21,21 @@ char *TE_Strings[] = {
 	&MrI1,
 	&MrI2,
 	&MrI3,
+	&GS_Dorrie_Intro,
+	&AnimeKoopa1,
+	/* 19 */
+	&MrBlizzardWF,
+	&ForestIntro,
+	/* 21 */
+	&LairOfEvil1,
+	&LairOfEvil2,
+	&LairOfEvil3,
+	/* 24 */
+	&PowerWordDestroy1,
+	&PowerWordDestroy2,
+	&PowerWordDestroy3,
+	&PowerWordDestroy4,
+	&PowerWordDestroy5,
+	&PowerWordDestroy6,
+	&PowerWordDestroy7,
 };

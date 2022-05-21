@@ -53,7 +53,7 @@ static uintptr_t *sStackTop = sStack;
 static uintptr_t *sStackBase = NULL;
 
 static s16 sScriptStatus;
-static s32 sRegister;
+s32 sRegister;
 struct LevelCommand *sCurrentCmd;
 
 #ifdef USE_SYSTEM_MALLOC

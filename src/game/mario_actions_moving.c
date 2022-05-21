@@ -315,11 +315,11 @@ void apply_slope_accel(struct MarioState *m) {
                 break;
         }
 
-        if (floorDYaw > -0x4000 && floorDYaw < 0x4000) {
-            m->forwardVel += slopeAccel * steepness;
-        } else {
-            m->forwardVel -= slopeAccel * steepness;
-        }
+        // if (floorDYaw > -0x4000 && floorDYaw < 0x4000) {
+            m->forwardVel += slopeAccel * steepness * coss(floorDYaw);
+        // } else {
+            // m->forwardVel -= slopeAccel * steepness;
+        // }
     }
 
     m->slideYaw = m->faceAngle[1];
@@ -1296,8 +1296,9 @@ s32 act_riding_shell_ground(struct MarioState *m) {
 	}
     if (m->input & INPUT_Z_DOWN && m->input & INPUT_A_PRESSED) {
         mario_stop_riding_object(m);
-        if (m->forwardVel > 24.0f) {
-            mario_set_forward_vel(m, 24.0f);
+		m->forwardVel += 24.0f;
+        if (m->forwardVel > 52.0f) {
+            mario_set_forward_vel(m, 52.0f);
         }
         return set_jumping_action(m, ACT_JUMP, 0);
 	}
@@ -1324,8 +1325,8 @@ s32 act_riding_shell_ground(struct MarioState *m) {
 
     if (m->input & INPUT_Z_DOWN && m->input & INPUT_B_PRESSED) {
         mario_stop_riding_object(m);
-        if (m->forwardVel < 24.0f) {
-            mario_set_forward_vel(m, 24.0f);
+        if (m->forwardVel > 32.0f) {
+            mario_set_forward_vel(m, 32.0f);
         }
         return set_mario_action(m, ACT_CROUCH_SLIDE, 0);
     }

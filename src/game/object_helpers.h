@@ -66,7 +66,9 @@ struct SpawnParticlesInfo
     /*0x0C*/ f32 sizeBase;
     /*0x10*/ f32 sizeRange;
 };
-
+void obj_spawn_loot_coins(struct Object *obj, s32 numCoins, f32 sp30,
+                                    const BehaviorScript *coinBehavior,
+                                    s16 posJitter, s16 model);
 Gfx *geo_update_projectile_pos_from_parent(s32 callContext, UNUSED struct GraphNode *node, Mat4 mtx);
 Gfx *geo_update_layer_transparency(s32 callContext, struct GraphNode *node, UNUSED void *context);
 #ifdef AVOID_UB
