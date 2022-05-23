@@ -245,7 +245,7 @@ isn't the type to go 3 weeks without a shower.\
 [DialogResponse(2)]\
 A plumber you say?[Pause(42)] What's the building's \
 password then?[AbtnNextBox()]\
-[WordWrap(0)][StartKeyboard(1)][AutoNextBox()][WordWrap(296)]\
+[WordWrap(0)][ResetKeyboard()][StartKeyboard(1)][AutoNextBox()][WordWrap(296)]\
 [CallOnce(0,'TE_check_password',2,['GS_password',1])][JumpLink('String_Box')][JumpLink('Blizzard_Img')]\
 [MatchRtrn(0,0)]You're lying man.[Pause(26)] Just another fake weeb trying \
 to get into the anime clubhouse.\
@@ -365,6 +365,14 @@ A cranial shock to break the spell controlling them,[Pause(18)] vetting them the
 Choose your power word carefully Mario.[Pause(30)] Once chosen,[Pause(18)] I will lock it within you using the power \
 of the stars.[Pause(30)] Then simply shout the power word at an anime villain to destroy them.[AbtnNextBox()]\
 [WordWrap(0)][StartKeyboard(0)][AutoNextBox()][CallOnce(0,'Save_Power_Word',0,[])][WordWrap(296)][JumpLink('String_Box')][JumpLink('Dorrie_Img')][SetSfx(0x5037)]Now take this star,[Pause(18)] and use your new powers wisely.\
+[Jump('Abtn_String_End')]"]
+
+DorrieForestReTalk = ["[JumpLink('String_Setup')][JumpLink('Dorrie_Img')]Do you want to change your word of power?[AbtnNextBox()]\
+[JumpLink('String_Box')][JumpLink('Dorrie_Img')][JumpLink('PrepDiag')][DialogOptions(1)]\
+Yes[end]\
+No[end]\
+[DialogResponse(0)][WordWrap(0)][ResetKeyboard()][StartKeyboard(0)][AutoNextBox()][CallOnce(0,'Save_Power_Word',0,[])][WordWrap(296)]\
+[GenericText()][JumpLink('Spd')][JumpLink('String_Box')][JumpLink('Dorrie_Img')]Take the start to lock in your power word.[Pause(30)] Use it well to destroy the powers of anime.\
 [Jump('Abtn_String_End')]"]
 
 

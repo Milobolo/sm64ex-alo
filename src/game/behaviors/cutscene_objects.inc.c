@@ -48,7 +48,7 @@ static void Dorrie_Talk(void){
 				u32 tmp = o->oBehParams;
 				o->oBehParams = 0;
 				spawn_default_star(o->oPosX + Xoff, o->oPosY + 200.0f, o->oPosZ + Zoff);
-				o->oBehParams = tmp;
+				o->oBehParams = 31;
 				o->oBehParams2ndByte = 0;
 			}
 			o->oAction = 0;

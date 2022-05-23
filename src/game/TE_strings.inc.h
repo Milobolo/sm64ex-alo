@@ -38,4 +38,6 @@ char *TE_Strings[] = {
 	&PowerWordDestroy5,
 	&PowerWordDestroy6,
 	&PowerWordDestroy7,
+	/* 31 */
+	&DorrieForestReTalk,
 };

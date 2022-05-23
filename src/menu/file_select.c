@@ -3101,7 +3101,7 @@ s32 lvl_hang(UNUSED s32 arg, UNUSED s32 unused) {
 extern s32 sRegister;
 
 s32 lvl_set_start(UNUSED s32 arg, UNUSED s32 unused) {
-	// return LEVEL_BOWSER_1;
+	// return LEVEL_CCM;
 	if(save_file_get_flags() & SAVE_FLAG_DDD_MOVED_BACK){
 		return LEVEL_SL;
 	}
