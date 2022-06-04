@@ -8,6 +8,7 @@
 #include "surface_collision.h"
 #include "surface_load.h"
 #include "math_util.h"
+#include "game/puppyprint.h"
 
 /**************************************************
  *                      WALLS                     *
@@ -160,7 +161,9 @@ static s32 find_wall_collisions_from_list(struct SurfaceNode *surfaceNode,
 s32 f32_find_wall_collision(f32 *xPtr, f32 *yPtr, f32 *zPtr, f32 offsetY, f32 radius) {
     struct WallCollisionData collision;
     s32 numCollisions = 0;
-
+#if PUPPYPRINT_DEBUG
+    OSTime first = osGetTime();
+#endif
     collision.offsetY = offsetY;
     collision.radius = radius;
 
@@ -175,7 +178,9 @@ s32 f32_find_wall_collision(f32 *xPtr, f32 *yPtr, f32 *zPtr, f32 offsetY, f32 ra
     *xPtr = collision.x;
     *yPtr = collision.y;
     *zPtr = collision.z;
-
+#if PUPPYPRINT_DEBUG
+    collisionTime[perfIteration] += osGetTime() - first;
+#endif
     return numCollisions;
 }
 
@@ -300,7 +305,9 @@ f32 find_ceil(f32 posX, f32 posY, f32 posZ, struct Surface **pceil) {
     f32 height = CELL_HEIGHT_LIMIT;
     f32 dynamicHeight = CELL_HEIGHT_LIMIT;
     s16 x, y, z;
-
+#if PUPPYPRINT_DEBUG
+    OSTime first = osGetTime();
+#endif
     //! (Parallel Universes) Because position is casted to an s16, reaching higher
     // float locations  can return ceilings despite them not existing there.
     //(Dynamic ceilings will unload due to the range.)
@@ -337,7 +344,9 @@ f32 find_ceil(f32 posX, f32 posY, f32 posZ, struct Surface **pceil) {
 
     // Increment the debug tracker.
     gNumCalls.ceil += 1;
-
+#if PUPPYPRINT_DEBUG
+    collisionTime[perfIteration] += osGetTime() - first;
+#endif
     return height;
 }
 
@@ -540,7 +549,9 @@ f32 find_dynamic_floor(f32 xPos, f32 yPos, f32 zPos, struct Surface **pfloor) {
  */
 f32 find_floor(f32 xPos, f32 yPos, f32 zPos, struct Surface **pfloor) {
     s16 cellZ, cellX;
-
+#if PUPPYPRINT_DEBUG
+    OSTime first = osGetTime();
+#endif
     struct Surface *floor, *dynamicFloor;
     struct SurfaceNode *surfaceList;
 
@@ -557,10 +568,16 @@ f32 find_floor(f32 xPos, f32 yPos, f32 zPos, struct Surface **pfloor) {
     *pfloor = NULL;
 
     if (x <= -LEVEL_BOUNDARY_MAX || x >= LEVEL_BOUNDARY_MAX) {
-        return height;
+        #if PUPPYPRINT_DEBUG
+        collisionTime[perfIteration] += osGetTime() - first;
+#endif
+		return height;
     }
     if (z <= -LEVEL_BOUNDARY_MAX || z >= LEVEL_BOUNDARY_MAX) {
-        return height;
+        #if PUPPYPRINT_DEBUG
+        collisionTime[perfIteration] += osGetTime() - first;
+#endif
+		return height;
     }
 
     // Each level is split into cells to limit load, find the appropriate cell.
@@ -605,7 +622,9 @@ f32 find_floor(f32 xPos, f32 yPos, f32 zPos, struct Surface **pfloor) {
 
     // Increment the debug tracker.
     gNumCalls.floor += 1;
-
+#if PUPPYPRINT_DEBUG
+        collisionTime[perfIteration] += osGetTime() - first;
+#endif
     return height;
 }
 
@@ -624,7 +643,9 @@ f32 find_water_level(f32 x, f32 z) {
     f32 loX, hiX, loZ, hiZ;
     f32 waterLevel = FLOOR_LOWER_LIMIT;
     s16 *p = gEnvironmentRegions;
-
+#if PUPPYPRINT_DEBUG
+    OSTime first = osGetTime();
+#endif
     if (p != NULL) {
         numRegions = *p++;
 
@@ -645,7 +666,9 @@ f32 find_water_level(f32 x, f32 z) {
             p++;
         }
     }
-
+#if PUPPYPRINT_DEBUG
+    collisionTime[perfIteration] += osGetTime() - first;
+#endif
     return waterLevel;
 }
 
@@ -660,7 +683,9 @@ f32 find_poison_gas_level(f32 x, f32 z) {
     f32 loX, hiX, loZ, hiZ;
     f32 gasLevel = FLOOR_LOWER_LIMIT;
     s16 *p = gEnvironmentRegions;
-
+#if PUPPYPRINT_DEBUG
+    OSTime first = osGetTime();
+#endif
     if (p != NULL) {
         numRegions = *p++;
 
@@ -685,7 +710,9 @@ f32 find_poison_gas_level(f32 x, f32 z) {
             p += 6;
         }
     }
-
+#if PUPPYPRINT_DEBUG
+    collisionTime[perfIteration] += osGetTime() - first;
+#endif
     return gasLevel;
 }
 
@@ -825,8 +852,8 @@ s32 ray_surface_intersect(Vec3f orig, Vec3f dir, f32 dir_length, struct Surface 
     vec3s_to_vec3f(v1, surface->vertex2);
     vec3s_to_vec3f(v2, surface->vertex3);
     
-    vec3f_dif(e1, v1, v0);
-    vec3f_dif(e2, v2, v0);
+    vec3f_diff(e1, v1, v0);
+    vec3f_diff(e2, v2, v0);
     
     vec3f_cross(h, dir, e2);
     
@@ -838,7 +865,7 @@ s32 ray_surface_intersect(Vec3f orig, Vec3f dir, f32 dir_length, struct Surface 
     // Check if we're making contact with the surface
     f = 1.0f / a;
     
-    vec3f_dif(s, orig, v0);
+    vec3f_diff(s, orig, v0);
     u = f * vec3f_dot(s, h);
     if (u < 0.0f || u > 1.0f)
         return FALSE;
@@ -855,7 +882,7 @@ s32 ray_surface_intersect(Vec3f orig, Vec3f dir, f32 dir_length, struct Surface 
     
     // Successful contact
     vec3f_copy(add_dir, dir);
-    vec3f_mul(add_dir, *length);
+    vec3f_scale(add_dir, *length);
     vec3f_sum(hit_pos, orig, add_dir);
     return TRUE;
 }

@@ -36,9 +36,8 @@
 #ifndef TARGET_N64
 #include "pc/pc_main.h"
 #include "pc/cliopts.h"
-#include "pc/configfile.h"
 #endif
-
+#include "pc/configfile.h"
 #define PLAY_MODE_NORMAL 0
 #define PLAY_MODE_PAUSED 2
 #define PLAY_MODE_CHANGE_AREA 3
@@ -399,7 +398,7 @@ void set_mario_initial_action(struct MarioState *m, u32 spawnType, u32 actionArg
 
     set_mario_initial_cap_powerup(m);
 }
-
+extern u16 sCurrentMusic;
 void init_mario_after_warp(void) {
     struct ObjectWarpNode *spawnNode = area_get_warp_node(sWarpDest.nodeId);
     u32 marioSpawnType = get_mario_spawn_type(spawnNode->object);
@@ -458,7 +457,9 @@ void init_mario_after_warp(void) {
     }
 
     if (gCurrDemoInput == NULL) {
-        set_background_music(gCurrentArea->musicParam, gCurrentArea->musicParam2, 0);
+		if (gCurrentArea->musicParam != sCurrentMusic){
+			set_background_music(gCurrentArea->musicParam, gCurrentArea->musicParam2, 0);
+		}
 
         if (gMarioState->flags & MARIO_METAL_CAP) {
             play_cap_music(SEQUENCE_ARGS(4, SEQ_EVENT_METAL_CAP));
@@ -467,30 +468,6 @@ void init_mario_after_warp(void) {
         if (gMarioState->flags & (MARIO_VANISH_CAP | MARIO_WING_CAP)) {
             play_cap_music(SEQUENCE_ARGS(4, SEQ_EVENT_POWERUP));
         }
-
-#ifndef VERSION_JP
-        if (gCurrLevelNum == LEVEL_BOB
-            && get_current_background_music() != SEQUENCE_ARGS(4, SEQ_LEVEL_SLIDE)
-            && sTimerRunning) {
-            play_music(SEQ_PLAYER_LEVEL, SEQUENCE_ARGS(4, SEQ_LEVEL_SLIDE), 0);
-        }
-#endif
-
-        if (sWarpDest.levelNum == LEVEL_CASTLE && sWarpDest.areaIdx == 1
-#ifndef VERSION_JP
-            && (sWarpDest.nodeId == 31 || sWarpDest.nodeId == 32)
-#else
-            && sWarpDest.nodeId == 31
-#endif
-        )
-            play_sound(SOUND_MENU_MARIO_CASTLE_WARP, gGlobalSoundSource);
-#ifndef VERSION_JP
-        if (sWarpDest.levelNum == LEVEL_CASTLE_GROUNDS && sWarpDest.areaIdx == 1
-            && (sWarpDest.nodeId == 7 || sWarpDest.nodeId == 10 || sWarpDest.nodeId == 20
-                || sWarpDest.nodeId == 30)) {
-            play_sound(SOUND_MENU_MARIO_CASTLE_WARP, gGlobalSoundSource);
-        }
-#endif
     }
 }
 
@@ -597,6 +574,46 @@ void check_instant_warp(void) {
             }
         }
     }
+}
+
+#if IS_64_BIT
+struct F2{
+	unsigned int Y:12;
+	unsigned int X:12;
+	unsigned int MSB:8;
+};
+#else
+struct F2{
+	unsigned int MSB:8;
+	unsigned int X:12;
+	unsigned int Y:12;
+};
+#endif
+union PosBytes{
+	u32 pos;
+	char bytes[4];
+};
+union WDBytes{
+	uintptr_t w0;
+	struct F2 SetTile;
+};
+void ScrollF2(Gfx *F2,u32 x, u32 y){
+	union PosBytes Xspd;
+	union PosBytes Yspd;
+	union WDBytes F2B;
+	Xspd.pos = x;
+	Yspd.pos = y;
+	F2B.w0 = F2->words.w0;
+	#if IS_64_BIT
+	#define FLOAT_BYTE 2
+	#else
+	#define FLOAT_BYTE 1
+	#endif
+	F2B.SetTile.X+=Xspd.pos;//Xspd.bytes[FLOAT_BYTE];
+	F2B.SetTile.Y+=Yspd.pos;//Yspd.bytes[FLOAT_BYTE];
+	F2B.SetTile.X=F2B.SetTile.X%0x200;
+	F2B.SetTile.Y=F2B.SetTile.Y%0x200;
+	F2->words.w0 = F2B.w0;
 }
 
 s16 music_changed_through_warp(s16 arg) {
@@ -764,11 +781,11 @@ s16 level_trigger_warp(struct MarioState *m, s32 warpOp) {
                 break;
 
             case WARP_OP_DEATH:
-                if (m->numLives == 0 && INFINITE_LIVES) {
-					//crash the plane with no survivors
-					#ifdef HARDCORE
+				//crash the plane with no survivors
+				if(configHC){
 					int i=1/0;
-					#endif
+				}
+				if (m->numLives == 0 && !INFINITE_LIVES) {
                     sDelayedWarpOp = WARP_OP_GAME_OVER;
                 }
                 sDelayedWarpTimer = 48;
@@ -997,9 +1014,8 @@ void basic_update(UNUSED s16 *arg) {
         update_camera(gCurrentArea->camera);
     }
 }
-
+#include "text_engine.h"
 int gPressedStart = 0;
-
 s32 play_mode_normal(void) {
 	OSTime newTime = osGetTime();
     if (gCurrDemoInput != NULL) {
@@ -1016,35 +1032,14 @@ s32 play_mode_normal(void) {
 
     warp_area();
     check_instant_warp();
-// Only N64 - shouldn't be necessary in pc-port
-#ifdef TARGET_N64
-    sDeltaTime += newTime - sOldTime;
-    sOldTime = newTime;
-    gGameLagged = -1;
-    while (sDeltaTime > 1562744) {
-        sDeltaTime -= 1562744;
-        if (sTimerRunning && gHudDisplay.timer < 17999) {
-            gHudDisplay.timer += 1;
-        }
-        gGameLagged += 1;
-        area_update_objects();
-        // put fast64's scroll_textures() function here
-        // scroll_textures();
-        if (gGameLagged && gCurrentArea != NULL && gCurrentArea->camera->cutscene != 0) {
-            play_cutscene(gCurrentArea->camera);
-        }
-    }
-
-#else
-    if (sTimerRunning && gHudDisplay.timer < 17999) {
-        gHudDisplay.timer += 1;
-    }
-
-     area_update_objects();
-    // put fast64's scroll_textures() function here for pc-port
-    // scroll_textures();
-#endif
-
+    #ifdef TE
+	#if TE_DEBUG
+	if (gPlayer1Controller->buttonPressed&D_JPAD){
+		SetupTextEngine(34,64,TE_Strings[0],TE_STATE_MAIN);
+	}
+	#endif
+	#endif
+	area_update_objects();
     update_hud_values();
 
     if (gCurrentArea != NULL) {
@@ -1099,21 +1094,26 @@ s32 play_mode_paused(void) {
         if (gDebugLevelSelect) {
             fade_into_special_warp(-9, 1);
         } else {
+			#ifdef exit_course_death
             initiate_warp(LEVEL_CASTLE_COURTYARD, gCurrAreaIndex, 0x40, 0);
+			#else
+			struct ObjectWarpNode *warpNode = area_get_warp_node(WARP_NODE_DEATH);
+			initiate_warp(warpNode->node.destLevel,warpNode->node.destArea,warpNode->node.destNode, 0);
+			#endif
             fade_into_special_warp(0, 0);
             gSavedCourseNum = COURSE_NONE;
         }
         
         // gCameraMovementFlags &= ~CAM_MOVE_PAUSE_SCREEN;
     }
-#ifndef TARGET_N64
+// #ifndef TARGET_N64
     else if (gPauseScreenMode == 3) {
         // We should only be getting "int 3" to here
         initiate_warp(gCurrLevelNum, gCurrAreaIndex^3, 10, 0);
         fade_into_special_warp(0, 0);
-		gSavedCourseNum = COURSE_NONE;
+        gSavedCourseNum = COURSE_NONE;
     }
-#endif
+// #endif
 	//very cringe code
 	#ifdef LEVEL_SELECT
 	handle_menu_scrolling(MENU_SCROLL_HORIZONTAL, &SelIndex, 0, 2);
@@ -1335,10 +1335,10 @@ s32 init_level(void) {
     if (gMarioState->action == ACT_INTRO_CUTSCENE) {
         sound_banks_disable(SEQ_PLAYER_SFX, SOUND_BANKS_DISABLED_DURING_INTRO_CUTSCENE);
     }
-	#ifdef GREEN_DEMON
-	extern const BehaviorScript bhvHidden1upInPole[];
-	spawn_object(gMarioObject, MODEL_1UP, bhvHidden1upInPole);
-	#endif
+	if(configGD){
+		extern const BehaviorScript bhvHidden1upInPole[];
+		spawn_object(gMarioObject, MODEL_1UP, bhvHidden1upInPole);
+	}
 
     return 1;
 }
@@ -1401,6 +1401,7 @@ s32 lvl_init_from_save_file(UNUSED s16 arg0, s32 levelNum) {
     gSpecialTripleJump = FALSE;
 
     init_mario_from_save_file();
+    save_file_init_challenges();
     disable_warp_checkpoint();
     save_file_move_cap_to_default_location();
     select_mario_cam_mode();

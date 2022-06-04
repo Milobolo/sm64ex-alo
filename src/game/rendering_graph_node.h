@@ -4,7 +4,11 @@
 #include <PR/ultratypes.h>
 
 #include "engine/graph_node.h"
-
+struct RenderModeContainer {
+    u32 modes[8];
+};
+extern struct RenderModeContainer renderModeTable_1Cycle[];
+extern struct RenderModeContainer renderModeTable_2Cycle[];
 extern struct GraphNodeRoot *gCurGraphNodeRoot;
 extern struct GraphNodeMasterList *gCurGraphNodeMasterList;
 extern struct GraphNodePerspective *gCurGraphNodeCamFrustum;
@@ -26,6 +30,8 @@ extern u16 gAreaUpdateCounter;
 // Every animation includes rotation, after processing any of the above
 // translation types the type is set to this
 #define ANIM_TYPE_ROTATION              5
+
+#define GET_GRAPH_NODE_LAYER(ly) ly>>8
 
 void geo_process_node_and_siblings(struct GraphNode *firstNode);
 void geo_process_root(struct GraphNodeRoot *node, Vp *b, Vp *c, s32 clearColor);

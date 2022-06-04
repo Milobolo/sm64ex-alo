@@ -189,6 +189,11 @@ SECTIONS
       BUILD_DIR/src/game/hud.o(.text);
       BUILD_DIR/src/game/obj_behaviors.o(.text);
       BUILD_DIR/src/game/obj_behaviors_2.o(.text);
+      BUILD_DIR/src/game/puppyprint.o(.text);
+      BUILD_DIR/src/game/debug_box.o(.text);
+#if TE
+	  BUILD_DIR/src/game/text_engine.o(.text);
+#endif
       BUILD_DIR/src/audio/synthesis.o(.text);
       BUILD_DIR/src/audio/heap.o(.text);
       BUILD_DIR/src/audio/load.o(.text);
@@ -517,6 +522,11 @@ SECTIONS
       BUILD_DIR/src/game/hud.o(.data*);
       BUILD_DIR/src/game/obj_behaviors.o(.data*);
       BUILD_DIR/src/game/obj_behaviors_2.o(.data*);
+      BUILD_DIR/src/game/puppyprint.o(.data*);
+      BUILD_DIR/src/game/debug_box.o(.data*);
+#if TE
+	  BUILD_DIR/src/game/text_engine.o(.data*);
+#endif
 #ifndef VERSION_EU
       /* wildcard doesn't match on EU due to files being moved to engine/ */
       BUILD_DIR/src/game*.o(.data*);
@@ -632,6 +642,11 @@ SECTIONS
       BUILD_DIR/src/game/hud.o(.rodata*);
       BUILD_DIR/src/game/obj_behaviors.o(.rodata*);
       BUILD_DIR/src/game/obj_behaviors_2.o(.rodata*);
+      BUILD_DIR/src/game/puppyprint.o(.rodata*);
+      BUILD_DIR/src/game/debug_box.o(.rodata*);
+#if TE
+	  BUILD_DIR/src/game/text_engine.o(.rodata*);
+#endif
 #if defined(VERSION_JP) || defined(VERSION_US)
       BUILD_DIR/src/game*.o(.rodata*);
 #endif
@@ -736,6 +751,11 @@ SECTIONS
       BUILD_DIR/src/game/hud.o(.bss*);
       BUILD_DIR/src/game/obj_behaviors.o(.bss*);
       BUILD_DIR/src/game/obj_behaviors_2.o(.bss*);
+      BUILD_DIR/src/game/puppyprint.o(.bss*);
+      BUILD_DIR/src/game/debug_box.o(.bss*);
+#if TE
+	  BUILD_DIR/src/game/text_engine.o(.bss*);
+#endif
 #ifndef VERSION_EU
       BUILD_DIR/src/game*.o(.bss*);
 #endif

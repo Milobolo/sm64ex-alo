@@ -15,7 +15,7 @@
 #else
 
 #ifdef TARGET_N64
-#define GFX_POOL_SIZE 6400
+#define GFX_POOL_SIZE 9600
 #else
 #define GFX_POOL_SIZE (512 * 1024)
 #endif
@@ -47,6 +47,8 @@ struct Animation;
 // ifdef hack. It was very likely subject to bss reordering originally.
 extern struct MemoryPool *gEffectsMemoryPool;
 #endif
+//on this repo, just return 8mb
+u32 		osGetMemSize(void);
 
 uintptr_t set_segment_base_addr(s32 segment, void *addr);
 void *get_segment_base_addr(s32 segment);

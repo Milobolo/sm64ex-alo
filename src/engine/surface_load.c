@@ -14,7 +14,7 @@
 #include "game/mario.h"
 #include "game/object_list_processor.h"
 #include "surface_load.h"
-
+#include "game/puppyprint.h"
 /**
  * Partitions for course and object surfaces. The arrays represent
  * the 16x16 cells that each level is split into.
@@ -134,10 +134,10 @@ static void add_surface_to_cell(s16 dynamic, s16 cellX, s16 cellZ, struct Surfac
     s16 sortDir;
     s16 listIndex;
 
-    if (surface->normal.y > 0.01) {
+    if (surface->normal.y > 0.08) {
         listIndex = SPATIAL_PARTITION_FLOORS;
         sortDir = 1; // highest to lowest, then insertion order
-    } else if (surface->normal.y < -0.01) {
+    } else if (surface->normal.y < -0.08) {
         listIndex = SPATIAL_PARTITION_CEILS;
         sortDir = -1; // lowest to highest, then insertion order
     } else {
@@ -615,7 +615,9 @@ void load_area_terrain(s16 index, s16 *data, s8 *surfaceRooms, s16 *macroObjects
     s16 terrainLoadType;
     s16 *vertexData;
     UNUSED s32 unused;
-
+#if PUPPYPRINT_DEBUG
+    OSTime first = osGetTime();
+#endif
     // Initialize the data for this.
     gEnvironmentRegions = NULL;
     gSurfaceNodesAllocated = 0;
@@ -676,6 +678,9 @@ void load_area_terrain(s16 index, s16 *data, s8 *surfaceRooms, s16 *macroObjects
 
 #ifdef USE_SYSTEM_MALLOC
     sStaticSurfaceLoadComplete = TRUE;
+#endif
+#if PUPPYPRINT_DEBUG
+    collisionTime[perfIteration] += osGetTime() - first;
 #endif
 }
 
@@ -805,7 +810,9 @@ void load_object_surfaces(s16 **data, s16 *vertexData) {
 void load_object_collision_model(void) {
     UNUSED s32 unused;
     s16 vertexData[600];
-
+#if PUPPYPRINT_DEBUG
+    OSTime first = osGetTime();
+#endif
     s16 *collisionData = gCurrentObject->collisionData;
     f32 marioDist = gCurrentObject->oDistanceToMario;
     f32 tangibleDist = gCurrentObject->oCollisionDistance;
@@ -842,5 +849,8 @@ void load_object_collision_model(void) {
     } else {
         gCurrentObject->header.gfx.node.flags &= ~GRAPH_RENDER_ACTIVE;
     }
+#endif
+#if PUPPYPRINT_DEBUG
+    collisionTime[perfIteration] += osGetTime()-first;
 #endif
 }

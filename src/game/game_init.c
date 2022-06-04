@@ -24,6 +24,7 @@
 #ifdef BETTERCAMERA
 #include "bettercamera.h"
 #endif
+#include "puppyprint.h"
 
 // FIXME: I'm not sure all of these variables belong in this file, but I don't
 // know of a good way to split them
@@ -300,7 +301,7 @@ void draw_reset_bars(void) {
     osRecvMesg(&gGameVblankQueue, &D_80339BEC, OS_MESG_BLOCK);
     osRecvMesg(&gGameVblankQueue, &D_80339BEC, OS_MESG_BLOCK);
 }
-
+u8 gJaboCheck = 0;
 #ifdef TARGET_N64
 void rendering_init(void) {
     gGfxPool = &gGfxPools[0];
@@ -309,10 +310,15 @@ void rendering_init(void) {
     gDisplayListHead = gGfxPool->buffer;
     gGfxPoolEnd = (u8 *) (gGfxPool->buffer + GFX_POOL_SIZE);
     init_render_image();
+	//check for FB EMULATION
+	gFrameBuffer0[0] = 0xff;
     clear_frame_buffer(0);
     end_master_display_list();
     send_display_list(&gGfxPool->spTask);
-
+	//yep, its jabo (or just 1.6 lol)
+	if(gFrameBuffer0[0] == 0xff){
+		gJaboCheck = 1;
+	}
     // Skip incrementing the initial framebuffer index on emulators so that they display immediately as the Gfx task finishes
     if ((*(volatile u32 *)0xA4100010) != 0) { // Read RDP Clock Register, has a value of zero on emulators
         frameBufferIndex++;
@@ -633,7 +639,9 @@ static struct LevelCommand *levelCommandAddr;
 // main game loop thread. runs forever as long as the game
 // continues.
 void thread5_game_loop(UNUSED void *arg) {
-
+#if PUPPYPRINT_DEBUG
+    OSTime lastTime = 0;
+#endif
     setup_game_memory();
 #ifdef VERSION_SH
     init_rumble_pak_scheduler_queue();
@@ -671,6 +679,15 @@ void game_loop_one_iteration(void) {
             return;
 #endif
         }
+		
+#if PUPPYPRINT_DEBUG
+        while (TRUE) {
+            lastTime = osGetTime();
+            collisionTime[perfIteration] = 0;
+            behaviourTime[perfIteration] = 0;
+            dmaTime[perfIteration] = 0;
+#endif
+
         profiler_log_thread5_time(THREAD5_START);
 
         // if any controllers are plugged in, start read the data for when
@@ -686,6 +703,23 @@ void game_loop_one_iteration(void) {
         config_gfx_pool();
         read_controller_inputs();
         levelCommandAddr = level_script_execute(levelCommandAddr);
+		
+#if PUPPYPRINT_DEBUG
+        profiler_update(scriptTime, lastTime);
+            if (benchmarkLoop > 0 && benchOption == 0) {
+                benchmarkLoop--;
+                benchMark[benchmarkLoop] = osGetTime() - lastTime;
+                if (benchmarkLoop == 0) {
+                    puppyprint_profiler_finished();
+                    break;
+                }
+            } else {
+                break;
+            }
+        }
+        puppyprint_profiler_process();
+#endif
+
         display_and_vsync();
 
         // when debug info is enabled, print the "BUF %d" information.

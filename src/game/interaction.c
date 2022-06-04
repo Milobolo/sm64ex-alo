@@ -23,7 +23,7 @@
 #include "sm64.h"
 #include "sound_init.h"
 #include "rumble_init.h"
-
+#include "pc/configfile.h"
 #define INT_GROUND_POUND_OR_TWIRL (1 << 0) // 0x01
 #define INT_PUNCH                 (1 << 1) // 0x02
 #define INT_KICK                  (1 << 2) // 0x04
@@ -349,7 +349,6 @@ void mario_blow_off_cap(struct MarioState *m, f32 capSpeed) {
     struct Object *capObject;
 
     if (does_mario_have_normal_cap_on_head(m)) {
-        save_file_set_cap_pos(m->pos[0], m->pos[1], m->pos[2]);
 
         m->flags &= ~(MARIO_NORMAL_CAP | MARIO_CAP_ON_HEAD);
 
@@ -679,7 +678,17 @@ u32 should_push_or_pull_door(struct MarioState *m, struct Object *o) {
 
 u32 take_damage_from_interact_object(struct MarioState *m) {
     s32 shake;
-    s32 damage = m->interactObj->oDamageOrCoinValue;
+    s32 damage;
+	if(configBE){
+		if(m->interactObj->oDamageOrCoinValue==1)
+			damage=3;
+		else if(m->interactObj->oDamageOrCoinValue==2)
+			damage=4;
+		else if(m->interactObj->oDamageOrCoinValue>2)
+			damage = 5;
+	}else{
+		damage = m->interactObj->oDamageOrCoinValue;
+	}
 
     if (damage >= 4) {
         shake = SHAKE_LARGE_DAMAGE;
@@ -741,9 +750,9 @@ void reset_mario_pitch(struct MarioState *m) {
 
 u32 interact_coin(struct MarioState *m, UNUSED u32 interactType, struct Object *o) {
     m->numCoins += o->oDamageOrCoinValue;
-	#ifndef COINS_NO_HEAL
-    m->healCounter += 4 * o->oDamageOrCoinValue;
-	#endif
+	if(!configCNH){
+		m->healCounter += 4 * o->oDamageOrCoinValue;
+	}
 
     o->oInteractStatus = INT_STATUS_INTERACTED;
 
@@ -1701,6 +1710,51 @@ u32 check_read_sign(struct MarioState *m, struct Object *o) {
     return FALSE;
 }
 
+#ifdef TE
+#include "text_engine.h"
+u32 check_read_sign_TE(struct MarioState *m, struct Object *o) {
+    if ((m->input & READ_MASK) && mario_can_talk(m, 0) && object_facing_mario(m, o, SIGN_RANGE)) {
+        s16 facingDYaw = (s16)(o->oMoveAngleYaw + 0x8000) - m->faceAngle[1];
+        if (facingDYaw >= -SIGN_RANGE && facingDYaw <= SIGN_RANGE) {
+            f32 targetX = o->oPosX + 105.0f * sins(o->oMoveAngleYaw);
+            f32 targetZ = o->oPosZ + 105.0f * coss(o->oMoveAngleYaw);
+
+            m->marioObj->oMarioReadingSignDYaw = facingDYaw;
+            m->marioObj->oMarioReadingSignDPosX = targetX - m->pos[0];
+            m->marioObj->oMarioReadingSignDPosZ = targetZ - m->pos[2];
+			SetupTextEngine(32,60,TE_Strings[o->oBehParams],TE_STATE_MAIN);
+
+            m->interactObj = o;
+            m->usedObj = o;
+            return set_mario_action(m, ACT_WAITING_FOR_DIALOG, 0);
+        }
+    }
+
+    return FALSE;
+}
+#else
+//just a normal sign if no def
+u32 check_read_sign_TE(struct MarioState *m, struct Object *o) {
+    if ((m->input & READ_MASK) && mario_can_talk(m, 0) && object_facing_mario(m, o, SIGN_RANGE)) {
+        s16 facingDYaw = (s16)(o->oMoveAngleYaw + 0x8000) - m->faceAngle[1];
+        if (facingDYaw >= -SIGN_RANGE && facingDYaw <= SIGN_RANGE) {
+            f32 targetX = o->oPosX + 105.0f * sins(o->oMoveAngleYaw);
+            f32 targetZ = o->oPosZ + 105.0f * coss(o->oMoveAngleYaw);
+
+            m->marioObj->oMarioReadingSignDYaw = facingDYaw;
+            m->marioObj->oMarioReadingSignDPosX = targetX - m->pos[0];
+            m->marioObj->oMarioReadingSignDPosZ = targetZ - m->pos[2];
+
+            m->interactObj = o;
+            m->usedObj = o;
+            return set_mario_action(m, ACT_READING_SIGN, 0);
+        }
+    }
+
+    return FALSE;
+}
+#endif
+
 u32 check_npc_talk(struct MarioState *m, struct Object *o) {
     if ((m->input & READ_MASK) && mario_can_talk(m, 1)) {
         s16 facingDYaw = mario_obj_angle_to_object(m, o) - m->faceAngle[1];
@@ -1724,6 +1778,8 @@ u32 interact_text(struct MarioState *m, UNUSED u32 interactType, struct Object *
 
     if (o->oInteractionSubtype & INT_SUBTYPE_SIGN) {
         interact = check_read_sign(m, o);
+    } else if (o->oInteractionSubtype & INT_SUBTYPE_TE) {
+        interact = check_read_sign_TE(m, o);
     } else if (o->oInteractionSubtype & INT_SUBTYPE_NPC) {
         interact = check_npc_talk(m, o);
     } else {

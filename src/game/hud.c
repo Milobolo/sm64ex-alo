@@ -29,6 +29,43 @@ int configHUD = TRUE;
  * That includes stars, lives, coins, camera status, power meter, timer
  * cannon reticle, and the unused keys.
  **/
+ 
+// ------------- FPS COUNTER ---------------
+// To use it, call print_fps(x,y); every frame.
+#define FRAMETIME_COUNT 30
+
+OSTime frameTimes[FRAMETIME_COUNT];
+u8 curFrameTimeIndex = 0;
+
+#include "PR/os_convert.h"
+
+// Call once per frame
+f32 calculate_and_update_fps() {
+    OSTime newTime = osGetTime();
+    OSTime oldTime = frameTimes[curFrameTimeIndex];
+    frameTimes[curFrameTimeIndex] = newTime;
+
+    curFrameTimeIndex++;
+    if (curFrameTimeIndex >= FRAMETIME_COUNT) {
+        curFrameTimeIndex = 0;
+    }
+    return ((f32)FRAMETIME_COUNT * 1000000.0f) / (s32)OS_CYCLES_TO_USEC(newTime - oldTime);
+}
+
+void print_fps(s32 x, s32 y) {
+    f32 fps = calculate_and_update_fps();
+    char text[14];
+
+    sprintf(text, "FPS %2.2f", fps);
+    #ifdef PUPPYPRINT
+    print_small_text(x, y, text, PRINT_TEXT_ALIGN_LEFT, PRINT_ALL, FONT_OUTLINE);
+    #else
+    print_text(x, y, text);
+    #endif
+
+}
+
+// ------------ END OF FPS COUNER -----------------
 
 struct PowerMeterHUD {
     s8 animation;
@@ -296,19 +333,22 @@ void render_hud_coins(void) {
  * Disables "X" glyph when Mario has 100 stars or more.
  */
 void render_hud_stars(void) {
-    s8 showX = 0;
+    s8 showX = 2;
 
     if (gHudFlash == 1 && gGlobalTimer & 0x08) {
         return;
     }
 
     if (gHudDisplay.stars < 100) {
-        showX = 1;
+        showX = 0;
+    }
+    if (gHudDisplay.stars < 10) {
+        showX = 0;
     }
 
     print_text(HUD_STARS_X, HUD_STARS_Y, "-"); // 'Star' glyph
-    if (showX == 1) {
-        print_text(HUD_STARS_CROSS_X, HUD_STARS_CROSS_Y, "*"); // 'X' glyph
+    if (showX < 2) {
+        print_text(HUD_STARS_X+16, HUD_STARS_Y, "*"); // 'X' glyph
     }
     print_text_fmt_int((showX * 14) + HUD_STARS_NUM_X,
                        HUD_STARS_NUM_Y, "%d", gHudDisplay.stars);

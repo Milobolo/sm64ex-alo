@@ -1,4 +1,3 @@
-
 /**
  * Behavior for bhvKoopa and bhvKoopaRaceEndpoint.
  * bhvKoopa includes normal, unshelled, tiny, and Koopa the Quick.
@@ -78,18 +77,20 @@ static const Trajectory KoopaTHI_path[] = {
 /**
  * Properties for the BoB race and the THI race.
  */
-#ifdef DOUBLE_KOOPA_SPEED
-#define speed_multiplier 2.0f
-#else
 #define speed_multiplier 1.0f
-#endif
-
+#ifdef RM2C
+//grab trajectory from Trajectories.inc.c and star pos from star_pos.inc.c
+static struct KoopaTheQuickProperties sKoopaTheQuickProperties[] = {
+    { DIALOG_005, DIALOG_007, KoopaTHI_path, KoopaBoBStarPos },
+    { DIALOG_009, DIALOG_031, KoopaTHI_path_EE, KoopaTHIStarPos }
+};
+#else
 //vanilla
 static struct KoopaTheQuickProperties sKoopaTheQuickProperties[] = {
     { DIALOG_009, DIALOG_031, KoopaTHI_path, { 1174, 0, 4091 } },
     { DIALOG_009, DIALOG_031, KoopaTHI_path_EE, { 1107, 189, -4781 } }
 };
-
+#endif
 
 /**
  * Initialization function.
@@ -105,7 +106,11 @@ void bhv_koopa_init(void) {
     } else if (o->oKoopaMovementType >= KOOPA_BP_KOOPA_THE_QUICK_BASE) {
         // Koopa the Quick. Race index is 0 for BoB and 1 for THI
         o->oKoopaTheQuickRaceIndex = o->oKoopaMovementType - KOOPA_BP_KOOPA_THE_QUICK_BASE;
-        o->oKoopaAgility = 4.0f*speed_multiplier;
+		if(configDKS){
+			o->oKoopaAgility = 8.0f*speed_multiplier;
+		}else{
+			o->oKoopaAgility = 8.0f*speed_multiplier;
+		}
         cur_obj_scale(3.0f);
     } else {
         o->oKoopaAgility = 1.0f;
@@ -653,6 +658,9 @@ static void koopa_the_quick_act_race(void) {
                     }
 					//Always be fast in sm74 since both are technically THI races
                     o->oKoopaAgility = 6.0f;
+					if(configDKS){
+						o->oKoopaAgility=o->oKoopaAgility*2.0f;
+					}
 
                     obj_forward_vel_approach(o->oKoopaAgility * 6.0f * downhillSteepness,
                                              o->oKoopaAgility * 0.1f);
