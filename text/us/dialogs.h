@@ -481,16 +481,19 @@ LUGMILLORD"))
 
 DEFINE_DIALOG(DIALOG_054,1,5,30,200, _("Hi! I'm Info Toad 1.\n\
 \n\
-Now that it's the future we\n\
-have puppy camera. This new\n\
-camera can go up/down and side\n\
-to side. You can switch modes\n\
-with L between analogue and 8\n\
-directional.\n\
-If you don't like it, go into\n\
-the options menu by pressing\n\
-pause and disable it to get \n\
-the good old original stuff."))
+Now that it's the future\n\
+we have a new camera.\n\
+Use the dpad to align the\n\
+the camera and c buttons\n\
+to turn.\n\
+Use the pause menu to swap\n\
+camera modes.\n\
+With puppycam, you can\n\
+hold R to do smooth\n\
+movements with the c\n\
+buttons and the\n\
+camera will always keep\n\
+mario in view, even behind walls."))
 
 DEFINE_DIALOG(DIALOG_055,1,4,30,200, _("Hey-ey, Mario, buddy,\n\
 howzit goin'? Step right\n\

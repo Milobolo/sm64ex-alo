@@ -1041,7 +1041,7 @@ s32 play_mode_normal(void) {
 	#endif
 	#endif
 	//comment out later
-	print_fps();
+	// print_fps();
 
 	area_update_objects();
     update_hud_values();
