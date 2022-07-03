@@ -31,7 +31,7 @@
 #include "pc/pc_main.h"
 
 // TODO: put this elsewhere
-enum SaveOption { SAVE_OPT_SAVE_AND_CONTINUE = 1, SAVE_OPT_SAVE_AND_QUIT, SAVE_OPT_CONTINUE_DONT_SAVE };
+enum SaveOption { SAVE_OPT_SAVE_AND_CONTINUE = 1, SAVE_OPT_SAVE_AND_QUIT = 2, SAVE_OPT_CONTINUE_DONT_SAVE = 3};
 
 static struct Object *sIntroWarpPipeObj;
 static struct Object *sEndPeachObj;
@@ -758,7 +758,7 @@ s32 act_quicksand_death(struct MarioState *m) {
             play_sound_if_no_flag(m, SOUND_MARIO_WAAAOOOW, MARIO_ACTION_SOUND_PLAYED);
         }
         if ((m->quicksandDepth += 5.0f) >= 180.0f) {
-            level_trigger_warp(m, WARP_OP_DEATH);
+            level_trigger_warp(m, WARP_NODE_WARP_FLOOR);
             m->actionState = 2;
         }
     }
@@ -1347,7 +1347,7 @@ s32 act_bbh_enter_spin(struct MarioState *m) {
             mario_set_forward_vel(m, forwardVel);
             m->flags &= ~MARIO_UNKNOWN_08;
             if (perform_air_step(m, 0) == AIR_STEP_LANDED) {
-                level_trigger_warp(m, WARP_OP_UNKNOWN_02);
+                level_trigger_warp(m, WARP_OP_SHRINK_ENTER);
 #ifdef RUMBLE_FEEDBACK
                 queue_rumble_data(15, 80);
 #endif

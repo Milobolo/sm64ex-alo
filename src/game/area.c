@@ -372,7 +372,7 @@ void play_transition_after_delay(s16 transType, s16 time, u8 red, u8 green, u8 b
     gWarpTransDelay = delay; // Number of frames to delay playing the transition.
     play_transition(transType, time, red, green, blue);
 }
-
+extern struct SaveBuffer gSaveBuffer;
 void render_game(void) {
     if (gCurrentArea != NULL && !gWarpTransition.pauseRendering) {
         geo_process_root(gCurrentArea->unk04, D_8032CE74, D_8032CE78, gFBSetColor);
@@ -394,6 +394,9 @@ void render_game(void) {
         if (gPauseScreenMode != 0) {
             gSaveOptSelectIndex = gPauseScreenMode;
         }
+		char buf[32];
+		sprintf(buf,"mode %d flag %x",gSaveOptSelectIndex, gSaveBuffer.files[gCurrSaveFileNum - 1][0].Challenges);
+		print_text(32,32,buf);
 
         if (D_8032CE78 != NULL) {
             make_viewport_clip_rect(D_8032CE78);

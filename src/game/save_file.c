@@ -445,9 +445,6 @@ BAD_RETURN(s32) save_file_copy(s32 srcFileIndex, s32 destFileIndex) {
 
 void save_file_load_all(void) {
     s32 file;
-#ifdef TARGET_N64
-    s32 validSlots;
-#endif
     
     gMainMenuDataModified = FALSE;
     gSaveFileModified = FALSE;
@@ -461,9 +458,6 @@ void save_file_load_all(void) {
     gSaveFileModified = TRUE;
     gMainMenuDataModified = TRUE;
 #else
-#ifndef TARGET_N64
-    s32 validSlots;
-#endif
     read_eeprom_data(&gSaveBuffer, sizeof(gSaveBuffer));
 
 #if BSAVE_FILE_PC
@@ -471,39 +465,8 @@ void save_file_load_all(void) {
         save_file_bswap(&gSaveBuffer);
 #endif
 
-    // Verify the main menu data and create a backup copy if only one of the slots is valid.
-    // validSlots = verify_save_block_signature(&gSaveBuffer.menuData[0], sizeof(gSaveBuffer.menuData[0]), MENU_DATA_MAGIC);
-    // validSlots |= verify_save_block_signature(&gSaveBuffer.menuData[1], sizeof(gSaveBuffer.menuData[1]),MENU_DATA_MAGIC) << 1;
-    // switch (validSlots) {
-        // case 0: // Neither copy is correct
-            // wipe_main_menu_data();
-            // break;
-        // case 1: // Slot 0 is correct and slot 1 is incorrect
-            // restore_main_menu_data(0);
-            // break;
-        // case 2: // Slot 1 is correct and slot 0 is incorrect
-            // restore_main_menu_data(1);
-            // break;
-    // }
 
-    // for (file = 0; file < NUM_SAVE_FILES; file++) {
-        // Verify the save file and create a backup copy if only one of the slots is valid.
-        // validSlots = verify_save_block_signature(&gSaveBuffer.files[file][0], sizeof(gSaveBuffer.files[file][0]), SAVE_FILE_MAGIC);
-        // validSlots |= verify_save_block_signature(&gSaveBuffer.files[file][1], sizeof(gSaveBuffer.files[file][1]), SAVE_FILE_MAGIC) << 1;
-        // switch (validSlots) {
-            // case 0: // Neither copy is correct
-                // save_file_erase(file);
-                // break;
-            // case 1: // Slot 0 is correct and slot 1 is incorrect
-                // restore_save_file_data(file, 0);
-                // break;
-            // case 2: // Slot 1 is correct and slot 0 is incorrect
-                // restore_save_file_data(file, 1);
-                // break;
-        // }
-    // }
 #endif // TEXTSAVES
-    // stub_save_file_1();
 }
 
 /**

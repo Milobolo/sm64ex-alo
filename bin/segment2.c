@@ -2473,6 +2473,26 @@ const Gfx dl_billboard_num_9[] = {
     gsSPEndDisplayList(),
 };
 
+// 0x0200F228 - 0x0200F258
+const Gfx dl_billboard_num_A[] = {
+    gsSPDisplayList(dl_billboard_num_begin),
+    gsDPSetTextureImage(G_IM_FMT_RGBA, G_IM_SIZ_16b, 1, texture_hud_char_A),
+    gsDPLoadSync(),
+    gsDPLoadBlock(G_TX_LOADTILE, 0, 0, 16 * 16 - 1, CALC_DXT(16, G_IM_SIZ_16b_BYTES)),
+    gsSPDisplayList(dl_billboard_num_end),
+    gsSPEndDisplayList(),
+};
+
+// 0x0200F228 - 0x0200F258
+const Gfx dl_billboard_num_B[] = {
+    gsSPDisplayList(dl_billboard_num_begin),
+    gsDPSetTextureImage(G_IM_FMT_RGBA, G_IM_SIZ_16b, 1, texture_hud_char_B),
+    gsDPLoadSync(),
+    gsDPLoadBlock(G_TX_LOADTILE, 0, 0, 16 * 16 - 1, CALC_DXT(16, G_IM_SIZ_16b_BYTES)),
+    gsSPDisplayList(dl_billboard_num_end),
+    gsSPEndDisplayList(),
+};
+
 ALIGNED8 static const Texture texture_shadow_quarter_circle[] = {
 #include "textures/segment2/shadow_quarter_circle.ia8.inc.c"
 };
@@ -2578,7 +2598,7 @@ const Gfx dl_draw_quad_verts_4567[] = {
 const Gfx dl_shadow_begin[] = {
     gsDPPipeSync(),
     gsSPClearGeometryMode(G_LIGHTING | G_CULL_BACK),
-    gsDPSetCombineMode(G_CC_MODULATEIA, G_CC_MODULATEIA),
+    gsDPSetCombineMode(G_CC_MODULATEIFADEA, G_CC_MODULATEIFADEA),
     gsSPTexture(0xFFFF, 0xFFFF, 0, G_TX_RENDERTILE, G_ON),
     gsSPEndDisplayList(),
 };
@@ -2610,8 +2630,18 @@ const Gfx dl_shadow_4_verts[] = {
     gsSPEndDisplayList(),
 };
 
+static const Vtx vertex_shadow[] = {
+    {{{    -1,      0,     -1}, 0, {  -512,   -512}, {0xff, 0xff, 0xff, 0xff}}},
+    {{{     1,      0,     -1}, 0, {   512,   -512}, {0xff, 0xff, 0xff, 0xff}}},
+    {{{    -1,      0,      1}, 0, {  -512,    512}, {0xff, 0xff, 0xff, 0xff}}},
+    {{{     1,      0,      1}, 0, {   512,    512}, {0xff, 0xff, 0xff, 0xff}}},
+
+};
+
 // 0x02014638 - 0x02014660
 const Gfx dl_shadow_end[] = {
+	gsSPVertex(vertex_shadow, 4, 0),
+    gsSP2Triangles( 0,  2,  1, 0x0,  1,  2,  3, 0x0),
     gsDPPipeSync(),
     gsSPTexture(0xFFFF, 0xFFFF, 0, G_TX_RENDERTILE, G_OFF),
     gsSPSetGeometryMode(G_LIGHTING | G_CULL_BACK),
