@@ -49,8 +49,10 @@ s8 gLevelToCourseNumTable[] = {
 #undef STUB_LEVEL
 #undef DEFINE_LEVEL
 
-STATIC_ASSERT(ARRAY_COUNT(gLevelToCourseNumTable) == LEVEL_COUNT - 1,
-              "change this array if you are adding levels");
+STATIC_ASSERT(sizeof(struct SaveBuffer) <= EEPROM_SIZE, "ERROR: Save struct too big for specified save type");
+STATIC_ASSERT((sizeof(struct SaveFile) & 0x7) == 0, "ERROR: file struct must be 8 byte aligned.");
+STATIC_ASSERT((sizeof(struct MainMenuSaveData) & 0x7) == 0, "ERROR: menu data struct must be 8 byte aligned.");
+STATIC_ASSERT((sizeof(struct SaveBuffer) & 0x7) == 0, "ERROR: save buffer struct must be 8 byte aligned.");
 
 #ifdef TEXTSAVES
 
@@ -78,8 +80,8 @@ static inline void bswap_signature(struct SaveBlockSignature *data) {
  */
 static inline void bswap_menudata(struct MainMenuSaveData *data) {
     int i;
-    for (i = 0; i < NUM_SAVE_FILES; ++i)
-        data->coinScoreAges[i] = BSWAP32(data->coinScoreAges[i]);
+    // for (i = 0; i < NUM_SAVE_FILES; ++i)
+        // data->coinScoreAges[i] = BSWAP32(data->coinScoreAges[i]);
     data->soundMode = BSWAP16(data->soundMode);
 #ifdef VERSION_EU
     data->language = BSWAP16(data->language);
@@ -277,23 +279,23 @@ static void wipe_main_menu_data(void) {
     bzero(&gSaveBuffer.menuData[0], sizeof(gSaveBuffer.menuData[0]));
 
     // Set score ages for all courses to 3, 2, 1, and 0, respectively.
-    gSaveBuffer.menuData[0].coinScoreAges[0] = 0x3FFFFFFF;
-    gSaveBuffer.menuData[0].coinScoreAges[1] = 0x2AAAAAAA;
-    gSaveBuffer.menuData[0].coinScoreAges[2] = 0x15555555;
+    // gSaveBuffer.menuData[0].coinScoreAges[0] = 0x3FFFFFFF;
+    // gSaveBuffer.menuData[0].coinScoreAges[1] = 0x2AAAAAAA;
+    // gSaveBuffer.menuData[0].coinScoreAges[2] = 0x15555555;
 
     gMainMenuDataModified = TRUE;
     save_main_menu_data();
 }
 
 static s32 get_coin_score_age(s32 fileIndex, s32 courseIndex) {
-    return (gSaveBuffer.menuData[0].coinScoreAges[fileIndex] >> (2 * courseIndex)) & 0x3;
+    // return (gSaveBuffer.menuData[0].coinScoreAges[fileIndex] >> (2 * courseIndex)) & 0x3;
 }
 
 static void set_coin_score_age(s32 fileIndex, s32 courseIndex, s32 age) {
     s32 mask = 0x3 << (2 * courseIndex);
 
-    gSaveBuffer.menuData[0].coinScoreAges[fileIndex] &= ~mask;
-    gSaveBuffer.menuData[0].coinScoreAges[fileIndex] |= age << (2 * courseIndex);
+    // gSaveBuffer.menuData[0].coinScoreAges[fileIndex] &= ~mask;
+    // gSaveBuffer.menuData[0].coinScoreAges[fileIndex] |= age << (2 * courseIndex);
 }
 
 /**
@@ -402,8 +404,8 @@ void save_file_do_save(s32 fileIndex) {
                                  sizeof(gSaveBuffer.files[fileIndex][0]), SAVE_FILE_MAGIC);
 
         // Copy to backup slot
-        // bcopy(&gSaveBuffer.files[fileIndex][0], &gSaveBuffer.files[fileIndex][1],
-              // sizeof(gSaveBuffer.files[fileIndex][1]));
+        bcopy(&gSaveBuffer.files[fileIndex][0], &gSaveBuffer.files[fileIndex][1],
+              sizeof(gSaveBuffer.files[fileIndex][1]));
 
         // Write to EEPROM
 #if BSAVE_FILE_PC
@@ -445,6 +447,9 @@ BAD_RETURN(s32) save_file_copy(s32 srcFileIndex, s32 destFileIndex) {
 
 void save_file_load_all(void) {
     s32 file;
+#ifdef TARGET_N64
+    s32 validSlots;
+#endif
     
     gMainMenuDataModified = FALSE;
     gSaveFileModified = FALSE;
@@ -458,6 +463,9 @@ void save_file_load_all(void) {
     gSaveFileModified = TRUE;
     gMainMenuDataModified = TRUE;
 #else
+#ifndef TARGET_N64
+    s32 validSlots;
+#endif
     read_eeprom_data(&gSaveBuffer, sizeof(gSaveBuffer));
 
 #if BSAVE_FILE_PC
@@ -465,8 +473,39 @@ void save_file_load_all(void) {
         save_file_bswap(&gSaveBuffer);
 #endif
 
+    // Verify the main menu data and create a backup copy if only one of the slots is valid.
+    validSlots = verify_save_block_signature(&gSaveBuffer.menuData[0], sizeof(gSaveBuffer.menuData[0]), MENU_DATA_MAGIC);
+    validSlots |= verify_save_block_signature(&gSaveBuffer.menuData[1], sizeof(gSaveBuffer.menuData[1]),MENU_DATA_MAGIC) << 1;
+    switch (validSlots) {
+        case 0: // Neither copy is correct
+            wipe_main_menu_data();
+            break;
+        case 1: // Slot 0 is correct and slot 1 is incorrect
+            restore_main_menu_data(0);
+            break;
+        case 2: // Slot 1 is correct and slot 0 is incorrect
+            restore_main_menu_data(1);
+            break;
+    }
 
+    for (file = 0; file < NUM_SAVE_FILES; file++) {
+        // Verify the save file and create a backup copy if only one of the slots is valid.
+        validSlots = verify_save_block_signature(&gSaveBuffer.files[file][0], sizeof(gSaveBuffer.files[file][0]), SAVE_FILE_MAGIC);
+        validSlots |= verify_save_block_signature(&gSaveBuffer.files[file][1], sizeof(gSaveBuffer.files[file][1]), SAVE_FILE_MAGIC) << 1;
+        switch (validSlots) {
+            case 0: // Neither copy is correct
+                save_file_erase(file);
+                break;
+            case 1: // Slot 0 is correct and slot 1 is incorrect
+                restore_save_file_data(file, 0);
+                break;
+            case 2: // Slot 1 is correct and slot 0 is incorrect
+                restore_save_file_data(file, 1);
+                break;
+        }
+    }
 #endif // TEXTSAVES
+    stub_save_file_1();
 }
 
 /**
@@ -510,13 +549,13 @@ void save_file_collect_star_or_key(s16 coinScore, s16 starIndex) {
             sUnusedGotGlobalCoinHiScore = 1;
         }
 
-        if (coinScore > save_file_get_course_coin_score(fileIndex, courseIndex)) {
-            gSaveBuffer.files[fileIndex][gCurrAreaIndex-1].courseCoinScores[courseIndex] = coinScore;
-            touch_coin_score_age(fileIndex, courseIndex);
+        // if (coinScore > save_file_get_course_coin_score(fileIndex, courseIndex)) {
+            // gSaveBuffer.files[fileIndex][gCurrAreaIndex-1].courseCoinScores[courseIndex] = coinScore;
+            // touch_coin_score_age(fileIndex, courseIndex);
 
-            gGotFileCoinHiScore = TRUE;
-            gSaveFileModified = TRUE;
-        }
+            // gGotFileCoinHiScore = TRUE;
+            // gSaveFileModified = TRUE;
+        // }
     }
 
     switch (gCurrLevelNum) {
@@ -646,13 +685,13 @@ s32 save_file_get_camera(void) {
 	return gSaveBuffer.files[gCurrSaveFileNum - 1][0].Camera;
 }
 void save_file_set_flags(u32 flags) {
-    gSaveBuffer.files[gCurrSaveFileNum - 1][gCurrAreaIndex-1].flags |= (flags | SAVE_FLAG_FILE_EXISTS);
+    gSaveBuffer.files[gCurrSaveFileNum - 1][0].flags |= (flags | SAVE_FLAG_FILE_EXISTS);
     gSaveFileModified = TRUE;
 }
 
 void save_file_clear_flags(u32 flags) {
-    gSaveBuffer.files[gCurrSaveFileNum - 1][gCurrAreaIndex-1].flags &= ~flags;
-    gSaveBuffer.files[gCurrSaveFileNum - 1][gCurrAreaIndex-1].flags |= SAVE_FLAG_FILE_EXISTS;
+    gSaveBuffer.files[gCurrSaveFileNum - 1][0].flags &= ~flags;
+    gSaveBuffer.files[gCurrSaveFileNum - 1][0].flags |= SAVE_FLAG_FILE_EXISTS;
     gSaveFileModified = TRUE;
 }
 
@@ -660,7 +699,13 @@ u32 save_file_get_flags(void) {
     if (gCurrCreditsEntry != NULL || gCurrDemoInput != NULL) {
         return 0;
     }
-    return gSaveBuffer.files[gCurrSaveFileNum - 1][gCurrAreaIndex-1].flags;
+    return gSaveBuffer.files[gCurrSaveFileNum - 1][0].flags;
+}
+
+#define GetDualFlags(var, ind) if( (gCurrAreaIndex-1) == 1){ \
+	var = gSaveBuffer.files[ind][sWarpDest.areaIdx-1].courseStars; \
+}else{\
+	var = gSaveBuffer.files[ind][sWarpDest.areaIdx-1].courseStarsEE; \
 }
 
 /**
@@ -670,11 +715,13 @@ u32 save_file_get_flags(void) {
 //I use the warp dest since area index is set to -1 in star select
 u32 save_file_get_star_flags(s32 fileIndex, s32 courseIndex) {
     u32 starFlags;
+	u8 *stars;
+	GetDualFlags(stars, fileIndex);
 
     if (courseIndex == -1) {
-        starFlags = SAVE_FLAG_TO_STAR_FLAG(gSaveBuffer.files[fileIndex][sWarpDest.areaIdx-1].flags);
+        starFlags = SAVE_FLAG_TO_STAR_FLAG(gSaveBuffer.files[fileIndex][0].flags);
     } else {
-        starFlags = gSaveBuffer.files[fileIndex][sWarpDest.areaIdx-1].courseStars[courseIndex] & 0x7F;
+        starFlags = stars[courseIndex] & 0x7F;
     }
 
     return starFlags;
@@ -682,7 +729,9 @@ u32 save_file_get_star_flags(s32 fileIndex, s32 courseIndex) {
 
 u32 save_file_get_cannon_flags(s32 fileIndex, s32 courseIndex) {
 
-    if (gSaveBuffer.files[fileIndex][gCurrAreaIndex-1].courseStars[courseIndex+1] & 0x80) {return 1;}
+    u8 *stars;
+	GetDualFlags(stars, fileIndex);
+	if (stars[courseIndex+1] & 0x80) {return 1;}
 
     return 0;
 }
@@ -692,10 +741,12 @@ u32 save_file_get_cannon_flags(s32 fileIndex, s32 courseIndex) {
  * If course is -1, add to the bitset of obtained castle secret stars.
  */
 void save_file_set_star_flags(s32 fileIndex, s32 courseIndex, u32 starFlags) {
-    if (courseIndex == -1) {
+    u8 *stars;
+	GetDualFlags(stars, fileIndex);
+	if (courseIndex == -1) {
         gSaveBuffer.files[fileIndex][gCurrAreaIndex-1].flags |= STAR_FLAG_TO_SAVE_FLAG(starFlags);
     } else {
-        gSaveBuffer.files[fileIndex][gCurrAreaIndex-1].courseStars[courseIndex] |= starFlags;
+        stars[courseIndex] |= starFlags;
     }
 
     gSaveBuffer.files[fileIndex][0].flags |= SAVE_FLAG_FILE_EXISTS;
@@ -703,41 +754,45 @@ void save_file_set_star_flags(s32 fileIndex, s32 courseIndex, u32 starFlags) {
 }
 
 s32 save_file_get_course_coin_score(s32 fileIndex, s32 courseIndex) {
-    return gSaveBuffer.files[fileIndex][gCurrAreaIndex-1].courseCoinScores[courseIndex];
+    // return gSaveBuffer.files[fileIndex][gCurrAreaIndex-1].courseCoinScores[courseIndex];
 }
 
 /**
  * Return TRUE if the cannon is unlocked in the current course.
  */
 s32 save_file_is_cannon_unlocked(void) {
-    return (gSaveBuffer.files[gCurrSaveFileNum - 1][gCurrAreaIndex-1].courseStars[gCurrCourseNum] & 0x80) != 0;
+    u8 *stars;
+	GetDualFlags(stars, gCurrSaveFileNum - 1);
+	return (stars[gCurrCourseNum] & 0x80) != 0;
 }
 
 /**
  * Sets the cannon status to unlocked in the current course.
  */
 void save_file_set_cannon_unlocked(void) {
-    gSaveBuffer.files[gCurrSaveFileNum - 1][gCurrAreaIndex-1].courseStars[gCurrCourseNum] |= 0x80;
+    u8 *stars;
+	GetDualFlags(stars, gCurrSaveFileNum - 1);
+	stars[gCurrCourseNum] |= 0x80;
     gSaveBuffer.files[gCurrSaveFileNum - 1][gCurrAreaIndex-1].flags |= SAVE_FLAG_FILE_EXISTS;
     gSaveFileModified = TRUE;
 }
 
 void save_file_set_cap_pos(s16 x, s16 y, s16 z) {
-    struct SaveFile *saveFile = &gSaveBuffer.files[gCurrSaveFileNum - 1][gCurrAreaIndex-1];
+    // struct SaveFile *saveFile = &gSaveBuffer.files[gCurrSaveFileNum - 1][gCurrAreaIndex-1];
 
-    saveFile->capLevel = gCurrLevelNum;
-    saveFile->capArea = gCurrAreaIndex;
-    save_file_set_flags(SAVE_FLAG_CAP_ON_GROUND);
+    // saveFile->capLevel = gCurrLevelNum;
+    // saveFile->capArea = gCurrAreaIndex;
+    // save_file_set_flags(SAVE_FLAG_CAP_ON_GROUND);
 }
 
 s32 save_file_get_cap_pos(Vec3s capPos) {
-    struct SaveFile *saveFile = &gSaveBuffer.files[gCurrSaveFileNum - 1][gCurrAreaIndex-1];
-    s32 flags = save_file_get_flags();
+    // struct SaveFile *saveFile = &gSaveBuffer.files[gCurrSaveFileNum - 1][gCurrAreaIndex-1];
+    // s32 flags = save_file_get_flags();
 
-    if (saveFile->capLevel == gCurrLevelNum && saveFile->capArea == gCurrAreaIndex
-        && (flags & SAVE_FLAG_CAP_ON_GROUND)) {
-        return TRUE;
-    }
+    // if (saveFile->capLevel == gCurrLevelNum && saveFile->capArea == gCurrAreaIndex
+        // && (flags & SAVE_FLAG_CAP_ON_GROUND)) {
+        // return TRUE;
+    // }
     return FALSE;
 }
 
@@ -754,20 +809,20 @@ u16 save_file_get_sound_mode(void) {
 }
 
 void save_file_move_cap_to_default_location(void) {
-    if (save_file_get_flags() & SAVE_FLAG_CAP_ON_GROUND) {
-        switch (gSaveBuffer.files[gCurrSaveFileNum - 1][0].capLevel) {
-            case LEVEL_SSL:
-                save_file_set_flags(SAVE_FLAG_CAP_ON_KLEPTO);
-                break;
-            case LEVEL_SL:
-                save_file_set_flags(SAVE_FLAG_CAP_ON_MR_BLIZZARD);
-                break;
-            case LEVEL_TTM:
-                save_file_set_flags(SAVE_FLAG_CAP_ON_UKIKI);
-                break;
-        }
-        save_file_clear_flags(SAVE_FLAG_CAP_ON_GROUND);
-    }
+    // if (save_file_get_flags() & SAVE_FLAG_CAP_ON_GROUND) {
+        // switch (gSaveBuffer.files[gCurrSaveFileNum - 1][0].capLevel) {
+            // case LEVEL_SSL:
+                // save_file_set_flags(SAVE_FLAG_CAP_ON_KLEPTO);
+                // break;
+            // case LEVEL_SL:
+                // save_file_set_flags(SAVE_FLAG_CAP_ON_MR_BLIZZARD);
+                // break;
+            // case LEVEL_TTM:
+                // save_file_set_flags(SAVE_FLAG_CAP_ON_UKIKI);
+                // break;
+        // }
+        // save_file_clear_flags(SAVE_FLAG_CAP_ON_GROUND);
+    // }
 }
 
 #ifdef VERSION_EU

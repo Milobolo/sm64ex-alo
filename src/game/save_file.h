@@ -9,7 +9,7 @@
 #include "course_table.h"
 
 #define EEPROM_SIZE 0x200
-#define NUM_SAVE_FILES 4
+#define NUM_SAVE_FILES 2
 
 struct SaveBlockSignature
 {
@@ -22,8 +22,8 @@ struct SaveFile
     // Location of lost cap.
     // Note: the coordinates get set, but are never actually used, since the
     // cap can always be found in a fixed spot within the course
-    u8 capLevel;
-    u8 capArea;
+    // u8 capLevel;
+    // u8 capArea;
 
     u16 Challenges;
 	u8 Camera;
@@ -34,10 +34,10 @@ struct SaveFile
     // cannon is open.
     u8 courseStars[COURSE_COUNT];
 
-    u8 courseCoinScores[COURSE_STAGES_COUNT];
+    u8 courseStarsEE[COURSE_COUNT];
 
     struct SaveBlockSignature signature;
-};
+}; //siz 64 bytes
 
 enum SaveFileIndex {
     SAVE_FILE_A,
@@ -51,7 +51,7 @@ struct MainMenuSaveData
     // Each save file has a 2 bit "age" for each course. The higher this value,
     // the older the high score is. This is used for tie-breaking when displaying
     // on the high score screen.
-    u32 coinScoreAges[NUM_SAVE_FILES];
+    // u32 coinScoreAges[NUM_SAVE_FILES];
     u16 soundMode;
 
 #ifdef VERSION_EU
@@ -62,7 +62,7 @@ struct MainMenuSaveData
 #endif
 
     // Pad to match the EEPROM size of 0x200 (10 bytes on JP/US, 8 bytes on EU)
-    u8 filler[EEPROM_SIZE / 2 - SUBTRAHEND - NUM_SAVE_FILES * (4 + sizeof(struct SaveFile))];
+    u8 filler[EEPROM_SIZE / 2 - SUBTRAHEND - NUM_SAVE_FILES * (sizeof(struct SaveFile))]; //0xC0
 
     struct SaveBlockSignature signature;
 };

@@ -102,7 +102,7 @@ static s32 write_text_save(s32 fileIndex) {
 
     menudata = &gSaveBuffer.menuData[0];
     fprintf(file, "\n[menu]\n");
-    fprintf(file, "coin_score_age = %d\n", menudata->coinScoreAges[fileIndex]);
+    // fprintf(file, "coin_score_age = %d\n", menudata->coinScoreAges[fileIndex]);
     
     if (menudata->soundMode == 0) {
         fprintf(file, "sound_mode = %s\n", sound_modes[0]);  // stereo
@@ -222,8 +222,8 @@ static s32 read_text_save(s32 fileIndex) {
         printf("Loading savefile from '%s'\n", filename);
     }
 
-    ini_sget(savedata, "menu", "coin_score_age", "%d",
-                &gSaveBuffer.menuData[0].coinScoreAges[fileIndex]);
+    // ini_sget(savedata, "menu", "coin_score_age", "%d",
+                // &gSaveBuffer.menuData[0].coinScoreAges[fileIndex]);
     
     value = ini_get(savedata, "menu", "sound_mode");
     if (value) {
@@ -262,7 +262,7 @@ static s32 read_text_save(s32 fileIndex) {
             cannonFlag <<= 7; //Shifts the bit to the most significant bit.
             save_file_set_star_flags(fileIndex, i+1, cannonFlag); //
             save_file_set_star_flags(fileIndex, i, starFlags);
-            gSaveBuffer.files[fileIndex][0].courseCoinScores[i] = coins;
+            // gSaveBuffer.files[fileIndex][0].courseCoinScores[i] = coins;
         }
     }
 
@@ -296,34 +296,34 @@ static s32 read_text_save(s32 fileIndex) {
         }
     }
     
-    value = ini_get(savedata, "cap", "level");
-    if (value) {
-        if (strcmp(value, "ssl") == 0) {
-            gSaveBuffer.files[fileIndex][0].capLevel = COURSE_SSL; // ssl
-        }
-        else if (strcmp(value, "sl") == 0) {
-            gSaveBuffer.files[fileIndex][0].capLevel = COURSE_SL; // sl
-        }
-        else if (strcmp(value, "ttm") == 0) {
-            gSaveBuffer.files[fileIndex][0].capLevel = COURSE_TTM; // ttm
-        }
-        else {
-            printf("Invalid 'cap:level' flag!\n");
-            return -1;
-        }
-    }
+    // value = ini_get(savedata, "cap", "level");
+    // if (value) {
+        // if (strcmp(value, "ssl") == 0) {
+            // gSaveBuffer.files[fileIndex][0].capLevel = COURSE_SSL; // ssl
+        // }
+        // else if (strcmp(value, "sl") == 0) {
+            // gSaveBuffer.files[fileIndex][0].capLevel = COURSE_SL; // sl
+        // }
+        // else if (strcmp(value, "ttm") == 0) {
+            // gSaveBuffer.files[fileIndex][0].capLevel = COURSE_TTM; // ttm
+        // }
+        // else {
+            // printf("Invalid 'cap:level' flag!\n");
+            // return -1;
+        // }
+    // }
     
-    value = ini_get(savedata, "cap", "area");
-    if (value) {
-        sscanf(value, "%d", &capArea);
-        if (capArea > 1 && capArea < 2) {
-            printf("Invalid 'cap:area' flag: %d!\n", capArea);
-            return -1;
-        }
-        else {
-            gSaveBuffer.files[fileIndex][0].capArea = capArea; 
-        }
-    }
+    // value = ini_get(savedata, "cap", "area");
+    // if (value) {
+        // sscanf(value, "%d", &capArea);
+        // if (capArea > 1 && capArea < 2) {
+            // printf("Invalid 'cap:area' flag: %d!\n", capArea);
+            // return -1;
+        // }
+        // else {
+            // gSaveBuffer.files[fileIndex][0].capArea = capArea; 
+        // }
+    // }
     
     // Good, file exists for gSaveBuffer
     gSaveBuffer.files[fileIndex][0].flags |= SAVE_FLAG_FILE_EXISTS;
