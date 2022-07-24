@@ -340,6 +340,7 @@ extern const BehaviorScript bhvBobombBuddyOpensCannon[];
 extern const BehaviorScript bhvCannonClosed[];
 extern const BehaviorScript bhvWhirlpool[];
 extern const BehaviorScript bhvJetStream[];
+extern const BehaviorScript bhvMessagePanelTE[];
 extern const BehaviorScript bhvMessagePanel[];
 extern const BehaviorScript bhvSignOnWall[];
 extern const BehaviorScript bhvHomingAmp[];

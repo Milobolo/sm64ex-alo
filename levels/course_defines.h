@@ -11,17 +11,17 @@
  *      4: Default, used for 100 coin stars, 8 red coin stars in bowser levels, and secret stars
  */
 DEFINE_COURSE(COURSE_NONE, 0x44444440) // (0)  Course Hub (Castle Grounds)
-DEFINE_COURSE(COURSE_BOB, 0x00022240) // (1)  Bob Omb Battlefield
-DEFINE_COURSE(COURSE_WF, 0x00002040) // (2)  Whomp's Fortress
-DEFINE_COURSE(COURSE_JRB, 0x22222240) // (3)  Jolly Rodger's Bay
-DEFINE_COURSE(COURSE_CCM, 0x00220040) // (4)  Cool Cool Mountain
+DEFINE_COURSE(COURSE_BOB, 0x44444440) // (1)  Bob Omb Battlefield
+DEFINE_COURSE(COURSE_WF, 0x44444440) // (2)  Whomp's Fortress
+DEFINE_COURSE(COURSE_JRB, 0x44444440) // (3)  Jolly Rodger's Bay
+DEFINE_COURSE(COURSE_CCM, 0x44444440) // (4)  Cool Cool Mountain
 DEFINE_COURSE(COURSE_BBH, 0x22222240) // (5)  Big Boo's Haunt
-DEFINE_COURSE(COURSE_HMC, 0x22222240) // (6)  Hazy Maze Cave
-DEFINE_COURSE(COURSE_LLL, 0x21212140) // (7)  Lethal Lava Land
-DEFINE_COURSE(COURSE_SSL, 0x20222240) // (8)  Shifting Sand Land
+DEFINE_COURSE(COURSE_HMC, 0x44444440) // (6)  Hazy Maze Cave
+DEFINE_COURSE(COURSE_LLL, 0x44444440) // (7)  Lethal Lava Land
+DEFINE_COURSE(COURSE_SSL, 0x44444440) // (8)  Shifting Sand Land
 DEFINE_COURSE(COURSE_DDD, 0x22222240) // (9)  Dire Dire Docks
 DEFINE_COURSE(COURSE_SL, 0x02020240) // (10) Snowman's Land
-DEFINE_COURSE(COURSE_WDW, 0x22102240) // (11) Wet Dry World
+DEFINE_COURSE(COURSE_WDW, 0x44444440) // (11) Wet Dry World
 DEFINE_COURSE(COURSE_TTM, 0x00000040) // (12) Tall Tall Mountain
 DEFINE_COURSE(COURSE_THI, 0x11112140) // (13) Tiny Huge Island
 DEFINE_COURSE(COURSE_TTC, 0x22222240) // (14) Tick Tock Clock

@@ -1146,6 +1146,7 @@ SECTIONS
    #include "levels/custom_level_defines.h"
 #undef DEFINE_LEVEL
 
+CUSTOM_LEVEL(hmc)
 
 
    /* 4E9FA0-? [?] */

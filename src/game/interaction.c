@@ -1724,7 +1724,7 @@ u32 check_read_sign_TE(struct MarioState *m, struct Object *o) {
     if (mario_can_talk(m, 0) && object_facing_mario(m, o, SIGN_RANGE)) {
         s16 facingDYaw = (s16)(o->oMoveAngleYaw + 0x8000) - m->faceAngle[1];
         if (facingDYaw >= -SIGN_RANGE && facingDYaw <= SIGN_RANGE) {
-			if(m->input & READ_MASK){
+			if(m->input & READ_MASK && o->oIntangibleTimer <= 0){
 				f32 targetX = o->oPosX + 105.0f * sins(o->oMoveAngleYaw);
 				f32 targetZ = o->oPosZ + 105.0f * coss(o->oMoveAngleYaw);
 
@@ -1749,12 +1749,13 @@ u32 check_npc_talk_TE(struct MarioState *m, struct Object *o) {
     if (mario_can_talk(m, 1)) {
         s16 facingDYaw = mario_obj_angle_to_object(m, o) - m->faceAngle[1];
         if (facingDYaw >= -0x4000 && facingDYaw <= 0x4000) {
-			if(m->input & READ_MASK){
+			if(m->input & READ_MASK && o->oIntangibleTimer <= 0){
 				o->oInteractStatus = INT_STATUS_INTERACTED;
 
 				m->interactObj = o;
 				m->usedObj = o;
 				SetupTextEngine(32, 60, TE_Strings[o->oBehParams&0xFF], TE_STATE_MAIN);
+				TE_Engines[TE_STATE_MAIN].initiator = o;
 
 				push_mario_out_of_object(m, o, -10.0f);
 				return set_mario_action(m, ACT_WAITING_FOR_DIALOG, 0);
@@ -1774,7 +1775,7 @@ u32 check_read_sign_TE(struct MarioState *m, struct Object *o) {
     if (mario_can_talk(m, 0) && object_facing_mario(m, o, SIGN_RANGE)) {
         s16 facingDYaw = (s16)(o->oMoveAngleYaw + 0x8000) - m->faceAngle[1];
         if (facingDYaw >= -SIGN_RANGE && facingDYaw <= SIGN_RANGE) {
-			if(m->input & READ_MASK){
+			if(m->input & READ_MASK && o->oIntangibleTimer <= 0){
 				f32 targetX = o->oPosX + 105.0f * sins(o->oMoveAngleYaw);
 				f32 targetZ = o->oPosZ + 105.0f * coss(o->oMoveAngleYaw);
 
@@ -1798,7 +1799,7 @@ u32 check_npc_talk_TE(struct MarioState *m, struct Object *o) {
     if (mario_can_talk(m, 1)) {
         s16 facingDYaw = mario_obj_angle_to_object(m, o) - m->faceAngle[1];
         if (facingDYaw >= -0x4000 && facingDYaw <= 0x4000) {
-			if(m->input & READ_MASK){
+			if(m->input & READ_MASK && o->oIntangibleTimer <= 0){
 				o->oInteractStatus = INT_STATUS_INTERACTED;
 
 				m->interactObj = o;

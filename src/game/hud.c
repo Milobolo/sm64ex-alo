@@ -463,13 +463,13 @@ void render_hud_camera_status(void) {
 
 #include "engine/surface_load.h"
 void render_hud_surface_text(void) {
-    if (gSurfacePoolError & NOT_ENOUGH_ROOM_FOR_NODES) {
-        print_text(GFX_DIMENSIONS_RECT_FROM_LEFT_EDGE(22), 40, "SURFACE NODE POOL FULL");
-    }
+    // if (gSurfacePoolError & NOT_ENOUGH_ROOM_FOR_NODES) {
+        // print_text(GFX_DIMENSIONS_RECT_FROM_LEFT_EDGE(22), 40, "SURFACE NODE POOL FULL");
+    // }
     
-    if (gSurfacePoolError & NOT_ENOUGH_ROOM_FOR_SURFACES) {
-        print_text(GFX_DIMENSIONS_RECT_FROM_LEFT_EDGE(22), 20, "SURFACE POOL FULL");
-    }
+    // if (gSurfacePoolError & NOT_ENOUGH_ROOM_FOR_SURFACES) {
+        // print_text(GFX_DIMENSIONS_RECT_FROM_LEFT_EDGE(22), 20, "SURFACE POOL FULL");
+    // }
 }
 #endif
 

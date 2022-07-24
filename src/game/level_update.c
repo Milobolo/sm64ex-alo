@@ -1062,6 +1062,8 @@ static u8 *LSScrolls[]={
 	&WarpID,
 };
 #endif
+
+#define exit_course_death 1
 s32 play_mode_paused(void) {
     if (gPauseScreenMode == 0) {
         set_menu_mode(RENDER_PAUSE_SCREEN);
@@ -1078,7 +1080,7 @@ s32 play_mode_paused(void) {
         if (gDebugLevelSelect) {
             fade_into_special_warp(-9, 1);
         } else {
-			#ifdef exit_course_death
+			#ifndef exit_course_death
             initiate_warp(EXIT_COURSE,0);
 			#else
 			struct ObjectWarpNode *warpNode = area_get_warp_node(WARP_NODE_DEATH);
@@ -1093,7 +1095,7 @@ s32 play_mode_paused(void) {
 #ifndef TARGET_N64
     else if (gPauseScreenMode == 3) {
         // We should only be getting "int 3" to here
-		#ifdef exit_course_death
+		#ifndef exit_course_death
 		initiate_warp(EXIT_COURSE,0);
 		#else
 		struct ObjectWarpNode *warpNode = area_get_warp_node(WARP_NODE_DEATH);
@@ -1407,6 +1409,9 @@ s32 lvl_set_current_level(UNUSED s16 arg0, s32 levelNum) {
     sWarpCheckpointActive = FALSE;
     gCurrLevelNum = levelNum;
     gCurrCourseNum = gLevelToCourseNumTable[levelNum - 1];
+	if (gCurrLevelNum == LEVEL_JRB) return 0;
+	if (gCurrLevelNum == LEVEL_CCM) return 0;
+	if (gCurrLevelNum == LEVEL_WF) return 0;
 	if (gCurrLevelNum == LEVEL_CASTLE_GROUNDS) return 0;
 
     if (gCurrDemoInput != NULL || gCurrCreditsEntry != NULL || gCurrCourseNum == COURSE_NONE) {

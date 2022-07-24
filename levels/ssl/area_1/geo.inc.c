@@ -1,0 +1,38 @@
+#include "src/game/envfx_snow.h"
+
+const GeoLayout ssl_area_1_geo[] = {
+	GEO_NODE_START(),
+	GEO_OPEN_NODE(),
+		GEO_ROTATION_NODE_WITH_DL(LAYER_ALPHA, 90, 0, 0, ssl_dl_DL_rr_1_0xe0752d0_Obj_mesh_layer_4),
+		GEO_ROTATION_NODE_WITH_DL(LAYER_ALPHA, 90, 0, 0, ssl_dl_DL_rr_1_0xe093108_Obj_mesh_layer_4),
+		GEO_ROTATION_NODE_WITH_DL(LAYER_TRANSPARENT, 90, 0, 0, ssl_dl_DL_rr_1_0xe0932b8_Obj_mesh_layer_5),
+	GEO_CLOSE_NODE(),
+	GEO_RETURN(),
+};
+const GeoLayout ssl_area_1[] = {
+	GEO_NODE_SCREEN_AREA(10, SCREEN_WIDTH/2, SCREEN_HEIGHT/2, SCREEN_WIDTH/2, SCREEN_HEIGHT/2),
+	GEO_OPEN_NODE(),
+		GEO_ZBUFFER(0),
+		GEO_OPEN_NODE(),
+			GEO_NODE_ORTHO(100.0000),
+			GEO_OPEN_NODE(),
+				GEO_BACKGROUND(11, geo_skybox_main),
+			GEO_CLOSE_NODE(),
+		GEO_CLOSE_NODE(),
+		GEO_ZBUFFER(1),
+		GEO_OPEN_NODE(),
+			GEO_CAMERA_FRUSTUM_WITH_FUNC(45.0000, 100, 30000, geo_camera_fov),
+			GEO_OPEN_NODE(),
+				GEO_CAMERA(1, 0, 0, 0, 0, -100, 0, geo_camera_main),
+				GEO_OPEN_NODE(),
+					GEO_BRANCH(1, ssl_area_1_geo),
+					GEO_RENDER_OBJ(),
+					GEO_ASM(ENVFX_MODE_NONE, geo_envfx_main),
+				GEO_CLOSE_NODE(),
+			GEO_CLOSE_NODE(),
+		GEO_CLOSE_NODE(),
+		GEO_DISPLAY_LIST(LAYER_ALPHA, ssl_dl_material_revert_render_settings),
+		GEO_DISPLAY_LIST(LAYER_TRANSPARENT, ssl_dl_material_revert_render_settings),
+	GEO_CLOSE_NODE(),
+	GEO_END(),
+};

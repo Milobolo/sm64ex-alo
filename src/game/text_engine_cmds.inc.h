@@ -671,6 +671,10 @@ s8 TE_reset_str(struct TEState *CurEng){
 	if(CurEng->LowerVolume){
 		raise_background_noise(2);
 	}
+	//lockout initiator from talking again for a bit
+	if(CurEng->initiator){
+		CurEng->initiator->oIntangibleTimer = 60;
+	}
 	TE_flush_buffers(CurEng);
 	return -2;
 }

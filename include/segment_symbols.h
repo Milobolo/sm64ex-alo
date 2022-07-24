@@ -67,7 +67,7 @@ DECLARE_LEVEL_SEGMENT(ending)
 #define DEFINE_LEVEL(folder,_0) DECLARE_CUSTOM_LEVEL_SEGMENT(folder)
 
 #include "levels/custom_level_defines.h"
-
+DECLARE_CUSTOM_LEVEL_SEGMENT(hmc)
 #undef DEFINE_LEVEL
 
 #define MIO0_SEG(name, addr) \
