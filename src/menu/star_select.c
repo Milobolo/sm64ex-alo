@@ -112,10 +112,10 @@ void bhv_act_selector_init(void) {
     u8 stars = save_file_get_star_flags(gCurrSaveFileNum - 1, gCurrCourseNum - 1);
 
     sVisibleStars = 0;
-    while (i != sObtainedStars) {
+    while (i != 6) {
         if (stars & (1 << sVisibleStars)) { // Star has been collected
             selectorModelIDs[sVisibleStars] = MODEL_STAR;
-            i++;
+            
         } else { // Star has not been collected
             selectorModelIDs[sVisibleStars] = MODEL_TRANSPARENT_STAR;
             // If this is the first star that has not been collected, set
@@ -126,6 +126,7 @@ void bhv_act_selector_init(void) {
             }
         }
         sVisibleStars++;
+		i++;
     }
 
     // If the stars have been collected in order so far, show the next star.
@@ -170,7 +171,7 @@ void bhv_act_selector_loop(void) {
     u8 starIndexCounter;
     u8 stars = save_file_get_star_flags(gCurrSaveFileNum - 1, gCurrCourseNum - 1);
 
-    if (sObtainedStars != 6) {
+    if (0) {
         // Sometimes, stars are not selectable even if they appear on the screen.
         // This code filters selectable and non-selectable stars.
         sSelectedActIndex = 0;

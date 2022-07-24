@@ -1,0 +1,5 @@
+extern void scroll_sts_mat_ddd_dl_SM64_DL_bitdw_1_0xe027a28_F3D_Mat_0();
+extern void scroll_sts_mat_ddd_dl_SM64_DL_bitdw_1_0xe027a28_F3D_Mat_1();
+extern void scroll_sts_mat_ddd_dl_SM64_DL_bitdw_2_0xe026d28_F3D_Mat_0();
+extern void scroll_sts_mat_ddd_dl_SM64_DL_bitdw_2_0xe026d28_F3D_Mat_2();
+extern void scroll_ddd();
