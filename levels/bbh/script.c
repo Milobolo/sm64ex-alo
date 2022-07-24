@@ -75,7 +75,7 @@ const LevelScript level_bbh_entry[] = {
 		OBJECT(0, 764, 1920, -13281, 0, 0, 0, 0x0, bhvWarp),
 		TERRAIN(bbh_area_1_collision),
 		MACRO_OBJECTS(bbh_area_1_macro_objs),
-		SET_BACKGROUND_MUSIC(0x00, 0x2A),
+		SET_BACKGROUND_MUSIC(0x00, 0x27),
 		TERRAIN_TYPE(TERRAIN_GRASS),
 		/* Fast64 begin persistent block [area commands] */
 		/* Fast64 end persistent block [area commands] */

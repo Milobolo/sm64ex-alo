@@ -27,7 +27,7 @@ extern Vtx bbh_dl_DL_pss_1_0xe06b4c0_Obj_mesh_layer_1_vtx_0[15];
 extern Gfx bbh_dl_DL_pss_1_0xe06b4c0_Obj_mesh_layer_1_tri_0[];
 extern Vtx bbh_dl_DL_pss_1_0xe06b4c0_Obj_mesh_layer_1_vtx_1[1157];
 extern Gfx bbh_dl_DL_pss_1_0xe06b4c0_Obj_mesh_layer_1_tri_1[];
-extern Vtx bbh_dl_DL_pss_1_0xe06b4c0_Obj_mesh_layer_1_vtx_2[16045];
+extern Vtx bbh_dl_DL_pss_1_0xe06b4c0_Obj_mesh_layer_1_vtx_2[16061];
 extern Gfx bbh_dl_DL_pss_1_0xe06b4c0_Obj_mesh_layer_1_tri_2[];
 extern Vtx bbh_dl_DL_pss_1_0xe06b4c0_Obj_mesh_layer_1_vtx_3[1107];
 extern Gfx bbh_dl_DL_pss_1_0xe06b4c0_Obj_mesh_layer_1_tri_3[];

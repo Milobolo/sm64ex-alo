@@ -85,3 +85,13 @@ Course: Final Delirium{end_tx}"]
 NoD_Explain = [f"{setup}Origin: Star Revenge 2: Night of Doom\n\
 Course: Tricky Tower's Trials\n\
 Star: 2nd Red Coin Hunting (Star 4){end_tx}"]
+
+#finals
+
+TW_Explain = [f"{setup}Origin: Super Mario Treasure World\n\
+Course: Toasted Coast\n\
+Star: Collecting the Legacy Flags (Star 6){end_tx}"]
+
+TbbT_Explain = [f"{setup}Origin: TsucnenT's Boss Battle Test\n\
+Course: After the Rain\n\
+Star: Flurry Traveler (Star 6){end_tx}"]

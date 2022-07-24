@@ -15,6 +15,8 @@ const GeoLayout castle_grounds_area_1_geo[] = {
 		GEO_TRANSLATE_ROTATE_WITH_DL(LAYER_OPAQUE, -2112, 609, -347, 90, 0, -90, castle_grounds_dl_Text_007_mesh_layer_1),
 		GEO_TRANSLATE_ROTATE_WITH_DL(LAYER_OPAQUE, -2112, 609, 916, 90, 0, -90, castle_grounds_dl_Text_008_mesh_layer_1),
 		GEO_TRANSLATE_ROTATE_WITH_DL(LAYER_OPAQUE, -2112, 609, 2079, 90, 0, -90, castle_grounds_dl_Text_009_mesh_layer_1),
+		GEO_TRANSLATE_ROTATE_WITH_DL(LAYER_OPAQUE, -251, 613, -2548, 90, 0, 0, castle_grounds_dl_Text_010_mesh_layer_1),
+		GEO_TRANSLATE_ROTATE_WITH_DL(LAYER_OPAQUE, 183, 711, 2604, 90, 0, 180, castle_grounds_dl_Text_011_mesh_layer_1),
 	GEO_CLOSE_NODE(),
 	GEO_RETURN(),
 };

@@ -10,4 +10,6 @@ char *TE_Strings[] = {
 	&KBRX_Explain,
 	&SMSD_Explain,
 	&NoD_Explain,
+	&TW_Explain,
+	&TbbT_Explain,
 };
