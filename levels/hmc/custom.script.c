@@ -76,7 +76,7 @@ const LevelScript level_hmc_entry_custom[] = {
 	/* Fast64 end persistent block [level commands] */
 
 	AREA(1, hmc_area_1),
-		WARP_NODE(WARP_NODE_DEATH, LEVEL_CASTLE_GROUNDS, 1, WARP_NODE_REVIVE, WARP_NO_CHECKPOINT),
+		WARP_NODE(WARP_NODE_DEATH, LEVEL_HMC, 1, WARP_NODE_REVIVE, WARP_NO_CHECKPOINT),
 		WARP_NODE(WARP_NODE_SUCCESS, LEVEL_CASTLE_GROUNDS, 1, WARP_NODE_STAR_GET, WARP_NO_CHECKPOINT),
 		WARP_NODE(13, LEVEL_HMC, 1, 14, WARP_NO_CHECKPOINT),
 		WARP_NODE(14, LEVEL_HMC, 1, 13, WARP_NO_CHECKPOINT),
@@ -204,6 +204,7 @@ const LevelScript level_hmc_entry_custom[] = {
 		OBJECT(206, -6027, 4805, 21096, 0, 0, 0, 0x0, bhvSnufit),
 		OBJECT(206, -3722, -10360, 7902, 0, 0, 0, 0x0, bhvSnufit),
 		OBJECT(0, -5261, 241, 12877, 0, 90, 0, 0xa0000, bhvSpinAirborneWarp),
+		OBJECT(0, -6261, 241, 12877, 0, 90, 0, 0xC0000, bhvAirborneDeathWarp),
 		OBJECT(122, 18905, 7164, 15528, 0, 0, 0, 0x0, bhvStar),
 		OBJECT(122, 19764, 16313, -1882, 0, 0, 0, 0x5000000, bhvStar),
 		OBJECT(122, -6003, 8784, 20144, 0, 0, 0, 0x2000000, bhvStar),
@@ -218,7 +219,7 @@ const LevelScript level_hmc_entry_custom[] = {
 		OBJECT(116, -3531, -1089, 9764, 0, 0, 0, 0x110000, bhvYellowCoin),
 		TERRAIN(hmc_area_1_collision),
 		MACRO_OBJECTS(hmc_area_1_macro_objs),
-		SET_BACKGROUND_MUSIC(0x00, 53),
+		SET_BACKGROUND_MUSIC(0x00, 0x28),
 		TERRAIN_TYPE(TERRAIN_GRASS),
 		/* Fast64 begin persistent block [area commands] */
 		/* Fast64 end persistent block [area commands] */

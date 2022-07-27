@@ -1095,15 +1095,11 @@ void lakitu_zoom(f32 rangeDist, s16 rangePitch) {
         if ((sLakituDist += 60) > 0) {
             sLakituDist = 0;
         }
-    } else if ((rangeDist < sLakituDist) && !(gCameraMovementFlags & CAM_MOVE_ULTRA_ZOOM_OUT)) {
+    } else if (rangeDist < sLakituDist) {
         if ((sLakituDist -= 60) < rangeDist) {
             sLakituDist = rangeDist;
         }
-    } else if (gCameraMovementFlags & CAM_MOVE_ULTRA_ZOOM_OUT) {
-        if ((sLakituDist += 60) > rangeDist*2) {
-            sLakituDist = rangeDist*2;
-        }
-    } else if (gCameraMovementFlags & CAM_MOVE_ZOOMED_OUT) {
+    }else if (gCameraMovementFlags & CAM_MOVE_ZOOMED_OUT) {
         if ((sLakituDist += 60) > rangeDist) {
             sLakituDist = rangeDist;
         }
@@ -1121,11 +1117,7 @@ void lakitu_zoom(f32 rangeDist, s16 rangePitch) {
 				sLakituPitch = rangePitch+0x1950;
 			}
 	}else{
-		if (gCameraMovementFlags & CAM_MOVE_ULTRA_ZOOM_OUT) {
-			if ((sLakituPitch += rangePitch / 4) > rangePitch+50) {
-				sLakituPitch = rangePitch+50;
-			}
-		}else if (gCameraMovementFlags & CAM_MOVE_ZOOMED_OUT) {
+		if (gCameraMovementFlags & CAM_MOVE_ZOOMED_OUT) {
 			if ((sLakituPitch += rangePitch / 4) > rangePitch) {
 				sLakituPitch = rangePitch;
 			}
@@ -5037,10 +5029,7 @@ s32 radial_camera_input(struct Camera *c, UNUSED f32 unused) {
 
     // Zoom in / enter C-Up
     if (gPlayer1Controller->buttonPressed & U_CBUTTONS) {
-        if (gCameraMovementFlags & CAM_MOVE_ULTRA_ZOOM_OUT) {
-            gCameraMovementFlags &= ~CAM_MOVE_ULTRA_ZOOM_OUT;
-            play_sound_cbutton_up();
-        } else if (gCameraMovementFlags & CAM_MOVE_ZOOMED_OUT) {
+		if (gCameraMovementFlags & CAM_MOVE_ZOOMED_OUT) {
             gCameraMovementFlags &= ~CAM_MOVE_ZOOMED_OUT;
             play_sound_cbutton_up();
         } else {
@@ -5051,7 +5040,6 @@ s32 radial_camera_input(struct Camera *c, UNUSED f32 unused) {
     // Zoom out
     if (gPlayer1Controller->buttonPressed & D_CBUTTONS) {
         if (gCameraMovementFlags & CAM_MOVE_ZOOMED_OUT) {
-            gCameraMovementFlags |= CAM_MOVE_ULTRA_ZOOM_OUT;
 // #ifndef VERSION_JP
             // play_camera_buzz_if_cdown();
 // #endif
@@ -5088,10 +5076,7 @@ void handle_c_button_movement(struct Camera *c) {
 
     // Zoom in
     if (gPlayer1Controller->buttonPressed & U_CBUTTONS) {
-        if (c->mode != CAMERA_MODE_FIXED && (gCameraMovementFlags & CAM_MOVE_ULTRA_ZOOM_OUT)) {
-            gCameraMovementFlags &= ~CAM_MOVE_ULTRA_ZOOM_OUT;
-            play_sound_cbutton_up();
-        } else if (c->mode != CAMERA_MODE_FIXED && (gCameraMovementFlags & CAM_MOVE_ZOOMED_OUT)) {
+		if (c->mode != CAMERA_MODE_FIXED && (gCameraMovementFlags & CAM_MOVE_ZOOMED_OUT)) {
             gCameraMovementFlags &= ~CAM_MOVE_ZOOMED_OUT;
             play_sound_cbutton_up();
         } else {
@@ -5107,8 +5092,6 @@ void handle_c_button_movement(struct Camera *c) {
         // Zoom out
         if (gPlayer1Controller->buttonPressed & D_CBUTTONS) {
             if (gCameraMovementFlags & CAM_MOVE_ZOOMED_OUT) {
-                gCameraMovementFlags |= CAM_MOVE_ULTRA_ZOOM_OUT;
-                sZoomAmount = gCameraZoomDist + 400.f;
 // #ifndef VERSION_JP
                 // play_camera_buzz_if_cdown();
 // #endif
@@ -10903,7 +10886,7 @@ u8 sZoomOutAreaMasks[] = {
 	ZOOMOUT_AREA_MASK(1, 0, 0, 0, 0, 0, 0, 0), // WF             | ENDING
 	ZOOMOUT_AREA_MASK(0, 0, 0, 0, 0, 0, 0, 0), // COURTYARD      | PSS
 	ZOOMOUT_AREA_MASK(1, 0, 0, 0, 1, 0, 0, 0), // COTMC          | TOTWC
-	ZOOMOUT_AREA_MASK(1, 0, 0, 0, 0, 0, 0, 0), // BOWSER_1       | WMOTR
+	ZOOMOUT_AREA_MASK(1, 0, 0, 0, 1, 0, 0, 0), // BOWSER_1       | WMOTR
 	ZOOMOUT_AREA_MASK(0, 0, 0, 0, 1, 0, 0, 0), // Unused         | BOWSER_2
 	ZOOMOUT_AREA_MASK(1, 0, 0, 0, 0, 0, 0, 0), // BOWSER_3       | Unused
 	ZOOMOUT_AREA_MASK(1, 0, 0, 0, 0, 0, 0, 0), // TTM            | Unused

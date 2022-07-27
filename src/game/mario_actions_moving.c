@@ -842,7 +842,7 @@ s32 act_walking(struct MarioState *m) {
         return begin_braking_action(m);
     }
 
-    if (m->framesSinceA < 2) {
+    if (m->framesSinceA < 1) {
         return set_jump_from_landing(m);
     }
 
@@ -1128,7 +1128,7 @@ s32 act_decelerating(struct MarioState *m) {
             return set_mario_action(m, ACT_BEGIN_SLIDING, 0);
         }
 
-        if (m->framesSinceA < 2) {
+        if (m->framesSinceA < 1) {
             return set_jump_from_landing(m);
         }
 
@@ -1463,7 +1463,7 @@ s32 common_slide_action_with_jump(struct MarioState *m, u32 stopAction, u32 jump
                                   s32 animation) {
     //cancel butt slide much easier
 	if (m->actionTimer == 5) {
-        if (m->framesSinceA<2) {
+        if (m->framesSinceA<1) {
             return set_jumping_action(m, jumpAction, 0);
         }
 	}else{

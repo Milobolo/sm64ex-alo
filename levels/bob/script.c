@@ -47,11 +47,12 @@ const LevelScript level_bob_entry[] = {
 	/* Fast64 end persistent block [level commands] */
 
 	AREA(1, bob_area_1),
-		WARP_NODE(WARP_NODE_DEATH, LEVEL_CASTLE_GROUNDS, 1, WARP_NODE_REVIVE, WARP_NO_CHECKPOINT),
+		WARP_NODE(WARP_NODE_DEATH, LEVEL_BOB, 1, 0x1C, WARP_NO_CHECKPOINT),
 		WARP_NODE(WARP_NODE_F0, LEVEL_CASTLE_GROUNDS, 1, WARP_NODE_STAR_GET, WARP_NO_CHECKPOINT),
 		WARP_NODE(12, LEVEL_BOB, 1, 11, WARP_NO_CHECKPOINT),
 		WARP_NODE(11, LEVEL_BOB, 1, 12, WARP_NO_CHECKPOINT),
 		WARP_NODE(10, LEVEL_BOB, 1, 10, WARP_NO_CHECKPOINT),
+		WARP_NODE(0x1C, LEVEL_BOB, 0x01, 0x0A, WARP_NO_CHECKPOINT),
 		OBJECT(212, 306, -2500, 2792, 0, 0, 0, 0x0, bhv1Up),
 		OBJECT(140, 3432, 2055, 6286, 0, 0, 0, 0x0, bhvBlueCoinSwitch),
 		OBJECT(129, 4069, 3018, 6342, 0, 0, 0, 0x10000, bhvBreakableBox),
@@ -141,6 +142,7 @@ const LevelScript level_bob_entry[] = {
 		OBJECT(206, -667, 521, 4529, 0, 0, 0, 0x0, bhvSnufit),
 		OBJECT(206, -2002, 8385, -6861, 0, 0, 0, 0x0, bhvSnufit),
 		OBJECT(0, 1761, -2818, -260, 0, 0, 0, (0x0A << 16), bhvSpinAirborneWarp),
+		OBJECT(0, 1761, -2818, -260, 0, 0, 0, (0x1C << 16), bhvAirborneDeathWarp),
 		OBJECT(122, -4065, -3078, 4741, 0, 0, 0, 0x0, bhvStar),
 		OBJECT(122, 1905, 5457, -85, 0, 0, 0, 0x1000000, bhvStar),
 		OBJECT(122, 2204, 3359, 7426, 0, 0, 0, 0x2000000, bhvStar),

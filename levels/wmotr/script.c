@@ -38,16 +38,23 @@ const LevelScript level_wmotr_entry[] = {
 	JUMP_LINK(script_func_global_1), 
 	JUMP_LINK(script_func_global_3), 
 	JUMP_LINK(script_func_global_18), 
+	LOAD_MODEL_FROM_GEO(22, warp_pipe_geo), 
 
 	/* Fast64 begin persistent block [level commands] */
 	/* Fast64 end persistent block [level commands] */
 
-	AREA(0, wmotr_area_0),
-		WARP_NODE(WARP_NODE_ENTRANCE, LEVEL_BOB, 0, 0x0A, WARP_NO_CHECKPOINT),
+	AREA(1, wmotr_area_1),
+		WARP_NODE(WARP_NODE_ENTRANCE, LEVEL_BOB, 1, 0x0A, WARP_NO_CHECKPOINT),
 		WARP_NODE(WARP_NODE_DEATH, LEVEL_CASTLE_GROUNDS, 1, WARP_NODE_REVIVE, WARP_NO_CHECKPOINT),
+		WARP_NODE(0x1A, LEVEL_WDW, 0x01, 0x0A, WARP_NO_CHECKPOINT),
+		WARP_NODE(0x2A, LEVEL_TTM, 0x01, 0x0A, WARP_NO_CHECKPOINT),
+		OBJECT(MODEL_WOODEN_SIGNPOST, -267, 100, 451, 0, 180, 0, (0 << 16) | (11), bhvMessagePanelTE),
+		OBJECT(MODEL_WOODEN_SIGNPOST, -267, 100, -496, 0, 0, 0, (0 << 16) | (10), bhvMessagePanelTE),
 		OBJECT(MODEL_NONE, 0, 321, 0, 0, 0, 0, (0x0A << 16), bhvSpinAirborneWarp),
-		TERRAIN(wmotr_area_0_collision),
-		MACRO_OBJECTS(wmotr_area_0_macro_objs),
+		OBJECT(MODEL_CASTLE_GROUNDS_WARP_PIPE, -18, 100, 734, 0, 0, 0, (0x2A << 16), bhvWarpPipe),
+		OBJECT(MODEL_CASTLE_GROUNDS_WARP_PIPE, -18, 100, -735, 0, 0, 0, (0x1A << 16), bhvWarpPipe),
+		TERRAIN(wmotr_area_1_collision),
+		MACRO_OBJECTS(wmotr_area_1_macro_objs),
 		SET_BACKGROUND_MUSIC(0x00, 0x30),
 		TERRAIN_TYPE(TERRAIN_GRASS),
 		/* Fast64 begin persistent block [area commands] */

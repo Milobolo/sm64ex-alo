@@ -77,7 +77,7 @@ Star: Triforce (Star 3){end_tx}"]
 
 KBRX_Explain = [f"{setup}Origin: King Boo's Revenge X\n\
 Course: Stardust Constellation\n\
-Star: Tree Floors One You (Star 6){end_tx}"]
+Star: Three Floors One You (Star 6){end_tx}"]
 
 SMSD_Explain = [f"{setup}Origin: Super Mario Senseless Delirium\n\
 Course: Final Delirium{end_tx}"]

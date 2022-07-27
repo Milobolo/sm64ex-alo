@@ -499,7 +499,7 @@ s32 perform_air_quarter_step(struct MarioState *m, Vec3f intendedPos, u32 stepAr
             return AIR_STEP_HIT_LAVA_WALL;
         }
 
-        if (wallDYaw < -0x58E0 || wallDYaw > 0x58E0) {
+        if (wallDYaw < -0x6000 || wallDYaw > 0x6000) {
             m->flags |= MARIO_UNKNOWN_30;
             return AIR_STEP_HIT_WALL;
         }

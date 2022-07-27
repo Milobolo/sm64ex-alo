@@ -431,7 +431,7 @@ s32 lvl_update_obj_and_load_act_button_actions(UNUSED s32 arg, UNUSED s32 unused
             queue_rumble_data(60, 70);
             queue_rumble_decay(1);
 #endif
-            if (sInitSelectedActNum >= sSelectedActIndex + 1) {
+            if (1) {
                 sLoadedActNum = sSelectedActIndex + 1;
             } else {
                 sLoadedActNum = sInitSelectedActNum;

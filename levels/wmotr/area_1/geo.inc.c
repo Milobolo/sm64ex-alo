@@ -1,15 +1,17 @@
 #include "src/game/envfx_snow.h"
 
-const GeoLayout wmotr_area_0_geo[] = {
+const GeoLayout wmotr_area_1_geo[] = {
 	GEO_NODE_START(),
 	GEO_OPEN_NODE(),
 		GEO_SCALE(LAYER_OPAQUE, 10737418),
 		GEO_DISPLAY_LIST(LAYER_OPAQUE, wmotr_dl_Cube_mesh_layer_1),
 		GEO_TRANSLATE_NODE_WITH_DL(LAYER_OPAQUE, -495, 2045, -5656, wmotr_dl_Cube_001_mesh_layer_1),
+		GEO_TRANSLATE_ROTATE_WITH_DL(LAYER_OPAQUE, 57, 942, 1220, 90, 0, 180, wmotr_dl_Text_012_mesh_layer_1),
+		GEO_TRANSLATE_ROTATE_WITH_DL(LAYER_OPAQUE, -326, 797, -1260, 90, 0, 0, wmotr_dl_Text_013_mesh_layer_1),
 	GEO_CLOSE_NODE(),
 	GEO_RETURN(),
 };
-const GeoLayout wmotr_area_0[] = {
+const GeoLayout wmotr_area_1[] = {
 	GEO_NODE_SCREEN_AREA(10, SCREEN_WIDTH/2, SCREEN_HEIGHT/2, SCREEN_WIDTH/2, SCREEN_HEIGHT/2),
 	GEO_OPEN_NODE(),
 		GEO_ZBUFFER(0),
@@ -25,7 +27,7 @@ const GeoLayout wmotr_area_0[] = {
 			GEO_OPEN_NODE(),
 				GEO_CAMERA(CAMERA_MODE_8_DIRECTIONS, 0, -757, 0, 0, -857, 0, geo_camera_main),
 				GEO_OPEN_NODE(),
-					GEO_BRANCH(1, wmotr_area_0_geo),
+					GEO_BRANCH(1, wmotr_area_1_geo),
 					GEO_RENDER_OBJ(),
 					GEO_ASM(ENVFX_MODE_NONE, geo_envfx_main),
 				GEO_CLOSE_NODE(),

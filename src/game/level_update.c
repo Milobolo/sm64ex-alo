@@ -768,6 +768,7 @@ s16 level_trigger_warp(struct MarioState *m, s32 warpOp) {
                 sDelayedWarpTimer = 48;
                 sSourceWarpNodeId = WARP_NODE_DEATH;
                 play_transition(WARP_TRANSITION_FADE_INTO_BOWSER, 0x30, 0x00, 0x00, 0x00);
+				val04 = !music_changed_through_warp(sSourceWarpNodeId);
                 play_sound(SOUND_MENU_BOWSER_LAUGH, gGlobalSoundSource);
                 break;
 
@@ -781,6 +782,7 @@ s16 level_trigger_warp(struct MarioState *m, s32 warpOp) {
                     }
                 }
                 sDelayedWarpTimer = 20;
+				val04 = !music_changed_through_warp(sSourceWarpNodeId);
                 play_transition(WARP_TRANSITION_FADE_INTO_CIRCLE, 0x14, 0x00, 0x00, 0x00);
                 break;
 
@@ -1063,7 +1065,7 @@ static u8 *LSScrolls[]={
 };
 #endif
 
-#define exit_course_death 1
+#define exit_course_death 0
 s32 play_mode_paused(void) {
     if (gPauseScreenMode == 0) {
         set_menu_mode(RENDER_PAUSE_SCREEN);
@@ -1080,7 +1082,7 @@ s32 play_mode_paused(void) {
         if (gDebugLevelSelect) {
             fade_into_special_warp(-9, 1);
         } else {
-			#ifndef exit_course_death
+			#if !exit_course_death
             initiate_warp(EXIT_COURSE,0);
 			#else
 			struct ObjectWarpNode *warpNode = area_get_warp_node(WARP_NODE_DEATH);
@@ -1095,7 +1097,7 @@ s32 play_mode_paused(void) {
 #ifndef TARGET_N64
     else if (gPauseScreenMode == 3) {
         // We should only be getting "int 3" to here
-		#ifndef exit_course_death
+		#if !exit_course_death
 		initiate_warp(EXIT_COURSE,0);
 		#else
 		struct ObjectWarpNode *warpNode = area_get_warp_node(WARP_NODE_DEATH);
