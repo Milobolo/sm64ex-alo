@@ -26,4 +26,7 @@ extern const LevelScript script_intro_L3[];
 extern const LevelScript script_intro_L4[];
 extern const LevelScript script_intro_L5[];
 
+#include "levels/intro/title/geo_header.h"
+#include "levels/intro/title/texscroll.inc.h"
+
 #endif

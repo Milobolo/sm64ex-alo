@@ -1,1 +1,1 @@
-.ascii "Super Mario 64      "
+.ascii "Kaizo Tourney 1"

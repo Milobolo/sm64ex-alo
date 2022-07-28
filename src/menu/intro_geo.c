@@ -4,6 +4,7 @@
 #include "game/segment2.h"
 #include "game/segment7.h"
 #include "intro_geo.h"
+#include "levels/intro/title/texscroll.inc.h"
 #include "sm64.h"
 #include "textures.h"
 #include "types.h"
@@ -99,6 +100,7 @@ Gfx *geo_intro_tm_copyright(s32 state, struct GraphNode *node, UNUSED void *cont
     struct GraphNode *graphNode = node;
     Gfx *dl = NULL;
     Gfx *dlIter = NULL;
+	scroll_bob_level_geo_title();
 
     if (state != 1) {  // reset
         sTmCopyrightAlpha = 0;
