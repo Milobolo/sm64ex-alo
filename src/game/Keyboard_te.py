@@ -84,7 +84,7 @@ Course: Final Delirium{end_tx}"]
 
 NoD_Explain = [f"{setup}Origin: Star Revenge 2: Night of Doom\n\
 Course: Tricky Tower's Trials\n\
-Star: 2nd Red Coin Hunting (Star 4){end_tx}"]
+Star: 2nd Red Coin Hunting (Star 3){end_tx}"]
 
 #finals
 

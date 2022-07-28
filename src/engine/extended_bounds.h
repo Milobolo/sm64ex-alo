@@ -53,7 +53,7 @@
 #define SURFACE_NODE_POOL_SIZE 32000
 
 //cell and height limits
-#define CELL_HEIGHT_LIMIT           20000
+#define CELL_HEIGHT_LIMIT           36000
 #define FLOOR_LOWER_LIMIT           -11000
 #define FLOOR_LOWER_LIMIT_MISC      (FLOOR_LOWER_LIMIT + 1000)
 #define FLOOR_LOWER_LIMIT_SHADOW    FLOOR_LOWER_LIMIT_MISC

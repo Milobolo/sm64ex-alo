@@ -68,6 +68,7 @@ DECLARE_LEVEL_SEGMENT(ending)
 
 #include "levels/custom_level_defines.h"
 DECLARE_CUSTOM_LEVEL_SEGMENT(hmc)
+DECLARE_CUSTOM_LEVEL_SEGMENT(ssl)
 #undef DEFINE_LEVEL
 
 #define MIO0_SEG(name, addr) \

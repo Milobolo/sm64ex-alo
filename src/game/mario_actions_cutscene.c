@@ -2694,7 +2694,7 @@ static s32 act_end_waving_cutscene(struct MarioState *m) {
 
 static s32 check_for_instant_quicksand(struct MarioState *m) {
     if (m->floor->type == SURFACE_INSTANT_QUICKSAND && m->action & ACT_FLAG_INVULNERABLE
-        && m->action != ACT_QUICKSAND_DEATH) {
+        && m->action != ACT_QUICKSAND_DEATH && !(m->flags & MARIO_VANISH_CAP)) {
         update_mario_sound_and_camera(m);
         return drop_and_set_mario_action(m, ACT_QUICKSAND_DEATH, 0);
     }

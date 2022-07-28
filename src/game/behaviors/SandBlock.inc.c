@@ -9,7 +9,7 @@ void bhv_sandblock_loop(void) {
 				o->oAction=2;
 			}
 			o->header.gfx.scale[1]=((f32)(300-o->oTimer))/300.0f;
-			spawn_object_relative(0,0,0,0,o, 0, bhvDirtParticleSpawner);
+			spawn_object_relative(0,0,(s16)(-340*o->header.gfx.scale[1]),0,o, 0, bhvDirtParticleSpawner);
 			cur_obj_play_sound_1(SOUND_ENV_MOVINGSAND);
 			break;
 		case 2:

@@ -1147,6 +1147,7 @@ SECTIONS
 #undef DEFINE_LEVEL
 
 CUSTOM_LEVEL(hmc)
+CUSTOM_LEVEL(ssl)
 
 
    /* 4E9FA0-? [?] */

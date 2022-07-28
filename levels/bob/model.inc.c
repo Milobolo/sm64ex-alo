@@ -6,7 +6,7 @@ Lights1 bob_dl_SM64_DL_ttc_2_0xe04b2e0_F3D_Mat_1_lights = gdSPDefLights1(
 	0x7F, 0x7F, 0x7F,
 	0xFF, 0xFF, 0xFF, 0x28, 0x28, 0x28);
 
-Lights1 bob_dl_SM64_DL_ttc_2_0xe04b2e0_F3D_Mat_2_lights = gdSPDefLights1(
+Lights1 bob_dl_EE_tip_lights = gdSPDefLights1(
 	0x7F, 0x7F, 0x7F,
 	0xFF, 0xFF, 0xFF, 0x28, 0x28, 0x28);
 
@@ -14,7 +14,7 @@ Lights1 bob_dl_SM64_DL_ttc_2_0xe04b2e0_F3D_Mat_3_lights = gdSPDefLights1(
 	0x7F, 0x7F, 0x7F,
 	0xFF, 0xFF, 0xFF, 0x28, 0x28, 0x28);
 
-Lights1 bob_dl_SM64_DL_ttc_2_0xe04b2e0_F3D_Mat_4_lights = gdSPDefLights1(
+Lights1 bob_dl_EE_qs_lights = gdSPDefLights1(
 	0x7F, 0x7F, 0x7F,
 	0xFF, 0xFF, 0xFF, 0x28, 0x28, 0x28);
 
@@ -50,11 +50,11 @@ Lights1 bob_dl_SM64_DL_ttc_2_0xe04b2e0_F3D_Mat_12_lights = gdSPDefLights1(
 	0x7F, 0x7F, 0x7F,
 	0xFF, 0xFF, 0xFF, 0x28, 0x28, 0x28);
 
-Lights1 bob_dl_SM64_DL_ttc_2_0xe04b2e0_F3D_Mat_13_lights = gdSPDefLights1(
+Lights1 bob_dl_EE_floor_lights = gdSPDefLights1(
 	0x7F, 0x7F, 0x7F,
 	0xFF, 0xFF, 0xFF, 0x28, 0x28, 0x28);
 
-Lights1 bob_dl_SM64_DL_ttc_2_0xe04b2e0_F3D_Mat_14_lights = gdSPDefLights1(
+Lights1 bob_dl_EE_wall_lights = gdSPDefLights1(
 	0x7F, 0x7F, 0x7F,
 	0xFF, 0xFF, 0xFF, 0x28, 0x28, 0x28);
 
@@ -20430,7 +20430,7 @@ Gfx mat_bob_dl_SM64_DL_ttc_2_0xe04b2e0_F3D_Mat_1[] = {
 	gsSPEndDisplayList(),
 };
 
-Gfx mat_bob_dl_SM64_DL_ttc_2_0xe04b2e0_F3D_Mat_2[] = {
+Gfx mat_bob_dl_EE_tip[] = {
 	gsDPPipeSync(),
 	gsDPSetCombineLERP(TEXEL0, 0, SHADE, 0, 0, 0, 0, SHADE, TEXEL0, 0, SHADE, 0, 0, 0, 0, SHADE),
 	gsSPTexture(65535, 65535, 0, 0, 1),
@@ -20442,7 +20442,7 @@ Gfx mat_bob_dl_SM64_DL_ttc_2_0xe04b2e0_F3D_Mat_2[] = {
 	gsDPPipeSync(),
 	gsDPSetTile(G_IM_FMT_RGBA, G_IM_SIZ_16b, 8, 0, 0, 0, G_TX_WRAP | G_TX_NOMIRROR, 5, 0, G_TX_WRAP | G_TX_NOMIRROR, 5, 0),
 	gsDPSetTileSize(0, 0, 0, 124, 124),
-	gsSPSetLights1(bob_dl_SM64_DL_ttc_2_0xe04b2e0_F3D_Mat_2_lights),
+	gsSPSetLights1(bob_dl_EE_tip_lights),
 	gsSPEndDisplayList(),
 };
 
@@ -20462,7 +20462,7 @@ Gfx mat_bob_dl_SM64_DL_ttc_2_0xe04b2e0_F3D_Mat_3[] = {
 	gsSPEndDisplayList(),
 };
 
-Gfx mat_bob_dl_SM64_DL_ttc_2_0xe04b2e0_F3D_Mat_4[] = {
+Gfx mat_bob_dl_EE_qs[] = {
 	gsDPPipeSync(),
 	gsDPSetCombineLERP(TEXEL0, 0, SHADE, 0, 0, 0, 0, SHADE, TEXEL0, 0, SHADE, 0, 0, 0, 0, SHADE),
 	gsSPTexture(65535, 65535, 0, 0, 1),
@@ -20474,7 +20474,7 @@ Gfx mat_bob_dl_SM64_DL_ttc_2_0xe04b2e0_F3D_Mat_4[] = {
 	gsDPPipeSync(),
 	gsDPSetTile(G_IM_FMT_RGBA, G_IM_SIZ_16b, 8, 0, 0, 0, G_TX_WRAP | G_TX_NOMIRROR, 5, 0, G_TX_WRAP | G_TX_NOMIRROR, 5, 0),
 	gsDPSetTileSize(0, 0, 0, 124, 124),
-	gsSPSetLights1(bob_dl_SM64_DL_ttc_2_0xe04b2e0_F3D_Mat_4_lights),
+	gsSPSetLights1(bob_dl_EE_qs_lights),
 	gsSPEndDisplayList(),
 };
 
@@ -20606,7 +20606,7 @@ Gfx mat_bob_dl_SM64_DL_ttc_2_0xe04b2e0_F3D_Mat_12[] = {
 	gsSPEndDisplayList(),
 };
 
-Gfx mat_bob_dl_SM64_DL_ttc_2_0xe04b2e0_F3D_Mat_13[] = {
+Gfx mat_bob_dl_EE_floor[] = {
 	gsDPPipeSync(),
 	gsDPSetCombineLERP(TEXEL0, 0, SHADE, 0, 0, 0, 0, SHADE, TEXEL0, 0, SHADE, 0, 0, 0, 0, SHADE),
 	gsSPTexture(65535, 65535, 0, 0, 1),
@@ -20618,11 +20618,11 @@ Gfx mat_bob_dl_SM64_DL_ttc_2_0xe04b2e0_F3D_Mat_13[] = {
 	gsDPPipeSync(),
 	gsDPSetTile(G_IM_FMT_RGBA, G_IM_SIZ_16b, 8, 0, 0, 0, G_TX_WRAP | G_TX_NOMIRROR, 5, 0, G_TX_WRAP | G_TX_NOMIRROR, 5, 0),
 	gsDPSetTileSize(0, 0, 0, 124, 124),
-	gsSPSetLights1(bob_dl_SM64_DL_ttc_2_0xe04b2e0_F3D_Mat_13_lights),
+	gsSPSetLights1(bob_dl_EE_floor_lights),
 	gsSPEndDisplayList(),
 };
 
-Gfx mat_bob_dl_SM64_DL_ttc_2_0xe04b2e0_F3D_Mat_14[] = {
+Gfx mat_bob_dl_EE_wall[] = {
 	gsDPPipeSync(),
 	gsDPSetCombineLERP(TEXEL0, 0, SHADE, 0, 0, 0, 0, SHADE, TEXEL0, 0, SHADE, 0, 0, 0, 0, SHADE),
 	gsSPTexture(65535, 65535, 0, 0, 1),
@@ -20634,7 +20634,7 @@ Gfx mat_bob_dl_SM64_DL_ttc_2_0xe04b2e0_F3D_Mat_14[] = {
 	gsDPPipeSync(),
 	gsDPSetTile(G_IM_FMT_RGBA, G_IM_SIZ_16b, 8, 0, 0, 0, G_TX_WRAP | G_TX_NOMIRROR, 5, 0, G_TX_WRAP | G_TX_NOMIRROR, 5, 0),
 	gsDPSetTileSize(0, 0, 0, 124, 124),
-	gsSPSetLights1(bob_dl_SM64_DL_ttc_2_0xe04b2e0_F3D_Mat_14_lights),
+	gsSPSetLights1(bob_dl_EE_wall_lights),
 	gsSPEndDisplayList(),
 };
 
@@ -20675,11 +20675,11 @@ Gfx bob_dl_DL_ttc_2_0xe04b2e0_Obj_mesh_layer_1[] = {
 	gsSPDisplayList(bob_dl_DL_ttc_2_0xe04b2e0_Obj_mesh_layer_1_tri_0),
 	gsSPDisplayList(mat_bob_dl_SM64_DL_ttc_2_0xe04b2e0_F3D_Mat_1),
 	gsSPDisplayList(bob_dl_DL_ttc_2_0xe04b2e0_Obj_mesh_layer_1_tri_1),
-	gsSPDisplayList(mat_bob_dl_SM64_DL_ttc_2_0xe04b2e0_F3D_Mat_2),
+	gsSPDisplayList(mat_bob_dl_EE_tip),
 	gsSPDisplayList(bob_dl_DL_ttc_2_0xe04b2e0_Obj_mesh_layer_1_tri_2),
 	gsSPDisplayList(mat_bob_dl_SM64_DL_ttc_2_0xe04b2e0_F3D_Mat_3),
 	gsSPDisplayList(bob_dl_DL_ttc_2_0xe04b2e0_Obj_mesh_layer_1_tri_3),
-	gsSPDisplayList(mat_bob_dl_SM64_DL_ttc_2_0xe04b2e0_F3D_Mat_4),
+	gsSPDisplayList(mat_bob_dl_EE_qs),
 	gsSPDisplayList(bob_dl_DL_ttc_2_0xe04b2e0_Obj_mesh_layer_1_tri_4),
 	gsSPDisplayList(mat_bob_dl_SM64_DL_ttc_2_0xe04b2e0_F3D_Mat_5),
 	gsSPDisplayList(bob_dl_DL_ttc_2_0xe04b2e0_Obj_mesh_layer_1_tri_5),
@@ -20697,9 +20697,9 @@ Gfx bob_dl_DL_ttc_2_0xe04b2e0_Obj_mesh_layer_1[] = {
 	gsSPDisplayList(bob_dl_DL_ttc_2_0xe04b2e0_Obj_mesh_layer_1_tri_11),
 	gsSPDisplayList(mat_bob_dl_SM64_DL_ttc_2_0xe04b2e0_F3D_Mat_12),
 	gsSPDisplayList(bob_dl_DL_ttc_2_0xe04b2e0_Obj_mesh_layer_1_tri_12),
-	gsSPDisplayList(mat_bob_dl_SM64_DL_ttc_2_0xe04b2e0_F3D_Mat_13),
+	gsSPDisplayList(mat_bob_dl_EE_floor),
 	gsSPDisplayList(bob_dl_DL_ttc_2_0xe04b2e0_Obj_mesh_layer_1_tri_13),
-	gsSPDisplayList(mat_bob_dl_SM64_DL_ttc_2_0xe04b2e0_F3D_Mat_14),
+	gsSPDisplayList(mat_bob_dl_EE_wall),
 	gsSPDisplayList(bob_dl_DL_ttc_2_0xe04b2e0_Obj_mesh_layer_1_tri_14),
 	gsSPDisplayList(mat_bob_dl_SM64_DL_ttc_2_0xe04b2e0_F3D_Mat_15),
 	gsSPDisplayList(bob_dl_DL_ttc_2_0xe04b2e0_Obj_mesh_layer_1_tri_15),

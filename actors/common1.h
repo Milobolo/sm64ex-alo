@@ -274,9 +274,7 @@ extern const Collision col_Green_Switchboard_MOP_0x7ddc38[];
 //sunshine platforms
 extern const GeoLayout Moving_Rotating_Block_MOP[];
 extern const Collision col_Moving_Rotating_Block_MOP_0x7e3ea0[];
-//sandblock
-extern const GeoLayout SandBlock_MOP[];
-extern const Collision col_Sandblock_MOP_0xaa6444[];
+
 //shell 1
 extern const GeoLayout Shell_1_MOP[];
 //shell 2
@@ -297,5 +295,9 @@ extern const Collision col_Switchblock_MOP_0x7d3058[];
 extern const GeoLayout Switchblock_Switch_MOP[];
 extern const Collision col_Switchblock_Switch_MOP_0x7d7348[];
 #endif
+
+#include "SandBlock_MOP/geo_header.h"
+
+#include "SandBlock_MOP/collision_header.h"
 
 #endif

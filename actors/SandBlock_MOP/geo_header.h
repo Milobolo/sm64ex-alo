@@ -1,0 +1,8 @@
+extern const GeoLayout SandBlock_MOP[];
+extern Lights1 SandBlock_MOP_SM64_DL_Sandblock_MOP_0x30222d4_F3D_Mat_0_lights;
+extern u8 SandBlock_MOP_SandBlock_MOP_0x3021354_rgba16_rgba16[];
+extern Vtx SandBlock_MOP_DL_Sandblock_MOP_0x30222d4_Obj_mesh_layer_1_vtx_0[53];
+extern Gfx SandBlock_MOP_DL_Sandblock_MOP_0x30222d4_Obj_mesh_layer_1_tri_0[];
+extern Gfx mat_SandBlock_MOP_SM64_DL_Sandblock_MOP_0x30222d4_F3D_Mat_0[];
+extern Gfx SandBlock_MOP_DL_Sandblock_MOP_0x30222d4_Obj_mesh_layer_1[];
+extern Gfx SandBlock_MOP_material_revert_render_settings[];

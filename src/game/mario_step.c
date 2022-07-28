@@ -105,7 +105,7 @@ void mario_bonk_reflection(struct MarioState *m, u32 negateSpeed) {
 }
 
 u32 mario_update_quicksand(struct MarioState *m, f32 sinkingSpeed) {
-    if (m->action & ACT_FLAG_RIDING_SHELL) {
+    if (m->action & ACT_FLAG_RIDING_SHELL || (m->flags & MARIO_VANISH_CAP)) {
         m->quicksandDepth = 0.0f;
     } else {
         if (m->quicksandDepth < 1.1f) {
@@ -144,7 +144,7 @@ u32 mario_update_quicksand(struct MarioState *m, f32 sinkingSpeed) {
 
             case SURFACE_INSTANT_QUICKSAND:
             case SURFACE_INSTANT_MOVING_QUICKSAND:
-				if(m->pos[1]<m->floorHeight+5.0f){
+				if(m->pos[1]<m->floorHeight+5.0f && !(m->flags & MARIO_VANISH_CAP)){
 					update_mario_sound_and_camera(m);
 					return drop_and_set_mario_action(m, ACT_QUICKSAND_DEATH, 0);
 				}

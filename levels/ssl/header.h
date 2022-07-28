@@ -84,6 +84,8 @@ extern const Gfx ssl_dl_pyramid_sand_pathway_side_end[];
 
 // script
 extern const LevelScript level_ssl_entry[];
+extern const LevelScript level_ssl_entry_custom[];
+
 
 
 #include "levels/ssl/header.inc.h"
