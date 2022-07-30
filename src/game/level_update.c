@@ -785,6 +785,9 @@ s16 level_trigger_warp(struct MarioState *m, s32 warpOp) {
                     }
                 }
                 sDelayedWarpTimer = 20;
+				sDelayedWarpArg = 0xF;
+				m->numCoins = 0;
+				gHudDisplay.coins = 0;
 				val04 = !music_changed_through_warp(sSourceWarpNodeId);
                 play_transition(WARP_TRANSITION_FADE_INTO_CIRCLE, 0x14, 0x00, 0x00, 0x00);
                 break;
