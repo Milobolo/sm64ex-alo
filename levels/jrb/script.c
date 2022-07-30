@@ -78,7 +78,7 @@ const LevelScript level_jrb_entry[] = {
 		OBJECT(121, 4203, -3749, -5191, 0, 0, 0, 0x0, bhvHiddenStarTrigger),
 		OBJECT(121, -2180, 559, 3230, 0, 0, 0, 0x0, bhvHiddenStarTrigger),
 		OBJECT(121, 6347, -1635, -2308, 0, 0, 0, 0x0, bhvHiddenStarTrigger),
-		OBJECT(217, -2259, 1665, 6174, -13, -157, 32, 0x0, bhvPushableMetalBox),
+		OBJECT(217, -2259, 1665, 6174, 13, -157, -32, 0x0, bhvPushableMetalBox),
 		OBJECT(122, -6239, -3774, -7136, 0, 0, 0, 0x2000000, bhvStar),
 		TERRAIN(jrb_area_1_collision),
 		MACRO_OBJECTS(jrb_area_1_macro_objs),
