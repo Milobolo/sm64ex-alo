@@ -86,7 +86,7 @@ const LevelScript level_sl_entry[] = {
 		OBJECT_WITH_ACTS(137, -7450, -2304, 4443, 0, 0, 0, 0x0, bhvExclamationBox, ACT_2),
 		OBJECT_WITH_ACTS(0, -943, -318, 1888, 0, 0, 0, 0x150000, bhvFadingWarp, ACT_4 | ACT_5),
 		OBJECT_WITH_ACTS(0, -946, -7950, 5013, 0, 0, 0, 0x140000, bhvFadingWarp, ACT_4 | ACT_5),
-		OBJECT_WITH_ACTS(0, -12115, 1821, 3818, 0, 0, 0, 0x7a0000, bhvFadingWarp, ACT_3),
+		OBJECT_WITH_ACTS(0, -12115, 1827, 3818, 0, 0, 0, 0x7a0000, bhvFadingWarp, ACT_3),
 		OBJECT_WITH_ACTS(0, -6669, 3969, 9326, 0, 0, 0, 0x6f0000, bhvFadingWarp, ACT_3),
 		OBJECT_WITH_ACTS(145, 7431, -1907, 5727, 0, 0, 0, 0x0, bhvFlame, ACT_1),
 		OBJECT_WITH_ACTS(145, 6455, -1907, 5525, 0, 0, 0, 0x0, bhvFlame, ACT_1),

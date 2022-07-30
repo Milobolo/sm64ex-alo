@@ -646,7 +646,7 @@ void initiate_warp(s16 destLevel, s16 destArea, s16 destWarpNode, s32 arg3) {
         sWarpDest.type = WARP_TYPE_CHANGE_LEVEL;
     } else if (destLevel != gCurrLevelNum) {
         sWarpDest.type = WARP_TYPE_CHANGE_LEVEL;
-    } else if (destArea != gCurrentArea->index) {
+    } else if (destArea != gCurrentArea->index || arg3 == 0xF) {
         sWarpDest.type = WARP_TYPE_CHANGE_AREA;
     } else {
         sWarpDest.type = WARP_TYPE_SAME_AREA;
@@ -766,6 +766,9 @@ s16 level_trigger_warp(struct MarioState *m, s32 warpOp) {
                     sDelayedWarpOp = WARP_OP_GAME_OVER;
                 }
                 sDelayedWarpTimer = 48;
+				sDelayedWarpArg = 0xF;
+				m->numCoins = 0;
+				gHudDisplay.coins = 0;
                 sSourceWarpNodeId = WARP_NODE_DEATH;
                 play_transition(WARP_TRANSITION_FADE_INTO_BOWSER, 0x30, 0x00, 0x00, 0x00);
 				val04 = !music_changed_through_warp(sSourceWarpNodeId);

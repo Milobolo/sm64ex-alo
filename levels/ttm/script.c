@@ -175,8 +175,6 @@ const LevelScript level_ttm_entry[] = {
 		OBJECT_WITH_ACTS(194, 3734, 1823, -10824, 0, 0, 0, 0x0, bhvHomingAmp, ACT_1 | ACT_2 | ACT_3 | ACT_4 | ACT_5),
 		OBJECT_WITH_ACTS(194, 115, 1687, 689, 0, 0, 0, 0x0, bhvHomingAmp, ACT_1 | ACT_2 | ACT_3 | ACT_4 | ACT_5),
 		OBJECT_WITH_ACTS(194, -1356, 2692, 5125, 0, 0, 0, 0x0, bhvHomingAmp, ACT_1 | ACT_2 | ACT_3 | ACT_4 | ACT_5),
-		OBJECT_WITH_ACTS(0, 10915, 2969, -9383, 0, 0, 0, 0x0, bhvLargeFishGroup, ACT_1 | ACT_2 | ACT_3 | ACT_4 | ACT_5),
-		OBJECT_WITH_ACTS(0, 10765, -417, -2070, 0, 0, 0, 0x0, bhvLargeFishGroup, ACT_1 | ACT_2 | ACT_3 | ACT_4 | ACT_5),
 		OBJECT_WITH_ACTS(120, -2749, 2377, 3860, 0, 0, 0, 0x0, bhvRecoveryHeart, ACT_1 | ACT_2 | ACT_3 | ACT_4 | ACT_5),
 		OBJECT_WITH_ACTS(215, -9854, -783, -10463, 0, 0, 0, 0x0, bhvRedCoin, ACT_1 | ACT_2 | ACT_3 | ACT_4 | ACT_5),
 		OBJECT_WITH_ACTS(215, 5994, 3150, -10815, 0, 0, 0, 0x0, bhvRedCoin, ACT_1 | ACT_2 | ACT_3 | ACT_4 | ACT_5),

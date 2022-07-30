@@ -208,7 +208,7 @@ const LevelScript level_wdw_entry[] = {
 		TERRAIN(wdw_area_1_collision),
 		MACRO_OBJECTS(wdw_area_1_macro_objs),
 		SET_BACKGROUND_MUSIC(0x00, 0x2C),
-		TERRAIN_TYPE(TERRAIN_GRASS),
+		TERRAIN_TYPE(TERRAIN_SAND),
 		/* Fast64 begin persistent block [area commands] */
 		/* Fast64 end persistent block [area commands] */
 	END_AREA(),

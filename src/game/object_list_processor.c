@@ -410,6 +410,7 @@ s32 unload_deactivated_objects_in_list(struct ObjectNode *objList) {
 void set_object_respawn_info_bits(struct Object *obj, u8 bits) {
     u32 *info32;
     u16 *info16;
+	return;
 
     switch (obj->respawnInfoType) {
         case RESPAWN_INFO_TYPE_32:
