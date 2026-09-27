@@ -58,11 +58,11 @@ TARGET_ARCH ?= 0
 TARGET_BITS ?= 0
 
 # Disable better camera by default
-BETTERCAMERA ?= 1
+BETTERCAMERA ?= 0
 # Disable no drawing distance by default
 NODRAWINGDISTANCE ?= 0
 # Disable QoL fixes by default (helps with them purists)
-QOL_FIXES ?= 1
+QOL_FIXES ?= 0
 # Enable extended options menu by default
 EXT_OPTIONS_MENU ?= 0
 # Disable text-based save-files by default
@@ -431,7 +431,7 @@ else
   OPT_FLAGS := -Os
 endif
 
-# Set BITS (32/64) to compile for
+# N64 release profile: favor runtime throughput over the smallest code size.`r`n# Keep DEBUG builds untouched so diagnostics remain available.`r`nifeq ($(TARGET_N64),1)`r`nifeq ($(DEBUG),0)`r`n  OPT_FLAGS := -O2`r`nendif`r`nendif`r`n`r`n# Set BITS (32/64) to compile for
 OPT_FLAGS += $(BITS)
 
 ifeq ($(TARGET_WEB),1)

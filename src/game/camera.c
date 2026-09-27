@@ -1218,7 +1218,11 @@ void mode_2_directions_camera(struct Camera *c) {
  * A mode that only has 8 camera angles, 45 degrees apart
  */
 
+#ifndef BETTERCAMERA
+u8 sDpadMove = 0;
+#else
 extern u8 sDpadMove;
+#endif
 void mode_8_directions_camera(struct Camera *c) {
     Vec3f pos;
     UNUSED u8 unused[8];
@@ -3093,7 +3097,9 @@ void update_camera(struct Camera *c) {
 
     gCamera = c;
     update_camera_hud_status(c);
-	newcam_toggle(configEnableCamera);
+	#ifdef BETTERCAMERA
+    newcam_toggle(configEnableCamera);
+#endif
     if (c->cutscene == 0) {
         // Only process R_TRIG if 'fixed' is not selected in the menu
         if ((cam_select_alt_mode(0) == CAM_SELECTION_MARIO)

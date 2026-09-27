@@ -560,6 +560,7 @@ void render_hud(void) {
         }
         
 #ifdef TARGET_N64
+        print_fps(GFX_DIMENSIONS_RECT_FROM_LEFT_EDGE(8), 20);
         render_hud_surface_text();
 #endif
     }

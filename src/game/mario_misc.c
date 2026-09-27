@@ -309,7 +309,11 @@ static Gfx *make_gfx_mario_alpha(struct GraphNodeGenerated *node, s16 alpha) {
             gDPSetAlphaCompare(gfx++, G_AC_NONE);
         }
     }
+#ifdef BETTERCAMERA
     alphaBias = min(alpha, newcam_xlu);
+#else
+    alphaBias = alpha;
+#endif
     gDPSetEnvColor(gfx++, 255, 255, 255, alphaBias);
     gSPEndDisplayList(gfx);
     return gfxHead;

@@ -7,7 +7,7 @@ const GeoLayout Geo_pss_1_0x16643b0[]= {
 		GEO_OPEN_NODE(),
 			GEO_NODE_ORTHO(100),
 			GEO_OPEN_NODE(),
-				GEO_BACKGROUND(SkyboxCustom23323776_skybox_Index+10, geo_skybox_main),
+				// GEO_BACKGROUND(SkyboxCustom23323776_skybox_Index+10, geo_skybox_main),
 			GEO_CLOSE_NODE(),
 		GEO_CLOSE_NODE(),
 		GEO_ZBUFFER(1),

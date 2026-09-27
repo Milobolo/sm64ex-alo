@@ -6,6 +6,26 @@
 #include "area.h"
 #include "level_update.h"
 #include "save_file.h"
+#ifndef EXT_OPTIONS_MENU
+// Keep challenge state symbols available when the QoL/options menu is disabled.
+bool configBE = false;
+bool configCNH = false;
+bool configDHP = false;
+bool configDLD = false;
+bool configDKS = false;
+bool configCL = false;
+bool configABC = false;
+bool configBBC = false;
+bool configZBC = false;
+bool configHC = false;
+bool configDD = false;
+bool configGD = false;
+bool configMB = false;
+bool configSM = false;
+bool configHUGE = false;
+bool configTINY = false;
+#endif
+
 #include "sound_init.h"
 #include "level_table.h"
 #include "course_table.h"
@@ -652,7 +672,11 @@ void save_file_set_challenges(void) {
 	flag |= (configHUGE<<14);
 	flag |= (configTINY<<15);
 	gSaveBuffer.files[gCurrSaveFileNum - 1][0].Challenges = flag;
-	gSaveBuffer.files[gCurrSaveFileNum - 1][0].Camera = configEnableCamera;
+	#ifdef BETTERCAMERA
+	 gSaveBuffer.files[gCurrSaveFileNum - 1][0].Camera = configEnableCamera;
+	#else
+	 gSaveBuffer.files[gCurrSaveFileNum - 1][0].Camera = FALSE;
+	#endif
 	gSaveFileModified = TRUE;
 	save_file_do_save(gCurrSaveFileNum - 1);
 }

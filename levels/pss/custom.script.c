@@ -24,7 +24,7 @@ const LevelScript level_pss_custom_entry[] = {
 	LOAD_MIO0(0x07, _bbh_segment_7SegmentRomStart, _bbh_segment_7SegmentRomEnd),
 	LOAD_RAW(0x1A, _bbhSegmentRomStart, _bbhSegmentRomEnd),
 	LOAD_RAW(0x0E, _pss_segment_ESegmentRomStart, _pss_segment_ESegmentRomEnd),
-	LOAD_MIO0(0xA, _SkyboxCustom23323776_skybox_mio0SegmentRomStart, _SkyboxCustom23323776_skybox_mio0SegmentRomEnd),
+	// LOAD_MIO0(0xA, _SkyboxCustom23323776_skybox_mio0SegmentRomStart, _SkyboxCustom23323776_skybox_mio0SegmentRomEnd),
 	LOAD_MIO0(8, _common0_mio0SegmentRomStart, _common0_mio0SegmentRomEnd),
 	LOAD_RAW(15, _common0_geoSegmentRomStart, _common0_geoSegmentRomEnd),
 	LOAD_MIO0(6, _group15_mio0SegmentRomStart, _group15_mio0SegmentRomEnd),

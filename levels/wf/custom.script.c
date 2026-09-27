@@ -20,7 +20,7 @@ extern u8 _wf_segment_ESegmentRomEnd[];
 const LevelScript level_wf_custom_entry[] = {
 	INIT_LEVEL(),
 	LOAD_RAW(0x0E, _wf_segment_ESegmentRomStart, _wf_segment_ESegmentRomEnd),
-	LOAD_MIO0(0xA, _SkyboxCustom19880160_skybox_mio0SegmentRomStart, _SkyboxCustom19880160_skybox_mio0SegmentRomEnd),
+	// LOAD_MIO0(0xA, _SkyboxCustom19880160_skybox_mio0SegmentRomStart, _SkyboxCustom19880160_skybox_mio0SegmentRomEnd),
 	LOAD_MIO0(8, _common0_mio0SegmentRomStart, _common0_mio0SegmentRomEnd),
 	LOAD_RAW(15, _common0_geoSegmentRomStart, _common0_geoSegmentRomEnd),
 	ALLOC_LEVEL_POOL(),

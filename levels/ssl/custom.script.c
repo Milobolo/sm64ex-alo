@@ -26,7 +26,7 @@ const LevelScript level_ssl_custom_entry[] = {
 	LOAD_MIO0(0x07, _bbh_segment_7SegmentRomStart, _bbh_segment_7SegmentRomEnd),
 	LOAD_RAW(0x1A, _bbhSegmentRomStart, _bbhSegmentRomEnd),
 	LOAD_RAW(0x0E, _ssl_segment_ESegmentRomStart, _ssl_segment_ESegmentRomEnd),
-	LOAD_MIO0(0xA, _SkyboxCustom22025568_skybox_mio0SegmentRomStart, _SkyboxCustom22025568_skybox_mio0SegmentRomEnd),
+	// LOAD_MIO0(0xA, _SkyboxCustom22025568_skybox_mio0SegmentRomStart, _SkyboxCustom22025568_skybox_mio0SegmentRomEnd),
 	LOAD_MIO0(8, _common0_mio0SegmentRomStart, _common0_mio0SegmentRomEnd),
 	LOAD_RAW(15, _common0_geoSegmentRomStart, _common0_geoSegmentRomEnd),
 	ALLOC_LEVEL_POOL(),

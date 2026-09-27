@@ -78,7 +78,7 @@ const LevelScript local_objects_hmc_1_[] = {
 	OBJECT_WITH_ACTS(0, 3754, 3550, 449, 0, 180, 0, 0x0,  bhvFlamethrower, 31),
 	OBJECT_WITH_ACTS(0, 4242, 3375, -317, 0, 0, 0, 0x40000,  bhvFlamethrower, 31),
 	OBJECT_WITH_ACTS(0, 4249, 3500, -694, 0, 0, 0, 0x40000,  bhvFlamethrower, 31),
-	OBJECT_WITH_ACTS(255, 4250, 3000, -1562, 0, 0, 0, 0x10000,  Bhv_Custom_0x130056bc, 31),
+	// OBJECT_WITH_ACTS(255, 4250, 3000, -1562, 0, 0, 0, 0x10000,  Bhv_Custom_0x130056bc, 31),
 	OBJECT_WITH_ACTS(0, 7200, 3700, -938, 0, -90, 0, 0x0,  bhvFlamethrower, 31),
 	OBJECT_WITH_ACTS(0, 6252, 3950, 3, 0, 180, 0, 0x0,  bhvFlamethrower, 31),
 	OBJECT_WITH_ACTS(180, 6747, 3900, -448, 0, 0, 0, 0x0,  bhvFireSpitter, 31),
@@ -141,7 +141,7 @@ const LevelScript local_warps_hmc_1_[] = {
 	WARP_NODE(241, 16, 1, 61, 0),
 	RETURN()
 };
-
+retourne sur f3de
 const LevelScript local_area_hmc_2_[] = {
 	AREA(2, Geo_hmc_2_0x1454d10),
 	TERRAIN(col_hmc_2_0xe010080),
