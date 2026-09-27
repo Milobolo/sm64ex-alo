@@ -1,9 +1,31 @@
 #ifndef BITDW_HEADER_H
 #define BITDW_HEADER_H
-
 #include "types.h"
-
-// geo
+#include "game/moving_texture.h"
+extern const GeoLayout Geo_bitdw_1_0x180e640[];
+extern Gfx DL_bitdw_1_0xe021240[];
+extern Gfx DL_bitdw_1_0xe021ae8[];
+extern Gfx DL_bitdw_1_0xe027a28[];
+extern const Collision col_bitdw_1_0xe027f30[];
+extern struct MovtexQuadCollection bitdw_1_Movtex_0[];
+extern struct MovtexQuadCollection bitdw_1_Movtex_1[];
+extern struct MovtexQuadCollection bitdw_1_Movtex_2[];
+extern const GeoLayout Geo_bitdw_2_0x180e520[];
+extern Gfx DL_bitdw_2_0xe020b50[];
+extern Gfx DL_bitdw_2_0xe0213f0[];
+extern Gfx DL_bitdw_2_0xe026d28[];
+extern const Collision col_bitdw_2_0xe027890[];
+extern struct MovtexQuadCollection bitdw_2_Movtex_0[];
+extern struct MovtexQuadCollection bitdw_2_Movtex_1[];
+extern struct MovtexQuadCollection bitdw_2_Movtex_2[];
+extern const LevelScript level_bitdw_custom_entry[];
+extern const LevelScript local_area_bitdw_1_[];
+extern const LevelScript local_objects_bitdw_1_[];
+extern const LevelScript local_warps_bitdw_1_[];
+extern const LevelScript local_area_bitdw_2_[];
+extern const LevelScript local_objects_bitdw_2_[];
+extern const LevelScript local_warps_bitdw_2_[];
+extern const LevelScript level_bitdw_entry[];
 extern const GeoLayout geo_bitdw_0003C0[];
 extern const GeoLayout geo_bitdw_0003D8[];
 extern const GeoLayout geo_bitdw_0003F0[];
@@ -30,8 +52,6 @@ extern const GeoLayout geo_bitdw_0005D0[];
 extern const GeoLayout geo_bitdw_0005E8[];
 extern const GeoLayout geo_bitdw_000600[];
 extern const GeoLayout geo_bitdw_000618[];
-
-// leveldata
 extern const Gfx bitdw_seg7_dl_070020C8[];
 extern const Gfx bitdw_seg7_dl_070028A0[];
 extern const Gfx bitdw_seg7_dl_070032F8[];
@@ -70,8 +90,5 @@ extern const Collision bitdw_seg7_collision_0700FA3C[];
 extern const Collision bitdw_seg7_collision_0700FB5C[];
 extern const Collision bitdw_seg7_collision_0700FC7C[];
 extern const Collision bitdw_seg7_collision_0700FD9C[];
-
-// script
 extern const LevelScript level_bitdw_entry[];
-
 #endif
